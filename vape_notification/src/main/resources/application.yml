@@ -1,0 +1,17 @@
+server:
+  port: 8001
+  address: localhost
+
+spring:
+  application:
+    name: notificator
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 15
+    leaseExpirationDurationInSeconds: 45
+  client:
+    enabled: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
