@@ -9,10 +9,10 @@
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>vapeshop_orchestrator</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>vape_orchestrator</name>
-    <description>Vape Spring Boot App</description>
+    <artifactId>vape_db</artifactId>
+    <version>0.0.1</version>
+    <name>vape_db</name>
+    <description>Database for vapeShop</description>
 
     <dependencies>
         <!--  =====================  Spring  =====================  -->
@@ -35,6 +35,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+
+        <!--  =====================  DB =====================  -->
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
         <!--  =====================  Cloud  =====================  -->
@@ -61,20 +73,12 @@
             <artifactId>javafaker</artifactId>
             <version>${javafaker.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.vapeshop</groupId>
+            <artifactId>vape_dto</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud-version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <plugins>

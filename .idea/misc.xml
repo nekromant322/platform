@@ -3,9 +3,10 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/vape_orchestrator/pom.xml" />
         <option value="$PROJECT_DIR$/vape_eureka_server/pom.xml" />
-        <option value="$PROJECT_DIR$/vape_notification/pom.xml" />
+        <option value="$PROJECT_DIR$/vape_db/pom.xml" />
+        <option value="$PROJECT_DIR$/vape_dto/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>

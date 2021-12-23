@@ -7,21 +7,31 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="vape_notification" />
-        <module name="vapeshop" />
+        <module name="vapeshop_orchestrator" />
+        <module name="vape_db" />
         <module name="eureka" />
+        <module name="dto" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="eureka" target="11" />
-      <module name="vape_notification" target="11" />
-      <module name="vapeshop" target="11" />
+      <module name="dto" target="1.8" />
+      <module name="eureka" target="1.8" />
+      <module name="vape_db" target="1.8" />
+      <module name="vape_notification" target="1.8" />
+      <module name="vapeShop" target="1.8" />
+      <module name="vapeshop" target="1.8" />
+      <module name="vapeshop_orchestrator" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="dto" options="-parameters" />
       <module name="eureka" options="-parameters" />
+      <module name="vapeShop" options="-parameters" />
+      <module name="vape_db" options="-parameters" />
       <module name="vape_notification" options="-parameters" />
       <module name="vapeshop" options="-parameters" />
+      <module name="vapeshop_orchestrator" options="-parameters" />
     </option>
   </component>
 </project>

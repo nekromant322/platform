@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/vape_dto/dto.iml" filepath="$PROJECT_DIR$/vape_dto/dto.iml" />
       <module fileurl="file://$PROJECT_DIR$/vape_eureka_server/eureka.iml" filepath="$PROJECT_DIR$/vape_eureka_server/eureka.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/vapeShop.iml" filepath="$PROJECT_DIR$/.idea/vapeShop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vape_db/vape_db.iml" filepath="$PROJECT_DIR$/vape_db/vape_db.iml" />
       <module fileurl="file://$PROJECT_DIR$/vape_notification/vape_notification.iml" filepath="$PROJECT_DIR$/vape_notification/vape_notification.iml" />
-      <module fileurl="file://$PROJECT_DIR$/vape_orchestrator/vapeshop.iml" filepath="$PROJECT_DIR$/vape_orchestrator/vapeshop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vape_orchestrator/vapeshop_orchestrator.iml" filepath="$PROJECT_DIR$/vape_orchestrator/vapeshop_orchestrator.iml" />
     </modules>
   </component>
 </project>
