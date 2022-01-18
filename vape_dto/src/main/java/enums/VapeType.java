@@ -1,6 +1,9 @@
 package enums;
 
 public enum VapeType {
-    TYPE_1,
-    TYPE_2
+    POD,
+    DEVICE,
+    LIQUID,
+    NICOTINE,
+    TOOL
 }

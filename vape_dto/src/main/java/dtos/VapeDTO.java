@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VapeModelDTO {
+public class VapeDTO {
     private long id;
     private float cost;
     private String img;
