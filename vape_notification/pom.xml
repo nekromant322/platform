@@ -39,6 +39,11 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.vapeshop</groupId>
+            <artifactId>vape_dto</artifactId>
+            <version>0.0.1</version>
+        </dependency>
 
     </dependencies>
 

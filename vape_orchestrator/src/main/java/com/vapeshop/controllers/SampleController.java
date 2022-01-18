@@ -1,14 +1,15 @@
 package com.vapeshop.controllers;
 
-import com.vapeshop.controllers.feigns.NotificatorFeign;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vapeshop.feigns.NotificatorFeign;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class MainController {
-    @Autowired
+@RequiredArgsConstructor
+public class SampleController {
+
     private NotificatorFeign proxy;
 
     @GetMapping

@@ -1,4 +1,4 @@
-package com.vapeshop.controllers.feigns;
+package com.vapeshop.feigns;
 
 
 import org.springframework.cloud.openfeign.FeignClient;
