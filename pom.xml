@@ -11,17 +11,16 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.vapeshop</groupId>
-    <artifactId>vape</artifactId>
+    <groupId>com.override</groupId>
+    <artifactId>platform</artifactId>
     <version>0.0.1</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>vape_dto</module>
-        <module>vape_db</module>
-        <module>vape_orchestrator</module>
-        <module>vape_eureka_server</module>
-        <module>vape_notification</module>
+        <module>platform_dto</module>
+        <module>platform_orchestrator</module>
+        <module>platform_eureka_server</module>
+        <module>platform_notification</module>
     </modules>
 
     <properties>
