@@ -152,6 +152,7 @@ public class MainTest {
 
 
     private static Class prepareClassFromSpecialFile() throws Exception {
+        new File("customClasses").mkdirs();
         File file = new File("customClasses/Main.java");
         try {
             Files.delete(Paths.get(file.toURI()));
