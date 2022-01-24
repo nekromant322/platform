@@ -36,7 +36,10 @@ public class MainTest {
 
     private static String studentsCode = "import java.util.*;\n" +
             "\n" +
-            "class Main {\n" +
+            "public class Main {\n" +
+            "    public Main() {\n" +
+            "    }\n" +
+            "\n" +
             "    //Stepik code: start\n" +
             "    public final class ComplexNumber {\n" +
             "        private final double re;\n" +
@@ -85,8 +88,10 @@ public class MainTest {
         out.close();
 
 
-        Process process = Runtime.getRuntime().exec("javac platform_code_executor/customerClasses/Main.java");
-
+        Process exec = Runtime.getRuntime().exec("javac platform_code_executor/customClasses/Main.java");
+        if (exec.waitFor() == 0) {
+            System.out.println("Compile done");
+        }
 
         ////
 //        ClassLoader.getSystemClassLoader().loadClass("Main").newInstance();
@@ -99,7 +104,7 @@ public class MainTest {
         URL[] urls = new URL[] {url};
 
         //load this folder into Class loader
-        ClassLoader cl = new URLClassLoader(urls);
+        ClassLoader cl = URLClassLoader.newInstance(urls);
 
         //load the Address class in 'c:\\other_classes\\'
         Class cls = cl.loadClass("Main");
@@ -109,7 +114,6 @@ public class MainTest {
         CodeSource cSource = pDomain.getCodeSource();
         URL urlfrom = cSource.getLocation();
         System.out.println(urlfrom.getFile());
-
 
 
         ////
@@ -122,9 +126,6 @@ public class MainTest {
                 mainClass,
                 Double.TYPE,
                 Double.TYPE);
-
-
-
 
 
         /////
@@ -203,7 +204,6 @@ public class MainTest {
         System.out.println(urlfrom.getFile());
         return cls;
     }
-
 
     @BeforeClass
     public static void beforeClass() throws Exception {
