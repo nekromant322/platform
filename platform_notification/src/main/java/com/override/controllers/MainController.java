@@ -1,4 +1,4 @@
-package com.override.vape_notification.controllers;
+package com.override.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
