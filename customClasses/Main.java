@@ -27,7 +27,7 @@ public class Main {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             ComplexNumber that = (ComplexNumber) o;
-            return Double.compare(that.re, re) == 0 && Double.compare(that.im, im + 1) == 0;
+            return Double.compare(that.re, re) == 0 && Double.compare(that.im, im) == 0;
         }
 
         @Override

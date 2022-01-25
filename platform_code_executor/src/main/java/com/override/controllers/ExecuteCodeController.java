@@ -45,7 +45,7 @@ public class ExecuteCodeController {
                 "            if (this == o) return true;\n" +
                 "            if (o == null || getClass() != o.getClass()) return false;\n" +
                 "            ComplexNumber that = (ComplexNumber) o;\n" +
-                "            return Double.compare(that.re, re) == 0 && Double.compare(that.im, im + 1) == 0;\n" +
+                "            return Double.compare(that.re, re) == 0 && Double.compare(that.im, im) == 0;\n" +
                 "        }\n" +
                 "\n" +
                 "        @Override\n" +
