@@ -2,10 +2,10 @@ package com.override.service.test;
 
 import com.override.exception.AssertionError;
 import com.override.exception.TooLongCodeExecutionException;
-import com.override.model.Status;
-import com.override.model.TaskIdentifier;
-import com.override.model.TestResult;
 import com.override.utils.TestUtils;
+import dtos.TaskIdentifierDTO;
+import dtos.TestResultDTO;
+import enums.Status;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ import java.util.concurrent.TimeoutException;
 @RequiredArgsConstructor
 public class ComplexNumberTaskTest implements TaskTest {
 
-    private ExecutorService executorService = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
+    private ExecutorService executorService = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 
     private static final String MESSAGE_TEMPLATE_HASHCODE = "\nComplexNumber a = new ComplexNumber(%f, %f);\n" +
             "ComplexNumber b = new ComplexNumber(%f, %f);\n" +
@@ -38,13 +38,13 @@ public class ComplexNumberTaskTest implements TaskTest {
 
 
     @Override
-    public TestResult test(Class mainClass) {
-        List<TestResult> testResults = new ArrayList<>();
+    public TestResultDTO test(Class mainClass) {
+        List<TestResultDTO> testResultDTOS = new ArrayList<>();
         for (Callable testCase : getTestCases(mainClass)) {
-            Future<TestResult> future = executorService.submit(testCase);
+            Future<TestResultDTO> future = executorService.submit(testCase);
             try {
-                TestResult testResult = future.get(getTimeout(), TimeUnit.MILLISECONDS);
-                testResults.add(testResult);
+                TestResultDTO testResultDTO = future.get(getTimeout(), TimeUnit.MILLISECONDS);
+                testResultDTOS.add(testResultDTO);
             } catch (TimeoutException e) {
                 future.cancel(true);
                 throw new TooLongCodeExecutionException();
@@ -57,12 +57,12 @@ public class ComplexNumberTaskTest implements TaskTest {
         }
 
 
-        return testResults.get(0);
+        return testResultDTOS.get(0);
     }
 
     @Override
-    public TaskIdentifier getTaskIdentifier() {
-        return TaskIdentifier.builder()
+    public TaskIdentifierDTO getTaskIdentifier() {
+        return TaskIdentifierDTO.builder()
                 .chapter(3)
                 .step(4)
                 .lesson(8)
@@ -82,7 +82,7 @@ public class ComplexNumberTaskTest implements TaskTest {
     }
 
     @SneakyThrows
-    public TestResult testCase1(Class mainClass) {
+    public TestResultDTO testCase1(Class mainClass) {
         Class<?> complexNumberClass = TestUtils.getInnerClass(mainClass, "ComplexNumber");
 
         Constructor<?> constructor = TestUtils.getConstructor(complexNumberClass,
@@ -103,10 +103,10 @@ public class ComplexNumberTaskTest implements TaskTest {
             message = String.format(MESSAGE_TEMPLATE_EQUALS, 1.0, 1.0, 1.0, 1.0);
             assertEquals(message, a, b);
         } catch (AssertionError e) {
-            return TestResult.builder().status(Status.ASSERTION_ERROR).output(e.getMessage()).build();
+            return TestResultDTO.builder().status(Status.ASSERTION_ERROR).output(e.getMessage()).build();
         }
 
 
-        return TestResult.builder().status(Status.OK).output("").build();
+        return TestResultDTO.builder().status(Status.OK).output("").build();
     }
 }

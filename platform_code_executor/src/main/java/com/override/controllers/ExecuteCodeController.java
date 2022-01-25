@@ -1,13 +1,11 @@
 package com.override.controllers;
 
-import com.override.model.TestResult;
 import com.override.service.ExecuteCodeService;
+import dtos.CodeTryDTO;
+import dtos.TestResultDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,7 +15,7 @@ public class ExecuteCodeController {
     private final ExecuteCodeService executeCodeService;
 
     @PostMapping("/execute")
-    public TestResult execute(@RequestBody CodeTryDTO codeTryDTO) {
+    public TestResultDTO execute(@RequestBody CodeTryDTO codeTryDTO) {
         codeTryDTO.setStudentsCode("import java.util.*;\n" +
                 "\n" +
                 "public class Main {\n" +

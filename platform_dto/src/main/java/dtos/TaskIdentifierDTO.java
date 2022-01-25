@@ -1,11 +1,11 @@
-package com.override.model;
+package dtos;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class TaskIdentifier {
+public class TaskIdentifierDTO {
 
     private Integer chapter;
     private Integer step;

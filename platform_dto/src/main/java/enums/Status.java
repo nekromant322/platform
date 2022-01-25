@@ -1,4 +1,4 @@
-package com.override.model;
+package enums;
 
 public enum Status {
     COMPILE_ERROR,

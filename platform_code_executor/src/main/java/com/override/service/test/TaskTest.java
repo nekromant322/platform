@@ -1,16 +1,16 @@
 package com.override.service.test;
 
 import com.override.exception.AssertionError;
-import com.override.model.TaskIdentifier;
-import com.override.model.TestResult;
+import dtos.TaskIdentifierDTO;
+import dtos.TestResultDTO;
 
 import java.util.concurrent.Callable;
 
 public interface TaskTest {
 
-    TestResult test(Class mainClass);
+    TestResultDTO test(Class mainClass);
 
-    TaskIdentifier getTaskIdentifier();
+    TaskIdentifierDTO getTaskIdentifier();
 
     Integer getTimeout();
 
