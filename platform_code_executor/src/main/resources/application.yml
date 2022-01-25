@@ -7,8 +7,7 @@ spring:
     name: code-executor
 eureka:
   instance:
-    hostname: ${spring.application.name}
-    preferIpAddress: true
+    hostname: localhost
     leaseRenewalIntervalInSeconds: 15
     leaseExpirationDurationInSeconds: 45
   client:

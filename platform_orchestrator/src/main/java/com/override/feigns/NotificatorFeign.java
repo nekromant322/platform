@@ -4,11 +4,9 @@ package com.override.feigns;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
-//TODO: вынести урл в yml, либо починить фейн (лучше) чтоб резолвил по имени сервиса
-@FeignClient(name = "notificator", url = "http://localhost:8001/", decode404 = true)
+@FeignClient(name = "notification")
 public interface NotificatorFeign {
 
-    @GetMapping("main/example")
+    @GetMapping("/main/example")
     String getMessage();
 }

@@ -29,7 +29,10 @@ public class CompilerService {
             out.close();
 
             Process process = Runtime.getRuntime().exec("javac " + CUSTOM_CLASSES_DIR_NAME + "/" + TOP_LEVEL_HELPER_CLASS_NAME + ".java");
-            process.waitFor();
+            //не убирать условие, потому что waitFor() не будет ждать
+            if (process.waitFor() == 0 ){
+                System.out.println("compile done");
+            }
         } catch (Exception e) {
             throw new CompilingCodeException(e);
         }

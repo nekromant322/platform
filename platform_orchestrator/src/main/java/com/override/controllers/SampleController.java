@@ -1,16 +1,17 @@
 package com.override.controllers;
 
 import com.override.feigns.NotificatorFeign;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequiredArgsConstructor
 public class SampleController {
 
-    private NotificatorFeign proxy;
+    @Autowired
+    private NotificatorFeign notificationFeign;
 
     @GetMapping
     @RequestMapping("/main")
@@ -21,6 +22,6 @@ public class SampleController {
     @GetMapping
     @RequestMapping("/feign")
     public String getFeignMessage() {
-        return proxy.getMessage();
+        return notificationFeign.getMessage();
     }
 }

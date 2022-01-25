@@ -8,8 +8,8 @@ server:
 eureka:
   instance:
     hostname: localhost
-    preferIpAddress: true
   client:
+    enabled: true
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:

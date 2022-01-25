@@ -5,13 +5,16 @@ server:
 spring:
   application:
     name: notification
+
 eureka:
   instance:
-    hostname: ${spring.application.name}
-    preferIpAddress: true
+    hostname: localhost
     leaseRenewalIntervalInSeconds: 15
     leaseExpirationDurationInSeconds: 45
+
   client:
+    registerWithEureka: true
+    fetch-registry: true
     enabled: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
