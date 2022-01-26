@@ -4,6 +4,7 @@ import com.override.exception.AssertionError;
 import dtos.TaskIdentifierDTO;
 import dtos.TestResultDTO;
 import enums.Status;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -16,6 +17,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public abstract class AbstractTaskTest {
+
+    @Value("${task-test.defaultTimeout}")
+    protected Integer defaultTimeout;
 
     protected ExecutorService executorService = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 
@@ -70,7 +74,9 @@ public abstract class AbstractTaskTest {
 
     public abstract TaskIdentifierDTO getTaskIdentifier();
 
-    protected abstract Integer getTimeout();
+    protected Integer getTimeout() {
+        return defaultTimeout;
+    }
 
     protected abstract Callable[] getTestCases(Class mainClass);
 
@@ -88,5 +94,19 @@ public abstract class AbstractTaskTest {
         } else {
             return expected.equals(actual);
         }
+    }
+
+    public String getCodePrefix() {
+        return "import java.util.*;\n" +
+                "\n" +
+                "public class Main {\n" +
+                "    public Main() {\n" +
+                "    }\n" +
+                "\n" +
+                "    //Stepik code: start\n";
+    }
+
+    public String getCodePostFix() {
+        return "}\n";
     }
 }

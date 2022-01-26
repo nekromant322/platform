@@ -25,16 +25,15 @@ public class ExecuteCodeService {
 
     public TestResultDTO runCode(TaskIdentifierDTO taskIdentifierDTO, String studentsCode) {
         try {
-            Class loadedClass = compilerService.makeClassFromCode(studentsCode);
-            return testsMap.get(taskIdentifierDTO).test(loadedClass);
+            AbstractTaskTest taskTest = testsMap.get(taskIdentifierDTO);
+            Class loadedClass = compilerService.makeClassFromCode(taskTest.getCodePrefix() + studentsCode + taskTest.getCodePostFix());
+            return taskTest.test(loadedClass);
         } catch (CompilingCodeException e) {
             return TestResultDTO.builder()
                     .status(Status.COMPILE_ERROR)
                     .output(e.getMessage())
                     .build();
         }
-
-
     }
 
 }

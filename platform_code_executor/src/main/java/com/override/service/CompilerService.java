@@ -3,6 +3,7 @@ package com.override.service;
 
 import com.override.exception.CompilingCodeException;
 import com.override.exception.LoadingClassException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -13,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @Service
+@Slf4j
 public class CompilerService {
 
     private static final String CUSTOM_CLASSES_DIR_NAME = "customClasses";
@@ -29,9 +31,9 @@ public class CompilerService {
             out.close();
 
             Process process = Runtime.getRuntime().exec("javac " + CUSTOM_CLASSES_DIR_NAME + "/" + TOP_LEVEL_HELPER_CLASS_NAME + ".java");
-            //не убирать условие, потому что waitFor() не будет ждать
-            if (process.waitFor() == 0 ){
-                System.out.println("compile done");
+            //не убирать условие, потому что waitFor() не будет ждать из-за оптимизаций при компиляции
+            if (process.waitFor() == 0) {
+                log.info("compile done for code \n" + studentsCode);
             }
         } catch (Exception e) {
             throw new CompilingCodeException(e);

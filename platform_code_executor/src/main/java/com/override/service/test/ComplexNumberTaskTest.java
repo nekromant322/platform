@@ -6,24 +6,18 @@ import dtos.TestResultDTO;
 import enums.Status;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertNotEquals;
 
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class ComplexNumberTaskTest extends AbstractTaskTest {
-
-    private ExecutorService executorService = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 
     private static final String MESSAGE_TEMPLATE_HASHCODE = "\nComplexNumber a = new ComplexNumber(%f, %f);\n" +
             "ComplexNumber b = new ComplexNumber(%f, %f);\n" +
@@ -39,11 +33,6 @@ public class ComplexNumberTaskTest extends AbstractTaskTest {
                 .step(4)
                 .lesson(8)
                 .build();
-    }
-
-    @Override
-    public Integer getTimeout() {
-        return 8000;
     }
 
     @Override
