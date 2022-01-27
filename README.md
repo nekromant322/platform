@@ -1,1 +1,1 @@
-Hello! It's first version of README for student's platform.
+Hello! It's second version of README for student's platform.
