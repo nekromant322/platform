@@ -1,5 +1,3 @@
-Hello! It's second version of README for student's platform.
-
 Перед запуском:
 - Установи JDK 1.8
 - Idea-> Plugins -> Lombok -> Install
@@ -16,6 +14,3 @@ Git Branching
 
 Полезные ссылки:
 https://trello.com/b/zN2JnsWE/%D0%BF%D0%BB%D0%B0%D1%82%D1%84%D0%BE%D1%80%D0%BC%D0%B0
-    
-I've tried so hard, and got so far
-but in the end it doesn't even matter
