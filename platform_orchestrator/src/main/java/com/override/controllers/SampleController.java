@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+//TODO убрать после объяснения шнайдеру
 public class SampleController {
 
     @Autowired
