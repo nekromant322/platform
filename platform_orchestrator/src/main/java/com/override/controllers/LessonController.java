@@ -3,6 +3,7 @@ package com.override.controllers;
 import com.override.feigns.CodeExecutorFeign;
 import dtos.CodeTryDTO;
 import dtos.TaskIdentifierDTO;
+import dtos.TestResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +23,8 @@ public class LessonController {
         return "lessons" + "/" + course + "/" + chapter + "/" + step + "/" + lesson;
     }
 
-    @PostMapping("/lessons/{course}/{chapter}/{step}/{lesson}")
-    public void TestResultDTO(@PathVariable String course,
-                              @PathVariable Integer chapter,
-                              @PathVariable Integer step,
-                              @PathVariable Integer lesson,
-                              @RequestBody String studentCode) {
-        TaskIdentifierDTO taskIdentifierDTO = TaskIdentifierDTO.builder().chapter(chapter).step(step).lesson(lesson).build();
-        codeExecutorFeign.execute(new CodeTryDTO(taskIdentifierDTO, studentCode));
+    @PostMapping("/lessons")
+    public void getCodeTry(@RequestBody CodeTryDTO codeTryDTO) {
+        codeExecutorFeign.execute(codeTryDTO);
     }
 }
