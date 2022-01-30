@@ -48,16 +48,16 @@ public class ExecuteCodeController {
 //                "            return Objects.hash(re, im);\n" +
 //                "        }\n" +
 //                "    }\n");
-        codeTryDTO.setTaskIdentifier(TaskIdentifierDTO.builder()
-                .chapter(1)
-                .step(2)
-                .lesson(13)
-                .build());
-        codeTryDTO.setStudentsCode("public class Main {\n" +
-                "    public static void main(String[] args) {\n" +
-                "        System.out.println(\"It's alive! It's alive!\");\n" +
-                "    }\n" +
-                "}");
+//        codeTryDTO.setTaskIdentifier(TaskIdentifierDTO.builder()
+//                .chapter(1)
+//                .step(2)
+//                .lesson(13)
+//                .build());
+//        codeTryDTO.setStudentsCode("public class Main {\n" +
+//                "    public static void main(String[] args) {\n" +
+//                "        System.out.println(\"It's alive! It's alive!\");\n" +
+//                "    }\n" +
+//                "}");
 
         return executeCodeService.runCode(codeTryDTO.getTaskIdentifier(), codeTryDTO.getStudentsCode());
     }
