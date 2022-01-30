@@ -32,6 +32,14 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
+        <!--  =====================  Mail  =====================  -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <version>2.6.3</version>
+        </dependency>
+
         <!--  =====================  Other  =====================  -->
 
         <dependency>
@@ -49,7 +57,6 @@
             <artifactId>platform-dto</artifactId>
             <version>0.0.1</version>
         </dependency>
-
     </dependencies>
 
     <build>

@@ -1,3 +1,7 @@
+email:
+  user: ${MAIL_USER_NAME}
+  password: ${MAIL_PASSWORD}
+#TODO Может и не email, просто отсюда надо достать значения.
 server:
   port: 8001
   address: localhost
