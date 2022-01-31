@@ -1,0 +1,24 @@
+bot:
+  name: ${TELEGRAM_BOT_NAME}
+  token: ${TELEGRAM_BOT_TOKEN}
+
+server:
+  port: 8003
+  address: localhost
+
+spring:
+  application:
+    name: bot
+
+eureka:
+  instance:
+    hostname: localhost
+    leaseRenewalIntervalInSeconds: 15
+    leaseExpirationDurationInSeconds: 45
+
+  client:
+    registerWithEureka: true
+    fetch-registry: true
+    enabled: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
