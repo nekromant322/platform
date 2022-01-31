@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MailMapper {
-    public MailMessage dtoToSimpleMail(MailDTO mailDTO) {
-        MailMessage resultMail = new SimpleMailMessage();
+    public SimpleMailMessage dtoToSimpleMail(MailDTO mailDTO) {
+        SimpleMailMessage resultMail = new SimpleMailMessage();
         resultMail.setFrom(mailDTO.getFrom());
         resultMail.setTo(mailDTO.getTo().toArray(new String[mailDTO.getTo().size()]));
         resultMail.setBcc(mailDTO.getBcc().toArray(new String[mailDTO.getBcc().size()]));

@@ -1,7 +1,6 @@
-email:
-  user: ${MAIL_USER_NAME}
-  password: ${MAIL_PASSWORD}
-#TODO Может и не email, просто отсюда надо достать значения.
+#TODO прочекать заходят ли переменные среды
+#TODO Надо зайти в гугл-аккаунт почты и включить настройку "less Secure Apps"
+
 server:
   port: 8001
   address: localhost
@@ -9,6 +8,12 @@ server:
 spring:
   application:
     name: notification
+  mail:
+    protocol: smtps
+    host: smtp.yandex.ru
+    port: 465
+    username: ${MAIL_USER_NAME}
+    password: ${MAIL_PASSWORD}
 
 eureka:
   instance:
