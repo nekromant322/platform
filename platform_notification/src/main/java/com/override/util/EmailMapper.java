@@ -6,7 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MailMapper {
+public class EmailMapper {
     public SimpleMailMessage dtoToSimpleMail(MailDTO mailDTO) {
         SimpleMailMessage resultMail = new SimpleMailMessage();
         resultMail.setFrom(mailDTO.getFrom());

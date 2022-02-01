@@ -1,23 +1,18 @@
 package com.override.service;
 
-import com.override.util.MailMapper;
+import com.override.util.EmailMapper;
 import dtos.MailDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.io.FileNotFoundException;
-
 @Service
-public class MailServiceImpl implements MailService {
+public class EmailServiceImpl implements EmailService {
     @Autowired
     public JavaMailSender emailSender;
     @Autowired
-    public MailMapper mailMapper;
+    public EmailMapper emailMapper;
 
     @Override
     public void sendSimpleMail(String toAdress, String subject, String message) {
@@ -31,7 +26,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendSimpleMail(MailDTO mailDTO) {
-        SimpleMailMessage resultSimpleMailMessage = mailMapper.dtoToSimpleMail(mailDTO);
+        SimpleMailMessage resultSimpleMailMessage = emailMapper.dtoToSimpleMail(mailDTO);
         emailSender.send(resultSimpleMailMessage);
     }
 }

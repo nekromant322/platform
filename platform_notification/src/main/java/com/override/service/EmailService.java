@@ -6,7 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 import javax.mail.MessagingException;
 import java.io.FileNotFoundException;
 
-public interface MailService {
+public interface EmailService {
 
     public void sendSimpleMail(String toAdress, String subject, String message);
 
