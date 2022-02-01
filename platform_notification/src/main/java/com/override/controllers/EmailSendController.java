@@ -5,7 +5,7 @@ import dtos.MailDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(value = "/email/resend")
+@RequestMapping(value = "/email/send")
 @RestController
 public class EmailSendController {
 
@@ -13,13 +13,8 @@ public class EmailSendController {
     EmailService emailService;
 
     @PostMapping("/mailDTO")
-    public void autoResendTextFromMailDTO(@RequestBody MailDTO mailDTO) {
+    public void sendTextFromMailDTO(@RequestBody MailDTO mailDTO) {
         emailService.sendSimpleMail(mailDTO);
-    }
-
-    @PostMapping("/manually/{mail}")
-    public void manuallyResendTextTest(@PathVariable String mailTo) {
-        emailService.sendSimpleMail(mailTo, "Test", "Testing platform");
     }
 
     @PostMapping("/test")

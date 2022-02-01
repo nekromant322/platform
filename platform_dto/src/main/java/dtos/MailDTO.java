@@ -9,8 +9,8 @@ import java.util.List;
 
 @Data
 public class MailDTO {
-    @Nullable
-    private String from;
+//    @Nullable
+//    private String from;
 
     @Nullable
     private String replyTo;
