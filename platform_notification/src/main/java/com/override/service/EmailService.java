@@ -1,15 +1,9 @@
 package com.override.service;
 
 import dtos.MailDTO;
-import org.springframework.mail.SimpleMailMessage;
-
-import javax.mail.MessagingException;
-import java.io.FileNotFoundException;
 
 public interface EmailService {
 
-    public void sendSimpleMail(String toAdress, String subject, String message);
+    void sendSimpleMail(MailDTO mailDTO);
 
-    public void sendSimpleMail(MailDTO mailDTO);
-    
 }

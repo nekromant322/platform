@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -15,18 +16,10 @@ public class EmailServiceImpl implements EmailService {
     public EmailMapper emailMapper;
 
     @Override
-    public void sendSimpleMail(String toAdress, String subject, String message) {
-        SimpleMailMessage resultSimpleMailMessage = new SimpleMailMessage();
-        resultSimpleMailMessage.setTo(toAdress);
-        resultSimpleMailMessage.setSubject(subject);
-        resultSimpleMailMessage.setText(message);
-        resultSimpleMailMessage.setFrom(System.getenv("MAIL_USER_NAME"));
-        emailSender.send(resultSimpleMailMessage);
-    }
-
-    @Override
     public void sendSimpleMail(MailDTO mailDTO) {
-        SimpleMailMessage resultSimpleMailMessage = emailMapper.dtoToSimpleMail(mailDTO);
-        emailSender.send(resultSimpleMailMessage);
+        List<SimpleMailMessage> messageList = emailMapper.dtoToListOfSimpleMails(mailDTO);
+        for (SimpleMailMessage message : messageList) {
+            emailSender.send(message);
+        }
     }
 }
