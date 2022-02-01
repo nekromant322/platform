@@ -9,7 +9,7 @@ function sendCode(editor) {
     codeTry.studentsCode = editor.getValue();
     $.ajax({
         method: 'POST',
-        url: "/lessons",
+        url: "/codeTry",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(codeTry),
         success: function (result) {
