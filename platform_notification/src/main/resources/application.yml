@@ -1,6 +1,3 @@
-#TODO прочекать заходят ли переменные среды
-#TODO Надо зайти в гугл-аккаунт почты и включить настройку "less Secure Apps"
-
 server:
   port: 8001
   address: localhost

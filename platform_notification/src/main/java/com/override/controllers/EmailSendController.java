@@ -17,9 +17,4 @@ public class EmailSendController {
         emailService.sendSimpleMail(mailDTO);
     }
 
-    @PostMapping("/test")
-    public void test() {
-        emailService.sendSimpleMail("free2fqn@gmail.com", "Test", "Test message");
-    }
-
 }

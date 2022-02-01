@@ -4,6 +4,9 @@ import dtos.MailDTO;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 //TODO сейчас "From" достается из переменной-окружения. Но зачем-то же её можно регулировать, как настроить это?
 @Component
 public class EmailMapper {
@@ -20,7 +23,7 @@ public class EmailMapper {
         if (mailDTO.getReplyTo() != null) {
             resultMail.setReplyTo(mailDTO.getReplyTo());
         }
-        resultMail.setSentDate(mailDTO.getSentDate());
+        resultMail.setSentDate(new Date(System.currentTimeMillis()));
         resultMail.setSubject(mailDTO.getSubject());
         resultMail.setText(mailDTO.getText());
         return resultMail;
