@@ -5,7 +5,7 @@ function sendCode(editor) {
     codeTry.taskIdentifier.chapter = url[url.length - 3];
     codeTry.taskIdentifier.step = url[url.length - 2];
     codeTry.taskIdentifier.lesson = url[url.length - 1];
-    // codeTry.theme = url[url.length - 4];
+    //codeTry.theme = url[url.length - 4];
     codeTry.studentsCode = editor.getValue();
     $.ajax({
         method: 'POST',
