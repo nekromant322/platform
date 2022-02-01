@@ -5,6 +5,12 @@ server:
 spring:
   application:
     name: notification
+  mail:
+    protocol: smtps
+    host: smtp.yandex.ru
+    port: 465
+    username: ${MAIL_USER_NAME}
+    password: ${MAIL_PASSWORD}
 
 eureka:
   instance:
