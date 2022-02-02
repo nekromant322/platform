@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Locale;
-
 @Service
 public class CodeCallServiceImpl implements CodeCallService {
     @Value("${sms.api.id}")
@@ -29,19 +27,20 @@ public class CodeCallServiceImpl implements CodeCallService {
         this.objectMapper = objectMapper;
     }
 
-    //TODO нам приходит код подтверждения, но надо бы его передать куда-то, для валидации правильно ли юзер ввел.
+
     @Override
-    public void sendGet(String clientPhoneNumber) {
+    public String sendGet(String clientPhoneNumber) {
+        String securityCode = "-1";
         ResponseEntity<String> response = restTemplate.getForEntity(
                 url + "?phone=" + clientPhoneNumber + "&api_id=" + apiID,
                 String.class);
         System.out.println(response.getBody());
         try {
             CodeCallResponseDTO codeCallResponseDTO = objectMapper.readValue(response.getBody(), CodeCallResponseDTO.class);
-            System.out.println("This is codeCallResponseDTO.code: \n" + codeCallResponseDTO.getCode());
+            securityCode = codeCallResponseDTO.getCode();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
+        return securityCode;
     }
 }
