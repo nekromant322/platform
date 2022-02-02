@@ -2,6 +2,10 @@ server:
   port: 8001
   address: localhost
 
+sms:
+  api:
+    id: ${SMS_API_ID}
+
 spring:
   application:
     name: notification
