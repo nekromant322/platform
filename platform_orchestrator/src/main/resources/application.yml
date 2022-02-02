@@ -10,6 +10,13 @@ spring:
   application:
     name: orchestrator
 
+sms:
+  url:
+    replenish-balance: https://sms.ru/pay.php
+    get-balance: https://sms.ru/my/balance?api_id=
+  api:
+    id: ${SMS_API_ID}
+
 logging:
   file:
     name: logs/app.log
