@@ -19,7 +19,6 @@ public class CodeCallServiceImpl implements CodeCallService {
     @Value("${sms.url}")
     private String url;
 
-//    private final RestTemplate restTemplate;
     private final SmsRuFeign smsRuFeign;
     private final ObjectMapper objectMapper;
 
@@ -32,7 +31,7 @@ public class CodeCallServiceImpl implements CodeCallService {
     @Override
     public String verifyNumber(String clientPhoneNumber) {
         String jsonResponse = smsRuFeign.verifyPhone(clientPhoneNumber, apiID);
-        String securityCode = new String();
+        String securityCode;
         CodeCallResponseDTO codeCallResponseDTO;
         try {
             codeCallResponseDTO = objectMapper.readValue(jsonResponse, CodeCallResponseDTO.class);
@@ -40,17 +39,6 @@ public class CodeCallServiceImpl implements CodeCallService {
         } catch (JsonProcessingException e) {
             throw new VerifyCallException(e.getCause());
         }
-//        String securityCode = "-1";
-//        ResponseEntity<String> response = restTemplate.getForEntity(
-//                url + "?phone=" + clientPhoneNumber + "&api_id=" + apiID,
-//                String.class);
-//        System.out.println(response.getBody());
-//        try {
-//            CodeCallResponseDTO codeCallResponseDTO = objectMapper.readValue(response.getBody(), CodeCallResponseDTO.class);
-//            securityCode = codeCallResponseDTO.getCode();
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
         return securityCode;
     }
 
