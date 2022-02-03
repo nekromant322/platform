@@ -16,7 +16,6 @@ public class ExecuteCodeController {
 
     @PostMapping("/execute")
     public TestResultDTO execute(@RequestBody CodeTryDTO codeTryDTO) {
-
         return executeCodeService.runCode(codeTryDTO.getTaskIdentifier(), codeTryDTO.getStudentsCode());
     }
 }

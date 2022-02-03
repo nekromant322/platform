@@ -3,10 +3,6 @@ server:
   address: localhost
 
 spring:
-  cloud:
-    loadbalancer:
-      ribbon:
-        enable: false
   application:
     name: notification
   mail:

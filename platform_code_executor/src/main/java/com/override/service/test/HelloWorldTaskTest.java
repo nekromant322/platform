@@ -41,15 +41,14 @@ public class HelloWorldTaskTest extends AbstractTaskTest {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try (PrintStream printStream = new PrintStream(out)) {
-
             System.setOut(printStream);
             Method main = TestUtils.getMethod(mainClass, "main",
                     new int[] {Modifier.PUBLIC | Modifier.STATIC | Modifier.TRANSIENT, Modifier.PUBLIC | Modifier.STATIC},
                     Void.TYPE,
                     String[].class);
+
             TestUtils.invokeMethod(mainClass, main, (Object) new String[0]);
-            String strOutput = out.toString().replaceAll("[\n\r]", "");
-            assertEquals(String.format(ERROR_MESSAGE, strOutput), EXPECTED_OUTPUT, strOutput);
+            assertEquals(String.format(ERROR_MESSAGE, out.toString()), EXPECTED_OUTPUT, out.toString());
 
         } catch (Throwable throwable) {
             log.error("Error executing testcase");
