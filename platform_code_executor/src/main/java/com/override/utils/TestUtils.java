@@ -1,7 +1,7 @@
 package com.override.utils;// Don't edit this file
 
-import com.sun.istack.internal.NotNull;
 
+import javax.validation.constraints.NotNull;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
