@@ -1,10 +1,9 @@
-package com.override.controllers;
+package com.override.controller;
 
 import com.override.service.CodeCallService;
 import dtos.CodeCallSecurityCodeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,13 +13,13 @@ public class CodeCallController {
     private final CodeCallService codeCallService;
 
     @Autowired
-    CodeCallController(CodeCallService codeCallService) {
+    public CodeCallController(CodeCallService codeCallService) {
         this.codeCallService = codeCallService;
     }
 
-    @GetMapping("/codecall")
+    @GetMapping("/codeCall")
     public CodeCallSecurityCodeDTO callToClient(@RequestBody String clientPhoneNumber) {
-        String securityCode = codeCallService.sendGet(clientPhoneNumber);
+        String securityCode = codeCallService.verifyNumber(clientPhoneNumber);
         return new CodeCallSecurityCodeDTO(securityCode);
     }
 }

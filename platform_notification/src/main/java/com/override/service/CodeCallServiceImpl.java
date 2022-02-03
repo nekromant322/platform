@@ -22,14 +22,14 @@ public class CodeCallServiceImpl implements CodeCallService {
 
 
     @Autowired
-    CodeCallServiceImpl(RestTemplate restTemplate, ObjectMapper objectMapper) {
+    public CodeCallServiceImpl(RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
     }
 
 
     @Override
-    public String sendGet(String clientPhoneNumber) {
+    public String verifyNumber(String clientPhoneNumber) {
         String securityCode = "-1";
         ResponseEntity<String> response = restTemplate.getForEntity(
                 url + "?phone=" + clientPhoneNumber + "&api_id=" + apiID,
