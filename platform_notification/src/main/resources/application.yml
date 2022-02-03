@@ -3,7 +3,7 @@ server:
   address: localhost
 
 sms:
-  url: https://sms.ru/code/call
+  url: https://sms.ru
   api:
     id: ${SMS_API_ID}
 

@@ -22,4 +22,9 @@ public class CodeCallController {
         String securityCode = codeCallService.verifyNumber(clientPhoneNumber);
         return new CodeCallSecurityCodeDTO(securityCode);
     }
+
+    @GetMapping("/balance")
+    public String checkBalance() {
+        return codeCallService.getBalance();
+    }
 }

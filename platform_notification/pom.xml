@@ -40,6 +40,13 @@
             <version>2.6.3</version>
         </dependency>
 
+        <!--  =====================  Spring Cloud Feign  =====================  -->
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
         <!--  =====================  Other  =====================  -->
 
         <dependency>
