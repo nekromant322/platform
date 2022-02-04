@@ -20,37 +20,21 @@ public class CodeCallServiceImpl implements CodeCallService {
     private String url;
 
     private final SmsRuFeign smsRuFeign;
-    private final ObjectMapper objectMapper;
 
     @Autowired
-    public CodeCallServiceImpl(SmsRuFeign smsRuFeign, ObjectMapper objectMapper) {
+    public CodeCallServiceImpl(SmsRuFeign smsRuFeign) {
         this.smsRuFeign = smsRuFeign;
-        this.objectMapper = objectMapper;
     }
 
     @Override
     public String verifyNumber(String clientPhoneNumber) {
-        String jsonResponse = smsRuFeign.verifyPhone(clientPhoneNumber, apiID);
-        String securityCode;
-        CodeCallResponseDTO codeCallResponseDTO;
-        try {
-            codeCallResponseDTO = objectMapper.readValue(jsonResponse, CodeCallResponseDTO.class);
-            securityCode = codeCallResponseDTO.getCode();
-        } catch (JsonProcessingException e) {
-            throw new VerifyCallException(e.getCause());
-        }
-        return securityCode;
+        CodeCallResponseDTO codeCallResponseDTO = smsRuFeign.verifyPhone(clientPhoneNumber, apiID);
+        return codeCallResponseDTO.getCode();
     }
 
     @Override
     public String getBalance() {
-        String balance;
-        try {
-            BalanceResponseDTO balanceResponseDTO =  objectMapper.readValue(smsRuFeign.getBalance(apiID), BalanceResponseDTO.class) ;
-            balance = balanceResponseDTO.getBalance();
-        } catch (JsonProcessingException e) {
-            throw new GetBalanceException(e.getCause());
-        }
-        return balance;
+        BalanceResponseDTO balanceResponseDTO = smsRuFeign.getBalance(apiID);
+        return balanceResponseDTO.getBalance();
     }
 }

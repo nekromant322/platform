@@ -5,9 +5,11 @@ import dtos.CodeCallSecurityCodeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/calls")
 public class CodeCallController {
 
     private final CodeCallService codeCallService;
@@ -17,7 +19,7 @@ public class CodeCallController {
         this.codeCallService = codeCallService;
     }
 
-    @GetMapping("/codeCall")
+    @GetMapping("/code")
     public CodeCallSecurityCodeDTO callToClient(@RequestBody String clientPhoneNumber) {
         String securityCode = codeCallService.verifyNumber(clientPhoneNumber);
         return new CodeCallSecurityCodeDTO(securityCode);
