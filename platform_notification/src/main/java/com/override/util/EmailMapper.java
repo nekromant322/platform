@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.util.LinkedList;
 import java.util.List;
 
-//TODO сейчас "From" достается из переменной-окружения. Но зачем-то же её можно регулировать, как настроить это?
 @Component
 public class EmailMapper {
     @Value("${spring.mail.username}")
