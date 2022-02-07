@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <!-- Обязательные метатеги -->
     <meta charset="utf-8">
@@ -12,11 +12,12 @@
 </head>
 <body>
   <h3>Balance on sms.ru</h3>
-  <label for="balanceText" >Balance(RUB): </label>
-  <input id="balanceText" th:value="${balance}" disabled>
+  <label for="balanceText">Balance(RUB): </label>
+  <input id="balanceText" disabled/>
 
   <a href="https://sms.ru/pay.php" class="link-success">Replenish the balance</a>
   <!-- Вариант 1: Bootstrap в связке с Popper -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="/js/balance-check.js"></script>
 </body>
 </html>
