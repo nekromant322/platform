@@ -6,6 +6,7 @@ import dtos.TestResultDTO;
 import enums.Status;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.io.File;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -16,7 +17,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import static org.junit.Assert.assertTrue;
+
 public abstract class AbstractTaskTest {
+
+    private final double FILE_MAX_SIZE = 16;
+    private final String PATH_TO_TEST_CLASS = "customClasses/Main.java";
 
     @Value("${task-test.defaultTimeout}")
     protected Integer defaultTimeout;
@@ -25,6 +31,20 @@ public abstract class AbstractTaskTest {
 
     public TestResultDTO test(Class mainClass) {
         List<TestResultDTO> testResults = new ArrayList<>();
+        File file = new File(PATH_TO_TEST_CLASS);
+        try {
+            assertTrue("File too fat", FILE_MAX_SIZE >= getFileSizeMegaBytes(file));
+            testResults.add(TestResultDTO.builder().
+                    status(Status.OK).
+                    output("").
+                    build());
+        } catch (Exception e) {
+            testResults.add(TestResultDTO.builder()
+                    .status(Status.OUT_OF_MEMORY)
+                    .output((
+                            "Ваш код занимает слишком много места, нужно его оптимизировать:\n\n" + e.getMessage()))
+                    .build());
+        }
         for (Callable testCase : getTestCases(mainClass)) {
             Future<TestResultDTO> future = executorService.submit(testCase);
 
@@ -71,7 +91,6 @@ public abstract class AbstractTaskTest {
                         .build());
     }
 
-
     public abstract TaskIdentifierDTO getTaskIdentifier();
 
     protected Integer getTimeout() {
@@ -94,6 +113,10 @@ public abstract class AbstractTaskTest {
         } else {
             return expected.equals(actual);
         }
+    }
+
+    private double getFileSizeMegaBytes(File file) {
+        return (double) file.length() / (1024 * 1024);
     }
 
     public String getCodePrefix() {

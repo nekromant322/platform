@@ -23,7 +23,6 @@ public class HelloWorldTaskTest extends AbstractTaskTest {
 
     private final String ERROR_MESSAGE = "Output doesn't match, your output:\n %s";
     private final String EXPECTED_OUTPUT = "It's alive! It's alive!";
-    private final double FILE_MAX_SIZE = 2;
 
     @Override
     public TaskIdentifierDTO getTaskIdentifier() {
@@ -37,27 +36,8 @@ public class HelloWorldTaskTest extends AbstractTaskTest {
     @Override
     protected Callable[] getTestCases(Class mainClass) {
         return new Callable[]{
-                () -> testCase1(mainClass),
-                () -> testCase2()
+                () -> testCase1(mainClass)
         };
-    }
-
-    private TestResultDTO testCase2() {
-        File file = new File("customClasses/Main.java");
-        try {
-            assertTrue("File too fat", FILE_MAX_SIZE >= getFileSizeMegaBytes(file));
-        } catch (Exception e) {
-            log.error("Error executing testcase");
-            throw new ExecutingCodeException(e);
-        }
-        return TestResultDTO.builder().
-                status(Status.OK).
-                output("").
-                build();
-    }
-
-    private double getFileSizeMegaBytes(File file) {
-        return (double) file.length() / (1024 * 1024);
     }
 
     private TestResultDTO testCase1(Class mainClass) {
