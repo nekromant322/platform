@@ -17,7 +17,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractTaskTest {
 
@@ -38,7 +37,7 @@ public abstract class AbstractTaskTest {
                     status(Status.OK).
                     output("").
                     build());
-        } catch (Exception e) {
+        } catch (AssertionError e) {
             testResults.add(TestResultDTO.builder()
                     .status(Status.OUT_OF_MEMORY)
                     .output((
@@ -105,6 +104,10 @@ public abstract class AbstractTaskTest {
             String cleanMessage = message == null ? "" : message;
             throw new AssertionError(cleanMessage, expected, actual);
         }
+    }
+
+    protected void assertTrue(String message, boolean condition) {
+        assertEquals(message, condition, true);
     }
 
     private boolean equalsRegardingNull(Object expected, Object actual) {
