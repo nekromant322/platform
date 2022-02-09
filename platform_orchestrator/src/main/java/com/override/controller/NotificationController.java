@@ -1,7 +1,7 @@
 package com.override.controller;
 
 import com.override.feigns.NotificatorFeign;
-import feign.FeignException;
+import dtos.BalanceResponseFromNotificationControllerDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,12 +24,7 @@ public class NotificationController {
     private String urlToReplenishBalance;
 
     @GetMapping("/balance")
-    public double getBalance() {
-        return notificatorFeign.getBalance();
-    }
-
-    @GetMapping("/url/replenish")
-    public String getUrlToReplenishBalance() {
-        return urlToReplenishBalance;
+    public BalanceResponseFromNotificationControllerDTO getBalanceDTO() {
+        return new BalanceResponseFromNotificationControllerDTO(notificatorFeign.getBalance(), urlToReplenishBalance);
     }
 }
