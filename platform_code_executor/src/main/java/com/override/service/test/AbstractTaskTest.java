@@ -20,7 +20,7 @@ import java.util.concurrent.TimeoutException;
 
 public abstract class AbstractTaskTest {
 
-    private final double FILE_MAX_SIZE = 16;
+    private final double FILE_MAX_SIZE_IN_MB = 16;
     private final String PATH_TO_TEST_CLASS = "customClasses/Main.java";
 
     @Value("${task-test.defaultTimeout}")
@@ -30,20 +30,7 @@ public abstract class AbstractTaskTest {
 
     public TestResultDTO test(Class mainClass) {
         List<TestResultDTO> testResults = new ArrayList<>();
-        File file = new File(PATH_TO_TEST_CLASS);
-        try {
-            assertTrue("File too fat", FILE_MAX_SIZE >= getFileSizeMegaBytes(file));
-            testResults.add(TestResultDTO.builder().
-                    status(Status.OK).
-                    output("").
-                    build());
-        } catch (AssertionError e) {
-            testResults.add(TestResultDTO.builder()
-                    .status(Status.OUT_OF_MEMORY)
-                    .output((
-                            "Ваш код занимает слишком много места, нужно его оптимизировать:\n\n" + e.getMessage()))
-                    .build());
-        }
+        testResults.add(getSpaceTestResult());
         for (Callable testCase : getTestCases(mainClass)) {
             Future<TestResultDTO> future = executorService.submit(testCase);
 
@@ -120,6 +107,23 @@ public abstract class AbstractTaskTest {
 
     private double getFileSizeMegaBytes(File file) {
         return (double) file.length() / (1024 * 1024);
+    }
+
+    private TestResultDTO getSpaceTestResult() {
+        File file = new File(PATH_TO_TEST_CLASS);
+        try {
+            assertTrue("File too fat", FILE_MAX_SIZE_IN_MB >= getFileSizeMegaBytes(file));
+            return TestResultDTO.builder().
+                    status(Status.OK).
+                    output("").
+                    build();
+        } catch (AssertionError e) {
+            return TestResultDTO.builder()
+                    .status(Status.OUT_OF_SPACE)
+                    .output((
+                            "Ваш код занимает слишком много места, нужно его оптимизировать:\n\n" + e.getMessage()))
+                    .build();
+        }
     }
 
     public String getCodePrefix() {
