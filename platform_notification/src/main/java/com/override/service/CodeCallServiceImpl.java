@@ -2,7 +2,7 @@ package com.override.service;
 
 import com.override.feign.SmsRuFeign;
 import dtos.CodeCallResponseDTO;
-import dtos.BalanceResponseFromSmsRuFeignClientDTO;
+import dtos.SmsRuBalanceResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class CodeCallServiceImpl implements CodeCallService {
 
     @Override
     public double getBalance() {
-        BalanceResponseFromSmsRuFeignClientDTO balanceResponseFromSmsRuFeignClientDTO = smsRuFeign.getBalance(apiID);
-        return balanceResponseFromSmsRuFeignClientDTO.getBalance();
+        SmsRuBalanceResponseDTO smsRuBalanceResponseDTO = smsRuFeign.getBalance(apiID);
+        return smsRuBalanceResponseDTO.getBalance();
     }
 }

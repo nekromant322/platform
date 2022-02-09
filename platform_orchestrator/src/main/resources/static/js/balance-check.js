@@ -7,7 +7,6 @@ function initBalance() {
         dataType: "json",
         async: "false",
         success: function (data) {
-            console.log(data);
             document.getElementById("balanceText")
                 .setAttribute("value", data.balance);
             document.getElementById("linkToReplenishBalance")
