@@ -24,15 +24,8 @@ public class NotificationController {
     private String urlToReplenishBalance;
 
     @GetMapping("/balance")
-    public String getBalance() {
-        String balance;
-        try {
-            balance = notificatorFeign.getBalance();
-        } catch (FeignException e) {
-            balance = "Service unavailable";
-            log.error("Caught FeignException: " + e.getMessage());
-        }
-        return balance;
+    public double getBalance() {
+        return notificatorFeign.getBalance();
     }
 
     @GetMapping("/url/replenish")

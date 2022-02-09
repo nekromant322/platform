@@ -23,7 +23,7 @@ public class CodeCallController {
     }
 
     @GetMapping("/balance")
-    public String checkBalance() {
+    public double checkBalance() {
         return codeCallService.getBalance();
     }
 }

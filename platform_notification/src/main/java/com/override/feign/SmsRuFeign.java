@@ -1,6 +1,6 @@
 package com.override.feign;
 
-import dtos.BalanceResponseDTO;
+import dtos.BalanceResponseFromSmsRuFeignClientDTO;
 import dtos.CodeCallResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,5 +12,5 @@ public interface SmsRuFeign {
     CodeCallResponseDTO verifyPhone(@PathVariable String phone, @PathVariable String apiID);
 
     @GetMapping("/my/balance?api_id={apiID}&json=1")
-    BalanceResponseDTO getBalance(@PathVariable String apiID);
+    BalanceResponseFromSmsRuFeignClientDTO getBalance(@PathVariable String apiID);
 }

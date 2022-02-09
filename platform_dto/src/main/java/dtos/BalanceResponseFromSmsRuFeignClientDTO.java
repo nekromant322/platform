@@ -3,10 +3,10 @@ package dtos;
 import lombok.Data;
 
 @Data
-public class BalanceResponseDTO {
+public class BalanceResponseFromSmsRuFeignClientDTO {
     private String status;
 
     private String statusCode;
 
-    private String balance;
+    private double balance;
 }

@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface NotificatorFeign {
 
     @GetMapping("/calls/balance")
-    String getBalance();
+    Double getBalance();
 }
