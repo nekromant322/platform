@@ -16,4 +16,9 @@ public class PageController {
         return "courses";
     }
 
+    @GetMapping("/balancePage")
+    public String balancePage() {
+        return "balance-check";
+    }
+
 }
