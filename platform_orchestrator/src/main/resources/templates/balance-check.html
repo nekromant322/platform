@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Обязательные метатеги -->
     <meta charset="utf-8">
@@ -10,22 +10,7 @@
 
     <title>Balance</title>
 
-    <nav class="navbar navbar-dark bg-dark">
-        <!-- Navbar content -->
-        <li class="nav-item">
-            <a class="nav-link" href="/courses">Курсы</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/">Index</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-        </li>
-    </nav>
-
+    <header th:replace="fragments/admin-navbar.html :: header"></header>
 </head>
 <body>
   <h3>Balance on sms.ru</h3>
