@@ -28,4 +28,3 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: Test
         run: mvn test
-      
