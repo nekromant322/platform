@@ -54,11 +54,7 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.override</groupId>
-            <artifactId>platform</artifactId>
-            <version>0.0.1</version>
-        </dependency>
+
         <dependency>
             <groupId>com.override</groupId>
             <artifactId>platform-dto</artifactId>
