@@ -7,16 +7,6 @@ public class NotificationHelloWorldTest {
 
     @Test
     void passedTest() {
-        Assertions.assertEquals(1, 1);
-    }
 
-    @Test
-    void notPassedTest() {
-        Assertions.assertEquals(1, 0);
-    }
-
-    @Test
-    void logTest() {
-        log.info("Log test completed!");
     }
 }
