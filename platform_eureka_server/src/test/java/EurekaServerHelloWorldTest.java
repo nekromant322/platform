@@ -3,8 +3,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
-public class HelloWorldTestClass {
-
+public class EurekaServerHelloWorldTest {
     @Test
     void passedTest() {
         Assertions.assertEquals(1, 1);
