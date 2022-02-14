@@ -10,19 +10,12 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <title>Override платформа</title>
 </head>
-<header th:replace="fragments/common.html :: header"></header>
 <body>
 
+<h2>Помощь зала</h2>
 
-<div id="taskText">
-    <p>Напишите программу, выводящую в консоль <code>It's alive! It's alive!</code></p>
+<div id="taskText" th:utext="${insertText}">
 
-    <p>Класс должен называться "Main", это ограничение проверяющей системы.</p>
-
-    <p><b>Sample Input:</b></p>
-
-    <p><b>Sample Output:</b></p>
-    <p>It's alive! It's alive!</p>
 </div>
 
 
@@ -35,8 +28,6 @@
 <script>
     var editor = ace.edit("editor");
 </script>
-
-<button type="button" class="btn btn-outline-danger" onclick="getTaskTextAndCodeDTO()">Помощь камунити</button>
 
 <!-- Дополнительный JavaScript; выберите один из двух! -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

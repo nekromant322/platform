@@ -20,8 +20,9 @@ public class HelpMeRestController {
     }
 
     @PostMapping("/helpMe")
-    void getHelpMeDTO(@RequestBody HelpMeTaskTextAndCodeDTO helpMeDTO) {
+    int getHelpMeDTO(@RequestBody HelpMeTaskTextAndCodeDTO helpMeDTO) {
         helpMeDTOCache.put(helpMeDTO.hashCode(), helpMeDTO);
         System.out.println("KEY: " + helpMeDTO.hashCode() + " " + helpMeDTOCache.getIfPresent(helpMeDTO.hashCode()));
+        return helpMeDTO.hashCode();
     }
 }
