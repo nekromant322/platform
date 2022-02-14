@@ -19,3 +19,23 @@ function sendCode(editor) {
         }
     });
 }
+
+function getTaskTextAndCodeDTO() {
+    let taskTextAndCodeDTO = {};
+    taskTextAndCodeDTO.taskText = document.getElementById("taskText").innerHTML;
+    taskTextAndCodeDTO.code = editor.getValue();
+    console.log(taskTextAndCodeDTO);
+    $.ajax({
+        method: "POST",
+        url: "/helpMe",
+        contentType: "application/json",
+        data: JSON.stringify(taskTextAndCodeDTO),
+        success: function() {
+            console.log("posted success");
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
+}

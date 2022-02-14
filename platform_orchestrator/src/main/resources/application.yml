@@ -10,6 +10,10 @@ spring:
   application:
     name: orchestrator
 
+#minutes
+cache:
+  timeout: 5
+
 sms:
   url:
     replenish-balance: https://sms.ru/pay.php
