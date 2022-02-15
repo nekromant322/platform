@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.*;
 
@@ -55,6 +56,10 @@ public class PlatformBot extends TelegramLongPollingCommandBot {
         message.disableWebPagePreview();
         message.setText(text);
         message.setChatId(chatId);
-        execute(message);
+        try {
+            execute(message);
+        } catch (TelegramApiException ignored) {
+
+        }
     }
 }

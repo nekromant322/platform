@@ -1,12 +1,13 @@
 package com.override.controller;
 
+import com.override.models.JoinRequest;
 import com.override.service.JoinRequestService;
+import dtos.JoinRequestStatusDTO;
 import dtos.RegisterStudentRequestDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/join/request")
@@ -16,7 +17,24 @@ public class JoinRequestController {
     private final JoinRequestService requestService;
 
     @PostMapping
-    public void saveJoinRequest(@RequestBody RegisterStudentRequestDTO requestDTO) {
-        requestService.saveRequest(requestDTO);
+    public JoinRequestStatusDTO saveJoinRequest(@RequestBody RegisterStudentRequestDTO requestDTO) {
+        return requestService.saveRequest(requestDTO);
+    }
+
+    @GetMapping
+    public List<JoinRequest> getAllJoinRequests() {
+        return requestService.getAllRequests();
+    }
+
+    @PostMapping
+    @RequestMapping("/accept")
+    public void acceptJoinRequest(@RequestBody Long id) {
+        requestService.responseForJoinRequest(true, id);
+    }
+
+    @PostMapping
+    @RequestMapping("/decline")
+    public void declineJoinRequest(@RequestBody Long id) {
+        requestService.responseForJoinRequest(false, id);
     }
 }

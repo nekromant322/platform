@@ -1,6 +1,7 @@
 package com.override.command;
 
 import com.override.services.RegisterService;
+import dtos.JoinRequestStatusDTO;
 import dtos.RegisterStudentRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,14 +26,14 @@ public class RegisterCommand extends PlatformBotCommand {
 
         SendMessage message = new SendMessage();
         message.setChatId(chat.getId().toString());
-        message.setText("Ваш запрос на регистрацию в платформе создан, ожидайте подтверждения");
 
         RegisterStudentRequestDTO requestDTO = RegisterStudentRequestDTO.builder()
                 .chatId(chat.getId().toString())
                 .name(user.getUserName())
                 .build();
 
-        registerService.registerRequest(requestDTO);
+        JoinRequestStatusDTO status = registerService.registerRequest(requestDTO);
+        message.setText(status.getMessage());
 
         execute(absSender, message, user);
     }
