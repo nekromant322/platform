@@ -34,13 +34,11 @@ public class PageController {
     }
 
     @GetMapping("/helpMe/{key}")
-    public String getHelpView(Model model, @PathVariable int key) {
-        HelpMeTaskTextAndCodeDTO helpMeDTO = helpMeCache.getIfPresent(key);
-        if (helpMeDTO == null) {
+    public String getHelpView(@PathVariable int key) {
+        if (helpMeCache.getIfPresent(key) == null) {
             return "emptyHelpMeView";
+        } else {
+            return "helpMeView";
         }
-        model.addAttribute("insertText", helpMeDTO.getTaskHTML());
-        model.addAttribute("editor.value", helpMeDTO.getCode());
-        return "helpMeView";
     }
 }

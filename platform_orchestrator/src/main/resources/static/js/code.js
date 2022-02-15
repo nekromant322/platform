@@ -31,10 +31,7 @@ function getTaskTextAndCodeDTO() {
         contentType: "application/json",
         data: JSON.stringify(taskTextAndCodeDTO),
         success: function (helpMeHashKey) {
-            console.log("posted success");
-            console.log(helpMeHashKey);
             copyTextToClipboard("localhost:8000/helpMe/" + helpMeHashKey);
-            console.log("Successgully copied link in clipboard to help-view")
         },
     });
 

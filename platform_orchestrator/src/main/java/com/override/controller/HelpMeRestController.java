@@ -4,10 +4,7 @@ package com.override.controller;
 import com.github.benmanes.caffeine.cache.Cache;
 import dtos.HelpMeTaskTextAndCodeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class HelpMeRestController {
@@ -24,5 +21,11 @@ public class HelpMeRestController {
         helpMeDTOCache.put(helpMeDTO.hashCode(), helpMeDTO);
         System.out.println("KEY: " + helpMeDTO.hashCode() + " " + helpMeDTOCache.getIfPresent(helpMeDTO.hashCode()));
         return helpMeDTO.hashCode();
+    }
+
+    @GetMapping("/helpMe/cache/{key}")
+    HelpMeTaskTextAndCodeDTO getHelpMeCachedDTO(@PathVariable int key) {
+        System.out.println("sended " + key);
+        return helpMeDTOCache.getIfPresent(key); // здесь может выскочить null, обработку null завещаю фронту. А может и все ок
     }
 }
