@@ -20,7 +20,7 @@ import java.util.concurrent.TimeoutException;
 
 public abstract class AbstractTaskTest {
 
-    private final double FILE_MAX_SIZE_IN_MB = 16;
+    private final double FILE_MAX_SIZE_IN_MB = 0;
     private final String PATH_TO_TEST_CLASS = "customClasses/Main.java";
 
     @Value("${task-test.defaultTimeout}")
@@ -30,7 +30,10 @@ public abstract class AbstractTaskTest {
 
     public TestResultDTO test(Class mainClass) {
         List<TestResultDTO> testResults = new ArrayList<>();
-        testResults.add(getSpaceTestResult());
+        TestResultDTO outOfSpaceTestResult = getSpaceTestResult();
+        if (outOfSpaceTestResult.getStatus() == Status.OUT_OF_SPACE) {
+            return outOfSpaceTestResult;
+        }
         for (Callable testCase : getTestCases(mainClass)) {
             Future<TestResultDTO> future = executorService.submit(testCase);
 
