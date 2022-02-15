@@ -10,9 +10,9 @@ spring:
   application:
     name: orchestrator
 
-#minutes
 cache:
-  timeout: 5
+  timeout: 5 #minutes
+  size: 100
 
 sms:
   url:

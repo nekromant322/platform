@@ -15,11 +15,14 @@ public class OrchestratorBeanConfig {
     @Value("${cache.timeout}")
     private long timeToExpireCache;
 
+    @Value("${cache.size}")
+    private long sizeOfCache;
+
     @Bean
     Cache<Integer, HelpMeTaskTextAndCodeDTO> getCacheBean() {
         Cache<Integer, HelpMeTaskTextAndCodeDTO> resultCache = Caffeine.newBuilder()
                 .expireAfterWrite(timeToExpireCache, TimeUnit.MINUTES)
-                .maximumSize(100)
+                .maximumSize(sizeOfCache)
                 .build();
         return resultCache;
     }

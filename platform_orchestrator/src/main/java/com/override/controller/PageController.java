@@ -39,7 +39,7 @@ public class PageController {
         if (helpMeDTO == null) {
             return "emptyHelpMeView";
         }
-        model.addAttribute("insertText", helpMeDTO.getTaskText());
+        model.addAttribute("insertText", helpMeDTO.getTaskHTML());
         model.addAttribute("editor.value", helpMeDTO.getCode());
         return "helpMeView";
     }
