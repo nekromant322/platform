@@ -15,6 +15,7 @@ function initPage() {
             } else {
                 document.getElementById("taskText").innerHTML = helpMeDTO.taskHTML;
                 editor.setValue(helpMeDTO.code);
+                document.getElementById("questionText").value = helpMeDTO.question;
             }
         }
     });

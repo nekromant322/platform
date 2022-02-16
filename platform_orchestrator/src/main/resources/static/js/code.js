@@ -1,3 +1,5 @@
+let taskTextAndCodeDTO = {};
+
 function sendCode(editor) {
     const url = window.location.href.split("/");
     let codeTry = {};
@@ -20,21 +22,27 @@ function sendCode(editor) {
     });
 }
 
-function getTaskTextAndCodeDTO() {
-    let taskTextAndCodeDTO = {};
+function initModal() {
     taskTextAndCodeDTO.taskHTML = document.getElementById("taskText").innerHTML;
     taskTextAndCodeDTO.code = editor.getValue();
     console.log(taskTextAndCodeDTO);
+}
+
+function postHelpMeDTO() {
+    taskTextAndCodeDTO.question = document.getElementById("message-text").value;
+    console.log(taskTextAndCodeDTO);
+    $("#questionModal").modal("hide");
     $.ajax({
         method: "POST",
         url: "/helpMe",
         contentType: "application/json",
+        async: false,
         data: JSON.stringify(taskTextAndCodeDTO),
         success: function (helpMeHashKey) {
+            console.log(helpMeHashKey)
             copyTextToClipboard("localhost:8000/helpMe/" + helpMeHashKey);
         },
     });
-
 }
 
 function copyTextToClipboard(text) {

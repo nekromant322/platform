@@ -2,7 +2,7 @@ package com.override.util;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import dtos.HelpMeTaskTextAndCodeDTO;
+import dtos.HelpMeDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +19,8 @@ public class OrchestratorBeanConfig {
     private long sizeOfCache;
 
     @Bean
-    Cache<Integer, HelpMeTaskTextAndCodeDTO> getCacheBean() {
-        Cache<Integer, HelpMeTaskTextAndCodeDTO> resultCache = Caffeine.newBuilder()
+    Cache<Integer, HelpMeDTO> getCacheBean() {
+        Cache<Integer, HelpMeDTO> resultCache = Caffeine.newBuilder()
                 .expireAfterWrite(timeToExpireCache, TimeUnit.MINUTES)
                 .maximumSize(sizeOfCache)
                 .build();
