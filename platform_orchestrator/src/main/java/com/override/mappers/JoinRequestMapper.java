@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 public class JoinRequestMapper {
 
     public JoinRequest dtoToEntity(RegisterStudentRequestDTO requestDTO) {
-        return new JoinRequest(null, requestDTO.getName(), requestDTO.getChatId());
+        return new JoinRequest(null, requestDTO.getTelegramUserName(), requestDTO.getChatId());
     }
 
     public RegisterStudentRequestDTO entityToDto(JoinRequest request) {
-        return RegisterStudentRequestDTO.builder().name(request.getNickName()).chatId(request.getChatId()).build();
+        return RegisterStudentRequestDTO.builder().telegramUserName(request.getNickName()).chatId(request.getChatId()).build();
     }
 }

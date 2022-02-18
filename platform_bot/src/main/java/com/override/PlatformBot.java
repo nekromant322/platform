@@ -2,6 +2,7 @@ package com.override;
 
 import com.override.command.PlatformBotCommand;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.*;
 
+@Slf4j
 @Component
 public class PlatformBot extends TelegramLongPollingCommandBot {
 
@@ -59,7 +61,7 @@ public class PlatformBot extends TelegramLongPollingCommandBot {
         try {
             execute(message);
         } catch (TelegramApiException ignored) {
-
+            log.error("fix long to int telegram-bot exception");
         }
     }
 }

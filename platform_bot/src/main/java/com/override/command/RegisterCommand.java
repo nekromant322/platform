@@ -29,7 +29,7 @@ public class RegisterCommand extends PlatformBotCommand {
 
         RegisterStudentRequestDTO requestDTO = RegisterStudentRequestDTO.builder()
                 .chatId(chat.getId().toString())
-                .name(user.getUserName())
+                .telegramUserName(user.getUserName())
                 .build();
 
         JoinRequestStatusDTO status = registerService.registerRequest(requestDTO);

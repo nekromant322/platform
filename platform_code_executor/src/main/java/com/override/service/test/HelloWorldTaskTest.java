@@ -9,13 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.concurrent.Callable;
-
-import static org.junit.Assert.assertTrue;
 
 @Component
 @Slf4j
@@ -36,27 +33,8 @@ public class HelloWorldTaskTest extends AbstractTaskTest {
     @Override
     protected Callable[] getTestCases(Class mainClass) {
         return new Callable[]{
-                () -> testCase1(mainClass),
-                () -> testCase2()
+                () -> testCase1(mainClass)
         };
-    }
-
-    private TestResultDTO testCase2() {
-        File file = new File("customClasses/Main.java");
-        try {
-            assertTrue("File too fat", 2 >= getFileSizeMegaBytes(file));
-        } catch (Exception e) {
-            log.error("Error executing testcase");
-            throw new ExecutingCodeException(e);
-        }
-        return TestResultDTO.builder().
-                status(Status.OK).
-                output("").
-                build();
-    }
-
-    private double getFileSizeMegaBytes(File file) {
-        return (double) file.length() / (1024 * 1024);
     }
 
     private TestResultDTO testCase1(Class mainClass) {
