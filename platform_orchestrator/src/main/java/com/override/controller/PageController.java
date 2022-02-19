@@ -16,4 +16,8 @@ public class PageController {
         return "courses";
     }
 
+    @GetMapping("/report")
+    public String reportPage() {
+        return "report";
+    }
 }
