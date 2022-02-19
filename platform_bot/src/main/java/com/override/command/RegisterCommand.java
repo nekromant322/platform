@@ -16,7 +16,6 @@ public class RegisterCommand extends PlatformBotCommand {
     @Autowired
     private RegisterService registerService;
 
-
     public RegisterCommand() {
         super("/register", "Отправить запрос на регистрацию");
     }

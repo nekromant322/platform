@@ -22,16 +22,12 @@ public class JoinRequestService {
         }
     }
 
-    public void sendMessage(String chatId, String text) {
-        platformBot.sendMessage(chatId, text);
-    }
-
     private void approvedResponse(StudentAccountDTO student) {
-        sendMessage(student.getTelegramChatId(), "login: " + student.getLogin() + "\n" + "password: " + student.getPassword());
+        platformBot.sendMessage(student.getTelegramChatId(), "login: " + student.getLogin() + "\n" + "password: " + student.getPassword());
     }
 
     private void declinedResponse(StudentAccountDTO student) {
-        sendMessage(student.getTelegramChatId(), "Ваш запрос не был одобрен, повторите попытку");
+        platformBot.sendMessage(student.getTelegramChatId(), "Ваш запрос не был одобрен, повторите попытку");
     }
 }
 
