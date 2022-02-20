@@ -16,7 +16,6 @@ public class PageController {
         this.helpMeCache = helpMeCache;
     }
 
-
     @GetMapping("/")
     public String indexPage() {
         return "index";
@@ -29,15 +28,15 @@ public class PageController {
 
     @GetMapping("/balancePage")
     public String balancePage() {
-        return "balance-check";
+        return "balanceCheck";
     }
 
     @GetMapping("/helpMe/{key}")
     public String getHelpView(@PathVariable int key) {
         if (helpMeCache.getIfPresent(key) == null) {
-            return "emptyHelpMeView";
+            return "emptyHelpMe";
         } else {
-            return "helpMeView";
+            return "helpMe";
         }
     }
 }
