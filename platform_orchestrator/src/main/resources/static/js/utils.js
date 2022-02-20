@@ -1,14 +1,14 @@
 const MILLIS_PER_DAY = 1000 * 60 * 60 * 24
 
-function checkAlert(itemId, alertId, errorMessage, extraCondition) {
+function checkAlert(itemId, alertId, errorMessage, extraErrorCondition) {
     let item = document.getElementById(itemId);
     try {
         document.getElementById(alertId).remove();
     } catch (e) {
     }
     item.classList.remove('invalid');
-    const hasExtraCondition = !!extraCondition;
-    if (item.value === undefined || item.value === "" || (hasExtraCondition && extraCondition)) {
+    const hasExtraCondition = !!extraErrorCondition;
+    if (item.value === undefined || item.value === "" || (hasExtraCondition && extraErrorCondition)) {
         let alert = document.createElement("p");
         alert.innerText = errorMessage ? errorMessage : "Пожалуйста заполните поле!";
         alert.className = "alert_logo";
