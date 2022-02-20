@@ -1,0 +1,106 @@
+.container {
+    display: grid;
+}
+
+.alert_logo {
+    background-color: #ff0000;
+    border: none;
+    color: #0d0d0d;
+    padding: 10px 3px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 5px 40%;
+    width: auto;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.input {
+    padding: 10px 3px;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    -webkit-border-radius: 5px 5px 5px 5px;
+
+    background-color: #f6f6f6;
+    border: none;
+    color: #0d0d0d;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 10px 30% 5px;
+    width: auto;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.button__request {
+    background-color: #000cf3;
+    border: none;
+    color: white;
+    padding: 15px 80px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 13px;
+
+    -webkit-box-shadow: 0 10px 30px 0 rgb(16, 45, 152);
+    box-shadow: 0 10px 30px 0 rgb(22, 42, 128);
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    margin: 40px auto 10px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.button__request:hover {
+    background-color: #0470f3;
+}
+
+.button__request:active {
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+}
+
+textarea {
+    resize: none;
+    text-align: start;
+    background-color: #f6f6f6;
+    color: #0d0d0d;
+    padding: 10px 3px;
+    height: 200px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    width: auto;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+textarea.start {
+    text-align: start!important;
+}
+
+textarea:focus {
+    background-color: #fff;
+    border-bottom: 4px solid #0049ff;
+}
+
+textarea::placeholder {
+    color: #cccccc;
+}

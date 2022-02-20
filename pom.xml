@@ -33,6 +33,7 @@
         <h2.version>1.4.199</h2.version>
         <lombok.version>1.18.12</lombok.version>
         <javafaker.version>1.0.2</javafaker.version>
+        <h2.version>1.4.199</h2.version>
     </properties>
 
     <dependencyManagement>

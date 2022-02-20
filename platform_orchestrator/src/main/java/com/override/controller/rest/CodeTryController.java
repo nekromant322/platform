@@ -1,4 +1,4 @@
-package com.override.controllers;
+package com.override.controller.rest;
 
 import com.override.feigns.CodeExecutorFeign;
 import dtos.CodeTryDTO;
