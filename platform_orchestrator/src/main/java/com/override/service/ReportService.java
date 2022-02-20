@@ -15,9 +15,9 @@ public class ReportService {
     private final StudentReportDAO reportDAO;
 
     public ResponseEntity saveReport(StudentReport report) {
-        if (true) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Уже есть репорт на эту дату");
+        if (false) {
+            return new ResponseEntity<>("Уже есть отчет на эту дату", HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("Запрос принят\n" + report.toString(), HttpStatus.OK);
+        return new ResponseEntity<>("Отчет принят\n" + report.toString(), HttpStatus.OK);
     }
 }
