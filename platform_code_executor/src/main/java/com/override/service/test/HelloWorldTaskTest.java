@@ -32,7 +32,7 @@ public class HelloWorldTaskTest extends AbstractTaskTest {
 
     @Override
     protected Callable[] getTestCases(Class mainClass) {
-        return new Callable[] {
+        return new Callable[]{
                 () -> testCase1(mainClass)
         };
     }
