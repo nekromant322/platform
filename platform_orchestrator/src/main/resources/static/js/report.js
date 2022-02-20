@@ -8,10 +8,10 @@ function sendReport() {
     const differenceDates = new Date().getTime() - new Date(report.date).getTime();
 
     const errorDateCondition = differenceDates > MILLIS_PER_DAY * REPORT_DAYS_OFFSET || differenceDates < 0;
-    const errorHoursCondition = report.hours < 0;
+    const errorHoursCondition = report.hours < 0 || report.hours > 23;
 
     const errorDateMessage = "Дата отчета должна быть не позднее 3ех дней от сегодня и не в будущем";
-    const errorHoursMessage = "Дата отчета должна быть не позднее 3ех дней от сегодня и не в будущем";
+    const errorHoursMessage = "Кол-во часов должно быть больше 0 и меньше 24";
 
     if (checkAlert("report-text", "report-text-alert")) {
         return;

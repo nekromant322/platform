@@ -16,7 +16,7 @@ public class ReportService {
 
     public ResponseEntity saveReport(StudentReport report) {
         if (true) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Уже есть такой репорт");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Уже есть репорт на эту дату");
         }
         return new ResponseEntity<>("Запрос принят\n" + report.toString(), HttpStatus.OK);
     }
