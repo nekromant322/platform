@@ -54,6 +54,21 @@
 <!--            <artifactId>spring-boot-starter-log4j2</artifactId>-->
 <!--        </dependency>-->
 
+        <!--  =====================  DB  =====================  -->
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.1.210</version>
+        </dependency>
+
+        <!--  =====================  JPA  =====================  -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
         <!--  =====================  Cloud  =====================  -->
 
         <dependency>
@@ -66,11 +81,27 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
+        <!--  ============ spring-boot-starter-test ============     -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <!--  =============== Caffeine ===========================      -->
+
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+
         <!--  =====================  Other  =====================  -->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -83,6 +114,7 @@
             <artifactId>platform-dto</artifactId>
             <version>0.0.1</version>
         </dependency>
+
 
     </dependencies>
 

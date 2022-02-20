@@ -11,21 +11,21 @@
     <title>Override платформа</title>
 </head>
 <header th:replace="fragments/common.html :: header"></header>
-</header>
 <body>
 
 
-<div>
+<div id="taskText">
     <p>Напишите программу, выводящую в консоль <code>It's alive! It's alive!</code></p>
 
     <p>Класс должен называться "Main", это ограничение проверяющей системы.</p>
 
+    <p><b>Sample Input:</b></p>
+
+    <p><b>Sample Output:</b></p>
+    <p>It's alive! It's alive!</p>
 </div>
 
-<p><b>Sample Input:</b></p>
 
-<p><b>Sample Output:</b></p>
-<p>It's alive! It's alive!</p>
 <button type="button" class="btn btn-dark" onclick="sendCode(editor)">Проверить</button>
 <div style="position: absolute;
     width: 500px;
@@ -35,6 +35,9 @@
 <script>
     var editor = ace.edit("editor");
 </script>
+
+<div th:replace="fragments/helpMeButton.html :: body"> </div>
+
 
 <!-- Дополнительный JavaScript; выберите один из двух! -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
