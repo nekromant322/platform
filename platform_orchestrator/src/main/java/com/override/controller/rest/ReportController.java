@@ -1,6 +1,6 @@
 package com.override.controller.rest;
 
-import com.override.model.StudentReport;
+import com.override.models.StudentReport;
 import com.override.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

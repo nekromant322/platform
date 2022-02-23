@@ -57,5 +57,8 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
 
-
-
+jwt:
+  secret:
+    path: keys/keystore.jks
+    password: password
+    alias: jwtsigning

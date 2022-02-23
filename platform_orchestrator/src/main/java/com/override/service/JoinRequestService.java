@@ -12,12 +12,14 @@ import dtos.ResponseJoinRequestDTO;
 import dtos.StudentAccountDTO;
 import enums.RequestStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class JoinRequestService {
 
     private final JoinRequestRepository requestRepository;
@@ -36,6 +38,7 @@ public class JoinRequestService {
             message = "Ваш запрос на регистрацию в платформе создан, ожидайте подтверждения";
             requestRepository.save(joinRequestMapper.dtoToEntity(request));
         }
+        log.info("Новый запрос от {} в чате № {}", request.getTelegramUserName(), request.getChatId());
         return new JoinRequestStatusDTO(message);
     }
 
@@ -48,11 +51,13 @@ public class JoinRequestService {
         StudentAccountDTO student;
         ResponseJoinRequestDTO responseDTO;
         if (approve) {
-            student = accountMapper.entityToDto(accountService.generateAccount(request));
+            student = accountMapper.entityToDto(accountService.generateAccount(request.getNickName(), request.getChatId()));
             responseDTO = ResponseJoinRequestDTO.builder().accountDTO(student).status(RequestStatus.APPROVED).build();
+            log.info("Запрос от {} в чате № {} разрешен", request.getNickName(), request.getChatId());
         } else {
             student = StudentAccountDTO.builder().telegramChatId(request.getChatId()).build();
             responseDTO = ResponseJoinRequestDTO.builder().status(RequestStatus.DECLINED).accountDTO(student).build();
+            log.info("Запрос от {} в чате № {} отклонен", request.getNickName(), request.getChatId());
         }
         requestRepository.delete(request);
         telegramBotFeign.responseForRequest(responseDTO);

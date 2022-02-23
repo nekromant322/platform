@@ -43,4 +43,9 @@ public class PageController {
     public String reportPage() {
         return "report";
     }
+
+    @GetMapping("/login")
+    public String authPage() {
+        return "login";
+    }
 }
