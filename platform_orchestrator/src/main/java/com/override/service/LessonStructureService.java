@@ -1,9 +1,9 @@
 package com.override.service;
 
-import org.json.JSONObject;
+import com.google.gson.JsonObject;
 
 import java.io.IOException;
 
 public interface LessonStructureService {
-    JSONObject scanLessonStructure(String courseName) throws IOException;
+    JsonObject scanLessonStructure(String courseName) throws IOException;
 }

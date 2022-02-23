@@ -68,13 +68,12 @@
             <version>3.0.5</version>
         </dependency>
 
-        <!--  =============== JSON ===========================      -->
+        <!--  =============== GSON ===========================      -->
 
         <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20211205</version>
-            <type>bundle</type>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.9.0</version>
         </dependency>
 
         <!--  =====================  Other  =====================  -->
