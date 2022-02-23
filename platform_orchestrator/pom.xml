@@ -68,6 +68,15 @@
             <version>3.0.5</version>
         </dependency>
 
+        <!--  =============== JSON ===========================      -->
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20211205</version>
+            <type>bundle</type>
+        </dependency>
+
         <!--  =====================  Other  =====================  -->
 
         <dependency>

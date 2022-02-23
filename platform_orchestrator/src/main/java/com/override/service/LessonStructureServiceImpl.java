@@ -1,8 +1,8 @@
 package com.override.service;
 
 import com.override.exception.LessonStructureException;
-import dtos.LessonStructureDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -19,8 +19,8 @@ import java.util.stream.Stream;
 public class LessonStructureServiceImpl implements LessonStructureService {
 
     @Override
-    public LessonStructureDTO scanLessonStructure(String courseName) {
-        LessonStructureDTO lessonStructureDTO = new LessonStructureDTO();
+    public JSONObject scanLessonStructure(String courseName) {
+        JSONObject resultJSON = new JSONObject();
         LinkedHashMap<String, LinkedHashMap<String, List<String>>> structureMap = new LinkedHashMap<>();
         LinkedHashMap<String, List<String>> stepLessonStructure = new LinkedHashMap<>();
         List<String> listOfChapters;
@@ -28,6 +28,12 @@ public class LessonStructureServiceImpl implements LessonStructureService {
         List<String> listOfLessons;
         String stringPathToCourse = "C:\\Users\\Schneider\\IdeaProjects\\platform\\platform_orchestrator\\src\\main\\resources\\templates\\lessons" + "\\" + courseName;
         listOfChapters = getDirectoryStructure(stringPathToCourse);
+        /*for (String chapter : listOfChapters) {
+            resultJSON.put(chapter, )
+        }*/
+
+
+            /*____________________________________________*/
         for (String chapter : listOfChapters) {
             listOfSteps = getDirectoryStructure(stringPathToCourse +
                     "\\" + chapter);
@@ -37,10 +43,10 @@ public class LessonStructureServiceImpl implements LessonStructureService {
                         "\\" + step);
                 stepLessonStructure.put(step, listOfLessons);
             }
-            structureMap.put(chapter, stepLessonStructure);
+            resultJSON.put(chapter, stepLessonStructure);
         }
-        lessonStructureDTO.setStructureMap(structureMap);
-        return lessonStructureDTO; //почему возвращается без уроков? в консоли уроки выводятся
+        System.out.println(resultJSON.toString());
+        return resultJSON;
     }
 
     private List<String> getDirectoryStructure(String stringPathToDirectory) {
