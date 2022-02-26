@@ -9,9 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,21 +43,6 @@ public class LessonStructureServiceImpl implements LessonStructureService {
             }
             resultJSON.add(chapter, stepLessonStructure);
         }
-
-
-            /*____________________________________________*/
-//        for (String chapter : listOfChapters) {
-//            listOfSteps = getDirectoryStructure(stringPathToCourse +
-//                    "\\" + chapter);
-//            for (String step : listOfSteps) {
-//                listOfLessons = getDirectoryStructure(stringPathToCourse +
-//                        "\\" + chapter +
-//                        "\\" + step);
-//                stepLessonStructure.put(step, listOfLessons);
-//            }
-//            resultJSON.put(chapter, stepLessonStructure);
-//        }
-        System.out.println(resultJSON.toString());
         return resultJSON;
     }
 
