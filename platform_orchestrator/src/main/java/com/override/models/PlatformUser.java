@@ -12,8 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "account_credential_t")
-public class StudentAccount {
+public class PlatformUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

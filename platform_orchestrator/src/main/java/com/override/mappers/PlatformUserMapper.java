@@ -1,14 +1,14 @@
 package com.override.mappers;
 
-import com.override.models.StudentAccount;
-import dtos.StudentAccountDTO;
+import com.override.models.PlatformUser;
+import dtos.PlatformUserDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StudentAccountMapper {
+public class PlatformUserMapper {
 
-    public StudentAccountDTO entityToDto(StudentAccount account) {
-        return StudentAccountDTO.builder()
+    public PlatformUserDTO entityToDto(PlatformUser account) {
+        return PlatformUserDTO.builder()
                 .login(account.getLogin())
                 .password(account.getPassword())
                 .telegramChatId(account.getTelegramChatId())

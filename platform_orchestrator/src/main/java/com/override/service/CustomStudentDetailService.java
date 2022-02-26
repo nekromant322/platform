@@ -1,7 +1,7 @@
 package com.override.service;
 
-import com.override.models.StudentAccount;
-import com.override.repositories.StudentAccountRepository;
+import com.override.models.PlatformUser;
+import com.override.repositories.PlatformUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CustomStudentDetailService implements UserDetailsService {
 
-    private final StudentAccountRepository studentAccountRepository;
+    private final PlatformUserRepository studentAccountRepository;
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
@@ -34,7 +34,7 @@ public class CustomStudentDetailService implements UserDetailsService {
         private final String password;
         private final List<GrantedAuthority> authorities;
 
-        public CustomStudentDetails(StudentAccount student) {
+        public CustomStudentDetails(PlatformUser student) {
             this.login = student.getLogin();
             this.password = student.getPassword();
             this.authorities = student.getAuthorities()

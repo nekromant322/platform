@@ -3,13 +3,13 @@ package com.override.service;
 
 import com.override.feigns.TelegramBotFeign;
 import com.override.mappers.JoinRequestMapper;
-import com.override.mappers.StudentAccountMapper;
+import com.override.mappers.PlatformUserMapper;
 import com.override.models.JoinRequest;
 import com.override.repositories.JoinRequestRepository;
 import dtos.JoinRequestStatusDTO;
-import dtos.RegisterStudentRequestDTO;
+import dtos.RegisterUserRequestDTO;
 import dtos.ResponseJoinRequestDTO;
-import dtos.StudentAccountDTO;
+import dtos.PlatformUserDTO;
 import enums.RequestStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +25,10 @@ public class JoinRequestService {
     private final JoinRequestRepository requestRepository;
     private final TelegramBotFeign telegramBotFeign;
     private final JoinRequestMapper joinRequestMapper;
-    private final StudentAccountService accountService;
-    private final StudentAccountMapper accountMapper;
+    private final PlatformUserService accountService;
+    private final PlatformUserMapper accountMapper;
 
-    public JoinRequestStatusDTO saveRequest(RegisterStudentRequestDTO request) {
+    public JoinRequestStatusDTO saveRequest(RegisterUserRequestDTO request) {
         String message;
         if (requestRepository.findFirstByChatId(request.getChatId()) != null) {
             message = "В этом чате уже есть запрос на регистрацию";
@@ -48,14 +48,14 @@ public class JoinRequestService {
 
     public void responseForJoinRequest(boolean approve, Long id) {
         JoinRequest request = requestRepository.findById(id).get();
-        StudentAccountDTO student;
+        PlatformUserDTO student;
         ResponseJoinRequestDTO responseDTO;
         if (approve) {
             student = accountMapper.entityToDto(accountService.generateAccount(request.getNickName(), request.getChatId()));
             responseDTO = ResponseJoinRequestDTO.builder().accountDTO(student).status(RequestStatus.APPROVED).build();
             log.info("Запрос от {} в чате № {} разрешен", request.getNickName(), request.getChatId());
         } else {
-            student = StudentAccountDTO.builder().telegramChatId(request.getChatId()).build();
+            student = PlatformUserDTO.builder().telegramChatId(request.getChatId()).build();
             responseDTO = ResponseJoinRequestDTO.builder().status(RequestStatus.DECLINED).accountDTO(student).build();
             log.info("Запрос от {} в чате № {} отклонен", request.getNickName(), request.getChatId());
         }

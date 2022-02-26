@@ -2,7 +2,7 @@ package com.override.services;
 
 import com.override.PlatformBot;
 import dtos.ResponseJoinRequestDTO;
-import dtos.StudentAccountDTO;
+import dtos.PlatformUserDTO;
 import enums.RequestStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,11 +22,11 @@ public class JoinRequestService {
         }
     }
 
-    private void approvedResponse(StudentAccountDTO student) {
+    private void approvedResponse(PlatformUserDTO student) {
         platformBot.sendMessage(student.getTelegramChatId(), "login: " + student.getLogin() + "\n" + "password: " + student.getPassword());
     }
 
-    private void declinedResponse(StudentAccountDTO student) {
+    private void declinedResponse(PlatformUserDTO student) {
         platformBot.sendMessage(student.getTelegramChatId(), "Ваш запрос не был одобрен, повторите попытку");
     }
 }

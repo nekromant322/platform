@@ -2,7 +2,7 @@ package com.override.service;
 
 import com.override.configs.security.JwtProvider;
 import com.override.exception.AuthException;
-import com.override.models.StudentAccount;
+import com.override.models.PlatformUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class AuthService {
 
     private final JwtProvider jwtProvider;
-    private final StudentAccountService userService;
+    private final PlatformUserService userService;
     private final CustomStudentDetailService studentDetailService;
     private final PasswordEncoder passwordEncoder;
 
@@ -41,7 +41,7 @@ public class AuthService {
         throw new AuthException("Данные пользователя неверны");
     }
 
-    public StudentAccount registerAdmin(String login, String password) {
+    public PlatformUser registerAdmin(String login, String password) {
         return userService.saveAdmin(login, password);
     }
 }
