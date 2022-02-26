@@ -21,8 +21,8 @@ public class LessonController {
     }
 
     @GetMapping("{course}/{chapter}/{step}/{lesson}")
-    public String lessonPage(@PathVariable String course, @PathVariable Integer chapter, @PathVariable Integer step,
-                             @PathVariable Integer lesson) {
+    public String lessonPage(@PathVariable String course, @PathVariable String chapter, @PathVariable String step,
+                             @PathVariable String lesson) {
         return "lessons" + "/" + course + "/" + chapter + "/" + step + "/" + lesson;
     }
 
