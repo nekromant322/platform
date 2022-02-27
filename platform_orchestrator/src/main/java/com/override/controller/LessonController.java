@@ -1,14 +1,10 @@
 package com.override.controller;
 
 import com.override.service.LessonStructureService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-
-@Slf4j
 @Controller
 @RequestMapping("/lessons")
 public class LessonController {
@@ -29,13 +25,6 @@ public class LessonController {
     @ResponseBody
     @GetMapping(value = "/structureOf/{course}", produces = "application/json")
     public String getLessonStructure(@PathVariable String course) {
-        try {
-            return lessonStructureService.getLessonStructure(course).toString();
-        } catch (IOException e) {
-            // почему здесь нужен try-catch? все IOException ловятся уже в lessonStructureService.getDirectoryStructure()
-
-            return "{ error: \"true\" }";
-        }
+        return lessonStructureService.getLessonStructure(course).toString();
     }
-
 }

@@ -1,8 +1,11 @@
-/*TODO как в javascript сделать сюда инжект названия курса? Вообще идей нет, как считывать название выбранного  курса */
-window.onload = init("core");
+window.onload = init(findCourseName());
+
+function findCourseName() {
+    let locationString = window.location.href;
+    return locationString.split('/')[4];
+}
 
 function init(courseName) {
-    console.log("Hello world");
     let structure = {};
     $.ajax({
         method: "GET",
@@ -10,7 +13,6 @@ function init(courseName) {
         async: false,
         dataType: "json",
         success: function(data) {
-            console.log(data);
             structure = data;
         },
         error: function (error) {
@@ -20,18 +22,6 @@ function init(courseName) {
     });
     document.getElementById("sideBarBody").innerHTML = " ";
     document.getElementById("sideBarBody").innerHTML = gatherText(structure, courseName);
-}
-
-function showStructure(structureOfCourse) {
-    for (let chapterKey in structureOfCourse) {
-        console.log(chapterKey);
-        for (let stepKey in structureOfCourse[chapterKey]) {
-            console.log('\t' + stepKey);
-            for (let lessonKey in (structureOfCourse[chapterKey])[stepKey]) {
-                console.log('\t\t' + ((structureOfCourse[chapterKey])[stepKey])[lessonKey]);
-            }
-        }
-    }
 }
 
 function gatherText(structureOfCourse, courseName) {
