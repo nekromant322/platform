@@ -30,6 +30,10 @@ public class PlatformUserService {
         return accountRepository.findFirstByTelegramChatId(chatId);
     }
 
+    public PlatformUser save(PlatformUser platformUser) {
+        return accountRepository.save(platformUser);
+    }
+
     public PlatformUser generateAccount(String login, String chatId) {
         String password = passwordGeneratorService.generateStrongPassword();
         List<Authority> roles = getAuthorityListFromRoles(Role.USER);

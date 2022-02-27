@@ -68,14 +68,6 @@
 <!--            <artifactId>spring-boot-starter-log4j2</artifactId>-->
 <!--        </dependency>-->
 
-        <!--  =====================  DB  =====================  -->
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>2.1.210</version>
-        </dependency>
-
         <!--  =====================  JPA  =====================  -->
 
         <dependency>
@@ -95,7 +87,7 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
-        <!--  ============ spring-boot-starter-test ============     -->
+        <!--  ============ Test ============     -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
