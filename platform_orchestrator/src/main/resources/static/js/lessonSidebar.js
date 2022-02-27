@@ -2,6 +2,7 @@ window.onload = init(findCourseName());
 
 function findCourseName() {
     let locationString = window.location.href;
+    console.log(locationString.split('/')[4]);
     return locationString.split('/')[4];
 }
 
