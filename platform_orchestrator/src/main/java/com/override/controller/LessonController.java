@@ -30,10 +30,10 @@ public class LessonController {
     @GetMapping(value = "/structureOf/{course}", produces = "application/json")
     public String getLessonStructure(@PathVariable String course) {
         try {
-            return lessonStructureService.scanLessonStructure(course).toString();
+            return lessonStructureService.getLessonStructure(course).toString();
         } catch (IOException e) {
             // почему здесь нужен try-catch? все IOException ловятся уже в lessonStructureService.getDirectoryStructure()
-            log.error("Can't send LessonStructureDTO: ", e);
+
             return "{ error: \"true\" }";
         }
     }

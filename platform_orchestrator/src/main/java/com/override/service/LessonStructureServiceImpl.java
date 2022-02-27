@@ -5,17 +5,39 @@ import com.google.gson.JsonObject;
 import com.override.exception.LessonStructureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
 @Slf4j
 @Component
 public class LessonStructureServiceImpl implements LessonStructureService {
+
+    HashMap<String, JsonObject> courseLessonStrucutre;
+
+    @Override
+    public JsonObject getLessonStructure(String courseName) {
+        return courseLessonStrucutre.get(courseName);
+    }
+
+    @Override
+    @PostConstruct
+    public void refreshLessonStructure() {
+        String stringPathToCourses = "C:\\Users\\Schneider\\IdeaProjects\\platform\\platform_orchestrator\\src\\main\\resources\\templates\\lessons\\";
+        List<String> listOfCourses = getDirectoryStructure(stringPathToCourses);
+        courseLessonStrucutre = new HashMap<>();
+        for (String courseName : listOfCourses) {
+            courseLessonStrucutre.put(courseName, scanLessonStructure(courseName));
+        }
+    }
 
     @Override
     public JsonObject scanLessonStructure(String courseName) {
