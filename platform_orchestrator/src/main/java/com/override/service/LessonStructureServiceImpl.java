@@ -31,7 +31,7 @@ public class LessonStructureServiceImpl implements LessonStructureService {
     @Override
     @PostConstruct
     public void refreshLessonStructure() {
-        String stringPathToCourses = "C:\\Users\\Schneider\\IdeaProjects\\platform\\platform_orchestrator\\src\\main\\resources\\templates\\lessons\\";
+        String stringPathToCourses = "platform_orchestrator/src/main/resources/templates/lessons"; /*C:\Users\Schneider\IdeaProjects\platform\platform_orchestrator\src\main\resources\templates\lessons\*/
         List<String> listOfCourses = getDirectoryStructure(stringPathToCourses);
         courseLessonStrucutre = new HashMap<>();
         for (String courseName : listOfCourses) {
@@ -41,7 +41,7 @@ public class LessonStructureServiceImpl implements LessonStructureService {
 
     @Override
     public JsonObject scanLessonStructure(String courseName) {
-        String stringPathToCourse = "C:\\Users\\Schneider\\IdeaProjects\\platform\\platform_orchestrator\\src\\main\\resources\\templates\\lessons" + "\\" + courseName;
+        String stringPathToCourse = "platform_orchestrator/src/main/resources/templates/lessons/" + courseName;
         JsonObject resultJSON = new JsonObject();
         JsonArray lessonsJsonArray;
         JsonObject stepLessonStructure;
