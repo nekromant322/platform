@@ -8,6 +8,4 @@ import java.io.IOException;
 public interface LessonStructureService {
     JsonObject scanLessonStructure(String courseName) ;
     JsonObject getLessonStructure(String courseName) throws IOException;
-    @PostConstruct
-    void refreshLessonStructure();
 }

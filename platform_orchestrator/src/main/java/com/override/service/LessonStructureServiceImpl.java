@@ -28,9 +28,8 @@ public class LessonStructureServiceImpl implements LessonStructureService {
         return courseLessonStrucutre.get(courseName);
     }
 
-    @Override
     @PostConstruct
-    public void refreshLessonStructure() {
+    private void postConstruct() {
         String stringPathToCourses = "platform_orchestrator/src/main/resources/templates/lessons"; /*C:\Users\Schneider\IdeaProjects\platform\platform_orchestrator\src\main\resources\templates\lessons\*/
         List<String> listOfCourses = getDirectoryStructure(stringPathToCourses);
         courseLessonStrucutre = new HashMap<>();
