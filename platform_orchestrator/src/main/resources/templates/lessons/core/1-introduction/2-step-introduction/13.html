@@ -13,30 +13,40 @@
 <header th:replace="fragments/common.html :: header"></header>
 <body>
 
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+        <div class="col-1">
+            <div th:replace="fragments/lessonSidebar.html"/>
+        </div>
+        <div class="col-11">
+            <div id="taskText">
+                <p>Напишите программу, выводящую в консоль <code>It's alive! It's alive!</code></p>
 
-<div id="taskText">
-    <p>Напишите программу, выводящую в консоль <code>It's alive! It's alive!</code></p>
+                <p>Класс должен называться "Main", это ограничение проверяющей системы.</p>
 
-    <p>Класс должен называться "Main", это ограничение проверяющей системы.</p>
+                <p><b>Sample Input:</b></p>
 
-    <p><b>Sample Input:</b></p>
-
-    <p><b>Sample Output:</b></p>
-    <p>It's alive! It's alive!</p>
-</div>
+                <p><b>Sample Output:</b></p>
+                <p>It's alive! It's alive!</p>
+            </div>
 
 
-<button type="button" class="btn btn-dark" onclick="sendCode(editor)">Проверить</button>
-<div style="position: absolute;
+            <button type="button" class="btn btn-dark" onclick="sendCode(editor)">Проверить</button>
+            <div style="position: absolute;
     width: 500px;
     height: 400px;" id="editor">some text</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/ace.js" type="text/javascript" charset="utf-8"></script>
-<script>
-    var editor = ace.edit("editor");
-</script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/ace.js" type="text/javascript" charset="utf-8"></script>
+            <script>
+                var editor = ace.edit("editor");
+            </script>
 
-<div th:replace="fragments/helpMeButton.html :: body"> </div>
+            <div th:replace="fragments/helpMeButton.html :: body"> </div>
+
+        </div>
+    </div>
+</div>
+
 
 
 <!-- Дополнительный JavaScript; выберите один из двух! -->
