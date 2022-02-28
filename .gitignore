@@ -32,3 +32,5 @@ target/
 logs/**
 logs
 build/
+
+customClasses/**
