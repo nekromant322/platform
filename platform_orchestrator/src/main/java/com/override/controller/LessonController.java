@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LessonController {
 
     @Autowired
-    LessonStructureService lessonStructureService;
+    private LessonStructureService lessonStructureService;
 
     @GetMapping("{course}/{chapter}/{step}/{lesson}")
     public String lessonPage(@PathVariable String course, @PathVariable String chapter, @PathVariable String step,
