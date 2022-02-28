@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
 import javax.annotation.PostConstruct;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,7 +28,7 @@ public class LessonStructureService {
 
     @PostConstruct
     private void postConstruct() {
-        String stringPathToCourses = "platform_orchestrator/src/main/resources/templates/lessons"; /*C:\Users\Schneider\IdeaProjects\platform\platform_orchestrator\src\main\resources\templates\lessons\*/
+        String stringPathToCourses = "platform_orchestrator/src/main/resources/templates/lessons";
         List<String> listOfCourses = getDirectoryStructure(stringPathToCourses);
         courseLessonStrucutre = new HashMap<>();
         for (String courseName : listOfCourses) {
