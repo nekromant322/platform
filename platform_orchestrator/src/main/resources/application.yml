@@ -3,12 +3,40 @@ server:
   address: localhost
 
 spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    password: root
+    username: root
+    url: jdbc:h2:mem:testdb
+    datasource:
+      driver-class-name: org.h2.Driver
+    jpa:
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.H2Dialect
+          show_sql: false
+          format_sql: true
+          use_sql_comments: true
+      hibernate:
+        ddl-auto: create
+      generate-ddl: true
   cloud:
     loadbalancer:
       ribbon:
         enable: false
   application:
     name: orchestrator
+
+cache:
+  timeout: 5 #minutes
+  size: 100
+
+sms:
+  url:
+    replenish-balance: https://sms.ru/pay.php
+
 
 logging:
   file:
@@ -28,4 +56,6 @@ eureka:
     enabled: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
+
+
 
