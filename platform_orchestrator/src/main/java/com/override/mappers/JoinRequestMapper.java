@@ -2,6 +2,7 @@ package com.override.mappers;
 
 import com.override.models.JoinRequest;
 import dtos.RegisterStudentRequestDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

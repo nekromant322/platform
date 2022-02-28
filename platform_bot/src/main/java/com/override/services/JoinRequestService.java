@@ -8,10 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class JoinRequestService {
 
-    private final PlatformBot platformBot;
+    @Autowired
+    private PlatformBot platformBot;
 
     public void processJoinRequestResponse(ResponseJoinRequestDTO responseDTO) {
         if (responseDTO.getStatus() == RequestStatus.APPROVED) {

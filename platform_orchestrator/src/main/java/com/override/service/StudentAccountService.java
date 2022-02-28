@@ -4,14 +4,17 @@ import com.override.models.JoinRequest;
 import com.override.models.StudentAccount;
 import com.override.repositories.StudentAccountRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class StudentAccountService {
 
-    private final StudentAccountRepository accountRepository;
-    private final PasswordGeneratorService passwordGeneratorService;
+    @Autowired
+    private StudentAccountRepository accountRepository;
+
+    @Autowired
+    private PasswordGeneratorService passwordGeneratorService;
 
     public StudentAccount generateAccount(JoinRequest requestInfo) {
         String login = requestInfo.getNickName();

@@ -12,19 +12,28 @@ import dtos.ResponseJoinRequestDTO;
 import dtos.StudentAccountDTO;
 import enums.RequestStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class JoinRequestService {
 
-    private final JoinRequestRepository requestRepository;
-    private final TelegramBotFeign telegramBotFeign;
-    private final JoinRequestMapper joinRequestMapper;
-    private final StudentAccountService accountService;
-    private final StudentAccountMapper accountMapper;
+    @Autowired
+    private JoinRequestRepository requestRepository;
+
+    @Autowired
+    private TelegramBotFeign telegramBotFeign;
+
+    @Autowired
+    private JoinRequestMapper joinRequestMapper;
+
+    @Autowired
+    private StudentAccountService accountService;
+
+    @Autowired
+    private StudentAccountMapper accountMapper;
 
     public JoinRequestStatusDTO saveRequest(RegisterStudentRequestDTO request) {
         String message;
