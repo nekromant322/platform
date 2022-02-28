@@ -3,7 +3,6 @@ package com.override.service;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -15,19 +14,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
-@Slf4j
 @Component
 public class LessonStructureService {
 
-    HashMap<String, JsonObject> courseLessonStrucutre;
+    private HashMap<String, JsonObject> courseLessonStrucutre;
 
     public JsonObject getLessonStructure(String courseName) {
         return courseLessonStrucutre.get(courseName);
     }
 
     @PostConstruct
-    private void postConstruct() {
+    private void refillCourseLessonStructure() {
         String stringPathToCourses = "platform_orchestrator/src/main/resources/templates/lessons";
         List<String> listOfCourses = getDirectoryStructure(stringPathToCourses);
         courseLessonStrucutre = new HashMap<>();
