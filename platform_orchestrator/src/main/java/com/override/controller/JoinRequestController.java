@@ -3,7 +3,7 @@ package com.override.controller;
 import com.override.models.JoinRequest;
 import com.override.service.JoinRequestService;
 import dtos.JoinRequestStatusDTO;
-import dtos.RegisterStudentRequestDTO;
+import dtos.RegisterUserRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class JoinRequestController {
     private JoinRequestService requestService;
 
     @PostMapping
-    public JoinRequestStatusDTO saveJoinRequest(@RequestBody RegisterStudentRequestDTO requestDTO) {
+    public JoinRequestStatusDTO saveJoinRequest(@RequestBody RegisterUserRequestDTO requestDTO) {
         return requestService.saveRequest(requestDTO);
     }
 

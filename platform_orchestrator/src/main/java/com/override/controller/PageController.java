@@ -23,11 +23,6 @@ public class PageController {
         return "courses";
     }
 
-    @GetMapping("/balancePage")
-    public String balancePage() {
-        return "balanceCheck";
-    }
-
     @GetMapping("/helpMe/{key}")
     public String getHelpView(@PathVariable int key) {
         if (helpMeCache.getIfPresent(key) == null) {
@@ -35,5 +30,14 @@ public class PageController {
         } else {
             return "helpMe";
         }
+    }
+    @GetMapping("/report")
+    public String reportPage() {
+        return "report";
+    }
+
+    @GetMapping("/login")
+    public String authPage() {
+        return "login";
     }
 }

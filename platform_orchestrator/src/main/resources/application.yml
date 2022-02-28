@@ -57,5 +57,10 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
 
-
-
+jwt:
+  primeAdminLogin: admin
+  primeAdminPassword: admin
+  secret:
+    path: keys/keystore.jks
+    password: password
+    alias: jwtsigning

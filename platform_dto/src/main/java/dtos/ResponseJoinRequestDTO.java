@@ -8,5 +8,5 @@ import lombok.Data;
 @Builder
 public class ResponseJoinRequestDTO {
     private RequestStatus status;
-    private StudentAccountDTO accountDTO;
+    private PlatformUserDTO accountDTO;
 }
