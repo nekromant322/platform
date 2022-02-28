@@ -15,7 +15,7 @@ public class AdminController {
 
     private final PlatformUserService userService;
 
-    @PostMapping("/update-student/{id}")
+    @PostMapping("/promote-student/{id}")
     public ResponseEntity<String> updateToAdmin(@PathVariable Long id) {
         return userService.updateToAdmin(id);
     }

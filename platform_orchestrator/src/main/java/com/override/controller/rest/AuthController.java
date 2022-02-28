@@ -13,12 +13,6 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/admin-register")
-    public String registerUser(@RequestBody AuthRequest request) {
-        authService.registerAdmin(request.getLogin(), request.getPassword());
-        return authService.login(request.getLogin(), request.getPassword());
-    }
-
     @PostMapping("/login")
     public String auth(@RequestBody AuthRequest request) {
         return authService.login(request.getLogin(), request.getPassword());

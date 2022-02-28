@@ -6,6 +6,7 @@ import com.override.models.enums.Role;
 import com.override.service.AuthorityService;
 import com.override.service.PlatformUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,12 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class InitializationService implements CommandLineRunner {
+
+    @Value("${jwt.primeAdminLogin}")
+    private String adminLogin;
+
+    @Value("${jwt.primeAdminLogin}")
+    private String adminPassword;
 
     private static final int COUNT_USER_FOR_INIT = 5;
 
@@ -49,7 +56,7 @@ public class InitializationService implements CommandLineRunner {
     }
 
     private void AdminInit() {
-        userService.saveAdmin("admin", "admin");
+        userService.saveAdmin(adminLogin, adminPassword);
     }
 
     private List<Authority> getAuthorityListFromRoles(Role... roles) {
