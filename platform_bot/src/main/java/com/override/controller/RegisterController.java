@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/register")
-@RequiredArgsConstructor
 public class RegisterController {
 
-    private final JoinRequestService requestService;
+    @Autowired
+    private JoinRequestService requestService;
 
     @PostMapping
     public void responseForRequest(@RequestBody ResponseJoinRequestDTO responseDTO) {

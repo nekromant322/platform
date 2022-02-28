@@ -9,12 +9,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/calls")
 public class CodeCallController {
 
-    private final CodeCallService codeCallService;
-
     @Autowired
-    public CodeCallController(CodeCallService codeCallService) {
-        this.codeCallService = codeCallService;
-    }
+    private CodeCallService codeCallService;
+
 
     @GetMapping("/code")
     public CodeCallSecurityCodeDTO callToClient(@RequestBody String clientPhoneNumber) {

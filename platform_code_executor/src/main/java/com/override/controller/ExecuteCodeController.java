@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequiredArgsConstructor
 public class ExecuteCodeController {
 
-    private final ExecuteCodeService executeCodeService;
+    @Autowired
+    private ExecuteCodeService executeCodeService;
 
     @PostMapping("/execute")
     public TestResultDTO execute(@RequestBody CodeTryDTO codeTryDTO) {
