@@ -26,8 +26,7 @@ Git Branching:
 
 3) Открываем вкладку Cookies и нажимаем на кнопку Add cookie
    
-![alt](https://i.ibb.co/WsZGvmy/img-2.png) ![alt](https://i.ibb.co/09ms0yd/img-3.png
-)
+![alt](https://i.ibb.co/WsZGvmy/img-2.png) ![alt](https://i.ibb.co/09ms0yd/img-3.png)
 
 4) Вместо Cookie_N=value ставим token=*наш токен*; *эту часть оставляем*
     
