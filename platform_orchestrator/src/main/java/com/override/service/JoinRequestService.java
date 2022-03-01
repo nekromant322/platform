@@ -1,32 +1,39 @@
 package com.override.service;
 
-
 import com.override.feigns.TelegramBotFeign;
 import com.override.mappers.JoinRequestMapper;
 import com.override.mappers.PlatformUserMapper;
 import com.override.models.JoinRequest;
 import com.override.repositories.JoinRequestRepository;
 import dtos.JoinRequestStatusDTO;
+import dtos.PlatformUserDTO;
 import dtos.RegisterUserRequestDTO;
 import dtos.ResponseJoinRequestDTO;
-import dtos.PlatformUserDTO;
 import enums.RequestStatus;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class JoinRequestService {
 
-    private final JoinRequestRepository requestRepository;
-    private final TelegramBotFeign telegramBotFeign;
-    private final JoinRequestMapper joinRequestMapper;
-    private final PlatformUserService accountService;
-    private final PlatformUserMapper accountMapper;
+    @Autowired
+    private JoinRequestRepository requestRepository;
+
+    @Autowired
+    private TelegramBotFeign telegramBotFeign;
+
+    @Autowired
+    private JoinRequestMapper joinRequestMapper;
+
+    @Autowired
+    private PlatformUserService accountService;
+
+    @Autowired
+    private PlatformUserMapper accountMapper;
 
     public JoinRequestStatusDTO saveRequest(RegisterUserRequestDTO request) {
         String message;

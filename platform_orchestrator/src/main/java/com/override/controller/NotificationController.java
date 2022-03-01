@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/notification")
 public class NotificationController {
-    NotificatorFeign notificatorFeign;
 
     @Autowired
-    public NotificationController(NotificatorFeign notificatorFeign) {
-        this.notificatorFeign = notificatorFeign;
-    }
+    NotificatorFeign notificatorFeign;
 
     @Value("${sms.url.replenish-balance}")
     private String urlToReplenishBalance;

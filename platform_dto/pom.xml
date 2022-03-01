@@ -21,7 +21,15 @@
             <version>1.18.22</version>
         </dependency>
 
-        <!--  ============ spring-boot-starter-test ============     -->
+        <!--  =====================  Validation  =====================  -->
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+
+        <!--  ============ Test ============     -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

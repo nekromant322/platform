@@ -7,10 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class RegisterService {
 
-    private final OrchestratorFeign orchestratorFeign;
+    @Autowired
+    private OrchestratorFeign orchestratorFeign;
 
     public JoinRequestStatusDTO registerRequest(RegisterUserRequestDTO requestDTO) {
         return orchestratorFeign.saveJoinRequest(requestDTO);

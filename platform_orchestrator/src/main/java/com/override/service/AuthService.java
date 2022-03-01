@@ -40,8 +40,4 @@ public class AuthService {
 
         throw new AuthException("Данные пользователя неверны");
     }
-
-    public PlatformUser registerAdmin(String login, String password) {
-        return userService.saveAdmin(login, password);
-    }
 }

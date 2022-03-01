@@ -9,12 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class PageController {
-    private final Cache<Integer, HelpMeDTO> helpMeCache;
 
     @Autowired
-    public PageController(Cache<Integer, HelpMeDTO> helpMeCache) {
-        this.helpMeCache = helpMeCache;
-    }
+    private Cache<Integer, HelpMeDTO> helpMeCache;
 
     @GetMapping("/")
     public String indexPage() {
