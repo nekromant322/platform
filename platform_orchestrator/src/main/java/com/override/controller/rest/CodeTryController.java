@@ -2,6 +2,8 @@ package com.override.controller.rest;
 
 import com.override.feigns.CodeExecutorFeign;
 import dtos.CodeTryDTO;
+import dtos.TestResultDTO;
+import enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,10 @@ public class CodeTryController {
         if (result.hasErrors()) {
             return new ResponseEntity<>("Введенный код некорректен (не прошел по длине)", HttpStatus.BAD_REQUEST);
         }
-        codeExecutorFeign.execute(codeTryDTO);
-        return new ResponseEntity<>("Все хорошо", HttpStatus.OK);
+        TestResultDTO testResult = codeExecutorFeign.execute(codeTryDTO);
+        if (testResult.getStatus() == Status.OK) {
+            return new ResponseEntity<>("Все тесты пройдены", HttpStatus.OK);
+        }
+        return new ResponseEntity<>(testResult.getOutput(), HttpStatus.BAD_REQUEST);
     }
 }
