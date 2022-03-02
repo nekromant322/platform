@@ -33,8 +33,8 @@ function gatherText(structureOfCourse, courseName) {
         text += ` <a href="#${chapterKey}Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">${chapterKey}</a> \n`;
         text += ` <ul class="collapse list-unstyled" id="${chapterKey}Submenu"> \n`;
         for (let stepKey in structureOfCourse[chapterKey]) {
-            text += `<li> <a href="#${stepKey}Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">${stepKey}</a> </li>`;
-            text += ` <ul class="collapse list-unstyled" id="${stepKey}Submenu"> \n`;
+            text += `<li> <a href="#${chapterKey}-${stepKey}Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">${stepKey}</a> </li>`;
+            text += ` <ul class="collapse list-unstyled" id="${chapterKey}-${stepKey}Submenu"> \n`;
             for (let lessonKey in stepKey) {
                 text += '<li>';
                 if (((structureOfCourse[chapterKey])[stepKey])[lessonKey] !== undefined) {
