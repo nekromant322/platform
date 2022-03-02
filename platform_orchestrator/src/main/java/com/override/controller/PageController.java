@@ -9,12 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class PageController {
-    private final Cache<Integer, HelpMeDTO> helpMeCache;
 
     @Autowired
-    public PageController(Cache<Integer, HelpMeDTO> helpMeCache) {
-        this.helpMeCache = helpMeCache;
-    }
+    private Cache<Integer, HelpMeDTO> helpMeCache;
 
     @GetMapping("/")
     public String indexPage() {
@@ -24,11 +21,6 @@ public class PageController {
     @GetMapping("/courses")
     public String coursesPage() {
         return "courses";
-    }
-
-    @GetMapping("/balancePage")
-    public String balancePage() {
-        return "balanceCheck";
     }
 
     @GetMapping("/helpMe/{key}")
@@ -43,5 +35,10 @@ public class PageController {
     @GetMapping("/report")
     public String reportPage() {
         return "report";
+    }
+
+    @GetMapping("/login")
+    public String authPage() {
+        return "login";
     }
 }

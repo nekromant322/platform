@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class StudentAccountDTO {
+public class PlatformUserDTO {
     private String login;
     private String password;
     private String telegramChatId;

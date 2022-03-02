@@ -2,7 +2,7 @@ package com.override.command;
 
 import com.override.services.RegisterService;
 import dtos.JoinRequestStatusDTO;
-import dtos.RegisterStudentRequestDTO;
+import dtos.RegisterUserRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -26,7 +26,7 @@ public class RegisterCommand extends PlatformBotCommand {
         SendMessage message = new SendMessage();
         message.setChatId(chat.getId().toString());
 
-        RegisterStudentRequestDTO requestDTO = RegisterStudentRequestDTO.builder()
+        RegisterUserRequestDTO requestDTO = RegisterUserRequestDTO.builder()
                 .chatId(chat.getId().toString())
                 .telegramUserName(user.getUserName())
                 .build();

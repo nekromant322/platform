@@ -15,6 +15,20 @@
     <description>Orchestration for platform application</description>
 
     <dependencies>
+
+        <!--  =====================  Security  =====================  -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
         <!--  =====================  DB  =====================  -->
 
         <dependency>
@@ -54,14 +68,6 @@
 <!--            <artifactId>spring-boot-starter-log4j2</artifactId>-->
 <!--        </dependency>-->
 
-        <!--  =====================  DB  =====================  -->
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>2.1.210</version>
-        </dependency>
-
         <!--  =====================  JPA  =====================  -->
 
         <dependency>
@@ -81,7 +87,7 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
-        <!--  ============ spring-boot-starter-test ============     -->
+        <!--  ============ Test ============     -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -94,6 +100,14 @@
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
             <version>3.0.5</version>
+        </dependency>
+
+        <!--  =============== GSON ===========================      -->
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.9.0</version>
         </dependency>
 
         <!--  =====================  Other  =====================  -->
@@ -135,6 +149,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

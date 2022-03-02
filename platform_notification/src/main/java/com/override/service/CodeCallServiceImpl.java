@@ -12,12 +12,8 @@ public class CodeCallServiceImpl implements CodeCallService {
     @Value("${sms.api.id}")
     private String apiID;
 
-    private final SmsRuFeign smsRuFeign;
-
     @Autowired
-    public CodeCallServiceImpl(SmsRuFeign smsRuFeign) {
-        this.smsRuFeign = smsRuFeign;
-    }
+    private SmsRuFeign smsRuFeign;
 
     @Override
     public String verifyNumber(String clientPhoneNumber) {

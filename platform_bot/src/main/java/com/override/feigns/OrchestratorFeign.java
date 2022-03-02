@@ -1,7 +1,7 @@
 package com.override.feigns;
 
 import dtos.JoinRequestStatusDTO;
-import dtos.RegisterStudentRequestDTO;
+import dtos.RegisterUserRequestDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface OrchestratorFeign {
 
     @PostMapping("/join/request")
-    JoinRequestStatusDTO saveJoinRequest(@RequestBody RegisterStudentRequestDTO requestDTO);
+    JoinRequestStatusDTO saveJoinRequest(@RequestBody RegisterUserRequestDTO requestDTO);
 }

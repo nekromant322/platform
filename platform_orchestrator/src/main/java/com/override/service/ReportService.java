@@ -1,7 +1,7 @@
 package com.override.service;
 
-import com.override.model.StudentReport;
-import com.override.repository.StudentReportDAO;
+import com.override.models.StudentReport;
+import com.override.repositories.StudentReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class ReportService {
 
-    private final StudentReportDAO reportDAO;
+    private final StudentReportRepository reportDAO;
 
     public ResponseEntity saveReport(StudentReport report) {
         if (false) {
