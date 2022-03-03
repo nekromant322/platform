@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("codeTry")
-public class CodeTryController {
+public class CodeTryRestController {
 
     @Autowired
     private CodeExecutorFeign codeExecutorFeign;
