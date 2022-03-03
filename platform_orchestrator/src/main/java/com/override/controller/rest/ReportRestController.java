@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/report")
 @RequiredArgsConstructor
-public class ReportController {
+public class ReportRestController {
 
     private final ReportService reportService;
 
