@@ -17,4 +17,9 @@ public class AdminPageController {
     public String allStudentsPage() {
         return "allStudents";
     }
+
+    @GetMapping("/joinRequests")
+    public String joinRequestsPage() {
+        return "joinRequests";
+    }
 }

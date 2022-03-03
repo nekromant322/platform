@@ -3,6 +3,7 @@ package com.override.configs;
 import com.override.configs.security.JwtProvider;
 import com.override.service.CustomStudentDetailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,11 +20,12 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @Component
-@RequiredArgsConstructor
 public class JwtFilter extends GenericFilterBean {
 
-    private final JwtProvider jwtProvider;
-    private final CustomStudentDetailService studentDetailService;
+    @Autowired
+    private JwtProvider jwtProvider;
+    @Autowired
+    private CustomStudentDetailService studentDetailService;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

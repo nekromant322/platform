@@ -5,40 +5,33 @@ import com.override.service.JoinRequestService;
 import dtos.JoinRequestStatusDTO;
 import dtos.RegisterUserRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
-@RequestMapping("/join/request")
 public class JoinRequestRestController {
 
     @Autowired
     private JoinRequestService requestService;
 
-    @PostMapping
+    @PostMapping("/join/request")
     public JoinRequestStatusDTO saveJoinRequest(@RequestBody RegisterUserRequestDTO requestDTO) {
         return requestService.saveRequest(requestDTO);
     }
 
-    @GetMapping
+    @GetMapping("/admin/join/request")
     public List<JoinRequest> getAllJoinRequests() {
         return requestService.getAllRequests();
     }
 
-    @PostMapping
-    @RequestMapping("/accept")
-    public void acceptJoinRequest(@RequestBody Long id) {
+    @PostMapping("/admin/join/request/accept/{id}")
+    public void acceptJoinRequest(@PathVariable Long id) {
         requestService.responseForJoinRequest(true, id);
     }
 
-    @PostMapping
-    @RequestMapping("/decline")
-    public void declineJoinRequest(@RequestBody Long id) {
+    @PostMapping("/admin/join/request/decline/{id}")
+    public void declineJoinRequest(@PathVariable Long id) {
         requestService.responseForJoinRequest(false, id);
     }
 }
