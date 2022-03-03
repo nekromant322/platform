@@ -1,4 +1,4 @@
-package com.override.controller;
+package com.override.controller.rest;
 
 import com.override.models.JoinRequest;
 import com.override.service.JoinRequestService;
@@ -11,29 +11,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/join/request")
 public class JoinRequestController {
 
     @Autowired
     private JoinRequestService requestService;
 
-    @PostMapping
+    @PostMapping("/join/request")
     public JoinRequestStatusDTO saveJoinRequest(@RequestBody RegisterUserRequestDTO requestDTO) {
         return requestService.saveRequest(requestDTO);
     }
 
-    @GetMapping
+    @GetMapping("/admin/join/request")
     public List<JoinRequest> getAllJoinRequests() {
         return requestService.getAllRequests();
     }
 
-    @PostMapping("/accept")
-    public void acceptJoinRequest(@RequestParam Long id) {
+    @PostMapping("/admin/join/request/accept/{id}")
+    public void acceptJoinRequest(@PathVariable Long id) {
         requestService.responseForJoinRequest(true, id);
     }
 
-    @PostMapping("/decline")
-    public void declineJoinRequest(@RequestParam Long id) {
+    @PostMapping("/admin/join/request/decline/{id}")
+    public void declineJoinRequest(@PathVariable Long id) {
         requestService.responseForJoinRequest(false, id);
     }
 }

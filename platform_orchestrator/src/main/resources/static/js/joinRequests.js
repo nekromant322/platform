@@ -2,7 +2,7 @@ window.onload = getAllRequests();
 
 function getAllRequests() {
     $.ajax({
-        url: '/join/request',
+        url: '/admin/join/request',
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
@@ -53,7 +53,7 @@ function addColumn(data) {
 
 function acceptRequest(id) {
     $.ajax({
-        url: '/join/request/accept?id=' + id,
+        url: '/admin/join/request/accept/' + id,
         type: 'POST',
         contentType: 'application/json',
         success: function () {
@@ -67,7 +67,7 @@ function acceptRequest(id) {
 
 function declineRequest(id) {
     $.ajax({
-        url: '/join/request/decline?id=' + id,
+        url: '/admin/join/request/decline/' + id,
         type: 'POST',
         contentType: 'application/json',
         success: function () {

@@ -18,8 +18,8 @@ public class AdminPageController {
         return "allStudents";
     }
 
-    @GetMapping("/join/requests")
+    @GetMapping("/joinRequests")
     public String joinRequestsPage() {
-        return "requests";
+        return "joinRequests";
     }
 }
