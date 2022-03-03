@@ -28,7 +28,7 @@ function addColumn(data) {
     let td;
 
     insertTd(data.id, tr);
-    insertTd(data.login, tr);
+    insertTd(data.nickName, tr);
 
     let updateBtn = document.createElement("button");
     updateBtn.className = "btn btn-success";
@@ -39,16 +39,38 @@ function addColumn(data) {
     });
     td = tr.insertCell(2);
     td.insertAdjacentElement("beforeend", updateBtn);
+
+    let declineBtn = document.createElement("button");
+    declineBtn.className = "btn btn-danger";
+    declineBtn.innerHTML = "Decline";
+    declineBtn.type = "submit";
+    declineBtn.addEventListener("click", () => {
+        declineRequest(data.id);
+    });
+    td = tr.insertCell(3);
+    td.insertAdjacentElement("beforeend", declineBtn);
 }
 
 function acceptRequest(id) {
-    let data = {};
-    data.id = id;
     $.ajax({
-        url: '/join/request/accept/' + id,
+        url: '/join/request/accept?id=' + id,
         type: 'POST',
         contentType: 'application/json',
-        success: function (response) {
+        success: function () {
+            getAllRequests();
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    })
+}
+
+function declineRequest(id) {
+    $.ajax({
+        url: '/join/request/decline?id=' + id,
+        type: 'POST',
+        contentType: 'application/json',
+        success: function () {
             getAllRequests();
         },
         error: function (error) {

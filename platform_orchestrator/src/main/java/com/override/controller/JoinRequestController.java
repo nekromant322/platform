@@ -27,15 +27,13 @@ public class JoinRequestController {
         return requestService.getAllRequests();
     }
 
-    @PostMapping
-    @RequestMapping("/accept")
-    public void acceptJoinRequest(@RequestBody Long id) {
+    @PostMapping("/accept")
+    public void acceptJoinRequest(@RequestParam Long id) {
         requestService.responseForJoinRequest(true, id);
     }
 
-    @PostMapping
-    @RequestMapping("/decline")
-    public void declineJoinRequest(@RequestBody Long id) {
+    @PostMapping("/decline")
+    public void declineJoinRequest(@RequestParam Long id) {
         requestService.responseForJoinRequest(false, id);
     }
 }
