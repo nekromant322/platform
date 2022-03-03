@@ -4,14 +4,13 @@ import com.override.models.JoinRequest;
 import com.override.service.JoinRequestService;
 import dtos.JoinRequestStatusDTO;
 import dtos.RegisterUserRequestDTO;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
-public class JoinRequestController {
+public class JoinRequestRestController {
 
     @Autowired
     private JoinRequestService requestService;
