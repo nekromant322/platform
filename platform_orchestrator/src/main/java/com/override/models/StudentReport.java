@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
@@ -20,7 +17,9 @@ public class StudentReport {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String studentLogin;
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private PlatformUser student;
     private LocalDate date;
     private String text;
     private Double hours;

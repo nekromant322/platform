@@ -1,5 +1,6 @@
 package com.override.service;
 
+import com.override.models.PlatformUser;
 import com.override.models.StudentReport;
 import com.override.repositories.StudentReportRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +15,15 @@ public class ReportService {
 
     @Autowired
     private StudentReportRepository reportRepository;
+    @Autowired
+    private PlatformUserService userService;
 
     public ResponseEntity<String> saveReport(StudentReport report, String studentLogin) {
         if (reportRepository.findFirstByDateAndStudentLogin(report.getDate(), studentLogin) != null) {
             return new ResponseEntity<>("Уже есть отчет на эту дату", HttpStatus.CONFLICT);
         }
-        report.setStudentLogin(studentLogin);
+        PlatformUser student = userService.getUserByLogin(studentLogin);
+        report.setStudent(student);
         reportRepository.save(report);
         return new ResponseEntity<>("Отчет принят\n" + report.toString(), HttpStatus.OK);
     }
