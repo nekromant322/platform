@@ -15,7 +15,7 @@ import static com.override.service.CustomStudentDetailService.CustomStudentDetai
 @RestController
 @RequestMapping("/report")
 @RequiredArgsConstructor
-public class ReportController {
+public class ReportRestController {
 
     private final ReportService reportService;
 

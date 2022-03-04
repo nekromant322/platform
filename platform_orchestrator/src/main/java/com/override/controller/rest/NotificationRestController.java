@@ -1,4 +1,4 @@
-package com.override.controller;
+package com.override.controller.rest;
 
 import com.override.feigns.NotificatorFeign;
 import dtos.BalanceResponseFromNotificationControllerDTO;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/notification")
-public class NotificationController {
+public class NotificationRestController {
 
     @Autowired
     NotificatorFeign notificatorFeign;

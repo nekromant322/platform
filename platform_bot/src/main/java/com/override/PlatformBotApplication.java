@@ -13,5 +13,4 @@ public class PlatformBotApplication {
     public static void main(String[] args) {
         SpringApplication.run(PlatformBotApplication.class, args);
     }
-
 }
