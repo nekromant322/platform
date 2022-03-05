@@ -2,7 +2,6 @@ package com.override.configs;
 
 import com.override.configs.security.JwtProvider;
 import com.override.service.CustomStudentDetailService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
