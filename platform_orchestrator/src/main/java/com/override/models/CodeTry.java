@@ -4,17 +4,14 @@ import enums.CodeExecutionStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
-@Table(name = "student-code")
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class CodeTry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,12 +30,13 @@ public class CodeTry {
     private Integer lesson;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private CodeExecutionStatus codeExecutionStatus;
 
     @Column
     private LocalDateTime date = LocalDateTime.now();
 
-    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.EAGER)
     private PlatformUser user;
 }
