@@ -7,6 +7,7 @@ import com.override.models.enums.Role;
 import com.override.repositories.PlatformUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,9 +22,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlatformUserService {
 
+    @Autowired
     private final PlatformUserRepository accountRepository;
+    @Autowired
     private final PasswordGeneratorService passwordGeneratorService;
+    @Autowired
     private final PasswordEncoder passwordEncoder;
+    @Autowired
     private final AuthorityService authorityService;
 
     public PlatformUser getAccountByChatId(String chatId) {
@@ -97,5 +102,9 @@ public class PlatformUserService {
         Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
 
         return accountRepository.findByAuthoritiesNotContaining(adminAuthority);
+    }
+
+    public PlatformUser findPlatformUserByLogin(String login) {
+        return accountRepository.findFirstByLogin(login);
     }
 }

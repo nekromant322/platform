@@ -1,6 +1,6 @@
 package com.override.models;
 
-import dtos.TaskIdentifierDTO;
+import enums.CodeExecutionStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -15,22 +15,28 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class StudentCode {
+public class CodeTry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
 
     @Column
-    private String code;
+    private String studentsCode;
 
     @Column
-    private boolean isCodeCorrect;
+    private Integer chapter;
 
     @Column
-    private TaskIdentifierDTO identifierDTO;
+    private Integer step;
 
     @Column
-    private LocalDateTime date;
+    private Integer lesson;
+
+    @Column
+    private CodeExecutionStatus codeExecutionStatus;
+
+    @Column
+    private LocalDateTime date = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
