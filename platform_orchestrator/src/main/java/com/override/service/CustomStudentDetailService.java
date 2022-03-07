@@ -28,7 +28,7 @@ public class CustomStudentDetailService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь с логином " + login + " не найден!"));
     }
 
-    private static class CustomStudentDetails implements UserDetails {
+    public static class CustomStudentDetails implements UserDetails {
 
         private final String login;
         private final String password;
