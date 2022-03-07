@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Component
 public class CodeTryMapper {
 
-    public CodeTry dtoToEntity(CodeTryDTO codeTryDTO, TestResultDTO testResultDTO
-            , PlatformUser user) {
+    public CodeTry dtoToEntity(CodeTryDTO codeTryDTO, TestResultDTO testResultDTO,
+                               PlatformUser user) {
         return new CodeTry(null,
                 codeTryDTO.getStudentsCode(),
                 codeTryDTO.getTaskIdentifier().getChapter(),
@@ -22,6 +22,5 @@ public class CodeTryMapper {
                 LocalDateTime.now(),
                 user
         );
-
     }
 }

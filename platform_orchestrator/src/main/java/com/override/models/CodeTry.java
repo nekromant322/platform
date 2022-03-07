@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class CodeTry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column
     private String studentsCode;

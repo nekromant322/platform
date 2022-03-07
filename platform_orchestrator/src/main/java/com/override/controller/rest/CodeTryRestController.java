@@ -1,7 +1,7 @@
 package com.override.controller.rest;
 
 import com.override.feigns.CodeExecutorFeign;
-import com.override.service.StudentCodeService;
+import com.override.service.CodeTryService;
 import dtos.CodeTryDTO;
 import dtos.TestResultDTO;
 import enums.CodeExecutionStatus;
@@ -23,7 +23,7 @@ import static com.override.service.CustomStudentDetailService.CustomStudentDetai
 public class CodeTryRestController {
 
     @Autowired
-    StudentCodeService studentCodeService;
+    private CodeTryService studentCodeService;
     @Autowired
     private CodeExecutorFeign codeExecutorFeign;
 
