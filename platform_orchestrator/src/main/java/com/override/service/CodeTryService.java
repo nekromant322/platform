@@ -28,14 +28,6 @@ public class CodeTryService {
         return codeTryRepository.findAllByUserLogin(login);
     }
 
-    public List<CodeTry> findAllByChapter(String login, Integer chapter) {
-        return codeTryRepository.findByUserLoginAndChapter(login, chapter);
-    }
-
-    public List<CodeTry> findAllByStep(String login, Integer chapter, Integer step) {
-        return codeTryRepository.findByUserLoginAndChapterAndStep(login, chapter, step);
-    }
-
     public List<CodeTry> findAllByLesson(String login, Integer chapter, Integer step, Integer lesson) {
         return codeTryRepository.findByUserLoginAndChapterAndStepAndLesson(login, chapter, step, lesson);
     }

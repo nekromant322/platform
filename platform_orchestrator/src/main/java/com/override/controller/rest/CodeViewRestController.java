@@ -22,19 +22,6 @@ public class CodeViewRestController {
         return codeTryService.findAllCodes(user.getUsername());
     }
 
-    @GetMapping("/chapter")
-    public List<CodeTry> studentCodesChapter(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
-                                             @RequestBody TaskIdentifierDTO taskIdentifierDTO) {
-        return codeTryService.findAllByChapter(user.getUsername(), taskIdentifierDTO.getChapter());
-    }
-
-    @GetMapping("/step")
-    public List<CodeTry> studentCodeStep(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
-                                         @RequestBody TaskIdentifierDTO taskIdentifierDTO) {
-        return codeTryService.findAllByStep(user.getUsername(), taskIdentifierDTO.getChapter(),
-                taskIdentifierDTO.getStep());
-    }
-
     @GetMapping("/lesson")
     public List<CodeTry> studentCodesLesson(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
                                             @RequestBody TaskIdentifierDTO taskIdentifierDTO) {
