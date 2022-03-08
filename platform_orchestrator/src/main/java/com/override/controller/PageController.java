@@ -31,6 +31,7 @@ public class PageController {
             return "helpMe";
         }
     }
+
     @GetMapping("/report")
     public String reportPage() {
         return "report";
