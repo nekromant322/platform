@@ -23,13 +23,13 @@ import java.util.List;
 public class PlatformUserService {
 
     @Autowired
-    private final PlatformUserRepository accountRepository;
+    private PlatformUserRepository accountRepository;
     @Autowired
-    private final PasswordGeneratorService passwordGeneratorService;
+    private PasswordGeneratorService passwordGeneratorService;
     @Autowired
-    private final PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
     @Autowired
-    private final AuthorityService authorityService;
+    private AuthorityService authorityService;
 
     public PlatformUser getAccountByChatId(String chatId) {
         return accountRepository.findFirstByTelegramChatId(chatId);
