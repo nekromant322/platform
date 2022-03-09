@@ -6,6 +6,7 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,8 +25,13 @@ public class LessonStructureService {
     }
 
     @PostConstruct
-    private void refillCourseLessonStructure() {
-        String stringPathToCourses = "platform_orchestrator/src/main/resources/templates/lessons";
+    public void refillCourseLessonStructure() {
+        String stringPathToCourses = "platform_orchestrator" + File.separator +
+                                        "src" + File.separator +
+                                        "main" + File.separator +
+                                        "resources" + File.separator +
+                                        "templates" + File.separator +
+                                        "lessons";
         List<String> listOfCourses = getDirectoryStructure(stringPathToCourses);
         courseLessonStrucutre = new HashMap<>();
         for (String courseName : listOfCourses) {
@@ -34,7 +40,13 @@ public class LessonStructureService {
     }
 
     private JsonObject scanLessonStructure(String courseName) {
-        String stringPathToCourse = "platform_orchestrator/src/main/resources/templates/lessons/" + courseName;
+        String stringPathToCourse = "platform_orchestrator" + File.separator +
+                                    "src" + File.separator +
+                                    "main" + File.separator +
+                                    "resources" + File.separator +
+                                    "templates" + File.separator +
+                                    "lessons" + File.separator +
+                                    courseName;
         JsonObject resultJSON = new JsonObject();
         JsonArray lessonsJsonArray;
         JsonObject stepLessonStructure;
@@ -44,12 +56,12 @@ public class LessonStructureService {
         listOfChapters = getDirectoryStructure(stringPathToCourse);
         for (String chapter : listOfChapters) {
             listOfSteps = getDirectoryStructure(stringPathToCourse +
-                    "\\" + chapter);
+                    File.separator + chapter);
             stepLessonStructure = new JsonObject();
             for (String step : listOfSteps) {
                 listOfLessons = getDirectoryStructure(stringPathToCourse +
-                        "\\" + chapter +
-                        "\\" + step);
+                        File.separator + chapter +
+                        File.separator + step);
                 lessonsJsonArray = new JsonArray(listOfLessons.size());
                 for (String lesson : listOfLessons) {
                     lessonsJsonArray.add(lesson);
