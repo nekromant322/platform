@@ -2,9 +2,8 @@ package com.override.service;
 
 import com.override.configs.security.JwtProvider;
 import com.override.exception.AuthException;
-import com.override.models.PlatformUser;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,14 +13,15 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class AuthService {
 
-    private final JwtProvider jwtProvider;
-    private final PlatformUserService userService;
-    private final CustomStudentDetailService studentDetailService;
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtProvider jwtProvider;
+    @Autowired
+    private CustomStudentDetailService studentDetailService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public String login(String login, String password) {
         UserDetails userDetails;

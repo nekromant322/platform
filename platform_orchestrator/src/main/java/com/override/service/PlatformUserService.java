@@ -5,7 +5,6 @@ import com.override.models.Authority;
 import com.override.models.PlatformUser;
 import com.override.models.enums.Role;
 import com.override.repositories.PlatformUserRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,6 @@ import java.util.List;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class PlatformUserService {
 
     @Autowired
@@ -36,7 +34,7 @@ public class PlatformUserService {
     }
 
     public PlatformUser save(PlatformUser platformUser) {
-        return accountRepository.save(platformUser);
+        return register(platformUser);
     }
 
     public PlatformUser generateAccount(String login, String chatId) {
@@ -58,7 +56,7 @@ public class PlatformUserService {
         return account;
     }
 
-    private void register(PlatformUser studentAccount) {
+    private PlatformUser register(PlatformUser studentAccount) {
         String login = studentAccount.getLogin();
 
         PlatformUser account = new PlatformUser(null,
@@ -69,8 +67,9 @@ public class PlatformUserService {
         );
 
         if (accountRepository.findFirstByLogin(login) == null) {
-            accountRepository.save(account);
+            PlatformUser user = accountRepository.save(account);
             log.info("Пользователь с логином {} был успешно создан", login);
+            return user;
         } else {
             throw new UserAlreadyExistException("Пользователь с логином " + login + " уже зарегистрирован");
         }

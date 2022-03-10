@@ -3,14 +3,12 @@ package com.override.service;
 import com.override.models.PlatformUser;
 import com.override.models.StudentReport;
 import com.override.repositories.StudentReportRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class ReportService {
 
     @Autowired
