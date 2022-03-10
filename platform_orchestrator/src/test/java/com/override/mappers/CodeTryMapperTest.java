@@ -7,7 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.override.utils.CodeTryTestUtils.*;
+import static com.override.utils.TestFieldsUtil.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CodeTryMapperTest {

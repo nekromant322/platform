@@ -11,7 +11,7 @@ import enums.CodeExecutionStatus;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
-public class CodeTryTestUtils {
+public class TestFieldsUtil {
     public static String generateTestCode(){
         return "public class MyClass {public static void main(String[] args){ System.out.println(\"This is my Code\");}}";
     }

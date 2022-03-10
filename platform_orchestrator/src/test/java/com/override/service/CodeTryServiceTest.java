@@ -19,7 +19,7 @@ import java.util.List;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static com.override.utils.CodeTryTestUtils.*;
+import static com.override.utils.TestFieldsUtil.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CodeTryServiceTest {
