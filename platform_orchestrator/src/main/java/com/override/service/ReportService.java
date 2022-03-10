@@ -22,7 +22,7 @@ public class ReportService {
         if (reportRepository.findFirstByDateAndStudentLogin(report.getDate(), studentLogin) != null) {
             return new ResponseEntity<>("Уже есть отчет на эту дату", HttpStatus.CONFLICT);
         }
-        PlatformUser student = userService.getUserByLogin(studentLogin);
+        PlatformUser student = userService.findPlatformUserByLogin(studentLogin);
         report.setStudent(student);
         reportRepository.save(report);
         return new ResponseEntity<>("Отчет принят\n" + report.toString(), HttpStatus.OK);
