@@ -1,8 +1,10 @@
 package com.override.controller.rest;
 
 import com.override.feigns.CodeExecutorFeign;
+import com.override.models.CodeTry;
 import com.override.service.CodeTryService;
 import dtos.CodeTryDTO;
+import dtos.TaskIdentifierDTO;
 import dtos.TestResultDTO;
 import enums.CodeExecutionStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,12 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+
 import static com.override.service.CustomStudentDetailService.CustomStudentDetails;
 
 @RestController
@@ -26,6 +27,8 @@ public class CodeTryRestController {
     private CodeTryService studentCodeService;
     @Autowired
     private CodeExecutorFeign codeExecutorFeign;
+    @Autowired
+    private CodeTryService codeTryService;
 
     @PostMapping
     public ResponseEntity<String> getCodeTryResult(@RequestBody @Valid CodeTryDTO codeTryDTO, BindingResult result,
@@ -39,5 +42,18 @@ public class CodeTryRestController {
             return new ResponseEntity<>("Все тесты пройдены", HttpStatus.OK);
         }
         return new ResponseEntity<>(testResult.getOutput(), HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/all")
+    public List<CodeTry> studentCodes(@AuthenticationPrincipal CustomStudentDetails user) {
+        return codeTryService.findAllCodes(user.getUsername());
+    }
+
+    @GetMapping("/lesson")
+    public List<CodeTry> studentCodesLesson(@AuthenticationPrincipal CustomStudentDetails user,
+                                            @RequestBody TaskIdentifierDTO taskIdentifierDTO) {
+        return codeTryService.findAllByLesson(user.getUsername(), taskIdentifierDTO.getChapter(),
+                taskIdentifierDTO.getStep(),
+                taskIdentifierDTO.getLesson());
     }
 }
