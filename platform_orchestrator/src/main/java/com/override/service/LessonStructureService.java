@@ -18,10 +18,10 @@ import java.util.stream.Stream;
 @Component
 public class LessonStructureService {
 
-    private HashMap<String, JsonObject> courseLessonStrucutre;
+    private HashMap<String, JsonObject> courseLessonStructure;
 
     public JsonObject getLessonStructure(String courseName) {
-        return courseLessonStrucutre.get(courseName);
+        return courseLessonStructure.get(courseName);
     }
 
     @PostConstruct
@@ -33,9 +33,9 @@ public class LessonStructureService {
                                         "templates" + File.separator +
                                         "lessons";
         List<String> listOfCourses = getDirectoryStructure(stringPathToCourses);
-        courseLessonStrucutre = new HashMap<>();
+        courseLessonStructure = new HashMap<>();
         for (String courseName : listOfCourses) {
-            courseLessonStrucutre.put(courseName, scanLessonStructure(courseName));
+            courseLessonStructure.put(courseName, scanLessonStructure(courseName));
         }
     }
 

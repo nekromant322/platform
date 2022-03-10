@@ -3,14 +3,14 @@ package com.override.service;
 import com.override.models.Authority;
 import com.override.models.enums.Role;
 import com.override.repositories.AuthorityRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class AuthorityService {
 
-    private final AuthorityRepository authorityRepository;
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
     public Authority getAuthorityByRole(Role role) {
         return authorityRepository.findByAuthority(role.getName()).get();

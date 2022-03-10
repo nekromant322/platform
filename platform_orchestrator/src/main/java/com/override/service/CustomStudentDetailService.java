@@ -2,7 +2,7 @@ package com.override.service;
 
 import com.override.models.PlatformUser;
 import com.override.repositories.PlatformUserRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,10 +16,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class CustomStudentDetailService implements UserDetailsService {
 
-    private final PlatformUserRepository studentAccountRepository;
+    @Autowired
+    private PlatformUserRepository studentAccountRepository;
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
