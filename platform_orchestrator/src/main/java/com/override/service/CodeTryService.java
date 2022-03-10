@@ -4,6 +4,7 @@ import com.override.mappers.CodeTryMapper;
 import com.override.models.CodeTry;
 import com.override.repositories.CodeTryRepository;
 import dtos.CodeTryDTO;
+import dtos.TaskIdentifierDTO;
 import dtos.TestResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,10 @@ public class CodeTryService {
         return codeTryRepository.findAllByUserLogin(login);
     }
 
-    public List<CodeTry> findAllByLesson(String login, Integer chapter, Integer step, Integer lesson) {
-        return codeTryRepository.findByUserLoginAndChapterAndStepAndLesson(login, chapter, step, lesson);
+    public List<CodeTry> findAllByLesson(String login, TaskIdentifierDTO taskIdentifierDTO) {
+        return codeTryRepository.findByUserLoginAndChapterAndStepAndLesson(login, taskIdentifierDTO.getChapter(),
+                taskIdentifierDTO.getStep(),
+                taskIdentifierDTO.getLesson()
+        );
     }
 }

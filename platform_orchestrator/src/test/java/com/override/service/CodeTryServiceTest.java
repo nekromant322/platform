@@ -55,8 +55,7 @@ public class CodeTryServiceTest {
         when(codeTryRepository.findByUserLoginAndChapterAndStepAndLesson("Andrey", 1 , 1, 1))
                 .thenReturn(new ArrayList<>(Collections.singletonList(generateTestCodeTry())));
 
-        final List<CodeTry> codeTryList = codeTryService.findAllByLesson("Andrey", 1, 1, 1);
-
+        final List<CodeTry> codeTryList = codeTryService.findAllByLesson("Andrey", generateTestTaskIdentifierDTO());
         verify(codeTryRepository, times(1))
                 .findByUserLoginAndChapterAndStepAndLesson("Andrey", 1, 1, 1);
         Assertions.assertTrue(codeTryList.contains(generateTestCodeTry()));

@@ -32,7 +32,7 @@ class ReportServiceTest {
         StudentReport report = new StudentReport();
 
         when(reportRepository.findFirstByDateAndStudentLogin(any(), any())).thenReturn(null);
-        when(userService.getUserByLogin(any())).thenReturn(new PlatformUser());
+        when(userService.findPlatformUserByLogin(any())).thenReturn(new PlatformUser());
 
         ResponseEntity<String> entity = reportService.saveReport(report, "kemenchik");
 
@@ -47,6 +47,6 @@ class ReportServiceTest {
         ResponseEntity<String> entity = reportService.saveReport(new StudentReport(), "kemenchik");
 
         Assertions.assertEquals(new ResponseEntity<>("Уже есть отчет на эту дату", HttpStatus.CONFLICT), entity);
-        verify(userService, times(0)).getUserByLogin(any());
+        verify(userService, times(0)).findPlatformUserByLogin(any());
     }
 }

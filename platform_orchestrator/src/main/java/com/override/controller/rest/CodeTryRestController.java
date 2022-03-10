@@ -47,8 +47,6 @@ public class CodeTryRestController {
     @GetMapping
     public List<CodeTry> studentCodesLesson(@AuthenticationPrincipal CustomStudentDetails user,
                                             @RequestBody TaskIdentifierDTO taskIdentifierDTO) {
-        return codeTryService.findAllByLesson(user.getUsername(), taskIdentifierDTO.getChapter(),
-                taskIdentifierDTO.getStep(),
-                taskIdentifierDTO.getLesson());
+        return codeTryService.findAllByLesson(user.getUsername(), taskIdentifierDTO);
     }
 }
