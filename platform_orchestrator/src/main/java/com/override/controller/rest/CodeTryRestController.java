@@ -44,12 +44,7 @@ public class CodeTryRestController {
         return new ResponseEntity<>(testResult.getOutput(), HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/all")
-    public List<CodeTry> studentCodes(@AuthenticationPrincipal CustomStudentDetails user) {
-        return codeTryService.findAllCodes(user.getUsername());
-    }
-
-    @GetMapping("/lesson")
+    @GetMapping
     public List<CodeTry> studentCodesLesson(@AuthenticationPrincipal CustomStudentDetails user,
                                             @RequestBody TaskIdentifierDTO taskIdentifierDTO) {
         return codeTryService.findAllByLesson(user.getUsername(), taskIdentifierDTO.getChapter(),
