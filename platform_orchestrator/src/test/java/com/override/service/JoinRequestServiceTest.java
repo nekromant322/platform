@@ -79,7 +79,6 @@ public class JoinRequestServiceTest {
     public void testWhenNewUser() {
         RegisterUserRequestDTO requestDTO = RegisterUserRequestDTO.builder()
                 .telegramUserName("Marandyuk_Anatolii")
-
                 .chatId("1234")
                 .build();
         JoinRequest requestEntity = new JoinRequest(1L, "Marandyuk_Anatolii", "1234");

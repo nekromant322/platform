@@ -4,7 +4,7 @@ import com.override.exception.ExecutingCodeException;
 import com.override.utils.TestUtils;
 import dtos.TaskIdentifierDTO;
 import dtos.TestResultDTO;
-import enums.Status;
+import enums.CodeExecutionStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -56,7 +56,7 @@ public class HelloWorldTaskTest extends AbstractTaskTest {
             throw new ExecutingCodeException(throwable);
         }
         return TestResultDTO.builder().
-                status(Status.OK).
+                codeExecutionStatus(CodeExecutionStatus.OK).
                 output("").
                 build();
 

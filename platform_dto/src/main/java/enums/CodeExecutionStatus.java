@@ -1,6 +1,6 @@
 package enums;
 
-public enum Status {
+public enum CodeExecutionStatus {
     COMPILE_ERROR,
     RUNTIME_ERROR,
     ASSERTION_ERROR,

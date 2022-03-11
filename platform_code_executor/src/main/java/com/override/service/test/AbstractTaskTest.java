@@ -3,7 +3,7 @@ package com.override.service.test;
 import com.override.exception.AssertionError;
 import dtos.TaskIdentifierDTO;
 import dtos.TestResultDTO;
-import enums.Status;
+import enums.CodeExecutionStatus;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.*;
@@ -34,13 +34,13 @@ public abstract class AbstractTaskTest {
             } catch (ExecutionException e) {
                 if (e.getCause() instanceof AssertionError) {
                     testResults.add(TestResultDTO.builder()
-                            .status(Status.ASSERTION_ERROR)
+                            .codeExecutionStatus(CodeExecutionStatus.ASSERTION_ERROR)
                             .output(e.getMessage())
                             .build());
                 } else {
                     //убрать сообщение, когда будет отлажена проверка кода этим сервисом
                     testResults.add(TestResultDTO.builder()
-                            .status(Status.RUNTIME_ERROR)
+                            .codeExecutionStatus(CodeExecutionStatus.RUNTIME_ERROR)
                             .output((
                                     "Ошибка может быть не связана с вашим кодом, вот её текст, сходите к ментору, если там какая-то лютая " +
                                             "непонятная дичь:\n\n" + e.getMessage()))
@@ -49,12 +49,12 @@ public abstract class AbstractTaskTest {
             } catch (TimeoutException e) {
                 future.cancel(true);
                 testResults.add(TestResultDTO.builder()
-                        .status(Status.OUT_OF_TIME)
+                        .codeExecutionStatus(CodeExecutionStatus.OUT_OF_TIME)
                         .output(e.getMessage())
                         .build());
             } catch (InterruptedException e) {
                 testResults.add(TestResultDTO.builder()
-                        .status(Status.RUNTIME_ERROR)
+                        .codeExecutionStatus(CodeExecutionStatus.RUNTIME_ERROR)
                         .output((
                                 "Техническая ошибка, обратись к ментору:\n\n" + e.getMessage()))
                         .build());
@@ -63,10 +63,10 @@ public abstract class AbstractTaskTest {
         }
 
         return testResults.stream()
-                .filter(x -> !x.getStatus().equals(Status.OK))
+                .filter(x -> !x.getCodeExecutionStatus().equals(CodeExecutionStatus.OK))
                 .findFirst()
                 .orElse(TestResultDTO.builder()
-                        .status(Status.OK)
+                        .codeExecutionStatus(CodeExecutionStatus.OK)
                         .output("")
                         .build());
     }
