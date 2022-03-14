@@ -32,7 +32,7 @@ function addColumn(data) {
 
     let updateBtn = document.createElement("button");
     updateBtn.className = "btn btn-success";
-    updateBtn.innerHTML = "Done";
+    updateBtn.innerHTML = "Повысить";
     updateBtn.type = "submit";
     updateBtn.addEventListener("click", () => {
         updateToAdmin(data.id);
@@ -45,7 +45,7 @@ function updateToAdmin(id) {
     let data = {};
     data.id = id;
     $.ajax({
-        url: '/admin/update-student/' + id,
+        url: '/admin/promote-student/' + id,
         type: 'POST',
         contentType: 'application/json',
         success: function (response) {
