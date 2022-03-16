@@ -101,36 +101,13 @@ function copyTextToClipboard(text) {
     document.body.removeChild(textArea);
 }
 
-function insertTd(value, parent) {
-    let element = document.createElement("td");
-    element.scope = "row";
-    element.innerText = value;
-    parent.insertAdjacentElement("beforeend", element)
-}
-
-function addColumn(data) {
-    let table = document.getElementById("requests-table").getElementsByTagName("tbody")[0];
-    let tr = table.insertRow(table.rows.length);
-    let td;
-
-    insertTd(data.nickName, tr);
-    insertTd(data.id, tr);
-    insertTd(data.date.toTimeString(), tr);
-
-    let updateBtn = document.createElement("button");
-    updateBtn.className = "btn btn-success";
-    updateBtn.innerHTML = "Open";
-    updateBtn.type = "submit";
-    updateBtn.addEventListener("click", () => {
-        openCode(data.id);
-    });
-    td = tr.insertCell(2);
-    td.insertAdjacentElement("beforeend", updateBtn);
-}
-
-function openCode(id){
-    let myModal = new bootstrap.Modal(document.getElementById('myCodeTryModal'), {
-        keyboard: false
-    })
-    myModal.show()
+function getMyCodeTry(){
+    const url = window.location.href.split("/");
+    let chapter = url[url.length - 3];
+    let step = url[url.length - 2];
+    let lesson = url[url.length - 1];
+    sessionStorage.setItem("lesson", lesson)
+    sessionStorage.setItem("step", step)
+    sessionStorage.setItem("chapter", chapter)
+    window.location.href = "/codeTryList";
 }
