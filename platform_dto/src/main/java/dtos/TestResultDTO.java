@@ -1,12 +1,12 @@
 package dtos;
 
-import enums.Status;
+import enums.CodeExecutionStatus;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
 public class TestResultDTO {
-    private Status status;
+    private CodeExecutionStatus codeExecutionStatus;
     private String output;
 }

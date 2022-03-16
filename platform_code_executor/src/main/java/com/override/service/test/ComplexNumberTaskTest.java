@@ -3,7 +3,7 @@ package com.override.service.test;
 import com.override.utils.TestUtils;
 import dtos.TaskIdentifierDTO;
 import dtos.TestResultDTO;
-import enums.Status;
+import enums.CodeExecutionStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
@@ -64,7 +64,7 @@ public class ComplexNumberTaskTest extends AbstractTaskTest {
         message = String.format(MESSAGE_TEMPLATE_EQUALS, 1.0, 1.0, 1.0, 1.0);
         assertEquals(message, a, b);
 
-        return TestResultDTO.builder().status(Status.OK).output("").build();
+        return TestResultDTO.builder().codeExecutionStatus(CodeExecutionStatus.OK).output("").build();
     }
 
     @SneakyThrows
@@ -86,7 +86,7 @@ public class ComplexNumberTaskTest extends AbstractTaskTest {
         message = String.format(MESSAGE_TEMPLATE_EQUALS, 1.0, 1.0, 1.0, 2.0);
         assertNotEquals(message, a, b);
 
-        return TestResultDTO.builder().status(Status.OK).output("").build();
+        return TestResultDTO.builder().codeExecutionStatus(CodeExecutionStatus.OK).output("").build();
     }
 
     @SneakyThrows
@@ -109,7 +109,7 @@ public class ComplexNumberTaskTest extends AbstractTaskTest {
         assertNotEquals(message, a, b);
 
 
-        return TestResultDTO.builder().status(Status.OK).output("").build();
+        return TestResultDTO.builder().codeExecutionStatus(CodeExecutionStatus.OK).output("").build();
     }
 
     @SneakyThrows
@@ -133,7 +133,7 @@ public class ComplexNumberTaskTest extends AbstractTaskTest {
         assertEquals(message, a, b);
 
 
-        return TestResultDTO.builder().status(Status.OK).output("").build();
+        return TestResultDTO.builder().codeExecutionStatus(CodeExecutionStatus.OK).output("").build();
     }
 
 }

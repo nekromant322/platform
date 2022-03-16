@@ -103,7 +103,8 @@ public class PlatformUserService {
         return accountRepository.findByAuthoritiesNotContaining(adminAuthority);
     }
 
-    public PlatformUser getUserByLogin(String login) {
+
+    public PlatformUser findPlatformUserByLogin(String login) {
         return accountRepository.findFirstByLogin(login);
     }
 }

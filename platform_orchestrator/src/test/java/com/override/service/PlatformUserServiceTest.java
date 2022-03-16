@@ -95,7 +95,7 @@ class PlatformUserServiceTest {
 
         when(accountRepository.findFirstByLogin(login)).thenReturn(notNullUser);
 
-        PlatformUser student = userService.getUserByLogin(login);
+        PlatformUser student = userService.findPlatformUserByLogin(login);
 
         Assertions.assertEquals(notNullUser, student);
         verify(accountRepository, times(1)).findFirstByLogin(login);
