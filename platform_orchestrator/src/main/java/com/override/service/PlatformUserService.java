@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -39,18 +39,9 @@ public class PlatformUserService {
 
     public PlatformUser generateAccount(String login, String chatId) {
         String password = passwordGeneratorService.generateStrongPassword();
-        List<Authority> roles = getAuthorityListFromRoles(Role.USER);
+        List<Authority> roles = Collections.singletonList(authorityService.getAuthorityByRole(Role.USER));
 
         PlatformUser account = new PlatformUser(null, login, password, chatId, roles);
-        register(account);
-
-        return account;
-    }
-
-    public PlatformUser saveAdmin(String login, String password) {
-        List<Authority> roles = getAuthorityListFromRoles(Role.ADMIN, Role.USER);
-
-        PlatformUser account = new PlatformUser(null, login, password, null, roles);
         register(account);
 
         return account;
@@ -74,15 +65,6 @@ public class PlatformUserService {
             throw new UserAlreadyExistException("Пользователь с логином " + login + " уже зарегистрирован");
         }
     }
-
-    private List<Authority> getAuthorityListFromRoles(Role... roles) {
-        List<Authority> authorityList = new ArrayList<>();
-        for (Role role : roles) {
-            authorityList.add(authorityService.getAuthorityByRole(role));
-        }
-        return authorityList;
-    }
-
 
     public ResponseEntity<String> updateToAdmin(Long id) {
         PlatformUser student = accountRepository.findById(id)

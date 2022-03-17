@@ -5,17 +5,15 @@ import com.override.models.PlatformUser;
 import com.override.models.enums.Role;
 import com.override.service.AuthorityService;
 import com.override.service.PlatformUserService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
 public class InitializationService implements CommandLineRunner {
 
     @Value("${jwt.primeAdminLogin}")
@@ -26,10 +24,11 @@ public class InitializationService implements CommandLineRunner {
 
     private static final int COUNT_USER_FOR_INIT = 5;
 
-    private final AuthorityService authorityService;
-    private final PlatformUserService userService;
+    @Autowired
+    private AuthorityService authorityService;
 
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private PlatformUserService userService;
 
     @Override
     public void run(String... args) {
@@ -45,18 +44,20 @@ public class InitializationService implements CommandLineRunner {
     }
 
     private void UserInit() {
-        List<Authority> userAuthority = getAuthorityListFromRoles(Role.USER);
         for (int i = 0; i < COUNT_USER_FOR_INIT; i++) {
-            PlatformUser user = new PlatformUser();
-            user.setLogin(i + "login");
-            user.setPassword(passwordEncoder.encode(String.valueOf(i)));
-            user.setAuthorities(userAuthority);
-            userService.save(user);
+            saveUser(i + "login", String.valueOf(i), Role.USER);
         }
     }
 
     private void AdminInit() {
-        userService.saveAdmin(adminLogin, adminPassword);
+        saveUser(adminLogin, adminPassword, Role.USER, Role.ADMIN);
+    }
+
+    private PlatformUser saveUser(String login, String password, Role... userRoles) {
+        List<Authority> roles = getAuthorityListFromRoles(userRoles);
+
+        PlatformUser account = new PlatformUser(null, login, password, null, roles);
+        return userService.save(account);
     }
 
     private List<Authority> getAuthorityListFromRoles(Role... roles) {
