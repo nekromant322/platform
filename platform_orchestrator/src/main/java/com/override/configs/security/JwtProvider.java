@@ -6,6 +6,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,9 +17,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Configuration
 @Slf4j
@@ -35,7 +38,11 @@ public class JwtProvider {
 
 
     @SneakyThrows
-    public String generateToken(String login, String authorities) {
+    public String generateToken(String login, Collection<? extends GrantedAuthority> authorityList) {
+        String authorities = authorityList.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
         Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", login);

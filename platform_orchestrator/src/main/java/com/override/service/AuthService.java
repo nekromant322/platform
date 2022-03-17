@@ -28,14 +28,11 @@ public class AuthService {
         try {
             userDetails = studentDetailService.loadUserByUsername(login);
         } catch (UsernameNotFoundException e) {
+            log.warn("Пользователь с логином " + login + " не был найден!");
             throw new UsernameNotFoundException("Пользователь с логином " + login + " не найден!");
         }
         if (passwordEncoder.matches(password, userDetails.getPassword())) {
-            String authorities = userDetails.getAuthorities().stream()
-                    .map(GrantedAuthority::getAuthority)
-                    .collect(Collectors.joining(","));
-
-            return jwtProvider.generateToken(login, authorities);
+            return jwtProvider.generateToken(login, userDetails.getAuthorities());
         }
 
         throw new AuthException("Данные пользователя неверны");
