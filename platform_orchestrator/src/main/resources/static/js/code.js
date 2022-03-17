@@ -100,3 +100,14 @@ function copyTextToClipboard(text) {
 
     document.body.removeChild(textArea);
 }
+
+function getMyCodeTry(){
+    const url = window.location.href.split("/");
+    let chapter = url[url.length - 3];
+    let step = url[url.length - 2];
+    let lesson = url[url.length - 1];
+    sessionStorage.setItem("lesson", lesson)
+    sessionStorage.setItem("step", step)
+    sessionStorage.setItem("chapter", chapter)
+    window.location.href = "/codeTryList";
+}

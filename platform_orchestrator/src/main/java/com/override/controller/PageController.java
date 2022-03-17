@@ -23,6 +23,11 @@ public class PageController {
         return "courses";
     }
 
+    @GetMapping("/codeTryList")
+    public String codeTryListPage() {
+        return "codeTryList";
+    }
+
     @GetMapping("/helpMe/{key}")
     public String getHelpView(@PathVariable int key) {
         if (helpMeCache.getIfPresent(key) == null) {

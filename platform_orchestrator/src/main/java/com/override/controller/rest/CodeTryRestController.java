@@ -38,6 +38,7 @@ public class CodeTryRestController {
         }
         TestResultDTO testResult = codeExecutorFeign.execute(codeTryDTO);
         studentCodeService.saveCodeTry(codeTryDTO, testResult, user.getUsername());
+
         if (testResult.getCodeExecutionStatus() == CodeExecutionStatus.OK) {
             return new ResponseEntity<>("Все тесты пройдены", HttpStatus.OK);
         }
@@ -46,7 +47,12 @@ public class CodeTryRestController {
 
     @GetMapping
     public List<CodeTry> studentCodesLesson(@AuthenticationPrincipal CustomStudentDetails user,
-                                            @RequestBody TaskIdentifierDTO taskIdentifierDTO) {
+                                            @RequestParam int chapter, @RequestParam int step, @RequestParam int lesson) {
+        TaskIdentifierDTO taskIdentifierDTO = TaskIdentifierDTO.builder()
+                .chapter(chapter)
+                .step(step)
+                .lesson(lesson)
+                .build();
         return codeTryService.findAllByLesson(user.getUsername(), taskIdentifierDTO);
     }
 }
