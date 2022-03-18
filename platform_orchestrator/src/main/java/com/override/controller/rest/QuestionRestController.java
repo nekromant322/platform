@@ -1,13 +1,9 @@
 package com.override.controller.rest;
 
-import com.override.models.Authority;
 import com.override.models.Question;
-import com.override.models.enums.Role;
-import com.override.service.CustomStudentDetailService.CustomStudentDetails;
 import com.override.service.QuestionService;
 import dtos.QuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,5 +22,15 @@ public class QuestionRestController {
     @PostMapping
     public void save(@RequestBody QuestionDTO questionDTO){
         questionService.save(questionDTO);
+    }
+
+    @PostMapping("/update")
+    public void patch(@RequestBody QuestionDTO questionDTO){
+        questionService.patch(questionDTO);
+    }
+
+    @DeleteMapping("/delete")
+    public void delete(@RequestBody QuestionDTO questionDTO){
+        questionService.delete(questionDTO);
     }
 }
