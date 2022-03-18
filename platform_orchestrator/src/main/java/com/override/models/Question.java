@@ -1,6 +1,7 @@
 package com.override.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Question {
@@ -15,11 +17,11 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @Column
     String question;
 
-    @Column
     int chapter;
+
+    boolean answered;
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.EAGER)
