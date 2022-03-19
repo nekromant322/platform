@@ -17,6 +17,7 @@ public class QuestionMapper {
 
     public Question dtoToEntity(QuestionDTO questionDTO){
         return Question.builder()
+                .id(questionDTO.getId())
                 .question(questionDTO.getQuestion())
                 .chapter(questionDTO.getChapter())
                 .answered(questionDTO.isAnswered())
