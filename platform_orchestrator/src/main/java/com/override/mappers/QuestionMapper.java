@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class QuestionMapper {
     @Autowired
-    PlatformUserService platformUserService;
+    private PlatformUserService platformUserService;
 
     public Question dtoToEntity(QuestionDTO questionDTO){
         return Question.builder()

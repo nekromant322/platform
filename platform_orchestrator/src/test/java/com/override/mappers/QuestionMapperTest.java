@@ -19,9 +19,9 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class QuestionMapperTest {
     @InjectMocks
-    QuestionMapper questionMapper;
+    private QuestionMapper questionMapper;
     @Mock
-    PlatformUserService platformUserService;
+    private PlatformUserService platformUserService;
 
 
     @Test

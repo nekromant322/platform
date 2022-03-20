@@ -54,7 +54,7 @@ public class TestFieldsUtil {
                 .id(1L)
                 .question("А ты точно разработчик?")
                 .answered(true)
-                .chapter(2)
+                .chapter("core 3")
                 .user(generateTestUser())
                 .build();
     }

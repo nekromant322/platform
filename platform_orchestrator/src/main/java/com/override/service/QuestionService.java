@@ -13,21 +13,22 @@ import java.util.List;
 public class QuestionService {
 
     @Autowired
-    QuestionRepository questionRepository;
+    private QuestionRepository questionRepository;
     @Autowired
-    QuestionMapper questionMapper;
+    private QuestionMapper questionMapper;
     @Autowired
-    PlatformUserService platformUserService;
+    private PlatformUserService platformUserService;
 
     public void save(QuestionDTO questionDTO){
         questionRepository.save(questionMapper.dtoToEntity(questionDTO));
     }
 
-    public List<Question> findAllByUserAndChapter(String login, int chapter){
+    public List<Question> findAllByUserAndChapter(String login, String chapter){
         return questionRepository.findAllByUserAndChapter(platformUserService.findPlatformUserByLogin(login), chapter);
     }
 
     public void delete(QuestionDTO questionDTO){
+
         questionRepository.deleteById(questionDTO.getId());
     }
 

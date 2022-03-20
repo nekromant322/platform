@@ -21,13 +21,13 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class QuestionServiceTest {
     @InjectMocks
-    QuestionService questionService;
+    private QuestionService questionService;
     @Mock
-    QuestionRepository questionRepository;
+    private QuestionRepository questionRepository;
     @Mock
-    QuestionMapper questionMapper;
+    private QuestionMapper questionMapper;
     @Mock
-    PlatformUserService platformUserService;
+    private PlatformUserService platformUserService;
 
     @Test
     void save() {
@@ -40,11 +40,12 @@ public class QuestionServiceTest {
     void findAllByUserAndChapter() {
         PlatformUser user = generateTestUser();
         Question question = generateTestQuestion();
-        when(questionRepository.findAllByUserAndChapter(user, 2))
+        when(questionRepository.findAllByUserAndChapter(user, "core 3"))
                 .thenReturn(Collections.singletonList(question));
         when(platformUserService.findPlatformUserByLogin(user.getLogin())).thenReturn(user);
 
-        final List<Question> allByUserAndChapter = questionService.findAllByUserAndChapter(generateTestQuestionDTO().getLogin(), generateTestQuestionDTO().getChapter());
+        final List<Question> allByUserAndChapter = questionService.findAllByUserAndChapter(generateTestQuestionDTO().getLogin(),
+                generateTestQuestionDTO().getChapter());
         Assertions.assertTrue(allByUserAndChapter.contains(question));
     }
 

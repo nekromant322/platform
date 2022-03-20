@@ -8,7 +8,7 @@ import lombok.Data;
 public class QuestionDTO {
     long id;
     String login;
-    int chapter;
+    String chapter;
     boolean answered;
     String question;
 }

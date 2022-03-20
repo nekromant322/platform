@@ -15,13 +15,13 @@ import javax.persistence.*;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
 
-    String question;
+    private String question;
 
-    int chapter;
+    private String chapter;
 
-    boolean answered;
+    private boolean answered;
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.EAGER)
