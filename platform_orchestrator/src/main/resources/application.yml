@@ -3,26 +3,22 @@ server:
   address: localhost
 
 spring:
-#  h2:
-#    console:
-#      enabled: true
   datasource:
     password: postgres
     username: postgres
-    url: jdbc:postgresql://localhost:5430/
+    url: jdbc:postgresql://localhost:5430/orchestrator-db
     datasource:
       driver-class-name: org.postgresql.Driver
-    jpa:
-      database: postgresql
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.PostgreSQL81Dialect
-          show_sql: false
-          format_sql: true
-          use_sql_comments: true
+  jpa:
+    properties:
       hibernate:
-        ddl-auto: create
-      generate-ddl: true
+        dialect: org.hibernate.dialect.PostgreSQL81Dialect
+        show_sql: false
+        format_sql: true
+        use_sql_comments: true
+    hibernate:
+      ddl-auto: create
+    generate-ddl: true
   cloud:
     loadbalancer:
       ribbon:
