@@ -1,0 +1,75 @@
+version: '3.8'
+services:
+  orchestrator-db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5430:5432'
+
+
+#    volumes:
+#      - orchestrator-db:/var/lib/postgresql/data/orchestrator
+
+#  notification-db:
+#      image: postgres:14.1-alpine
+#      restart: always
+#      environment:
+#        - POSTGRES_USER=postgres
+#        - POSTGRES_PASSWORD=postgres
+#      ports:
+#        - '5431:5432'
+#      volumes:
+#        - notification-db:/var/lib/postgresql/data/notification
+#
+#  bot-db:
+#      image: postgres:14.1-alpine
+#      restart: always
+#      environment:
+#        - POSTGRES_USER=postgres
+#        - POSTGRES_PASSWORD=postgres
+#      ports:
+#        - '5432:5432'
+#      volumes:
+#        - notification-db:/var/lib/postgresql/data/bot
+#
+#  code-executor-db:
+#      image: postgres:14.1-alpine
+#      restart: always
+#      environment:
+#        - POSTGRES_USER=postgres
+#        - POSTGRES_PASSWORD=postgres
+#      ports:
+#        - '5433:5432'
+#      volumes:
+#        - code-executor-db:/var/lib/postgresql/data/bot
+#
+#  eureka-server-db:
+#      image: postgres:14.1-alpine
+#      restart: always
+#      environment:
+#        - POSTGRES_USER=postgres
+#        - POSTGRES_PASSWORD=postgres
+#      ports:
+#        - '5434:5432'
+#      volumes:
+#        - code-executor-db:/var/lib/postgresql/data/eureka
+#volumes:
+#    orchestrator-db:
+#      driver: local
+#
+#    notification-db:
+#       driver: local
+#
+#    bot-db:
+#       driver: local
+#
+#    code-executor-db:
+#       driver: local
+#
+#    eureka-server-db:
+#      driver: local
+##   db:
+##      driver: local
