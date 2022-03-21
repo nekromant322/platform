@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class TelegramService {
     @Autowired
-    TelegramFeign telegramFeign;
+    private TelegramFeign telegramFeign;
 
     public void sendMessage(MessageDTO messageDTO){
-        telegramFeign.sendMessages(messageDTO);
+        telegramFeign.sendMessages(messageDTO.getMessage(), messageDTO.getChatId());
     }
 }
