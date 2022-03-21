@@ -19,17 +19,12 @@ import static org.mockito.Mockito.when;
 public class QuestionMapperTest {
     @InjectMocks
     private QuestionMapper questionMapper;
-    @Mock
-    private PlatformUserService platformUserService;
-
 
     @Test
     public void testDtoToEntity(){
         Question testQuestion = generateTestQuestion();
         PlatformUser user = generateTestUser();
         QuestionDTO questionDTO = generateTestQuestionDTO();
-
-        when(platformUserService.findPlatformUserByLogin(any())).thenReturn(user);
 
         Question question = questionMapper.dtoToEntity(questionDTO, user);
 
