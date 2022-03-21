@@ -23,10 +23,6 @@ public class PageController {
         return "courses";
     }
 
-    @GetMapping("/questions")
-    public String questionsPage(){
-        return "questions";}
-
     @GetMapping("/codeTryList")
     public String codeTryListPage() {
         return "codeTryList";
