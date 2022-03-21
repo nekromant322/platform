@@ -25,12 +25,12 @@ public class CompilerService {
         clearCustomClasses();
 
         try {
-            PrintWriter out = new PrintWriter(CUSTOM_CLASSES_DIR_NAME + "/" + TOP_LEVEL_HELPER_CLASS_NAME + ".java");
+            PrintWriter out = new PrintWriter(CUSTOM_CLASSES_DIR_NAME + File.separator + TOP_LEVEL_HELPER_CLASS_NAME + ".java");
             out.write(studentsCode);
             out.flush();
             out.close();
 
-            Process process = Runtime.getRuntime().exec("javac " + CUSTOM_CLASSES_DIR_NAME + "/" + TOP_LEVEL_HELPER_CLASS_NAME + ".java");
+            Process process = Runtime.getRuntime().exec("javac " + CUSTOM_CLASSES_DIR_NAME + File.separator + TOP_LEVEL_HELPER_CLASS_NAME + ".java");
             //не убирать условие, потому что waitFor() не будет ждать из-за оптимизаций при компиляции
             if (process.waitFor() == 0) {
                 log.info("compile done for code \n" + studentsCode);
@@ -62,10 +62,10 @@ public class CompilerService {
 
     private void clearCustomClasses() {
         try {
-            File file = new File(CUSTOM_CLASSES_DIR_NAME + "/" + TOP_LEVEL_HELPER_CLASS_NAME + ".java");
-            Files.delete(Paths.get(file.toURI()));
-            file = new File(CUSTOM_CLASSES_DIR_NAME + "/" + TOP_LEVEL_HELPER_CLASS_NAME + ".class");
-            Files.delete(Paths.get(file.toURI()));
+            File file = new File(CUSTOM_CLASSES_DIR_NAME + File.separator + TOP_LEVEL_HELPER_CLASS_NAME + ".java");
+            Files.delete(Paths.get(file.getAbsolutePath()));
+            file = new File(CUSTOM_CLASSES_DIR_NAME + File.separator + TOP_LEVEL_HELPER_CLASS_NAME + ".class");
+            Files.delete(Paths.get(file.getAbsolutePath()));
         } catch (Exception e) {
             e.printStackTrace();
         }
