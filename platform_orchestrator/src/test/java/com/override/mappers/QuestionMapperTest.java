@@ -31,7 +31,7 @@ public class QuestionMapperTest {
 
         when(platformUserService.findPlatformUserByLogin(any())).thenReturn(user);
 
-        Question question = questionMapper.dtoToEntity(questionDTO);
+        Question question = questionMapper.dtoToEntity(questionDTO, user);
 
         Assertions.assertEquals(question.getId(), testQuestion.getId());
         Assertions.assertEquals(question.getQuestion(), testQuestion.getQuestion());

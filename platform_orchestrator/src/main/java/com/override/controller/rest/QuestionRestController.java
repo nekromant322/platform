@@ -28,21 +28,21 @@ public class QuestionRestController {
         return lessonStructureService.getChapterNamesList();
     }
 
-    @PostMapping
     @Secured("ROLE_ADMIN")
+    @PostMapping
     public void save(@RequestBody QuestionDTO questionDTO){
         questionService.save(questionDTO);
     }
 
     @Secured("ROLE_ADMIN")
-    @PatchMapping()
+    @PatchMapping
     public void patch(@RequestBody QuestionDTO questionDTO){
         questionService.patch(questionDTO);
     }
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping
-    public void delete(@RequestBody QuestionDTO questionDTO){
-            questionService.delete(questionDTO);
+    public void delete(@RequestParam long id){
+            questionService.delete(id);
     }
 }

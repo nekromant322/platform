@@ -12,9 +12,4 @@ import java.util.List;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> findAllByUserAndChapter(PlatformUser platformUser, String chapter);
-
-    @Transactional
-    @Modifying(clearAutomatically = true)
-    @Query(value = "update Question q set q.answered = :answered where q.id = :id")
-    void patchAnsweredById(@Param("answered") boolean answered, @Param("id") long id);
 }

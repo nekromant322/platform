@@ -20,19 +20,19 @@ public class QuestionService {
     private PlatformUserService platformUserService;
 
     public void save(QuestionDTO questionDTO){
-        questionRepository.save(questionMapper.dtoToEntity(questionDTO));
+        questionRepository.save(questionMapper.dtoToEntity(questionDTO, platformUserService.findPlatformUserByLogin(questionDTO.getLogin())));
     }
 
     public List<Question> findAllByUserAndChapter(String login, String chapter){
         return questionRepository.findAllByUserAndChapter(platformUserService.findPlatformUserByLogin(login), chapter);
     }
 
-    public void delete(QuestionDTO questionDTO){
+    public void delete(long id){
 
-        questionRepository.deleteById(questionDTO.getId());
+        questionRepository.deleteById(id);
     }
 
     public void patch(QuestionDTO questionDTO){
-        questionRepository.patchAnsweredById(questionDTO.isAnswered(), questionDTO.getId());
+        save(questionDTO);
     }
 }

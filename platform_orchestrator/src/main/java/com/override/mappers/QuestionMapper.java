@@ -1,5 +1,6 @@
 package com.override.mappers;
 
+import com.override.models.PlatformUser;
 import com.override.models.Question;
 import com.override.service.PlatformUserService;
 import dtos.QuestionDTO;
@@ -15,13 +16,13 @@ public class QuestionMapper {
     @Autowired
     private PlatformUserService platformUserService;
 
-    public Question dtoToEntity(QuestionDTO questionDTO){
+    public Question dtoToEntity(QuestionDTO questionDTO, PlatformUser user){
         return Question.builder()
                 .id(questionDTO.getId())
                 .question(questionDTO.getQuestion())
                 .chapter(questionDTO.getChapter())
                 .answered(questionDTO.isAnswered())
-                .user(platformUserService.findPlatformUserByLogin(questionDTO.getLogin()))
+                .user(user)
                 .build();
     }
 }

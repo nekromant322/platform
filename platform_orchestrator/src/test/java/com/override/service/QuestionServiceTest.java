@@ -31,9 +31,11 @@ public class QuestionServiceTest {
 
     @Test
     void save() {
-        questionService.save(generateTestQuestionDTO());
+        final QuestionDTO questionDTO = generateTestQuestionDTO();
+
+        questionService.save(questionDTO);
         verify(questionRepository, times(1)).save(any());
-        verify(questionMapper, times(1)).dtoToEntity(any(QuestionDTO.class));
+        verify(questionMapper, times(1)).dtoToEntity(any(), any());
     }
 
     @Test
@@ -52,8 +54,8 @@ public class QuestionServiceTest {
 
     @Test
     void delete() {
-        questionService.delete(generateTestQuestionDTO());
-        verify(questionRepository,times(1)).deleteById(generateTestQuestionDTO().getId());
+        questionService.delete(1L);
+        verify(questionRepository,times(1)).deleteById(1L);
     }
 
     @Test
@@ -62,6 +64,6 @@ public class QuestionServiceTest {
 
         questionService.patch(question);
 
-        verify(questionRepository, times(1)).patchAnsweredById(question.isAnswered(), question.getId());
+        verify(questionRepository, times(1)).save(any());
     }
 }
