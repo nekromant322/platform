@@ -11,8 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.override.utils.TestFieldsUtil.generateTestQuestion;
-import static com.override.utils.TestFieldsUtil.generateTestUser;
+import static com.override.utils.TestFieldsUtil.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -26,17 +25,13 @@ public class QuestionMapperTest {
 
     @Test
     public void testDtoToEntity(){
-        when(platformUserService.findPlatformUserByLogin(any())).thenReturn(generateTestUser());
         Question testQuestion = generateTestQuestion();
         PlatformUser user = generateTestUser();
+        QuestionDTO questionDTO = generateTestQuestionDTO();
 
-        Question question = questionMapper.dtoToEntity(QuestionDTO.builder()
-                .id(testQuestion.getId())
-                .chapter(testQuestion.getChapter())
-                .login(user.getLogin())
-                .answered(testQuestion.isAnswered())
-                .question(testQuestion.getQuestion())
-                .build());
+        when(platformUserService.findPlatformUserByLogin(any())).thenReturn(user);
+
+        Question question = questionMapper.dtoToEntity(questionDTO);
 
         Assertions.assertEquals(question.getId(), testQuestion.getId());
         Assertions.assertEquals(question.getQuestion(), testQuestion.getQuestion());

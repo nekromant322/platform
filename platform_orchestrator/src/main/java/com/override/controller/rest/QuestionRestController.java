@@ -18,7 +18,7 @@ public class QuestionRestController {
     @Autowired
     LessonStructureService lessonStructureService;
 
-    @GetMapping("/all")
+    @GetMapping("/users")
     public List<Question> findAll(@RequestBody QuestionDTO questionDTO) {
             return questionService.findAllByUserAndChapter(questionDTO.getLogin(), questionDTO.getChapter());
     }
@@ -35,13 +35,13 @@ public class QuestionRestController {
     }
 
     @Secured("ROLE_ADMIN")
-    @PostMapping("/update")
+    @PatchMapping()
     public void patch(@RequestBody QuestionDTO questionDTO){
         questionService.patch(questionDTO);
     }
 
     @Secured("ROLE_ADMIN")
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public void delete(@RequestBody QuestionDTO questionDTO){
             questionService.delete(questionDTO);
     }

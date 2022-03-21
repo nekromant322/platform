@@ -40,12 +40,13 @@ public class QuestionServiceTest {
     void findAllByUserAndChapter() {
         PlatformUser user = generateTestUser();
         Question question = generateTestQuestion();
+        QuestionDTO questionDTO = generateTestQuestionDTO();
         when(questionRepository.findAllByUserAndChapter(user, "core 3"))
                 .thenReturn(Collections.singletonList(question));
         when(platformUserService.findPlatformUserByLogin(user.getLogin())).thenReturn(user);
 
-        final List<Question> allByUserAndChapter = questionService.findAllByUserAndChapter(generateTestQuestionDTO().getLogin(),
-                generateTestQuestionDTO().getChapter());
+        final List<Question> allByUserAndChapter = questionService.findAllByUserAndChapter(questionDTO.getLogin(),
+                questionDTO.getChapter());
         Assertions.assertTrue(allByUserAndChapter.contains(question));
     }
 
@@ -57,12 +58,10 @@ public class QuestionServiceTest {
 
     @Test
     void patch() {
-        Question question = generateTestQuestion();
+        QuestionDTO question = generateTestQuestionDTO();
 
-        questionService.patch(generateTestQuestionDTO());
+        questionService.patch(question);
 
-        verify(questionRepository, times(1)).deleteById(question.getId());
-        verify(questionMapper, times(1)).dtoToEntity(any(QuestionDTO.class));
-        verify(questionRepository, times(1)).save(any());
+        verify(questionRepository, times(1)).patchAnsweredById(question.isAnswered(), question.getId());
     }
 }

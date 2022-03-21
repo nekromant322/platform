@@ -17,10 +17,11 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column
     private String question;
-
+    @Column
     private String chapter;
-
+    @Column
     private boolean answered;
 
     @JoinColumn(name = "user_id")

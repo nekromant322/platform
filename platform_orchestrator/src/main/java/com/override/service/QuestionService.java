@@ -33,7 +33,6 @@ public class QuestionService {
     }
 
     public void patch(QuestionDTO questionDTO){
-        delete(questionDTO);
-        save(questionDTO);
+        questionRepository.patchAnsweredById(questionDTO.isAnswered(), questionDTO.getId());
     }
 }
