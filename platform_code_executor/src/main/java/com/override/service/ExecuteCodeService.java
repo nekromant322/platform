@@ -4,11 +4,13 @@ import com.override.exception.CompilingCodeException;
 import com.override.service.test.AbstractTaskTest;
 import dtos.TaskIdentifierDTO;
 import dtos.TestResultDTO;
-import enums.Status;
+import enums.CodeExecutionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ExecuteCodeService {
@@ -30,10 +32,9 @@ public class ExecuteCodeService {
             return taskTest.test(loadedClass);
         } catch (CompilingCodeException e) {
             return TestResultDTO.builder()
-                    .status(Status.COMPILE_ERROR)
+                    .codeExecutionStatus(CodeExecutionStatus.COMPILE_ERROR)
                     .output(e.getMessage())
                     .build();
         }
     }
-
 }

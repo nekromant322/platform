@@ -1,8 +1,11 @@
 package com.override.repositories;
 
-import org.springframework.stereotype.Repository;
+import com.override.models.StudentReport;
+import org.springframework.data.repository.CrudRepository;
 
-@Repository
-public class StudentReportRepository {
+import java.time.LocalDate;
 
+public interface StudentReportRepository extends CrudRepository<StudentReport, Long> {
+
+    StudentReport findFirstByDateAndStudentLogin(LocalDate date, String login);
 }
