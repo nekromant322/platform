@@ -7,8 +7,7 @@ spring:
     password: postgres
     username: postgres
     url: jdbc:postgresql://localhost:5430/orchestrator-db
-    datasource:
-      driver-class-name: org.postgresql.Driver
+    driver-class-name: org.postgresql.Driver
   jpa:
     properties:
       hibernate:
