@@ -25,8 +25,7 @@ Git Branching:
 4) Жмем на кнопку docker-compose up рядом с services или открываем вкладку Services 
 жмем Docker -> Deploy -> docker-compose-db.yml: Compose Deployment. В Deploy Log должны появиться
 надписи наподобие:
-    Starting platform_notification-db_1 ... done
-    Starting platform_orchestrator-db_1 ... done
+    `Starting platform_notification-db_1 ... done`
 А в Docker Desktop должна появится группа контейнеров platform. Если нет, то попробуй повторить п.2.
 5) Запускай сервисы, которым нужен Postgres.
 Для удобства работы с БД в IDEA есть вкладка Database, можешь использовать её, но однажды она чуть не свела меня с ума, 
