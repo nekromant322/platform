@@ -55,4 +55,28 @@ public class CodeTryRestController {
                 .build();
         return codeTryService.findAllByLesson(user.getUsername(), taskIdentifierDTO);
     }
+
+    @GetMapping("/stats")
+    public List<String> statList(){
+        return codeTryService.countStatsOfHardTasks();
+    }
+
+    @GetMapping("/stats/status")
+    public long countStatsByStatus(@RequestParam CodeExecutionStatus codeExecutionStatus){
+        return codeTryService.countStatsByStatus(codeExecutionStatus);
+    }
+
+    @GetMapping("/stats/users")
+    public long countStatsByStatusAndUser(@RequestParam CodeExecutionStatus codeExecutionStatus,
+                                          @RequestParam String login){
+        return codeTryService.countStatsByStatusAndUser(codeExecutionStatus,
+                login);
+    }
+
+    @GetMapping("/stats/tasks")
+    public long countStatsByChapterAndStepAndStatus(@RequestParam int chapter,@RequestParam int step,
+                                                    @RequestParam CodeExecutionStatus codeExecutionStatus){
+        return codeTryService.countStatsByChapterAndStepAndStatus(chapter,
+                step, codeExecutionStatus);
+    }
 }

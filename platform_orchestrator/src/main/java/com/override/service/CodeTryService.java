@@ -6,6 +6,7 @@ import com.override.repositories.CodeTryRepository;
 import dtos.CodeTryDTO;
 import dtos.TaskIdentifierDTO;
 import dtos.TestResultDTO;
+import enums.CodeExecutionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,25 @@ public class CodeTryService {
                 taskIdentifierDTO.getStep(),
                 taskIdentifierDTO.getLesson()
         );
+    }
+
+    public List<String> countStatsOfHardTasks() {
+        return codeTryRepository.countStatsOfHardTasks();
+    }
+
+    public long countStatsByStatus(CodeExecutionStatus codeExecutionStatus){
+        return codeTryRepository.countCodeTryByCodeExecutionStatus(codeExecutionStatus);
+    }
+
+    public long countStatsByStatusAndUser(CodeExecutionStatus codeExecutionStatus,
+                                          String login){
+        return codeTryRepository.countCodeTryCodeExecutionStatusAndUser(codeExecutionStatus,
+                platformUserService.findPlatformUserByLogin(login));
+    }
+
+    public long countStatsByChapterAndStepAndStatus(int chapter, int step,
+                                                    CodeExecutionStatus codeExecutionStatus){
+        return codeTryRepository.countCodeTryByChapterAndStepAndCodeExecutionStatus(chapter,
+                step, codeExecutionStatus);
     }
 }

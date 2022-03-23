@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
+@Table(name = "code_try")
 @NoArgsConstructor
 @AllArgsConstructor
 public class CodeTry {
@@ -29,7 +30,7 @@ public class CodeTry {
     @Column
     private Integer lesson;
 
-    @Column
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private CodeExecutionStatus codeExecutionStatus;
 
