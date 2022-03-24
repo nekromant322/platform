@@ -10,6 +10,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -83,5 +84,24 @@ public class LessonStructureService {
                 .map(Path::toString)
                 .collect(Collectors.toList());
         return resultList;
+    }
+
+    public List<String> getChapterNamesList(){
+        List<String> listOfCourses;
+        List<String> listToReturn = new ArrayList<>();
+        String path = "platform_orchestrator" + File.separator +
+                "src" + File.separator +
+                "main" + File.separator +
+                "resources" + File.separator +
+                "templates" + File.separator +
+                "lessons";
+        listOfCourses = getDirectoryStructure(path);
+        for(String course : listOfCourses){
+            List<String> listOfChapters = getDirectoryStructure(path + File.separator + course);
+            for (String chapter : listOfChapters){
+                listToReturn.add(String.format("%s %s",course, chapter));
+            }
+        }
+        return listToReturn;
     }
 }
