@@ -1,6 +1,7 @@
 package com.override.controller.rest;
 
 import com.override.service.StatisticsService;
+import dtos.CodeTryStatDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,18 +23,8 @@ public class StatisticsRestController {
         return statisticsService.countStatsOfHardTasks(size);
     }
 
-    @GetMapping("/status")
-    public Map<String, BigInteger> countStatsByStatus(){
-        return statisticsService.countStatsByStatus();
-    }
-
-    @GetMapping("/users")
-    public Map<String, BigInteger> countStatsByStatusAndUser(){
-        return statisticsService.countStatsByStatusAndUser();
-    }
-
-    @GetMapping("/tasks")
-    public Map<String, Double> countStatsByChapterAndStepAndStatus(){
-        return statisticsService.countStatsByChapterAndStepAndStatus();
+    @GetMapping("/data")
+    public CodeTryStatDTO countStatsByStatus(@RequestParam int size){
+        return statisticsService.getStatistics(size);
     }
 }

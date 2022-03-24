@@ -1,9 +1,10 @@
+const statisticsData = getStatistics(20)
 const dataOfHardTasks = {
     datasets: [{
         label: 'Самые сложные задачи',
         backgroundColor: 'rgb(100, 99, 132)',
         borderColor: 'rgb(100, 99, 132)',
-        data: getStatForHardTask(20),
+        data: statisticsData.hardTasks,
     }]
 };
 
@@ -12,7 +13,7 @@ const dataOfSteps = {
         label: 'Самые сложные главы',
         backgroundColor: 'rgb(100,255,255)',
         borderColor: 'rgb(100, 99, 132)',
-        data: getStatForSteps(),
+        data: statisticsData.hardStepRatio,
     }]
 };
 
@@ -21,7 +22,7 @@ const dataOfUsers = {
         label: 'Ученики',
         backgroundColor: 'rgb(255,0,255)',
         borderColor: 'rgb(100, 99, 132)',
-        data: getStatForUsers(),
+        data: statisticsData.studentsCodeTry,
     }]
 };
 
@@ -34,7 +35,7 @@ const dataOfStatus = {
             'rgb(255, 205, 86)',
             'rgb(255,0,255)'
         ],
-        data: getStatForStatus(),
+        data: statisticsData.codeTryStatus,
     }]
 };
 
@@ -101,45 +102,11 @@ function getStatForHardTask(size) {
     return data;
 }
 
-function getStatForSteps() {
+function getStatistics(size) {
     let data;
     $.ajax({
         method: 'GET',
-        url: "/statistics/tasks",
-        async: false,
-        success: function (response) {
-            console.log(response)
-            data = response;
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-    return data;
-}
-
-function getStatForUsers() {
-    let data;
-    $.ajax({
-        method: 'GET',
-        url: "/statistics/users",
-        async: false,
-        success: function (response) {
-            console.log(response)
-            data = response;
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-    return data;
-}
-
-function getStatForStatus() {
-    let data;
-    $.ajax({
-        method: 'GET',
-        url: "/statistics/status",
+        url: "/statistics/data?size=" + size,
         async: false,
         success: function (response) {
             console.log(response)
@@ -153,7 +120,7 @@ function getStatForStatus() {
 }
 
 function updateHardTaskChart(size){
-    let dataset = {
+    hardTaskChart.data = {
         datasets: [{
             label: 'HardTask',
             backgroundColor: 'rgb(100, 99, 132)',
@@ -161,6 +128,5 @@ function updateHardTaskChart(size){
             data: getStatForHardTask(size),
         }]
     };
-    hardTaskChart.data = dataset;
     hardTaskChart.update();
 }
