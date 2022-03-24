@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/messages")
 public interface TelegramFeign {
     @PostMapping
-    void sendMessages(@RequestParam String message, @RequestParam String chatId);
+    void sendMessages(@RequestBody MessageDTO message);
 }

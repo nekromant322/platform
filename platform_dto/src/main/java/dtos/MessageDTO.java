@@ -6,8 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class MessageDTO {
-    String chatId;
-    String message;
-    String type;
-    String username;
+    private String chatId;
+    private String message;
 }

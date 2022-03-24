@@ -12,7 +12,7 @@ public class MessageController {
     private MessageService messageService;
 
     @PostMapping
-    public void sendMessage(@RequestParam String chatId, @RequestParam String message){
-        messageService.sendMessage(message, chatId);
+    public void sendMessage(@RequestBody MessageDTO message){
+        messageService.sendMessage(message.getMessage(), message.getChatId());
     }
 }
