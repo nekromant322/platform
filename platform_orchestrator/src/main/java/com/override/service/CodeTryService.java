@@ -39,16 +39,10 @@ public class CodeTryService {
         );
     }
 
-    public Map<TaskIdentifierDTO, Long> countStatsOfHardTasks(int size) {
-        Map<TaskIdentifierDTO, Long> mapOfHardTasks = new HashMap<>();
-        List<Integer[]> statsOfHardTasks = codeTryRepository.countStatsOfHardTasks();
-        for (int i = 0; i < size; i++) {
-            Integer[] obj = statsOfHardTasks.get(i);
-            mapOfHardTasks.put(TaskIdentifierDTO.builder()
-                    .chapter(obj[0])
-                    .step(obj[1])
-                    .lesson(obj[2])
-                    .build(), (long) obj[3]);
+    public Map<String, Long> countStatsOfHardTasks(int size) {
+        Map<String, Long> mapOfHardTasks = new HashMap<>();
+        for (Integer[] obj : codeTryRepository.countStatsOfHardTasks(size)) {
+            mapOfHardTasks.put(obj[0] + "." + obj[1] + "." + obj[2], (long) obj[3]);
         }
         return mapOfHardTasks;
     }

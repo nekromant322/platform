@@ -3,6 +3,7 @@ package com.override.repositories;
 import com.override.models.CodeTry;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -17,11 +18,11 @@ public interface CodeTryRepository extends JpaRepository<CodeTry, Long> {
             " on pu.id = code_try.user_id group by login", nativeQuery = true)
     List<Object[]> countStatsOfUsers();
 
-    @Query(value = "SELECT status, count(*) from code_try group by status", nativeQuery = true)
+    @Query(value = "SELECT code_execution_status as status, count(*) from code_try group by status", nativeQuery = true)
     List<Object[]> countStatsOfStatus();
 
     @Query(value = "SELECT chapter, step, lesson, count(*) as count " +
-            "from code_try where status!='OK' group by chapter, step, lesson " +
-            "order by count desc limit 20", nativeQuery = true)
-    List<Integer[]> countStatsOfHardTasks();
+            "from code_try where code_execution_status!='OK' group by chapter, step, lesson " +
+            "order by count desc limit :size", nativeQuery = true)
+    List<Integer[]> countStatsOfHardTasks(@Param("size") int size);
 }

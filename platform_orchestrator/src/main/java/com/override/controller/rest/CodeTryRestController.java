@@ -59,7 +59,7 @@ public class CodeTryRestController {
     }
 
     @GetMapping("/stats/hardTasks")
-    public Map<TaskIdentifierDTO, Long> statList(@RequestParam int size){
+    public Map<String, Long> statList(@RequestParam int size){
         return codeTryService.countStatsOfHardTasks(size);
     }
 

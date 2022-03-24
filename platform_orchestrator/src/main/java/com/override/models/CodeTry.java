@@ -30,7 +30,7 @@ public class CodeTry {
     @Column
     private Integer lesson;
 
-    @Column(name = "status")
+    @Column
     @Enumerated(EnumType.STRING)
     private CodeExecutionStatus codeExecutionStatus;
 
