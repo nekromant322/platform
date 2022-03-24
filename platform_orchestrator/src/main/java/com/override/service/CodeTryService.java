@@ -6,11 +6,13 @@ import com.override.repositories.CodeTryRepository;
 import dtos.CodeTryDTO;
 import dtos.TaskIdentifierDTO;
 import dtos.TestResultDTO;
-import enums.CodeExecutionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CodeTryService {
@@ -37,23 +39,45 @@ public class CodeTryService {
         );
     }
 
-    public List<String> countStatsOfHardTasks() {
-        return codeTryRepository.countStatsOfHardTasks();
+    public Map<TaskIdentifierDTO, Long> countStatsOfHardTasks(int size) {
+        Map<TaskIdentifierDTO, Long> mapOfHardTasks = new HashMap<>();
+        List<Integer[]> statsOfHardTasks = codeTryRepository.countStatsOfHardTasks();
+        for (int i = 0; i < size; i++) {
+            Integer[] obj = statsOfHardTasks.get(i);
+            mapOfHardTasks.put(TaskIdentifierDTO.builder()
+                    .chapter(obj[0])
+                    .step(obj[1])
+                    .lesson(obj[2])
+                    .build(), (long) obj[3]);
+        }
+        return mapOfHardTasks;
     }
 
-    public long countStatsByStatus(CodeExecutionStatus codeExecutionStatus){
-        return codeTryRepository.countCodeTryByCodeExecutionStatus(codeExecutionStatus);
+    public Map<String, BigInteger> countStatsByStatus() {
+        Map<String, BigInteger> mapOfStatus = new HashMap<>();
+        for(Object[] obj: codeTryRepository.countStatsOfStatus()){
+            mapOfStatus.put((String) obj[0], (BigInteger) obj[1]);
+        }
+        return mapOfStatus;
     }
 
-    public long countStatsByStatusAndUser(CodeExecutionStatus codeExecutionStatus,
-                                          String login){
-        return codeTryRepository.countCodeTryCodeExecutionStatusAndUser(codeExecutionStatus,
-                platformUserService.findPlatformUserByLogin(login));
+    public Map<String, BigInteger> countStatsByStatusAndUser() {
+        Map<String, BigInteger> mapOfUsers = new HashMap<>();
+        for(Object[] obj : codeTryRepository.countStatsOfUsers()){
+            mapOfUsers.put((String) obj[0], (BigInteger) obj[1]);
+        }
+        return mapOfUsers;
     }
 
-    public long countStatsByChapterAndStepAndStatus(int chapter, int step,
-                                                    CodeExecutionStatus codeExecutionStatus){
-        return codeTryRepository.countCodeTryByChapterAndStepAndCodeExecutionStatus(chapter,
-                step, codeExecutionStatus);
+    public Map<TaskIdentifierDTO, Integer> countStatsByChapterAndStepAndStatus() {
+        Map<TaskIdentifierDTO, Integer> mapOfAllTries = new HashMap<>();
+        for (Integer[] integers : codeTryRepository.countCodeTryByChapterAndStep()) {
+            mapOfAllTries.put(TaskIdentifierDTO.builder()
+                    .chapter(integers[0])
+                    .step(integers[1])
+                    .lesson(0)
+                    .build(), integers[2]);
+        }
+        return mapOfAllTries;
     }
 }

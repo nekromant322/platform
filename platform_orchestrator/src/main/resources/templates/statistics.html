@@ -11,9 +11,27 @@
 
     <title>Stats</title>
 </head>
+<header th:replace="fragments/common.html :: header"></header>
+</header>
 <body>
 <div>
-    <canvas id="statsHardTaskChart" style="display: block; height: 273px; width: 657px;" class="chartjs-render-monitor" width="1314" height="546"></canvas>
+    <div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-outline-secondary" onclick="updateHardTaskChart(5)">Топ 5</button>
+            <button type="button" class="btn btn-outline-secondary" onclick="updateHardTaskChart(10)">Топ 10</button>
+            <button type="button" class="btn btn-outline-secondary" onclick="updateHardTaskChart(20)">Топ 20</button>
+        </div>
+        <canvas id="statsHardTaskChart"></canvas>
+    </div>
+    <div>
+        <canvas id="statsStepsChart"></canvas>
+    </div>
+    <div>
+        <canvas id="statsUsersChart"></canvas>
+    </div>
+    <div>
+        <canvas id="statsStatusChart"></canvas>
+    </div>
 </div>
 
 

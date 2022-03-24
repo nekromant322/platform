@@ -15,7 +15,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 import static com.override.service.CustomStudentDetailService.CustomStudentDetails;
 
@@ -56,27 +58,23 @@ public class CodeTryRestController {
         return codeTryService.findAllByLesson(user.getUsername(), taskIdentifierDTO);
     }
 
-    @GetMapping("/stats")
-    public List<String> statList(){
-        return codeTryService.countStatsOfHardTasks();
+    @GetMapping("/stats/hardTasks")
+    public Map<TaskIdentifierDTO, Long> statList(@RequestParam int size){
+        return codeTryService.countStatsOfHardTasks(size);
     }
 
     @GetMapping("/stats/status")
-    public long countStatsByStatus(@RequestParam CodeExecutionStatus codeExecutionStatus){
-        return codeTryService.countStatsByStatus(codeExecutionStatus);
+    public Map<String, BigInteger> countStatsByStatus(){
+        return codeTryService.countStatsByStatus();
     }
 
     @GetMapping("/stats/users")
-    public long countStatsByStatusAndUser(@RequestParam CodeExecutionStatus codeExecutionStatus,
-                                          @RequestParam String login){
-        return codeTryService.countStatsByStatusAndUser(codeExecutionStatus,
-                login);
+    public Map<String, BigInteger> countStatsByStatusAndUser(){
+        return codeTryService.countStatsByStatusAndUser();
     }
 
     @GetMapping("/stats/tasks")
-    public long countStatsByChapterAndStepAndStatus(@RequestParam int chapter,@RequestParam int step,
-                                                    @RequestParam CodeExecutionStatus codeExecutionStatus){
-        return codeTryService.countStatsByChapterAndStepAndStatus(chapter,
-                step, codeExecutionStatus);
+    public Map<TaskIdentifierDTO, Integer> countStatsByChapterAndStepAndStatus(){
+        return codeTryService.countStatsByChapterAndStepAndStatus();
     }
 }
