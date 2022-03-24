@@ -1,6 +1,6 @@
 const dataOfHardTasks = {
     datasets: [{
-        label: 'HardTask',
+        label: 'Самые сложные задачи',
         backgroundColor: 'rgb(100, 99, 132)',
         borderColor: 'rgb(100, 99, 132)',
         data: getStatForHardTask(20),
@@ -9,7 +9,7 @@ const dataOfHardTasks = {
 
 const dataOfSteps = {
     datasets: [{
-        label: 'Hardest Steps',
+        label: 'Самые сложные главы',
         backgroundColor: 'rgb(100,255,255)',
         borderColor: 'rgb(100, 99, 132)',
         data: getStatForSteps(),
@@ -18,7 +18,7 @@ const dataOfSteps = {
 
 const dataOfUsers = {
     datasets: [{
-        label: 'Users',
+        label: 'Ученики',
         backgroundColor: 'rgb(255,0,255)',
         borderColor: 'rgb(100, 99, 132)',
         data: getStatForUsers(),
@@ -27,7 +27,7 @@ const dataOfUsers = {
 
 const dataOfStatus = {
     datasets: [{
-        label: 'Status',
+        label: 'Статус решений',
         backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
@@ -88,7 +88,7 @@ function getStatForHardTask(size) {
     let data;
     $.ajax({
         method: 'GET',
-        url: "/codeTry/stats/hardTasks?size=" + size,
+        url: "/statistics/hardTasks?size=" + size,
         async: false,
         success: function (response) {
             console.log(response)
@@ -105,7 +105,7 @@ function getStatForSteps() {
     let data;
     $.ajax({
         method: 'GET',
-        url: "/codeTry/stats/tasks",
+        url: "/statistics/tasks",
         async: false,
         success: function (response) {
             console.log(response)
@@ -122,7 +122,7 @@ function getStatForUsers() {
     let data;
     $.ajax({
         method: 'GET',
-        url: "/codeTry/stats/users",
+        url: "/statistics/users",
         async: false,
         success: function (response) {
             console.log(response)
@@ -139,7 +139,7 @@ function getStatForStatus() {
     let data;
     $.ajax({
         method: 'GET',
-        url: "/codeTry/stats/status",
+        url: "/statistics/status",
         async: false,
         success: function (response) {
             console.log(response)

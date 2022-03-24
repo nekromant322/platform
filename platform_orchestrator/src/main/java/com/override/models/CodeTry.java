@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "code_try")
 @NoArgsConstructor
 @AllArgsConstructor
 public class CodeTry {

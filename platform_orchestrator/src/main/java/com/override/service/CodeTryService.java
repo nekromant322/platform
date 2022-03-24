@@ -38,40 +38,4 @@ public class CodeTryService {
                 taskIdentifierDTO.getLesson()
         );
     }
-
-    public Map<String, Long> countStatsOfHardTasks(int size) {
-        Map<String, Long> mapOfHardTasks = new HashMap<>();
-        for (Integer[] obj : codeTryRepository.countStatsOfHardTasks(size)) {
-            mapOfHardTasks.put(obj[0] + "." + obj[1] + "." + obj[2], (long) obj[3]);
-        }
-        return mapOfHardTasks;
-    }
-
-    public Map<String, BigInteger> countStatsByStatus() {
-        Map<String, BigInteger> mapOfStatus = new HashMap<>();
-        for(Object[] obj: codeTryRepository.countStatsOfStatus()){
-            mapOfStatus.put((String) obj[0], (BigInteger) obj[1]);
-        }
-        return mapOfStatus;
-    }
-
-    public Map<String, BigInteger> countStatsByStatusAndUser() {
-        Map<String, BigInteger> mapOfUsers = new HashMap<>();
-        for(Object[] obj : codeTryRepository.countStatsOfUsers()){
-            mapOfUsers.put((String) obj[0], (BigInteger) obj[1]);
-        }
-        return mapOfUsers;
-    }
-
-    public Map<TaskIdentifierDTO, Integer> countStatsByChapterAndStepAndStatus() {
-        Map<TaskIdentifierDTO, Integer> mapOfAllTries = new HashMap<>();
-        for (Integer[] integers : codeTryRepository.countCodeTryByChapterAndStep()) {
-            mapOfAllTries.put(TaskIdentifierDTO.builder()
-                    .chapter(integers[0])
-                    .step(integers[1])
-                    .lesson(0)
-                    .build(), integers[2]);
-        }
-        return mapOfAllTries;
-    }
 }

@@ -11,8 +11,8 @@ public interface CodeTryRepository extends JpaRepository<CodeTry, Long> {
     List<CodeTry> findAllByUserLogin(String login);
     List<CodeTry> findByUserLoginAndChapterAndStepAndLesson(String login, Integer chapter, Integer step, Integer lesson);
 
-    @Query(value = "SELECT chapter, step, count(*) as count from code_try group by chapter, step", nativeQuery = true)
-    List<Integer[]> countCodeTryByChapterAndStep();
+    @Query(value = "SELECT chapter, step, count(*) as count, count(distinct lesson) as counLessons from code_try group by chapter, step", nativeQuery = true)
+    List<Long[]> countCodeTryByChapterAndStep();
 
     @Query(value = "SELECT login, count(*) from code_try join platform_user as pu" +
             " on pu.id = code_try.user_id group by login", nativeQuery = true)

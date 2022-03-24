@@ -37,7 +37,7 @@ public class PageController {
         }
     }
 
-    @GetMapping("/codeTry/stats")
+    @GetMapping("/statistics")
     public String statisticPage(){
         return "statistics";
     }

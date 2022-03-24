@@ -57,24 +57,4 @@ public class CodeTryRestController {
                 .build();
         return codeTryService.findAllByLesson(user.getUsername(), taskIdentifierDTO);
     }
-
-    @GetMapping("/stats/hardTasks")
-    public Map<String, Long> statList(@RequestParam int size){
-        return codeTryService.countStatsOfHardTasks(size);
-    }
-
-    @GetMapping("/stats/status")
-    public Map<String, BigInteger> countStatsByStatus(){
-        return codeTryService.countStatsByStatus();
-    }
-
-    @GetMapping("/stats/users")
-    public Map<String, BigInteger> countStatsByStatusAndUser(){
-        return codeTryService.countStatsByStatusAndUser();
-    }
-
-    @GetMapping("/stats/tasks")
-    public Map<TaskIdentifierDTO, Integer> countStatsByChapterAndStepAndStatus(){
-        return codeTryService.countStatsByChapterAndStepAndStatus();
-    }
 }
