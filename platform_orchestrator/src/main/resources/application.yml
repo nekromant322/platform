@@ -33,6 +33,11 @@ sms:
   url:
     replenish-balance: https://sms.ru/pay.php
 
+init:
+  testData:
+    enabled: true
+    usersCount: 5
+    requestsCount: 2
 
 logging:
   file:
@@ -56,6 +61,7 @@ eureka:
 jwt:
   primeAdminLogin: admin
   primeAdminPassword: admin
+  primeAdminChatId: 010101
   secret:
     path: keys/keystore.jks
     password: password

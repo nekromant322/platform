@@ -1,8 +1,6 @@
 package com.override.util;
 
 import com.github.javafaker.Faker;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
 import com.override.models.Authority;
 import com.override.models.PlatformUser;
 import com.override.models.enums.Role;
@@ -30,16 +28,20 @@ public class InitializationService {
     @Value("${jwt.primeAdminLogin}")
     private String adminLogin;
 
-    @Value("${jwt.primeAdminLogin}")
+    @Value("${jwt.primeAdminPassword}")
     private String adminPassword;
 
-    @Value("@admin")
+    @Value("${jwt.primeAdminChatId}")
     private String adminTelegramChatId;
 
-    Faker faker = new Faker();
+    @Value("${init.testData.usersCount}")
+    private int usersCount;
 
-    private static final int COUNT_USER_FOR_INIT = 5;
-    private static final int COUNT_REQUESTS_FOR_INIT = 2;
+    @Value("${init.testData.requestsCount}")
+    private int requestsCount;
+
+    @Value("${init.testData.enabled}")
+    private boolean enableTestData;
 
     @Autowired
     private AuthorityService authorityService;
@@ -53,13 +55,17 @@ public class InitializationService {
     @Autowired
     private JoinRequestService joinRequestService;
 
+    Faker faker = new Faker();
+
     @PostConstruct
     private void init() {
-        AuthorityInit();
-        AdminInit();
-        UserInit();
-        codeTryInit();
-        joinRequestsInit();
+        if (enableTestData) {
+            AuthorityInit();
+            AdminInit();
+            UserInit();
+            codeTryInit();
+            joinRequestsInit();
+        }
     }
 
     private void AuthorityInit() {
@@ -69,7 +75,7 @@ public class InitializationService {
     }
 
     private void UserInit() {
-        for (int i = 0; i < COUNT_USER_FOR_INIT; i++) {
+        for (int i = 0; i < usersCount; i++) {
             saveUser(faker.name().username(),
                     faker.bothify("########"),
                     String.valueOf(faker.number().numberBetween(1000, 10000)),
@@ -113,9 +119,9 @@ public class InitializationService {
     }
 
     private void joinRequestsInit() {
-        for (int i = 0; i < COUNT_REQUESTS_FOR_INIT; i++) {
+        for (int i = 0; i < requestsCount; i++) {
             joinRequestService.saveRequest(new RegisterUserRequestDTO(faker.name().username(),
-                    String.valueOf(faker.number().numberBetween(1000,10000))));
+                    String.valueOf(faker.number().numberBetween(1000, 10000))));
         }
     }
 
