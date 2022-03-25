@@ -105,10 +105,10 @@ public class InitializationService {
 
     private void codeTryInit() {
         List<PlatformUser> students = userService.getAllStudents();
-        students.forEach(this::addCodeRetry);
+        students.forEach(this::addCodeTry);
     }
 
-    private void addCodeRetry(PlatformUser student) {
+    private void addCodeTry(PlatformUser student) {
         CodeExecutionStatus status;
         for (int i = 0; i < 10; i++) {
             status = CodeExecutionStatus
