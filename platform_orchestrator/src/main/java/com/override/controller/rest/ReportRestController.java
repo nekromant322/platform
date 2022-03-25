@@ -2,7 +2,7 @@ package com.override.controller.rest;
 
 import com.override.models.StudentReport;
 import com.override.service.ReportService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +14,10 @@ import static com.override.service.CustomStudentDetailService.CustomStudentDetai
 
 @RestController
 @RequestMapping("/report")
-@RequiredArgsConstructor
 public class ReportRestController {
 
-    private final ReportService reportService;
+    @Autowired
+    private ReportService reportService;
 
     @PostMapping
     public ResponseEntity<String> postReport(@RequestBody StudentReport report, @AuthenticationPrincipal CustomStudentDetails user) {

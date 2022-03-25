@@ -7,11 +7,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class StudentReport {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,4 +25,10 @@ public class StudentReport {
     private LocalDate date;
     private String text;
     private Double hours;
+
+    public StudentReport(LocalDate date, String text, Double hours) {
+        this.date = date;
+        this.text = text;
+        this.hours = hours;
+    }
 }

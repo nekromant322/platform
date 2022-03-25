@@ -1,0 +1,15 @@
+package com.override.services;
+
+import com.override.PlatformBot;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MessageService {
+    @Autowired
+    private PlatformBot platformBot;
+
+    public void sendMessage(String message, String chatId) {
+        platformBot.sendMessage(chatId, message);
+    }
+}

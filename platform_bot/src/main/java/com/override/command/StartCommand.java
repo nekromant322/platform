@@ -21,6 +21,4 @@ public class StartCommand extends PlatformBotCommand {
 
         execute(absSender, message, user);
     }
-
-
 }
