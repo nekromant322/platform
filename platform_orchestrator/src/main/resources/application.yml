@@ -33,11 +33,10 @@ sms:
   url:
     replenish-balance: https://sms.ru/pay.php
 
-init:
-  testData:
-    enabled: true
-    usersCount: 5
-    requestsCount: 2
+testData:
+  enabled: true
+  usersCount: 5
+  requestsCount: 2
 
 logging:
   file:

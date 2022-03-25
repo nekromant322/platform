@@ -15,6 +15,7 @@ import dtos.TestResultDTO;
 import enums.CodeExecutionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Random;
 
 @Component
+@ConditionalOnProperty(prefix = "testData", name = "enabled",havingValue = "true")
 public class InitializationService {
 
     @Value("${jwt.primeAdminLogin}")
@@ -34,14 +36,11 @@ public class InitializationService {
     @Value("${jwt.primeAdminChatId}")
     private String adminTelegramChatId;
 
-    @Value("${init.testData.usersCount}")
+    @Value("${testData.usersCount}")
     private int usersCount;
 
-    @Value("${init.testData.requestsCount}")
+    @Value("${testData.requestsCount}")
     private int requestsCount;
-
-    @Value("${init.testData.enabled}")
-    private boolean enableTestData;
 
     @Autowired
     private AuthorityService authorityService;
@@ -59,13 +58,12 @@ public class InitializationService {
 
     @PostConstruct
     private void init() {
-        if (enableTestData) {
-            AuthorityInit();
-            AdminInit();
-            UserInit();
-            codeTryInit();
-            joinRequestsInit();
-        }
+        AuthorityInit();
+        AdminInit();
+        UserInit();
+        codeTryInit();
+        joinRequestsInit();
+
     }
 
     private void AuthorityInit() {
@@ -75,9 +73,12 @@ public class InitializationService {
     }
 
     private void UserInit() {
+        String usernameAndPassword;
+
         for (int i = 0; i < usersCount; i++) {
-            saveUser(faker.name().username(),
-                    faker.bothify("########"),
+            usernameAndPassword = faker.name().firstName();
+            saveUser(usernameAndPassword,
+                    usernameAndPassword,
                     String.valueOf(faker.number().numberBetween(1000, 10000)),
                     Role.USER);
         }
@@ -106,15 +107,21 @@ public class InitializationService {
         List<PlatformUser> students = userService.getAllStudents();
         students.forEach(student ->
                 codeTryService.saveCodeTry(
-                        new CodeTryDTO(
-                                new TaskIdentifierDTO(
-                                        faker.number().numberBetween(0, 10),
-                                        faker.number().numberBetween(0, 10),
-                                        faker.number().numberBetween(0, 10)),
-                                faker.funnyName().name()),
-                        new TestResultDTO(
-                                CodeExecutionStatus.values()[new Random().nextInt(CodeExecutionStatus.values().length)],
-                                faker.funnyName().name()),
+                        CodeTryDTO
+                                .builder()
+                                .taskIdentifier(TaskIdentifierDTO
+                                        .builder()
+                                        .chapter(faker.number().numberBetween(0, 10))
+                                        .lesson(faker.number().numberBetween(0, 10))
+                                        .step(faker.number().numberBetween(0, 10))
+                                        .build())
+                                .studentsCode(faker.funnyName().name())
+                                .build(),
+                        TestResultDTO
+                                .builder()
+                                .codeExecutionStatus(CodeExecutionStatus
+                                        .values()[new Random().nextInt(CodeExecutionStatus.values().length)])
+                                .output(faker.funnyName().name()).build(),
                         student.getLogin()));
     }
 
