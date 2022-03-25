@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Random;
 
 @Component
-@ConditionalOnProperty(prefix = "testData", name = "enabled",havingValue = "true")
+@ConditionalOnProperty(prefix = "testData", name = "enabled", havingValue = "true")
 public class InitializationService {
 
     @Value("${jwt.primeAdminLogin}")
@@ -54,25 +54,25 @@ public class InitializationService {
     @Autowired
     private JoinRequestService joinRequestService;
 
-    Faker faker = new Faker();
+    private final Faker faker = new Faker();
 
     @PostConstruct
     private void init() {
-        AuthorityInit();
-        AdminInit();
-        UserInit();
+        authorityInit();
+        adminInit();
+        userInit();
         codeTryInit();
         joinRequestsInit();
 
     }
 
-    private void AuthorityInit() {
+    private void authorityInit() {
         for (Role role : Role.values()) {
             authorityService.save(role.getName());
         }
     }
 
-    private void UserInit() {
+    private void userInit() {
         String usernameAndPassword;
 
         for (int i = 0; i < usersCount; i++) {
@@ -84,7 +84,7 @@ public class InitializationService {
         }
     }
 
-    private void AdminInit() {
+    private void adminInit() {
         saveUser(adminLogin, adminPassword, adminTelegramChatId, Role.USER, Role.ADMIN);
     }
 
