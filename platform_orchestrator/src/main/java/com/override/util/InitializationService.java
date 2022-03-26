@@ -4,10 +4,7 @@ import com.github.javafaker.Faker;
 import com.override.models.Authority;
 import com.override.models.PlatformUser;
 import com.override.models.enums.Role;
-import com.override.service.AuthorityService;
-import com.override.service.CodeTryService;
-import com.override.service.JoinRequestService;
-import com.override.service.PlatformUserService;
+import com.override.service.*;
 import dtos.CodeTryDTO;
 import dtos.RegisterUserRequestDTO;
 import dtos.TaskIdentifierDTO;
@@ -19,9 +16,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Component
 @ConditionalOnProperty(prefix = "testData", name = "enabled", havingValue = "true")
@@ -53,6 +48,9 @@ public class InitializationService {
 
     @Autowired
     private JoinRequestService joinRequestService;
+
+    @Autowired
+    private LessonStructureService lessonStructureService;
 
     private final Faker faker = new Faker();
 
@@ -105,25 +103,26 @@ public class InitializationService {
 
     private void codeTryInit() {
         List<PlatformUser> students = userService.getAllStudents();
-        students.forEach(this::addCodeTry);
+        students.forEach(this::addCodeTryForEveryChapter);
     }
 
-    private void addCodeTry(PlatformUser student) {
-        CodeExecutionStatus status;
-        for (int i = 0; i < 10; i++) {
+    private void addCodeTryForEveryChapter(PlatformUser student) {
+        List<String> chapters = lessonStructureService.getChapterNamesList();
+        chapters.forEach(chapter -> generateCodeTryAttempts(student, chapters.indexOf(chapter) + 1));
+    }
+
+    private void generateCodeTryAttempts(PlatformUser student, int chapter) {
+        CodeExecutionStatus status = CodeExecutionStatus
+                .values()[new Random().nextInt(CodeExecutionStatus.values().length)];
+        while (status != CodeExecutionStatus.OK) {
+            saveCodeTry(student, chapter, status);
             status = CodeExecutionStatus
                     .values()[new Random().nextInt(CodeExecutionStatus.values().length)];
-            while (status != CodeExecutionStatus.OK) {
-                saveCodeTry(student, i, status);
-                status = CodeExecutionStatus
-                        .values()[new Random().nextInt(CodeExecutionStatus.values().length)];
-            }
-            saveCodeTry(student, i, CodeExecutionStatus.OK);
-
         }
+        saveCodeTry(student, chapter, CodeExecutionStatus.OK);
     }
 
-    private void saveCodeTry(PlatformUser student, int task, CodeExecutionStatus status) {
+    private void saveCodeTry(PlatformUser student, int chapter, CodeExecutionStatus status) {
         String helloWorld = "class HelloWorld {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        System.out.println(\"Hello World!\");\n" +
@@ -134,9 +133,9 @@ public class InitializationService {
                         .builder()
                         .taskIdentifier(TaskIdentifierDTO
                                 .builder()
-                                .chapter(task)
-                                .lesson(task)
-                                .step(task)
+                                .chapter(chapter)
+                                .lesson(chapter)
+                                .step(chapter)
                                 .build())
                         .studentsCode(helloWorld)
                         .build(),
@@ -145,6 +144,15 @@ public class InitializationService {
                         .codeExecutionStatus(status)
                         .output(faker.funnyName().name()).build(),
                 student.getLogin());
+    }
+
+    private void questionsInit() {
+        List<PlatformUser> students = userService.getAllStudents();
+        students.forEach(this::saveQuestions);
+    }
+
+    private void saveQuestions(PlatformUser student) {
+
     }
 
     private void joinRequestsInit() {
