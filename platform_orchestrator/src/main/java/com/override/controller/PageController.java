@@ -37,6 +37,11 @@ public class PageController {
         }
     }
 
+    @GetMapping("/questions")
+    public String questionsPage() {
+        return "questions";
+    }
+
     @GetMapping("/report")
     public String reportPage() {
         return "report";
