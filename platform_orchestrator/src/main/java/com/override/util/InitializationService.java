@@ -52,7 +52,8 @@ public class InitializationService {
     @Autowired
     private LessonStructureService lessonStructureService;
 
-    private final Faker faker = new Faker();
+    @Autowired
+    private Faker faker;
 
     @PostConstruct
     private void init() {
