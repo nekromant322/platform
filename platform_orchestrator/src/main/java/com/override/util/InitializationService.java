@@ -5,10 +5,7 @@ import com.override.models.Authority;
 import com.override.models.PlatformUser;
 import com.override.models.enums.Role;
 import com.override.service.*;
-import dtos.CodeTryDTO;
-import dtos.RegisterUserRequestDTO;
-import dtos.TaskIdentifierDTO;
-import dtos.TestResultDTO;
+import dtos.*;
 import enums.CodeExecutionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,6 +47,9 @@ public class InitializationService {
     private JoinRequestService joinRequestService;
 
     @Autowired
+    private QuestionService questionService;
+
+    @Autowired
     private LessonStructureService lessonStructureService;
 
     private final Faker faker = new Faker();
@@ -61,6 +61,7 @@ public class InitializationService {
         userInit();
         codeTryInit();
         joinRequestsInit();
+        questionsInit();
 
     }
 
@@ -152,6 +153,17 @@ public class InitializationService {
     }
 
     private void saveQuestions(PlatformUser student) {
+        int randomCount = faker.number().numberBetween(0,10);
+        for (int i = 0; i < randomCount; i++) {
+            List<String> chapters = lessonStructureService.getChapterNamesList();
+            chapters.forEach(chapter -> questionService.save(QuestionDTO
+                    .builder()
+                    .login(student.getLogin())
+                    .chapter(chapter)
+                    .answered(new Random().nextBoolean())
+                    .question(faker.funnyName().name())
+                    .build()));
+        }
 
     }
 
