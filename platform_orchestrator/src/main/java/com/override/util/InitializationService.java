@@ -3,6 +3,7 @@ package com.override.util;
 import com.github.javafaker.Faker;
 import com.override.models.Authority;
 import com.override.models.PlatformUser;
+import com.override.models.StudentReport;
 import com.override.models.enums.Role;
 import com.override.service.*;
 import dtos.*;
@@ -13,7 +14,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Component
 @ConditionalOnProperty(prefix = "testData", name = "enabled", havingValue = "true")
@@ -53,6 +58,9 @@ public class InitializationService {
     private LessonStructureService lessonStructureService;
 
     @Autowired
+    private ReportService reportService;
+
+    @Autowired
     private Faker faker;
 
     @PostConstruct
@@ -63,6 +71,7 @@ public class InitializationService {
         codeTryInit();
         joinRequestsInit();
         questionsInit();
+        reportsInit();
 
     }
 
@@ -154,7 +163,7 @@ public class InitializationService {
     }
 
     private void saveQuestions(PlatformUser student) {
-        int randomCount = faker.number().numberBetween(0,10);
+        int randomCount = faker.number().numberBetween(0, 10);
         for (int i = 0; i < randomCount; i++) {
             List<String> chapters = lessonStructureService.getChapterNamesList();
             chapters.forEach(chapter -> questionService.save(QuestionDTO
@@ -166,6 +175,26 @@ public class InitializationService {
                     .build()));
         }
 
+    }
+
+    private void reportsInit() {
+        List<PlatformUser> students = userService.getAllStudents();
+        students.forEach(this::saveReport);
+    }
+
+    private void saveReport(PlatformUser student) {
+        LocalDate startDate = LocalDate.of(2022, 1, 1);
+        LocalDate endDate = LocalDate.now();
+        List<LocalDate> dates = startDate.datesUntil(endDate).collect(Collectors.toList());
+
+        dates.forEach(date -> {
+            StudentReport report = new StudentReport();
+            report.setStudent(student);
+            report.setDate(date);
+            report.setText(faker.elderScrolls().firstName());
+            report.setHours((double) faker.number().numberBetween(0, 10));
+            reportService.saveReport(report, student.getLogin());
+        });
     }
 
     private void joinRequestsInit() {
