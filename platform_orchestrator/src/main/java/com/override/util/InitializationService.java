@@ -15,10 +15,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Component
 @ConditionalOnProperty(prefix = "testData", name = "enabled", havingValue = "true")
@@ -174,7 +172,6 @@ public class InitializationService {
                     .question(faker.funnyName().name())
                     .build()));
         }
-
     }
 
     private void reportsInit() {
@@ -203,6 +200,4 @@ public class InitializationService {
                     String.valueOf(faker.number().numberBetween(1000, 10000))));
         }
     }
-
-
 }
