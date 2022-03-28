@@ -1,6 +1,6 @@
 Добавление переменных окружения (Environment variables):
 - Edit Configurations -> Выбираем нужный стартер -> Вставляем нужные значения в строку как на картинке* -> Apply
-  (*если строка не отображается, то Modify options -> Environment variables (или Alt+E) -> Вставляем -> Apply)
+  (*если строка не отображается, то Modify options -> Environment variables (или Alt+E) -> Вставляем данные-> Apply)
 
 ![image](https://user-images.githubusercontent.com/94536519/160442353-96da2387-de34-4fdd-8370-895ff792393a.png)
 
