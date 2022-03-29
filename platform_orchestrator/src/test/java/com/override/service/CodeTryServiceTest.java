@@ -3,7 +3,6 @@ package com.override.service;
 import com.override.mappers.CodeTryMapper;
 import com.override.models.CodeTry;
 import com.override.repositories.CodeTryRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Answers;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -46,7 +46,7 @@ public class CodeTryServiceTest {
         final List<CodeTry> codeTryList = codeTryService.findAllCodes("Andrey");
 
         verify(codeTryRepository, times(1)).findAllByUserLogin(Mockito.any());
-        Assertions.assertTrue(codeTryList.contains(generateTestCodeTry()));
+        assertTrue(codeTryList.contains(generateTestCodeTry()));
     }
 
     @Test
@@ -58,6 +58,6 @@ public class CodeTryServiceTest {
         final List<CodeTry> codeTryList = codeTryService.findAllByLesson("Andrey", generateTestTaskIdentifierDTO());
         verify(codeTryRepository, times(1))
                 .findByUserLoginAndChapterAndStepAndLesson("Andrey", 1, 1, 1);
-        Assertions.assertTrue(codeTryList.contains(generateTestCodeTry()));
+        assertTrue(codeTryList.contains(generateTestCodeTry()));
     }
 }

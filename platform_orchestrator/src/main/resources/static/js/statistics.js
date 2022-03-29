@@ -122,7 +122,7 @@ function getStatistics(size) {
 function updateHardTaskChart(size){
     hardTaskChart.data = {
         datasets: [{
-            label: 'HardTask',
+            label: 'Самые сложные задачи',
             backgroundColor: 'rgb(100, 99, 132)',
             borderColor: 'rgb(100, 99, 132)',
             data: getStatForHardTask(size),
