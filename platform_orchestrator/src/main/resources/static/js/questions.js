@@ -267,7 +267,7 @@ function deleteQuestion(id) {
     })
 }
 
-function saveQuestion(id, question, chapter, answered, login) {
+function saveQuestion(id, question, chapter, answered, login, tabPane) {
     $.ajax({
         url: 'questions',
         dataType: 'json',
@@ -283,6 +283,7 @@ function saveQuestion(id, question, chapter, answered, login) {
         }),
         success: function () {
             console.log('saved')
+            checkLessonStructure(login, tabPane)
         }
     })
 }
