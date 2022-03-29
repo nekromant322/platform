@@ -1,11 +1,11 @@
 Добавление переменных окружения (Environment variables):
 - Edit Configurations -> Выбираем нужный сервис -> Вставляем нужные значения* в строку как на картинке** -> Apply
 
-*Значения берём из колонки Utils в Trello (ссылка внизу)
+*Значения берём из колонки Utils (Notification и orchestrator) в Trello (ссылка внизу)
 
 **Если строка не отображается, то Modify options -> Environment variables (или Alt+E) -> Вставляем данные-> Apply
 
-![image](https://user-images.githubusercontent.com/94536519/160442353-96da2387-de34-4fdd-8370-895ff792393a.png)
+![image](https://user-images.githubusercontent.com/94536519/160645457-6ae66f72-fe18-4fd9-8a23-01d806b14e70.png)
 
 Перед запуском:
 - Установи JDK 11
