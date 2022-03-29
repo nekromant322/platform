@@ -3,7 +3,9 @@ package com.override.utils;
 import com.override.models.Authority;
 import com.override.models.CodeTry;
 import com.override.models.PlatformUser;
+import com.override.models.Question;
 import dtos.CodeTryDTO;
+import dtos.QuestionDTO;
 import dtos.TaskIdentifierDTO;
 import dtos.TestResultDTO;
 import enums.CodeExecutionStatus;
@@ -70,5 +72,27 @@ public class TestFieldsUtil {
         final ArrayList<Long[]> objects = new ArrayList<>();
         objects.add(obj);
         return  objects;
+    }
+
+    public static Question generateTestQuestion() {
+        return Question.builder()
+                .id(1L)
+                .question("А ты точно разработчик?")
+                .answered(true)
+                .chapter("core 3")
+                .user(generateTestUser())
+                .build();
+    }
+
+    public static QuestionDTO generateTestQuestionDTO(){
+        PlatformUser user = generateTestUser();
+        Question testQuestion = generateTestQuestion();
+        return QuestionDTO.builder()
+                .id(testQuestion.getId())
+                .chapter(testQuestion.getChapter())
+                .login(user.getLogin())
+                .answered(testQuestion.isAnswered())
+                .question(testQuestion.getQuestion())
+                .build();
     }
 }
