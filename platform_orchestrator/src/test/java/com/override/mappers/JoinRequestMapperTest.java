@@ -8,6 +8,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(MockitoExtension.class)
 class JoinRequestMapperTest {
 
@@ -23,7 +25,7 @@ class JoinRequestMapperTest {
 
         JoinRequest actualEntity = requestMapper.dtoToEntity(expectedDto);
 
-        Assertions.assertEquals(expectedDto.getChatId(), actualEntity.getChatId());
-        Assertions.assertEquals(expectedDto.getTelegramUserName(), actualEntity.getNickName());
+        assertEquals(expectedDto.getChatId(), actualEntity.getChatId());
+        assertEquals(expectedDto.getTelegramUserName(), actualEntity.getNickName());
     }
 }

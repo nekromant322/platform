@@ -1,6 +1,5 @@
 package com.override.service;
 
-import com.override.mappers.CodeTryMapper;
 import com.override.mappers.CodeTryStatMapper;
 import com.override.repositories.CodeTryRepository;
 import org.junit.jupiter.api.Test;

@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -54,7 +55,7 @@ public class JoinRequestServiceTest {
 
         JoinRequestStatusDTO joinRequestStatusDTO = joinRequestService.saveRequest(requestDTO);
 
-        Assertions.assertEquals(new JoinRequestStatusDTO("В этом чате уже есть запрос на регистрацию"), joinRequestStatusDTO);
+        assertEquals(new JoinRequestStatusDTO("В этом чате уже есть запрос на регистрацию"), joinRequestStatusDTO);
     }
 
 
@@ -72,7 +73,7 @@ public class JoinRequestServiceTest {
 
         JoinRequestStatusDTO joinRequestStatusDTO = joinRequestService.saveRequest(requestDTO);
 
-        Assertions.assertEquals(new JoinRequestStatusDTO("Вы уже зарегистрированы"), joinRequestStatusDTO);
+        assertEquals(new JoinRequestStatusDTO("Вы уже зарегистрированы"), joinRequestStatusDTO);
     }
 
     @Test
@@ -89,7 +90,7 @@ public class JoinRequestServiceTest {
 
         JoinRequestStatusDTO joinRequestStatusDTO = joinRequestService.saveRequest(requestDTO);
 
-        Assertions.assertEquals(new JoinRequestStatusDTO("Ваш запрос на регистрацию в платформе создан, ожидайте подтверждения"),
+        assertEquals(new JoinRequestStatusDTO("Ваш запрос на регистрацию в платформе создан, ожидайте подтверждения"),
                 joinRequestStatusDTO);
         verify(requestRepository, times(1)).save(requestEntity);
     }
