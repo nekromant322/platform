@@ -15,7 +15,7 @@ public class StatisticsService {
     @Autowired
     private CodeTryStatMapper codeTryStatMapper;
 
-    public CodeTryStatDTO getStatistics(int size){
+    public CodeTryStatDTO getCodeTryStatistics(int size){
         return codeTryStatMapper.entityToDto(codeTryRepository.countStatsOfHardTasks(size),
                 codeTryRepository.countStatsOfUsers(), codeTryRepository.countStatsOfStatus(),
                 codeTryRepository.countCodeTryByChapterAndStep());

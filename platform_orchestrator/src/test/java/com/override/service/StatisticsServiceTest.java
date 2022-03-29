@@ -13,15 +13,15 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class StatisticsServiceTest {
     @InjectMocks
-    StatisticsService statisticsService;
+    private StatisticsService statisticsService;
     @Mock
-    CodeTryRepository codeTryRepository;
+    private CodeTryRepository codeTryRepository;
     @Mock
-    CodeTryStatMapper codeTryStatMapper;
+    private CodeTryStatMapper codeTryStatMapper;
 
     @Test
     void getStatistics() {
-        statisticsService.getStatistics(1);
+        statisticsService.getCodeTryStatistics(1);
 
         verify(codeTryStatMapper, times(1)).entityToDto(anyList(), anyList(), anyList(), anyList());
         verify(codeTryRepository,times(1)).countCodeTryByChapterAndStep();
@@ -32,7 +32,7 @@ class StatisticsServiceTest {
 
     @Test
     void countStatsOfHardTasks() {
-        statisticsService.getStatistics(1);
+        statisticsService.getCodeTryStatistics(1);
 
         verify(codeTryRepository, times(1)).countStatsOfHardTasks(1);
     }
