@@ -194,7 +194,8 @@ function checkLessonStructure(studentLogin, tabPane) {
 
                 getQuestionsByChapter(studentLogin, chapter, tableId, tabPane)
 
-                $('#form' + studentLogin + i).submit(function () {
+                $('#form' + studentLogin + i).submit(function (e) {
+                    e.preventDefault();
                     saveQuestion(null, $('#newQuestion' + studentLogin + i).val(), chapter, false, studentLogin)
                     checkLessonStructure(studentLogin, tabPane)
                 })
