@@ -20,10 +20,10 @@ public class QuestionRestController {
     private QuestionService questionService;
 
     @Autowired
-    LessonStructureService lessonStructureService;
+    private LessonStructureService lessonStructureService;
 
     @Autowired
-    PlatformUserService platformUserService;
+    private PlatformUserService platformUserService;
 
     @GetMapping("/users/{login}/{chapter}")
     public List<Question> findAll(@PathVariable String login,
