@@ -4,7 +4,7 @@ window.onload = function () {
 
 function getCurrentUser() {
     $.ajax({
-        url: 'questions/get/current',
+        url: 'questions/current',
         type: 'GET',
         contentType: 'application/json',
         success: function (currentUser) {
@@ -84,7 +84,7 @@ function getQuestionsForStudent(studentLogin, chapter, table) {
     let tableId = $('#' + table)
     let tableAnswered = $('#' + table + 'Answered')
     $.ajax({
-        url: 'questions/users/' + studentLogin + '/' + chapter,
+        url: 'questions/my/' + chapter,
         type: 'GET',
         contentType: 'application/json',
         success: function (questions) {
@@ -207,7 +207,7 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
     let tableId = $('#' + table)
     let tableAnswered = $('#' + table + 'Answered')
     $.ajax({
-        url: 'questions/users/' + studentLogin + '/' + chapter,
+        url: 'questions/' + studentLogin + '/' + chapter,
         type: 'GET',
         contentType: 'application/json',
         success: function (questions) {
