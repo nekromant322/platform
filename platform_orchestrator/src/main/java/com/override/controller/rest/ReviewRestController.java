@@ -17,20 +17,16 @@ public class ReviewRestController {
     @Autowired
     private ReviewService reviewService;
 
-    // В конце раздела студент сможет запросить ревью, задав тему и выбрав дату и время из свободных слотов
-    // Ревью при этом сохраняется в бд, но со статусом confirmed(false), это значит что время забронированно, но ещё не подтверждено
     @PostMapping
     public ResponseEntity<String> requestReview(@RequestBody Review review, @RequestParam LocalDate date,
                                                 @RequestParam int index) {
-        review.setBookedDateTime(date, index);
-        return reviewService.requestReview(review);
+        return reviewService.requestReview(review, date, index);
     }
 
-    // Ментор получает запрос на ревью и подтверждает бронь (или не подтверждает)
     @Secured("ROLE_ADMIN")
     @PostMapping
-    public ResponseEntity<String> appointReview(@RequestParam Long id) {
-        return reviewService.appointReview(id);
+    public ResponseEntity<String> approveReview(@RequestParam Long id) {
+        return reviewService.approveReview(id);
     }
 
     @GetMapping("/one")
@@ -43,20 +39,17 @@ public class ReviewRestController {
         return reviewService.findAllReview();
     }
 
-    // Ментор может смотреть все свои ревью, будет внедрён фильтр на прошедшие и запланированные, а также по датам
     @Secured("ROLE_ADMIN")
     @GetMapping("/mentors")
     public List<Review> findMentorReview(@RequestParam String login) {
         return reviewService.findMentorReview(login);
     }
 
-    // Аналогично, только для студента
     @GetMapping("/students")
     public List<Review> findStudentReview(@RequestParam String login) {
         return reviewService.findStudentReview(login);
     }
 
-    // Нужно, чтобы изменить дату например или назначить другого ментора
     @Secured("ROLE_ADMIN")
     @PostMapping
     public ResponseEntity<String> updateReview(@RequestBody Review review) {
