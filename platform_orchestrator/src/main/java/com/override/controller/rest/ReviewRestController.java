@@ -2,12 +2,12 @@ package com.override.controller.rest;
 
 import com.override.models.Review;
 import com.override.service.ReviewService;
+import dtos.ReviewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -18,9 +18,8 @@ public class ReviewRestController {
     private ReviewService reviewService;
 
     @PostMapping
-    public ResponseEntity<String> requestReview(@RequestBody Review review, @RequestParam LocalDate date,
-                                                @RequestParam int index) {
-        return reviewService.requestReview(review, date, index);
+    public ResponseEntity<String> requestReview(@RequestBody ReviewDTO reviewDTO) {
+        return reviewService.requestReview(reviewDTO);
     }
 
     @Secured("ROLE_ADMIN")
@@ -52,8 +51,8 @@ public class ReviewRestController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping
-    public ResponseEntity<String> updateReview(@RequestBody Review review) {
-        return reviewService.updateReview(review);
+    public ResponseEntity<String> updateReview(@RequestBody ReviewDTO reviewDTO) {
+        return reviewService.updateReview(reviewDTO);
     }
 
     @Secured("ROLE_ADMIN")

@@ -1,8 +1,10 @@
 package com.override.service;
 
+import com.override.mappers.ReviewMapper;
 import com.override.models.PlatformUser;
 import com.override.models.Review;
 import com.override.repositories.ReviewRepository;
+import dtos.ReviewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +25,15 @@ public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    public ResponseEntity<String> requestReview(Review review, LocalDate date, int index) {
-        review.setConfirmed(false);
-        review.setBookedDateTime(setDateTime(date, index));
-        reviewRepository.save(review);
+    @Autowired
+    private ReviewMapper reviewMapper;
+
+    public ResponseEntity<String> requestReview(ReviewDTO reviewDTO) {
+        reviewDTO.setConfirmed(false);
+        reviewDTO.setBookedDateTime(selectDateTimeSlot(reviewDTO.getDate(), reviewDTO.getIndex()));
+        reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
+                userService.findPlatformUserByLogin(reviewDTO.getStudent()),
+                userService.findPlatformUserByLogin(reviewDTO.getMentor())));
         return new ResponseEntity<>("Отправлен запрос на ревью!", HttpStatus.OK);
     }
 
@@ -55,8 +62,10 @@ public class ReviewService {
         return reviewRepository.findStudentReview(student);
     }
 
-    public ResponseEntity<String> updateReview(Review review) {
-        reviewRepository.save(review);
+    public ResponseEntity<String> updateReview(ReviewDTO reviewDTO) {
+        reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
+                userService.findPlatformUserByLogin(reviewDTO.getStudent()),
+                userService.findPlatformUserByLogin(reviewDTO.getMentor())));
         return new ResponseEntity<>("Ревью обновлено!", HttpStatus.OK);
     }
 
@@ -75,7 +84,7 @@ public class ReviewService {
         return dateTimeSlots;
     }
 
-    public LocalDateTime setDateTime(LocalDate date, int index) {
+    public LocalDateTime selectDateTimeSlot(LocalDate date, int index) {
         List<LocalDateTime> dateTimeSlots = generateDefaultDateTimeSlots(date);
         return dateTimeSlots.get(index);
     }
