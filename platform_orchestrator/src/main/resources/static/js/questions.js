@@ -214,16 +214,34 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
         success: function (questions) {
             $.each(questions, function (i, question) {
                 if (question.answered === true) {
-                    tableAnswered.append('<tr><td><div class="container-fluid"><div class="row">' +
-                        '<div class="col-11"><div class="form-check form-check-inline">' +
+                    tableAnswered.append('<tr><td><div class="container-fluid" id="container'
+                        + studentLogin + i + table + '"><div class="row">' +
+                        '<div class="col-10"><div class="form-check form-check-inline">' +
                         '<input class="form-check-input" type="checkbox" ' +
                         'id="checkbox' + studentLogin + i + chapter.id + '" checked/>' +
                         '</div><s>'
                         + question.question +
                         '</s></div>' +
-                        '<div class="col"><button type="button" id="del' + studentLogin + i + table + '"' +
+                        '<div class="col"><button type="button" id="edit' + studentLogin + i + table + '" ' +
+                        'class="btn btn-primary btn-sm" data-toggle="collapse" ' +
+                        'data-target="#collapse' + studentLogin + i + table + '" aria-expanded="false" ' +
+                        'aria-controls="collapse' + studentLogin + i + table + '">Изменить</button>' +
+                        '</div>' +
+                        '<div class="col-1"><button type="button" id="del' + studentLogin + i + table + '"' +
                         ' class="btn btn-danger btn-sm">Удалить</button>' +
-                        '</div></div></div></td></tr>')
+                        '</div>' +
+                        '</div>' +
+                        '<div class="collapse" id="collapse' + studentLogin + i + table + '">' +
+                        '<div class="card card-body">' +
+                        '<form id="form' + studentLogin + i + table + '" >' +
+                        '<div class="form-group">' +
+                        '<input class="form-control" id="editQuestion' + studentLogin + i + table + '" placeholder="Вопрос" value="' + question.question + '" required><br>' +
+                        '<button type="submit" id="editButton' + studentLogin + i + table + '" class="btn btn-success">Подтвердить</button>' +
+                        '</div>' +
+                        '</form>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div></td></tr>')
 
                     $('#checkbox' + studentLogin + i + chapter.id).change(function () {
                         if (this.checked !== true) {
@@ -233,14 +251,31 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
                     })
                 } else {
                     tableId.append('<tr><td><div class="container-fluid"><div class="row">' +
-                        '<div class="col-11"><div class="form-check form-check-inline">' +
+                        '<div class="col-10"><div class="form-check form-check-inline">' +
                         '<input class="form-check-input" type="checkbox" id="checkbox' + studentLogin + i + chapter.id + '">' +
                         '</div>'
                         + question.question +
                         '</div>' +
-                        '<div class="col"><button type="button" id="del' + studentLogin + i + table + '" ' +
+                        '<div class="col"><button type="button" id="edit' + studentLogin + i + table + '" ' +
+                        'class="btn btn-primary btn-sm" data-toggle="collapse" ' +
+                        'data-target="#collapse' + studentLogin + i + table + '" aria-expanded="false" ' +
+                        'aria-controls="collapse' + studentLogin + i + table + '">Изменить</button>' +
+                        '</div>' +
+                        '<div class="col-1"><button type="button" id="del' + studentLogin + i + table + '" ' +
                         'class="btn btn-danger btn-sm">Удалить</button>' +
-                        '</div></div></div></td></tr>')
+                        '</div>' +
+                        '</div>' +
+                        '<div class="collapse" id="collapse' + studentLogin + i + table + '">' +
+                        '<div class="card card-body">' +
+                        '<form id="form' + studentLogin + i + table + '" >' +
+                        '<div class="form-group">' +
+                        '<input class="form-control" id="editQuestion' + studentLogin + i + table + '" placeholder="Вопрос" value="' + question.question + '" required><br>' +
+                        '<button type="submit" id="editButton' + studentLogin + i + table + '" class="btn btn-success">Подтвердить</button>' +
+                        '</div>' +
+                        '</form>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div></td></tr>')
 
                     $('#checkbox' + studentLogin + i + chapter.id).change(function () {
                         if (this.checked) {
@@ -251,6 +286,13 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
                 }
                 $('#del' + studentLogin + i + table).click(function () {
                     deleteQuestion(question.id)
+                    checkLessonStructure(studentLogin, tabPane)
+                })
+
+                $('#form' + studentLogin + i + table).submit(function (e) {
+                    e.preventDefault();
+                    deleteQuestion(question.id)
+                    saveQuestion(null, $('#editQuestion' + studentLogin + i + table).val(), chapter, question.answered, studentLogin)
                     checkLessonStructure(studentLogin, tabPane)
                 })
             })
