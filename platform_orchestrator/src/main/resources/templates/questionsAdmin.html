@@ -7,19 +7,19 @@
 
     <title>Questions</title>
 
-    <header th:replace="fragments/common.html :: header"></header>
+    <header th:replace="fragments/admin-navbar.html :: header"></header>
 </head>
 <body>
-<div class="container-fluid bg-dark" id="container">
-<!--    <div id="forSingleUser"></div>-->
-<!--    <div class="row">-->
-<!--        <div class="col-2">-->
-<!--            <br>-->
-<!--            <div class="nav flex-column nav-pills bg-dark" id="allUserList" role="tablist" aria-orientation="vertical"-->
-<!--                 style="min-height: max-content; padding-right: 0"></div>-->
-<!--        </div>-->
-<!--        <div class="tab-content col bg-dark"  id="tabContent"></div>-->
-<!--    </div>-->
+<div class="container-fluid bg-dark">
+    <div id="forSingleUser"></div>
+    <div class="row">
+        <div class="col-2">
+            <br>
+            <div class="nav flex-column nav-pills bg-dark" id="allUserList" role="tablist" aria-orientation="vertical"
+                 style="min-height: max-content; padding-right: 0"></div>
+        </div>
+        <div class="tab-content col bg-dark"  id="tabContent"></div>
+    </div>
 </div>
 
 
@@ -34,6 +34,6 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 <script src="/js/utils.js"></script>
-<script src="/js/questions.js"></script>
+<script src="/js/questionsAdmin.js"></script>
 </body>
 </html>

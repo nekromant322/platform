@@ -47,22 +47,4 @@ public class QuestionRestController {
     public List<String> findAllChapters() {
         return lessonStructureService.getChapterNamesList();
     }
-
-    @Secured("ROLE_ADMIN")
-    @PostMapping
-    public void save(@RequestBody QuestionDTO questionDTO) {
-        questionService.save(questionDTO);
-    }
-
-    @Secured("ROLE_ADMIN")
-    @PatchMapping
-    public void patch(@RequestBody QuestionDTO questionDTO) {
-        questionService.patch(questionDTO);
-    }
-
-    @Secured("ROLE_ADMIN")
-    @DeleteMapping
-    public void delete(@RequestParam long id) {
-        questionService.delete(id);
-    }
 }
