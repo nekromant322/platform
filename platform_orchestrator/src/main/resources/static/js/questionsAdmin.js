@@ -60,13 +60,15 @@ function checkLessonStructure(studentLogin, tabPane) {
                     '<div class="card">' +
                     '<div class="card-header" id="heading' + studentLogin + i + '">' +
                     '<h5 class="mb-0">' +
-                    '<button class="btn btn-link" data-toggle="collapse" data-target="#collapse' + studentLogin + i + '" ' +
+                    '<button class="btn btn-link" data-toggle="collapse" ' +
+                    'data-target="#collapse' + studentLogin + i + '" ' +
                     'aria-expanded="true" aria-controls="collapse' + studentLogin + i + '"> Отвеченные вопросы' +
                     '</button>' +
                     '</h5>' +
                     '</div>' +
                     '<div id="collapse' + studentLogin + i + '" class="collapse" ' +
-                    'aria-labelledby="heading' + studentLogin + i + '" data-parent="#accordion' + studentLogin + i + '">' +
+                    'aria-labelledby="heading' + studentLogin + i + '" ' +
+                    'data-parent="#accordion' + studentLogin + i + '">' +
                     '<div class="card-body">' +
                     '<div class="table-responsive">' +
                     '<table class="table table-hover col">' +
@@ -80,14 +82,17 @@ function checkLessonStructure(studentLogin, tabPane) {
                     '</td></tr></tbody>' +
                     '</table>' +
                     '<button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="collapse" ' +
-                    'data-target="#collapseButton' + studentLogin + i + '" aria-expanded="false" aria-controls="collapseButton' + studentLogin + i + '" ' +
+                    'data-target="#collapseButton' + studentLogin + i + '" aria-expanded="false"' +
+                    ' aria-controls="collapseButton' + studentLogin + i + '" ' +
                     'id="button' + studentLogin + i + '">Добавить вопрос</button>' +
                     '<div class="collapse" id="collapseButton' + studentLogin + i + '">' +
                     '<div class="card card-body">' +
                     '<form id="form' + studentLogin + i + '" >' +
                     '<div class="form-group">' +
-                    '<input class="form-control" id="newQuestion' + studentLogin + i + '" placeholder="Вопрос" required><br>' +
-                    '<button type="submit" id="addButton' + studentLogin + i + '" class="btn btn-success">Добавить</button>' +
+                    '<input class="form-control" id="newQuestion' + studentLogin + i + '" ' +
+                    'placeholder="Вопрос" required><br>' +
+                    '<button type="submit" id="addButton' + studentLogin + i + '" ' +
+                    'class="btn btn-success">Добавить</button>' +
                     '</div>' +
                     '</form>' +
                     '</div>' +
@@ -98,7 +103,8 @@ function checkLessonStructure(studentLogin, tabPane) {
 
                 $('#form' + studentLogin + i).submit(function (e) {
                     e.preventDefault();
-                    saveQuestion(null, $('#newQuestion' + studentLogin + i).val(), chapter, false, studentLogin)
+                    saveQuestion(null, $('#newQuestion' + studentLogin + i).val(), chapter, false,
+                        studentLogin)
                     checkLessonStructure(studentLogin, tabPane)
                 })
             })
@@ -137,8 +143,10 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
                         '<div class="card card-body">' +
                         '<form id="form' + studentLogin + i + table + '" >' +
                         '<div class="form-group">' +
-                        '<input class="form-control" id="editQuestion' + studentLogin + i + table + '" placeholder="Вопрос" value="' + question.question + '" required><br>' +
-                        '<button type="submit" id="editButton' + studentLogin + i + table + '" class="btn btn-success">Подтвердить</button>' +
+                        '<input class="form-control" id="editQuestion' + studentLogin + i + table + '" ' +
+                        'placeholder="Вопрос" value="' + question.question + '" required><br>' +
+                        '<button type="submit" id="editButton' + studentLogin + i + table + '" ' +
+                        'class="btn btn-success">Подтвердить</button>' +
                         '</div>' +
                         '</form>' +
                         '</div>' +
@@ -147,14 +155,16 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
 
                     $('#checkbox' + studentLogin + i + chapter.id).change(function () {
                         if (this.checked !== true) {
-                            saveQuestion(question.id, question.question, question.chapter, false, studentLogin, tabPane)
+                            saveQuestion(question.id, question.question, question.chapter, false,
+                                studentLogin, tabPane)
                             checkLessonStructure(studentLogin, tabPane)
                         }
                     })
                 } else {
                     tableId.append('<tr><td><div class="container-fluid"><div class="row">' +
                         '<div class="col-10"><div class="form-check form-check-inline">' +
-                        '<input class="form-check-input" type="checkbox" id="checkbox' + studentLogin + i + chapter.id + '">' +
+                        '<input class="form-check-input" type="checkbox" ' +
+                        'id="checkbox' + studentLogin + i + chapter.id + '">' +
                         '</div>'
                         + question.question +
                         '</div>' +
@@ -171,8 +181,10 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
                         '<div class="card card-body">' +
                         '<form id="form' + studentLogin + i + table + '" >' +
                         '<div class="form-group">' +
-                        '<input class="form-control" id="editQuestion' + studentLogin + i + table + '" placeholder="Вопрос" value="' + question.question + '" required><br>' +
-                        '<button type="submit" id="editButton' + studentLogin + i + table + '" class="btn btn-success">Подтвердить</button>' +
+                        '<input class="form-control" id="editQuestion' + studentLogin + i + table + '"' +
+                        ' placeholder="Вопрос" value="' + question.question + '" required><br>' +
+                        '<button type="submit" id="editButton' + studentLogin + i + table + '" ' +
+                        'class="btn btn-success">Подтвердить</button>' +
                         '</div>' +
                         '</form>' +
                         '</div>' +
@@ -181,7 +193,8 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
 
                     $('#checkbox' + studentLogin + i + chapter.id).change(function () {
                         if (this.checked) {
-                            saveQuestion(question.id, question.question, question.chapter, true, studentLogin, tabPane)
+                            saveQuestion(question.id, question.question, question.chapter,
+                                true, studentLogin, tabPane)
                             checkLessonStructure(studentLogin, tabPane)
                         }
                     })
@@ -194,7 +207,8 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
                 $('#form' + studentLogin + i + table).submit(function (e) {
                     e.preventDefault();
                     deleteQuestion(question.id)
-                    saveQuestion(null, $('#editQuestion' + studentLogin + i + table).val(), chapter, question.answered, studentLogin)
+                    saveQuestion(null, $('#editQuestion' + studentLogin + i + table).val(), chapter,
+                        question.answered, studentLogin)
                     checkLessonStructure(studentLogin, tabPane)
                 })
             })

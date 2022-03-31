@@ -41,13 +41,15 @@ function getStudentQuestions(studentLogin) {
                     '<div class="card">' +
                     '<div class="card-header" id="heading' + studentLogin + i + '">' +
                     '<h5 class="mb-0">' +
-                    '<button class="btn btn-link" data-toggle="collapse" data-target="#collapse' + studentLogin + i + '" ' +
+                    '<button class="btn btn-link" data-toggle="collapse" ' +
+                    'data-target="#collapse' + studentLogin + i + '" ' +
                     'aria-expanded="true" aria-controls="collapse' + studentLogin + i + '"> Отвеченные вопросы' +
                     '</button>' +
                     '</h5>' +
                     '</div>' +
                     '<div id="collapse' + studentLogin + i + '" class="collapse" ' +
-                    'aria-labelledby="heading' + studentLogin + i + '" data-parent="#accordion' + studentLogin + i + '">' +
+                    'aria-labelledby="heading' + studentLogin + i + '" ' +
+                    'data-parent="#accordion' + studentLogin + i + '">' +
                     '<div class="card-body">' +
                     '<div class="table-responsive">' +
                     '<table class="table table-hover col">' +
