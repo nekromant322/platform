@@ -2,7 +2,7 @@ getStudents();
 
 function getStudents() {
     $.ajax({
-        url: '/admin/getAllStudents',
+        url: '/getAllStudents',
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
@@ -45,7 +45,7 @@ function updateToAdmin(id) {
     let data = {};
     data.id = id;
     $.ajax({
-        url: '/admin/promote-student/' + id,
+        url: '/promote-student/' + id,
         type: 'POST',
         contentType: 'application/json',
         success: function (response) {
