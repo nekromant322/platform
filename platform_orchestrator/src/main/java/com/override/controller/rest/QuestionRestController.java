@@ -6,9 +6,7 @@ import com.override.service.CustomStudentDetailService;
 import com.override.service.LessonStructureService;
 import com.override.service.PlatformUserService;
 import com.override.service.QuestionService;
-import dtos.QuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 

@@ -89,8 +89,8 @@ function checkLessonStructure(studentLogin, tabPane) {
                     '<div class="card card-body">' +
                     '<form id="form' + studentLogin + i + '" >' +
                     '<div class="form-group">' +
-                    '<input class="form-control" id="newQuestion' + studentLogin + i + '" ' +
-                    'placeholder="Вопрос" required><br>' +
+                    '<textarea class="form-control" id="newQuestion' + studentLogin + i + '" ' +
+                    'placeholder="Вопрос" rows="1" maxlength="255" required></textarea><br>' +
                     '<button type="submit" id="addButton' + studentLogin + i + '" ' +
                     'class="btn btn-success">Добавить</button>' +
                     '</div>' +
@@ -124,13 +124,13 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
                 if (question.answered === true) {
                     tableAnswered.append('<tr><td><div class="container-fluid" id="container'
                         + studentLogin + i + table + '"><div class="row">' +
-                        '<div class="col-10"><div class="form-check form-check-inline">' +
+                        '<div class="form-check form-check-inline col-1" style="max-width: 0">' +
                         '<input class="form-check-input" type="checkbox" ' +
                         'id="checkbox' + studentLogin + i + chapter.id + '" checked/>' +
-                        '</div><s>'
-                        + question.question +
+                        '</div>' +
+                        '<div class="col-9" style="word-wrap: break-word; max-width: 1400px"><s>' + question.question +
                         '</s></div>' +
-                        '<div class="col"><button type="button" id="edit' + studentLogin + i + table + '" ' +
+                        '<div class="col-1"><button type="button" id="edit' + studentLogin + i + table + '" ' +
                         'class="btn btn-primary btn-sm" data-toggle="collapse" ' +
                         'data-target="#collapse' + studentLogin + i + table + '" aria-expanded="false" ' +
                         'aria-controls="collapse' + studentLogin + i + table + '">Изменить</button>' +
@@ -143,8 +143,8 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
                         '<div class="card card-body">' +
                         '<form id="form' + studentLogin + i + table + '" >' +
                         '<div class="form-group">' +
-                        '<input class="form-control" id="editQuestion' + studentLogin + i + table + '" ' +
-                        'placeholder="Вопрос" value="' + question.question + '" required><br>' +
+                        '<textarea class="form-control" id="editQuestion' + studentLogin + i + table + '" ' +
+                        'placeholder="Вопрос" maxlength="255" required>' + question.question + '</textarea><br>' +
                         '<button type="submit" id="editButton' + studentLogin + i + table + '" ' +
                         'class="btn btn-success">Подтвердить</button>' +
                         '</div>' +
@@ -162,13 +162,13 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
                     })
                 } else {
                     tableId.append('<tr><td><div class="container-fluid"><div class="row">' +
-                        '<div class="col-10"><div class="form-check form-check-inline">' +
+                        '<div class="form-check form-check-inline col-1" style="max-width: 0">' +
                         '<input class="form-check-input" type="checkbox" ' +
                         'id="checkbox' + studentLogin + i + chapter.id + '">' +
-                        '</div>'
-                        + question.question +
                         '</div>' +
-                        '<div class="col"><button type="button" id="edit' + studentLogin + i + table + '" ' +
+                        '<div class="col-9" style="word-wrap: break-word; max-width: 1400px"><p>' + question.question +
+                        '</p></div>'+
+                        '<div class="col-1"><button type="button" id="edit' + studentLogin + i + table + '" ' +
                         'class="btn btn-primary btn-sm" data-toggle="collapse" ' +
                         'data-target="#collapse' + studentLogin + i + table + '" aria-expanded="false" ' +
                         'aria-controls="collapse' + studentLogin + i + table + '">Изменить</button>' +
@@ -181,8 +181,8 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
                         '<div class="card card-body">' +
                         '<form id="form' + studentLogin + i + table + '" >' +
                         '<div class="form-group">' +
-                        '<input class="form-control" id="editQuestion' + studentLogin + i + table + '"' +
-                        ' placeholder="Вопрос" value="' + question.question + '" required><br>' +
+                        '<textarea class="form-control" id="editQuestion' + studentLogin + i + table + '"' +
+                        ' placeholder="Вопрос" maxlength="255" required>' + question.question + '</textarea><br>' +
                         '<button type="submit" id="editButton' + studentLogin + i + table + '" ' +
                         'class="btn btn-success">Подтвердить</button>' +
                         '</div>' +
