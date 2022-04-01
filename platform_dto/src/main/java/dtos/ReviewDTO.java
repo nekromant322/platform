@@ -10,11 +10,12 @@ import java.time.LocalDateTime;
 @Builder
 public class ReviewDTO {
     private Long id;
-    private String student;
-    private String mentor;
+    private String studentLogin;
+    private String mentorLogin;
     private String title;
     private LocalDateTime bookedDateTime;
     private Boolean confirmed;
     private LocalDate date;
-    private int index;
+    private int[] slots;
+    private int slot;
 }

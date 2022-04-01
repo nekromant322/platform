@@ -24,8 +24,8 @@ public class ReviewRestController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping
-    public ResponseEntity<String> approveReview(@RequestParam Long id) {
-        return reviewService.approveReview(id);
+    public ResponseEntity<String> approveReview(@RequestBody ReviewDTO reviewDTO) {
+        return reviewService.approveReview(reviewDTO);
     }
 
     @GetMapping("/one")
@@ -33,20 +33,15 @@ public class ReviewRestController {
         return reviewService.findReviewById(id);
     }
 
-    @GetMapping("/all")
-    public List<Review> findAllReview() {
-        return reviewService.findAllReview();
-    }
-
     @Secured("ROLE_ADMIN")
     @GetMapping("/mentors")
-    public List<Review> findMentorReview(@RequestParam String login) {
-        return reviewService.findMentorReview(login);
+    public List<Review> findReviewByMentor(@RequestParam String login) {
+        return reviewService.findReviewByMentor(login);
     }
 
     @GetMapping("/students")
-    public List<Review> findStudentReview(@RequestParam String login) {
-        return reviewService.findStudentReview(login);
+    public List<Review> findReviewByStudent(@RequestParam String login) {
+        return reviewService.findReviewByStudent(login);
     }
 
     @Secured("ROLE_ADMIN")

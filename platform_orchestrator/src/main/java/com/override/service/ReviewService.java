@@ -30,17 +30,18 @@ public class ReviewService {
 
     public ResponseEntity<String> requestReview(ReviewDTO reviewDTO) {
         reviewDTO.setConfirmed(false);
-        reviewDTO.setBookedDateTime(selectDateTimeSlot(reviewDTO.getDate(), reviewDTO.getIndex()));
         reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
-                userService.findPlatformUserByLogin(reviewDTO.getStudent()),
-                userService.findPlatformUserByLogin(reviewDTO.getMentor())));
+                userService.findPlatformUserByLogin(reviewDTO.getStudentLogin()),
+                userService.findPlatformUserByLogin(reviewDTO.getMentorLogin())));
         return new ResponseEntity<>("Отправлен запрос на ревью!", HttpStatus.OK);
     }
 
-    public ResponseEntity<String> approveReview(Long id) {
-        Review review = reviewRepository.findReviewById(id);
-        review.setConfirmed(true);
-        reviewRepository.save(review);
+    public ResponseEntity<String> approveReview(ReviewDTO reviewDTO) {
+        reviewDTO.setBookedDateTime(selectDateTimeSlot(reviewDTO.getDate(), reviewDTO.getSlots(), reviewDTO.getSlot()));
+        reviewDTO.setConfirmed(true);
+        reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
+                userService.findPlatformUserByLogin(reviewDTO.getStudentLogin()),
+                userService.findPlatformUserByLogin(reviewDTO.getMentorLogin())));
         return new ResponseEntity<>("Ревью подтверждено!", HttpStatus.OK);
     }
 
@@ -48,24 +49,21 @@ public class ReviewService {
         return reviewRepository.findReviewById(id);
     }
 
-    public List<Review> findAllReview() {
-        return reviewRepository.findAllReview();
-    }
 
-    public List<Review> findMentorReview(String login) {
+    public List<Review> findReviewByMentor(String login) {
         PlatformUser mentor = userService.findPlatformUserByLogin(login);
-        return reviewRepository.findMentorReview(mentor);
+        return reviewRepository.findReviewByMentor(mentor);
     }
 
-    public List<Review> findStudentReview(String login) {
+    public List<Review> findReviewByStudent(String login) {
         PlatformUser student = userService.findPlatformUserByLogin(login);
-        return reviewRepository.findStudentReview(student);
+        return reviewRepository.findReviewByStudent(student);
     }
 
     public ResponseEntity<String> updateReview(ReviewDTO reviewDTO) {
         reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
-                userService.findPlatformUserByLogin(reviewDTO.getStudent()),
-                userService.findPlatformUserByLogin(reviewDTO.getMentor())));
+                userService.findPlatformUserByLogin(reviewDTO.getStudentLogin()),
+                userService.findPlatformUserByLogin(reviewDTO.getMentorLogin())));
         return new ResponseEntity<>("Ревью обновлено!", HttpStatus.OK);
     }
 
@@ -74,18 +72,22 @@ public class ReviewService {
         return new ResponseEntity<>("Ревью удалено!", HttpStatus.OK);
     }
 
-    public List<LocalDateTime> generateDefaultDateTimeSlots(LocalDate date) {
+    private List<LocalDateTime> generateDefaultDateTimeSlots(LocalDate date) {
         List<LocalDateTime> dateTimeSlots = new ArrayList<>();
         LocalTime time = LocalTime.of(0, 0);
-        for (int i = 1; i < 48; i++) {
+        for (int i = 0; i < 47; i++) {
             dateTimeSlots.add(LocalDateTime.of(date, time));
             time = time.plusMinutes(30);
         }
         return dateTimeSlots;
     }
 
-    public LocalDateTime selectDateTimeSlot(LocalDate date, int index) {
+    private LocalDateTime selectDateTimeSlot(LocalDate date, int[] slots, int slot) {
         List<LocalDateTime> dateTimeSlots = generateDefaultDateTimeSlots(date);
-        return dateTimeSlots.get(index);
+        List<LocalDateTime> selectedTimeSlots = new ArrayList<>();
+        for (int index : slots) {
+            selectedTimeSlots.add(dateTimeSlots.get(index));
+        }
+        return selectedTimeSlots.get(slot);
     }
 }

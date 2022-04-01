@@ -1,15 +1,10 @@
 package com.override.utils;
 
-import com.override.models.Authority;
-import com.override.models.CodeTry;
-import com.override.models.PlatformUser;
-import com.override.models.Question;
-import dtos.CodeTryDTO;
-import dtos.QuestionDTO;
-import dtos.TaskIdentifierDTO;
-import dtos.TestResultDTO;
+import com.override.models.*;
+import dtos.*;
 import enums.CodeExecutionStatus;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
@@ -68,6 +63,35 @@ public class TestFieldsUtil {
                 .login(user.getLogin())
                 .answered(testQuestion.isAnswered())
                 .question(testQuestion.getQuestion())
+                .build();
+    }
+
+    public static Review generateTestReview() {
+        return Review.builder()
+                .id(1L)
+                .student(generateTestUser())
+                .mentor(generateTestUser())
+                .title("Тема 1")
+                .bookedDateTime(LocalDateTime.of(2022, 4, 1, 16, 30))
+                .confirmed(false)
+                .build();
+    }
+
+    public static ReviewDTO generateTestReviewDTO() {
+        PlatformUser testStudent = generateTestUser();
+        PlatformUser testMentor = generateTestUser();
+        Review testReview = generateTestReview();
+        int[] testSlots = {23, 25, 33};
+        return ReviewDTO.builder()
+                .id(testReview.getId())
+                .studentLogin(testStudent.getLogin())
+                .mentorLogin(testMentor.getLogin())
+                .title(testReview.getTitle())
+                .bookedDateTime(testReview.getBookedDateTime())
+                .confirmed(testReview.getConfirmed())
+                .date(LocalDate.of(2022, 4, 1))
+                .slots(testSlots)
+                .slot(2)
                 .build();
     }
 }
