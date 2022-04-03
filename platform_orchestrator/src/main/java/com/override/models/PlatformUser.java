@@ -24,6 +24,9 @@ public class PlatformUser {
 
     private String telegramChatId;
 
+    @OneToOne
+    private PersonalData personalData;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinTable(
             name = "users_authorities",
