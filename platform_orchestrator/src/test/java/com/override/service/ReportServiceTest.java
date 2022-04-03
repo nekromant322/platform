@@ -2,6 +2,7 @@ package com.override.service;
 
 import com.override.models.PlatformUser;
 import com.override.models.StudentReport;
+import com.override.repositories.PlatformUserRepository;
 import com.override.repositories.StudentReportRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,9 @@ class ReportServiceTest {
     @Mock
     private PlatformUserService userService;
 
+    @Mock
+    private PlatformUserRepository userRepository;
+
     @Test
     public void testWhenNewReport() {
         StudentReport report = new StudentReport();
@@ -48,5 +52,10 @@ class ReportServiceTest {
 
         Assertions.assertEquals(new ResponseEntity<>("Уже есть отчет на эту дату", HttpStatus.CONFLICT), entity);
         verify(userService, times(0)).findPlatformUserByLogin(any());
+    }
+
+    @Test
+    public void testWhenSendReminderOfReport() {
+//        when(userRepository.findPlatformUsersWithoutReportOfCurrentDay());
     }
 }

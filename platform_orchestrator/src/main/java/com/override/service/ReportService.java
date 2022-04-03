@@ -3,6 +3,7 @@ package com.override.service;
 import com.override.feigns.NotificatorFeign;
 import com.override.models.PlatformUser;
 import com.override.models.StudentReport;
+import com.override.repositories.PlatformUserRepository;
 import com.override.repositories.StudentReportRepository;
 import dtos.MessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class ReportService {
     @Autowired
     private PlatformUserService userService;
     @Autowired
+    private PlatformUserRepository userRepository;
+    @Autowired
     private NotificatorFeign notificatorFeign;
 
     public ResponseEntity<String> saveReport(StudentReport report, String studentLogin) {
@@ -36,15 +39,11 @@ public class ReportService {
 
     @Scheduled(cron = "${spring.datasource.hikari.scheduled-executor.cron}", zone = "${spring.datasource.hikari.scheduled-executor.zone}")
     public void sendDailyReminderOfReport() {
-        ZoneId zoneId = ZoneId.of("Europe/Moscow");
-
-        for (PlatformUser user : userService.getAllStudents()) {
-            if (reportRepository.findFirstByDateAndStudentLogin(LocalDate.now(zoneId), user.getLogin()) == null) {
-                MessageDTO message = MessageDTO.builder().build();
-                message.setMessage("Привет, не забудь написать отчет \uD83D\uDE4A");
-                message.setChatId(user.getTelegramChatId());
-                notificatorFeign.sendReminderOfReport(message);
-            }
+        for (PlatformUser user : userRepository.findPlatformUsersWithoutReportOfCurrentDay()) {
+            MessageDTO message = MessageDTO.builder().build();
+            message.setMessage("Привет, не забудь написать отчет \uD83D\uDE4A");
+            message.setChatId(user.getTelegramChatId());
+            notificatorFeign.sendTelegramMessages(message);
         }
     }
 }

@@ -14,5 +14,5 @@ public interface NotificatorFeign {
     Double getBalance();
 
     @PostMapping("/teleMessages")
-    void sendReminderOfReport(@RequestBody MessageDTO message);
+    void sendTelegramMessages(@RequestBody MessageDTO message);
 }
