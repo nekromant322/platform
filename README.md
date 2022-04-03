@@ -69,4 +69,4 @@ Git Branching:
 ![alt](https://i.ibb.co/j8S68TD/img-6.png) ![alt](https://i.ibb.co/7vx42gV/img-5.png)
 
 Полезные ссылки:
-https://trello.com/b/zN2JnsWE/%D0%BF%D0%BB%D0%B0%D1%82%D1%84%D0%BE%D1%80%D0%BC%D0%B0
+https://trello.com/b/zN2JnsWE/платформа
