@@ -2,6 +2,7 @@ package com.override.service;
 
 import com.override.exception.UserAlreadyExistException;
 import com.override.models.Authority;
+import com.override.models.PersonalData;
 import com.override.models.PlatformUser;
 import com.override.models.enums.Role;
 import com.override.repositories.PlatformUserRepository;
@@ -40,8 +41,9 @@ public class PlatformUserService {
     public PlatformUser generateAccount(String login, String chatId) {
         String password = passwordGeneratorService.generateStrongPassword();
         List<Authority> roles = Collections.singletonList(authorityService.getAuthorityByRole(Role.USER));
+        PersonalData personalData = new PersonalData();
 
-        PlatformUser account = new PlatformUser(null, login, password, chatId, roles);
+        PlatformUser account = new PlatformUser(null, login, password, chatId, roles, personalData);
         register(account);
 
         return account;
@@ -54,7 +56,8 @@ public class PlatformUserService {
                 login,
                 passwordEncoder.encode(studentAccount.getPassword()),
                 studentAccount.getTelegramChatId(),
-                studentAccount.getAuthorities()
+                studentAccount.getAuthorities(),
+                null
         );
 
         if (accountRepository.findFirstByLogin(login) == null) {
