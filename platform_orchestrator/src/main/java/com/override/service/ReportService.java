@@ -49,7 +49,5 @@ public class ReportService {
                 notificatorFeign.sendReminderOfReport(message);
             }
         }
-
-
     }
 }
