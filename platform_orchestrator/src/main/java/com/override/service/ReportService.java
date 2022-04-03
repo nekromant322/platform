@@ -1,7 +1,6 @@
 package com.override.service;
 
 import com.override.feigns.NotificatorFeign;
-import com.override.feigns.TelegramBotFeign;
 import com.override.models.PlatformUser;
 import com.override.models.StudentReport;
 import com.override.repositories.StudentReportRepository;
@@ -14,8 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ReportService {
@@ -38,7 +35,7 @@ public class ReportService {
     }
 
     @Scheduled(cron = "${spring.datasource.hikari.scheduled-executor.cron}", zone = "${spring.datasource.hikari.scheduled-executor.zone}")
-    public void reminderOfReport() {
+    public void sendDailyReminderOfReport() {
         ZoneId zoneId = ZoneId.of("Europe/Moscow");
 
         for (PlatformUser user : userService.getAllStudents()) {
