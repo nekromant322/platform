@@ -49,6 +49,11 @@ public class PageController {
         return "questions";
     }
 
+    @GetMapping("/personalData")
+    public String personalDataPage() {
+        return "personalData";
+    }
+
     @GetMapping("/report")
     public String reportPage() {
         return "report";
