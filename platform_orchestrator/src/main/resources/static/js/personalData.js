@@ -4,7 +4,7 @@ window.onload = function () {
 
 function getCurrentUser() {
     $.ajax({
-        url: 'questions/current',
+        url: 'personalData/current',
         type: 'GET',
         contentType: 'application/json',
         success: function (currentUser) {
@@ -64,7 +64,46 @@ function getCurrentUser() {
                 '</button>' +
                 '</div>' +
                 '</form>')
+
+            $('#addButton').submit(function () {
+                save(currentUser.personalData.actNumber, currentUser.personalData.contractNumber,
+                    currentUser.personalData.date, currentUser.personalData.fullName,
+                    currentUser.personalData.passportSeries, currentUser.personalData.passportNumber,
+                    currentUser.personalData.passportIssued, currentUser.personalData.issueDate,
+                    currentUser.personalData.birthDate, currentUser.personalData.registration,
+                    currentUser.personalData.email, currentUser.personalData.phoneNumber,)
+            })
             // getStudentQuestions(currentUser.login)
+        }
+    })
+}
+
+function save(actNumber, contractNumber, date, fullName, passportSeries, passportNumber, passportIssued,
+              issueDate, birthDate, registration, email, phoneNumber, ) {
+    $.ajax({
+        url: 'personalData',
+        dataType: 'json',
+        method: 'PATCH',
+        cache: false,
+        contentType: 'application/json',
+        data: JSON.stringify({
+            actNumber: actNumber,
+            contractNumber: contractNumber,
+            date: date,
+            fullName: fullName,
+            passportSeries: passportSeries,
+            passportNumber: passportNumber,
+            passportIssued: passportIssued,
+            issueDate: issueDate,
+            birthDate: birthDate,
+            registration: registration,
+            email: email,
+            phoneNumber: phoneNumber,
+
+        }),
+        success: function () {
+            console.log('saved')
+            checkLessonStructure(login, tabPane)
         }
     })
 }
