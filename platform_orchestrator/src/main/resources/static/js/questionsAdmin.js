@@ -6,7 +6,7 @@ function listAllUsers() {
     var navLinkId;
     var vPillId;
     $.ajax({
-        url: '/admin/getAllStudents',
+        url: '/getAllStudents',
         type: 'GET',
         contentType: 'application/json',
         success: function (users) {
