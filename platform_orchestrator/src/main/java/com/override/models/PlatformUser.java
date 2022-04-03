@@ -32,6 +32,6 @@ public class PlatformUser {
     )
     private List<Authority> authorities;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     private PersonalData personalData;
 }

@@ -2,6 +2,7 @@ package com.override.service;
 
 import com.override.exception.UserAlreadyExistException;
 import com.override.models.Authority;
+import com.override.models.PersonalData;
 import com.override.models.PlatformUser;
 import com.override.models.enums.Role;
 import com.override.repositories.PlatformUserRepository;
@@ -113,7 +114,8 @@ class PlatformUserServiceTest {
                 chatId,
                 new ArrayList<>() {{
                     add(userAuthority);
-                }}
+                }},
+                new PersonalData()
         );
 
         when(authorityService.getAuthorityByRole(Role.USER)).thenReturn(userAuthority);

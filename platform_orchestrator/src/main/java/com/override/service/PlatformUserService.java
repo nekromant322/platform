@@ -57,7 +57,7 @@ public class PlatformUserService {
                 passwordEncoder.encode(studentAccount.getPassword()),
                 studentAccount.getTelegramChatId(),
                 studentAccount.getAuthorities(),
-                null
+                new PersonalData()
         );
 
         if (accountRepository.findFirstByLogin(login) == null) {

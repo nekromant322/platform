@@ -2,6 +2,7 @@ package com.override.util;
 
 import com.github.javafaker.Faker;
 import com.override.models.Authority;
+import com.override.models.PersonalData;
 import com.override.models.PlatformUser;
 import com.override.models.StudentReport;
 import com.override.models.enums.Role;
@@ -97,8 +98,8 @@ public class InitializationService {
 
     private void saveUser(String login, String password, String telegramChatId, Role... userRoles) {
         List<Authority> roles = getAuthorityListFromRoles(userRoles);
-
-        PlatformUser account = new PlatformUser(null, login, password, telegramChatId, roles);
+        PersonalData personalData = new PersonalData();
+        PlatformUser account = new PlatformUser(null, login, password, telegramChatId, roles, personalData);
         userService.save(account);
     }
 

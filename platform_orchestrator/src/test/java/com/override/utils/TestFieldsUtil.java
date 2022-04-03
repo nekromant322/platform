@@ -1,9 +1,6 @@
 package com.override.utils;
 
-import com.override.models.Authority;
-import com.override.models.CodeTry;
-import com.override.models.PlatformUser;
-import com.override.models.Question;
+import com.override.models.*;
 import dtos.CodeTryDTO;
 import dtos.QuestionDTO;
 import dtos.TaskIdentifierDTO;
@@ -21,7 +18,7 @@ public class TestFieldsUtil {
 
     public static PlatformUser generateTestUser() {
         return new PlatformUser(null, "Andrey", "a", "a",
-                Collections.singletonList(new Authority(null, "admin")));
+                Collections.singletonList(new Authority(null, "admin")), new PersonalData());
     }
 
     public static TaskIdentifierDTO generateTestTaskIdentifierDTO() {
