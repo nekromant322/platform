@@ -1,16 +1,15 @@
 package com.override.models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
 public class PlatformUser {
 
@@ -32,6 +31,7 @@ public class PlatformUser {
     )
     private List<Authority> authorities;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private PersonalData personalData;
+
 }

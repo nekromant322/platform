@@ -1,22 +1,22 @@
 package com.override.models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
-public class PersonalData {
+public class PersonalData extends PlatformUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "actNumber")
@@ -55,4 +55,6 @@ public class PersonalData {
     @Column(name = "phoneNumber")
     private Long phoneNumber;
 
+    @OneToOne(mappedBy = "personalData")
+    private PlatformUser user;
 }

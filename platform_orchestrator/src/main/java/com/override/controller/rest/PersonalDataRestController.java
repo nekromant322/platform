@@ -3,7 +3,9 @@ package com.override.controller.rest;
 import com.override.models.PersonalData;
 import com.override.models.PlatformUser;
 import com.override.service.CustomStudentDetailService;
+import com.override.service.PersonalDataService;
 import com.override.service.PlatformUserService;
+import dtos.PersonalDataDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +17,16 @@ public class PersonalDataRestController {
     @Autowired
     private PlatformUserService platformUserService;
 
+    @Autowired
+    private PersonalDataService personalDataService;
+
     @GetMapping("/current")
     public PlatformUser getUserInfo(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return platformUserService.findPlatformUserByLogin(user.getUsername());
     }
 
     @PatchMapping
-    public void patch(@RequestBody PersonalData personalData, @RequestBody PlatformUser platformUser) {
-        platformUser.setPersonalData(personalData);
-        platformUserService.save(platformUser);
+    public void patch(@RequestBody PersonalDataDTO personalDataDTO) {
+        personalDataService.save(personalDataDTO);
     }
 }
