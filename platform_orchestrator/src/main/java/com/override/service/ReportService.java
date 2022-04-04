@@ -12,9 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-
 @Service
 public class ReportService {
 
@@ -40,9 +37,10 @@ public class ReportService {
     @Scheduled(cron = "${spring.datasource.hikari.scheduled-executor.cron}", zone = "${spring.datasource.hikari.scheduled-executor.zone}")
     public void sendDailyReminderOfReport() {
         for (PlatformUser user : userRepository.findPlatformUsersWithoutReportOfCurrentDay()) {
-            MessageDTO message = MessageDTO.builder().build();
-            message.setMessage("Привет, не забудь написать отчет \uD83D\uDE4A");
-            message.setChatId(user.getTelegramChatId());
+            MessageDTO message = MessageDTO.builder()
+                    .message("Привет, не забудь написать отчет \uD83D\uDE4A")
+                    .chatId(user.getTelegramChatId())
+                    .build();
             notificatorFeign.sendTelegramMessages(message);
         }
     }

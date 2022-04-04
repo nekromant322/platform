@@ -1,9 +1,10 @@
 package com.override.service;
 
+import com.override.feigns.NotificatorFeign;
 import com.override.models.PlatformUser;
 import com.override.models.StudentReport;
-import com.override.repositories.PlatformUserRepository;
 import com.override.repositories.StudentReportRepository;
+import dtos.MessageDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +30,7 @@ class ReportServiceTest {
     private PlatformUserService userService;
 
     @Mock
-    private PlatformUserRepository userRepository;
+    private NotificatorFeign notificatorFeign;
 
     @Test
     public void testWhenNewReport() {
@@ -55,7 +56,13 @@ class ReportServiceTest {
     }
 
     @Test
-    public void testWhenSendReminderOfReport() {
-//        when(userRepository.findPlatformUsersWithoutReportOfCurrentDay());
+    public void testSendTelegramMessages() {
+        MessageDTO message = MessageDTO.builder()
+                .message("test")
+                .chatId("5293984716")
+                .build();
+        notificatorFeign.sendTelegramMessages(message);
+
+        verify(notificatorFeign, atLeast(1)).sendTelegramMessages(message);
     }
 }
