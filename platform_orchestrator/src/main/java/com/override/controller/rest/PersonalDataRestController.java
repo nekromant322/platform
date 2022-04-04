@@ -26,7 +26,8 @@ public class PersonalDataRestController {
     }
 
     @PatchMapping
-    public void patch(@RequestBody PersonalDataDTO personalDataDTO) {
-        personalDataService.save(personalDataDTO);
+    public void patch(@RequestBody PersonalData personalData,
+                      @PathVariable String userLogin) {
+        personalDataService.save(personalData, userLogin);
     }
 }
