@@ -1,6 +1,7 @@
 package com.override.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -55,6 +56,7 @@ public class PersonalData extends PlatformUser {
     @Column(name = "phoneNumber")
     private Long phoneNumber;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "personalData")
     private PlatformUser user;
 }
