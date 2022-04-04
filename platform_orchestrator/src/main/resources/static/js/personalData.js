@@ -13,51 +13,51 @@ function getCurrentUser() {
                 '<div class="form-group">' +
                 '<h5>Номер акта</h5>' +
                 '<input class="form-control" id="actNumber" type="number" ' +
-                'placeholder="actNumber" maxlength="255" value="' + currentUser.personalData.actNumber + '" required>' +
+                'placeholder="actNumber" maxlength="255" value="' + currentUser.personalData.actNumber + '">' +
                 '<br>' +
                 '<h5>Номер контракта</h5>' +
                 '<input class="form-control" id="contractNumber" type="number" ' +
-                'placeholder="contractNumber" maxlength="255" value="' + currentUser.personalData.contractNumber + '" required>' +
+                'placeholder="contractNumber" maxlength="255" value="' + currentUser.personalData.contractNumber + '">' +
                 '<br>' +
                 '<h5>Дата</h5>' +
                 '<input class="form-control" id="date" type="date" ' +
-                'placeholder="date" value="' + currentUser.personalData.date + '" required>' +
+                'placeholder="date" value="' + currentUser.personalData.date + '">' +
                 '<br>' +
                 '<h5>Полное имя</h5>' +
                 '<input class="form-control" id="fullName" ' +
-                'placeholder="fullName" maxlength="255" value="' + currentUser.personalData.fullName + '" required>' +
+                'placeholder="fullName" maxlength="255" value="' + currentUser.personalData.fullName + '">' +
                 '<br>' +
                 '<h5>Серия паспорта</h5>' +
                 '<input class="form-control" id="passportSeries" type="number" ' +
-                'placeholder="passportSeries" maxlength="4" value="' + currentUser.personalData.passportSeries + '" required>' +
+                'placeholder="passportSeries" maxlength="4" value="' + currentUser.personalData.passportSeries + '">' +
                 '<br>' +
                 '<h5>Номер паспорта</h5>' +
                 '<input class="form-control" id="passportNumber" type="number" ' +
-                'placeholder="passportNumber" maxlength="6" value="' + currentUser.personalData.passportNumber + '" required>' +
+                'placeholder="passportNumber" maxlength="6" value="' + currentUser.personalData.passportNumber + '">' +
                 '<br>' +
                 '<h5>Выдан</h5>' +
                 '<input class="form-control" id="passportIssued" ' +
-                'placeholder="passportIssued" maxlength="255" value="' + currentUser.personalData.passportIssued + '" required>' +
+                'placeholder="passportIssued" maxlength="255" value="' + currentUser.personalData.passportIssued + '">' +
                 '<br>' +
                 '<h5>Годен</h5>' +
                 '<input class="form-control" id="issueDate" type="date" ' +
-                'placeholder="issueDate" value="' + currentUser.personalData.issueDate + '" required>' +
+                'placeholder="issueDate" value="' + currentUser.personalData.issueDate + '">' +
                 '<br>' +
                 '<h5>Дата рождения</h5>' +
                 '<input class="form-control" id="birthDate" type="date" ' +
-                'placeholder="birthDate" value="' + currentUser.personalData.birthDate + '" required>' +
+                'placeholder="birthDate" value="' + currentUser.personalData.birthDate + '">' +
                 '<br>' +
                 '<h5>Регистрация</h5>' +
                 '<input class="form-control" id="registration" ' +
-                'placeholder="registration" maxlength="255" value="' + currentUser.personalData.registration + '" required>' +
+                'placeholder="registration" maxlength="255" value="' + currentUser.personalData.registration + '">' +
                 '<br>' +
                 '<h5>Email</h5>' +
                 '<input class="form-control" id="email" type="email" ' +
-                'placeholder="email" maxlength="255" value="' + currentUser.personalData.email + '" required>' +
+                'placeholder="email" maxlength="255" value="' + currentUser.personalData.email + '">' +
                 '<br>' +
                 '<h5>Номер телефона</h5>' +
                 '<input class="form-control" id="phoneNumber" type="number" ' +
-                'placeholder="phoneNumber" maxlength="11" value="' + currentUser.personalData.phoneNumber + '" required>' +
+                'placeholder="phoneNumber" maxlength="11" value="' + currentUser.personalData.phoneNumber + '">' +
                 '<br>' +
                 '<button type="submit" id="addButton" ' +
                 'class="btn btn-success">Сохранить' +
@@ -66,12 +66,12 @@ function getCurrentUser() {
                 '</form>')
 
             $('#addButton').submit(function () {
-                save(currentUser.personalData.actNumber, currentUser.personalData.contractNumber,
-                    currentUser.personalData.date, currentUser.personalData.fullName,
-                    currentUser.personalData.passportSeries, currentUser.personalData.passportNumber,
-                    currentUser.personalData.passportIssued, currentUser.personalData.issueDate,
-                    currentUser.personalData.birthDate, currentUser.personalData.registration,
-                    currentUser.personalData.email, currentUser.personalData.phoneNumber,)
+                save($('#actNumber').val(), $('#contractNumber').val(),
+                    $('#date').val(), $('#fullName').val(),
+                    $('#passportSeries').val(), $('#passportNumber').val(),
+                    $('#passportIssued').val(), $('#issueDate').val(),
+                    $('#birthDate').val(), $('#registration').val(),
+                    $('#email').val(), $('#phoneNumber').val())
             })
             // getStudentQuestions(currentUser.login)
         }
@@ -79,7 +79,7 @@ function getCurrentUser() {
 }
 
 function save(actNumber, contractNumber, date, fullName, passportSeries, passportNumber, passportIssued,
-              issueDate, birthDate, registration, email, phoneNumber, ) {
+              issueDate, birthDate, registration, email, phoneNumber) {
     $.ajax({
         url: 'personalData',
         dataType: 'json',
@@ -103,7 +103,7 @@ function save(actNumber, contractNumber, date, fullName, passportSeries, passpor
         }),
         success: function () {
             console.log('saved')
-            checkLessonStructure(login, tabPane)
+            getCurrentUser()
         }
     })
 }
