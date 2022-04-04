@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-public class PersonalData extends PlatformUser {
+public class PersonalData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
