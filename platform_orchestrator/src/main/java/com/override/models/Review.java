@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +19,9 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title")
+    private String title;
+
     @ManyToOne
     @JoinColumn(name = "student_id")
     private PlatformUser student;
@@ -27,12 +30,6 @@ public class Review {
     @JoinColumn(name = "mentor_id")
     private PlatformUser mentor;
 
-    @Column(name = "title")
-    private String title;
-
-    @Column(name = "date")
-    private LocalDateTime bookedDateTime;
-
-    @Column(name = "confirmed")
-    private Boolean confirmed;
+    @ManyToMany(mappedBy = "reviews")
+    private List<TimeSlot> bookedTimeSlots;
 }

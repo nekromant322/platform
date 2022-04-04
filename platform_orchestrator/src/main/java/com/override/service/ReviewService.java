@@ -1,93 +1,77 @@
 package com.override.service;
 
 import com.override.mappers.ReviewMapper;
-import com.override.models.PlatformUser;
+import com.override.mappers.TimeSlotMapper;
 import com.override.models.Review;
+import com.override.repositories.PlatformUserRepository;
 import com.override.repositories.ReviewRepository;
+import com.override.repositories.TimeSlotRepository;
 import dtos.ReviewDTO;
+import dtos.TimeSlotDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ReviewService {
 
     @Autowired
-    private PlatformUserService userService;
+    private PlatformUserRepository platformUserRepository;
 
     @Autowired
     private ReviewRepository reviewRepository;
 
     @Autowired
+    private TimeSlotRepository timeSlotRepository;
+
+    @Autowired
     private ReviewMapper reviewMapper;
 
-    public ResponseEntity<String> requestReview(ReviewDTO reviewDTO) {
-        reviewDTO.setConfirmed(false);
+    @Autowired
+    private TimeSlotMapper timeSlotMapper;
+
+    public void saveOrUpdateReview(ReviewDTO reviewDTO) {
         reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
-                userService.findPlatformUserByLogin(reviewDTO.getStudentLogin()),
-                userService.findPlatformUserByLogin(reviewDTO.getMentorLogin())));
-        return new ResponseEntity<>("Отправлен запрос на ревью!", HttpStatus.OK);
+                platformUserRepository.findFirstByLogin(reviewDTO.getStudentLogin()),
+                platformUserRepository.findFirstByLogin(reviewDTO.getMentorLogin()),
+                timeSlotRepository.findTimeSlotsById(reviewDTO.getBookedTimeSlots().iterator().next().getId())));
     }
 
-    public ResponseEntity<String> approveReview(ReviewDTO reviewDTO) {
-        reviewDTO.setBookedDateTime(selectDateTimeSlot(reviewDTO.getDate(), reviewDTO.getSlots(), reviewDTO.getSlot()));
-        reviewDTO.setConfirmed(true);
-        reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
-                userService.findPlatformUserByLogin(reviewDTO.getStudentLogin()),
-                userService.findPlatformUserByLogin(reviewDTO.getMentorLogin())));
-        return new ResponseEntity<>("Ревью подтверждено!", HttpStatus.OK);
+    public void saveOrUpdateTimeSlot(TimeSlotDTO timeSlotDTO) {
+        timeSlotRepository.save(timeSlotMapper.dtoToEntity(timeSlotDTO,
+                reviewRepository.findReviewsById(timeSlotDTO.getReviews().iterator().next().getId())));
     }
 
-    public Review findReviewById(Long id) {
-        return reviewRepository.findReviewById(id);
+    public void deleteReview(ReviewDTO reviewDTO) {
+        reviewRepository.deleteById(reviewDTO.getId());
     }
 
-
-    public List<Review> findReviewByMentor(String login) {
-        PlatformUser mentor = userService.findPlatformUserByLogin(login);
-        return reviewRepository.findReviewByMentor(mentor);
+    public void deleteTimeSlot(TimeSlotDTO timeSlotDTO) {
+        timeSlotRepository.deleteById(timeSlotDTO.getId());
     }
 
-    public List<Review> findReviewByStudent(String login) {
-        PlatformUser student = userService.findPlatformUserByLogin(login);
-        return reviewRepository.findReviewByStudent(student);
+    public List<Review> findReviewByMentor(ReviewDTO reviewDTO) {
+        return reviewRepository.findReviewByMentor(platformUserRepository.
+                findFirstByLogin(reviewDTO.getMentorLogin()));
     }
 
-    public ResponseEntity<String> updateReview(ReviewDTO reviewDTO) {
-        reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
-                userService.findPlatformUserByLogin(reviewDTO.getStudentLogin()),
-                userService.findPlatformUserByLogin(reviewDTO.getMentorLogin())));
-        return new ResponseEntity<>("Ревью обновлено!", HttpStatus.OK);
+    public List<Review> findReviewByStudent(ReviewDTO reviewDTO) {
+        return reviewRepository.findReviewByStudent(platformUserRepository.
+                findFirstByLogin(reviewDTO.getStudentLogin()));
     }
 
-    public ResponseEntity<String> deleteReview(Long id) {
-        reviewRepository.deleteById(id);
-        return new ResponseEntity<>("Ревью удалено!", HttpStatus.OK);
+    public List<Review> findReviewByBookedDate(TimeSlotDTO timeSlotDTO) {
+        return reviewRepository.findReviewByBookedTimeSlots(timeSlotRepository.
+                findTimeSlotByBookedDate(timeSlotDTO.getBookedDate()));
     }
 
-    private List<LocalDateTime> generateDefaultDateTimeSlots(LocalDate date) {
-        List<LocalDateTime> dateTimeSlots = new ArrayList<>();
-        LocalTime time = LocalTime.of(0, 0);
-        for (int i = 0; i < 47; i++) {
-            dateTimeSlots.add(LocalDateTime.of(date, time));
-            time = time.plusMinutes(30);
-        }
-        return dateTimeSlots;
+    public List<Review> findReviewByBookedDateAndTime(TimeSlotDTO timeSlotDTO) {
+        return reviewRepository.findReviewByBookedTimeSlots(timeSlotRepository.
+                findTimeSlotByBookedDateAndBookedTime(timeSlotDTO.getBookedDate(), timeSlotDTO.getBookedTime()));
     }
 
-    private LocalDateTime selectDateTimeSlot(LocalDate date, int[] slots, int slot) {
-        List<LocalDateTime> dateTimeSlots = generateDefaultDateTimeSlots(date);
-        List<LocalDateTime> selectedTimeSlots = new ArrayList<>();
-        for (int index : slots) {
-            selectedTimeSlots.add(dateTimeSlots.get(index));
-        }
-        return selectedTimeSlots.get(slot);
+    public List<Review> findReviewByMentorIsNull() {
+        return reviewRepository.findReviewsByMentorIsNull();
     }
 }

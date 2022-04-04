@@ -2,29 +2,25 @@ package com.override.mappers;
 
 import com.override.models.PlatformUser;
 import com.override.models.Review;
-import com.override.service.PlatformUserService;
+import com.override.models.TimeSlot;
 import dtos.ReviewDTO;
-import lombok.Builder;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Data
-@Builder
+import java.util.List;
+
 @Component
 public class ReviewMapper {
 
-    @Autowired
-    private PlatformUserService platformUserService;
-
-    public Review dtoToEntity(ReviewDTO reviewDTO, PlatformUser student, PlatformUser mentor){
+    public Review dtoToEntity(ReviewDTO reviewDTO,
+                              PlatformUser student,
+                              PlatformUser mentor,
+                              List<TimeSlot> bookedTimeSlots){
         return Review.builder()
                 .id(reviewDTO.getId())
+                .title(reviewDTO.getTitle())
                 .student(student)
                 .mentor(mentor)
-                .title(reviewDTO.getTitle())
-                .bookedDateTime(reviewDTO.getBookedDateTime())
-                .confirmed(reviewDTO.getConfirmed())
+                .bookedTimeSlots(bookedTimeSlots)
                 .build();
     }
 }
