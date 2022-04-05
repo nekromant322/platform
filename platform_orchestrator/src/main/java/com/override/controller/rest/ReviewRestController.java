@@ -26,19 +26,20 @@ public class ReviewRestController {
 
     @GetMapping
     public List<Review> findReview(@RequestBody ReviewDTO reviewDTO) {
-        if (reviewDTO.getMentorLogin() != null) {
-            return reviewService.findReviewByMentor(reviewDTO);
+        if (reviewDTO.getMentorLogin() != null && reviewDTO.getStudentLogin() == null) {
+            return reviewService.findReviewByMentorLogin(reviewDTO);
+        }
+        if (reviewDTO.getStudentLogin() != null && reviewDTO.getMentorLogin() == null) {
+            return reviewService.findReviewByStudentLogin(reviewDTO);
         }
         if (reviewDTO.getStudentLogin() != null && reviewDTO.getMentorLogin() != null) {
-            return reviewService.findReviewByStudent(reviewDTO);
+            return reviewService.findReviewByMentorLoginAndStudentLogin(reviewDTO);
         }
-        if (reviewDTO.getBookedTimeSlots().iterator().next().getBookedDate() != null &&
-                    reviewDTO.getBookedTimeSlots().iterator().next().getBookedTime() == null) {
-            return reviewService.findReviewByBookedDate(reviewDTO.getBookedTimeSlots().iterator().next());
+        if (reviewDTO.getBookedDate() != null && reviewDTO.getBookedTime() == null) {
+            return reviewService.findReviewByBookedDate(reviewDTO);
         }
-        if (reviewDTO.getBookedTimeSlots().iterator().next().getBookedDate() != null &&
-                    reviewDTO.getBookedTimeSlots().iterator().next().getBookedTime() != null) {
-            return reviewService.findReviewByBookedDateAndTime(reviewDTO.getBookedTimeSlots().iterator().next());
+        if (reviewDTO.getBookedDate() != null && reviewDTO.getBookedTime() != null) {
+            return reviewService.findReviewByBookedDateAndTime(reviewDTO);
         }
         else {
             return reviewService.findReviewByMentorIsNull();

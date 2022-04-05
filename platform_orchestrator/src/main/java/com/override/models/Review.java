@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -30,6 +31,18 @@ public class Review {
     @JoinColumn(name = "mentor_id")
     private PlatformUser mentor;
 
-    @ManyToMany(mappedBy = "reviews")
-    private List<TimeSlot> bookedTimeSlots;
+    @Column(name = "booked_date")
+    private LocalDate bookedDate;
+
+    @Column(name = "booked_time")
+    private LocalTime bookedTime;
+
+    @Column(name = "first_time_slot")
+    private LocalTime firstTimeSlot;
+
+    @Column(name = "second_time_slot")
+    private LocalTime secondTimeSlot;
+
+    @Column(name = "third_time_slot")
+    private LocalTime thirdTimeSlot;
 }

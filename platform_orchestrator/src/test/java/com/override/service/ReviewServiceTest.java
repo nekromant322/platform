@@ -3,6 +3,7 @@ package com.override.service;
 import com.override.mappers.ReviewMapper;
 import com.override.models.PlatformUser;
 import com.override.models.Review;
+import com.override.repositories.PlatformUserRepository;
 import com.override.repositories.ReviewRepository;
 import dtos.ReviewDTO;
 import org.junit.jupiter.api.Assertions;
@@ -12,7 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.override.utils.TestFieldsUtil.*;
@@ -31,79 +32,105 @@ public class ReviewServiceTest {
     private ReviewMapper reviewMapper;
 
     @Mock
-    private PlatformUserService platformUserService;
+    private PlatformUserRepository platformUserRepository;
 
     @Test
-    void requestReview() {
-        final ReviewDTO testReviewDTO = generateTestReviewDTO();
-
-        reviewService.requestReview(testReviewDTO);
-        verify(reviewRepository, times(1)).save(any());
-        verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
-    }
-
-    @Test
-    void approveReview() {
-        final ReviewDTO testReviewDTO = generateTestReviewDTO();
-
-        reviewService.approveReview(testReviewDTO);
-        verify(reviewRepository, times(1)).save(any());
-        verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
-    }
-
-    @Test
-    void findReviewById() {
-        Review testReview = generateTestReview();
+    void saveOrUpdateReview() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
+        PlatformUser testUser = generateTestUser();
 
-        when(reviewRepository.findReviewById(1L)).thenReturn(testReview);
+        when(platformUserRepository.findFirstByLogin(testReviewDTO.getStudentLogin()))
+                .thenReturn(testUser);
+        when(platformUserRepository.findFirstByLogin(testReviewDTO.getMentorLogin()))
+                .thenReturn(testUser);
 
-        final Review review = reviewService.findReviewById(testReviewDTO.getId());
-        Assertions.assertEquals(review, testReview);
-    }
-
-    @Test
-    void findReviewByMentor() {
-        Review testReview = generateTestReview();
-        ReviewDTO testReviewDTO = generateTestReviewDTO();
-        PlatformUser testMentor = generateTestUser();
-
-        when(platformUserService.findPlatformUserByLogin(testMentor.getLogin()))
-                .thenReturn(testMentor);
-        when(reviewRepository.findReviewByMentor(testMentor))
-                .thenReturn(Collections.singletonList(testReview));
-
-        final List<Review> review = reviewService.findReviewByMentor(testReviewDTO.getMentorLogin());
-        Assertions.assertTrue(review.contains(testReview));
-    }
-
-    @Test
-    void findReviewByStudent() {
-        Review testReview = generateTestReview();
-        ReviewDTO testReviewDTO = generateTestReviewDTO();
-        PlatformUser testStudent = generateTestUser();
-
-        when(platformUserService.findPlatformUserByLogin(testStudent.getLogin()))
-                .thenReturn(testStudent);
-        when(reviewRepository.findReviewByStudent(testStudent))
-                .thenReturn(Collections.singletonList(testReview));
-
-        final List<Review> review = reviewService.findReviewByStudent(testReviewDTO.getStudentLogin());
-        Assertions.assertTrue(review.contains(testReview));
-    }
-
-    @Test
-    void updateReview() {
-        final ReviewDTO testReviewDTO = generateTestReviewDTO();
-
-        reviewService.updateReview(testReviewDTO);
+        reviewService.saveOrUpdateReview(testReviewDTO);
         verify(reviewRepository, times(1)).save(any());
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
     }
 
     @Test
     void deleteReview() {
-        reviewService.deleteReview(1L);
+        ReviewDTO testReviewDTO = generateTestReviewDTO();
+        reviewService.deleteReview(testReviewDTO);
         verify(reviewRepository,times(1)).deleteById(1L);
+    }
+
+    @Test
+    void findReviewByMentorLogin() {
+        List<Review> testReview = new ArrayList<>();
+        testReview.add(generateTestReview());
+        ReviewDTO testReviewDTO = generateTestReviewDTO();
+
+        when(reviewRepository.findReviewByMentorLogin(testReviewDTO.getMentorLogin()))
+                .thenReturn(testReview);
+
+        List<Review> review = reviewService.findReviewByMentorLogin(testReviewDTO);
+        Assertions.assertEquals(review.iterator().next(), testReview.iterator().next());
+    }
+
+    @Test
+    void findReviewByStudentLogin() {
+        List<Review> testReview = new ArrayList<>();
+        testReview.add(generateTestReview());
+        ReviewDTO testReviewDTO = generateTestReviewDTO();
+
+        when(reviewRepository.findReviewByStudentLogin(testReviewDTO.getStudentLogin()))
+                .thenReturn(testReview);
+
+        List<Review> review = reviewService.findReviewByStudentLogin(testReviewDTO);
+        Assertions.assertEquals(review.iterator().next(), testReview.iterator().next());
+    }
+
+    @Test
+    void findReviewByMentorLoginAndStudentLogin() {
+        List<Review> testReview = new ArrayList<>();
+        testReview.add(generateTestReview());
+        ReviewDTO testReviewDTO = generateTestReviewDTO();
+
+        when(reviewRepository.findReviewByMentorLoginAndStudentLogin(testReviewDTO.getMentorLogin(),
+                testReviewDTO.getStudentLogin())).thenReturn(testReview);
+
+        List<Review> review = reviewService.findReviewByMentorLoginAndStudentLogin(testReviewDTO);
+        Assertions.assertEquals(review.iterator().next(), testReview.iterator().next());
+    }
+
+    @Test
+    void findReviewByBookedDate() {
+        List<Review> testReview = new ArrayList<>();
+        testReview.add(generateTestReview());
+        ReviewDTO testReviewDTO = generateTestReviewDTO();
+
+        when(reviewRepository.findReviewByBookedDate(testReviewDTO.getBookedDate()))
+                .thenReturn(testReview);
+
+        List<Review> review = reviewService.findReviewByBookedDate(testReviewDTO);
+        Assertions.assertEquals(review.iterator().next(), testReview.iterator().next());
+    }
+
+    @Test
+    void findReviewByBookedDateAndTime() {
+        List<Review> testReview = new ArrayList<>();
+        testReview.add(generateTestReview());
+        ReviewDTO testReviewDTO = generateTestReviewDTO();
+
+        when(reviewRepository.findReviewByBookedDateAndBookedTime(testReviewDTO.getBookedDate(),
+                testReviewDTO.getBookedTime())).thenReturn(testReview);
+
+        List<Review> review = reviewService.findReviewByBookedDateAndTime(testReviewDTO);
+        Assertions.assertEquals(review.iterator().next(), testReview.iterator().next());
+    }
+
+    @Test
+    void findReviewByMentorIsNull() {
+        Review testReview = generateTestReview();
+        testReview.setMentor(null);
+        List<Review> testReviewList = new ArrayList<>();
+        testReviewList.add(testReview);
+
+        when(reviewRepository.findReviewByMentorIsNull()).thenReturn(testReviewList);
+
+        List<Review> review = reviewService.findReviewByMentorIsNull();
+        Assertions.assertEquals(review.iterator().next(), testReviewList.iterator().next());
     }
 }

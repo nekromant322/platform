@@ -6,6 +6,7 @@ import enums.CodeExecutionStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 
 public class TestFieldsUtil {
@@ -69,29 +70,29 @@ public class TestFieldsUtil {
     public static Review generateTestReview() {
         return Review.builder()
                 .id(1L)
+                .title("Тема 1")
                 .student(generateTestUser())
                 .mentor(generateTestUser())
-                .title("Тема 1")
-                .bookedDateTime(LocalDateTime.of(2022, 4, 1, 16, 30))
-                .confirmed(false)
+                .bookedDate(LocalDate.of(2022, 4, 4))
+                .bookedTime(LocalTime.of(16, 30))
+                .firstTimeSlot(LocalTime.of(16, 30))
+                .secondTimeSlot(LocalTime.of(17, 30))
+                .thirdTimeSlot(LocalTime.of(18, 30))
                 .build();
     }
 
     public static ReviewDTO generateTestReviewDTO() {
-        PlatformUser testStudent = generateTestUser();
-        PlatformUser testMentor = generateTestUser();
         Review testReview = generateTestReview();
-        int[] testSlots = {23, 25, 33};
         return ReviewDTO.builder()
                 .id(testReview.getId())
-                .studentLogin(testStudent.getLogin())
-                .mentorLogin(testMentor.getLogin())
                 .title(testReview.getTitle())
-                .bookedDateTime(testReview.getBookedDateTime())
-                .confirmed(testReview.getConfirmed())
-                .date(LocalDate.of(2022, 4, 1))
-                .slots(testSlots)
-                .slot(2)
+                .studentLogin(testReview.getStudent().getLogin())
+                .mentorLogin(testReview.getMentor().getLogin())
+                .bookedDate(testReview.getBookedDate())
+                .bookedTime(testReview.getBookedTime())
+                .firstTimeSlot(testReview.getFirstTimeSlot())
+                .secondTimeSlot(testReview.getSecondTimeSlot())
+                .thirdTimeSlot(testReview.getThirdTimeSlot())
                 .build();
     }
 }
