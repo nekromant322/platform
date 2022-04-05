@@ -69,6 +69,5 @@ jwt:
 schedulers:
   zone: "Europe/Moscow"
   report-reminders:
-#    cron: 0 0 22 * * *
-    cron: "*/10 * * * * *"
+    cron: 0 0 22 * * *
 

@@ -3,7 +3,6 @@ package com.override.service;
 import com.override.feigns.NotificatorFeign;
 import com.override.models.PlatformUser;
 import com.override.models.StudentReport;
-import com.override.repositories.PlatformUserRepository;
 import com.override.repositories.StudentReportRepository;
 import dtos.MessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;

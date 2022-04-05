@@ -27,5 +27,5 @@ public interface PlatformUserRepository extends CrudRepository<PlatformUser, Lon
             "                             join role_t rt on rt.id = ua.authority_id " +
             "                    where rt.authority like 'ROLE_ADMIN')",
             nativeQuery = true)
-    List<PlatformUser> findPlatformUsersWithoutReportOfCurrentDay();
+    List<PlatformUser> findStudentsWithoutReportOfCurrentDay();
 }

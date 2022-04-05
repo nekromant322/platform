@@ -91,6 +91,6 @@ public class PlatformUserService {
     }
 
     public List<PlatformUser> findStudentsWithoutReportOfCurrentDay() {
-        return accountRepository.findPlatformUsersWithoutReportOfCurrentDay();
+        return accountRepository.findStudentsWithoutReportOfCurrentDay();
     }
 }
