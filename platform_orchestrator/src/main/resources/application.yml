@@ -8,10 +8,6 @@ spring:
     username: postgres
     url: jdbc:postgresql://localhost:5430/orchestrator-db
     driver-class-name: org.postgresql.Driver
-    hikari:
-      scheduled-executor:
-        cron: 0 0 22 * * *
-        zone: Europe/Moscow
   jpa:
     properties:
       hibernate:
@@ -69,3 +65,10 @@ jwt:
     path: keys/keystore.jks
     password: password
     alias: jwtsigning
+
+schedulers:
+  zone: "Europe/Moscow"
+  report-reminders:
+#    cron: 0 0 22 * * *
+    cron: "*/10 * * * * *"
+

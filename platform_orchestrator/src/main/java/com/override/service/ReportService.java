@@ -20,8 +20,6 @@ public class ReportService {
     @Autowired
     private PlatformUserService userService;
     @Autowired
-    private PlatformUserRepository userRepository;
-    @Autowired
     private NotificatorFeign notificatorFeign;
 
     public ResponseEntity<String> saveReport(StudentReport report, String studentLogin) {
@@ -34,9 +32,9 @@ public class ReportService {
         return new ResponseEntity<>("Отчет принят\n" + report.toString(), HttpStatus.OK);
     }
 
-    @Scheduled(cron = "${spring.datasource.hikari.scheduled-executor.cron}", zone = "${spring.datasource.hikari.scheduled-executor.zone}")
+    @Scheduled(cron = "${schedulers.report-reminders.cron}", zone = "${schedulers.zone}")
     public void sendDailyReminderOfReport() {
-        for (PlatformUser user : userRepository.findPlatformUsersWithoutReportOfCurrentDay()) {
+        for (PlatformUser user : userService.findStudentsWithoutReportOfCurrentDay()) {
             MessageDTO message = MessageDTO.builder()
                     .message("Привет, не забудь написать отчет \uD83D\uDE4A")
                     .chatId(user.getTelegramChatId())

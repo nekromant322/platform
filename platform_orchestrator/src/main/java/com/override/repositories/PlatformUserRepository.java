@@ -15,8 +15,17 @@ public interface PlatformUserRepository extends CrudRepository<PlatformUser, Lon
 
     List<PlatformUser> findByAuthoritiesNotContaining(Authority authority);
 
-    @Query("select distinct users from PlatformUser users where users.id not in (select studentReport.id " +
-            "from StudentReport studentReport where studentReport.date = current_date) or users.id not in " +
-            "(select studentReport.id from StudentReport studentReport)")
+    @Query(value = "select distinct * " +
+            "from platform_user pu " +
+            "where (pu.id not in (select sr.student_id " +
+            "                     from student_report sr " +
+            "                     where sr.date = current_date) " +
+            "    or pu.id not in (select sr.student_id " +
+            "                     from student_report sr)) " +
+            "  and pu.id not in (select ua.user_id " +
+            "                    from users_authorities ua " +
+            "                             join role_t rt on rt.id = ua.authority_id " +
+            "                    where rt.authority like 'ROLE_ADMIN')",
+            nativeQuery = true)
     List<PlatformUser> findPlatformUsersWithoutReportOfCurrentDay();
 }
