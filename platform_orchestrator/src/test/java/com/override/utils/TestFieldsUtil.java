@@ -8,7 +8,10 @@ import dtos.TestResultDTO;
 import enums.CodeExecutionStatus;
 
 import java.time.LocalDate;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,6 +60,27 @@ public class TestFieldsUtil {
 
     public static CodeTryDTO generateTestCodeTryDTO() {
         return new CodeTryDTO(generateTestTaskIdentifierDTO(), generateTestCode());
+    }
+
+    public static List<Object[]> generateListObjects(){
+        Object[] obj = new Object[]{"testUser", new BigInteger(Integer.toBinaryString(1))};
+        final ArrayList<Object[]> objects = new ArrayList<>();
+        objects.add(obj);
+        return  objects;
+    }
+
+    public static List<Integer[]> generateListInteger(){
+        Integer[] obj = new Integer[]{1, 2, 3, 4};
+        final ArrayList<Integer[]> objects = new ArrayList<>();
+        objects.add(obj);
+        return  objects;
+    }
+
+    public static List<Long[]> generateListLong(){
+        Long[] obj = new Long[]{1L, 2L, 3L, 4L};
+        final ArrayList<Long[]> objects = new ArrayList<>();
+        objects.add(obj);
+        return  objects;
     }
 
     public static Question generateTestQuestion() {

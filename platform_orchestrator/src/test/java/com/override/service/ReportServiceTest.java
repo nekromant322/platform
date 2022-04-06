@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -47,7 +48,7 @@ class ReportServiceTest {
 
         ResponseEntity<String> entity = reportService.saveReport(report, "kemenchik");
 
-        Assertions.assertEquals(new ResponseEntity<>("Отчет принят\n" + report.toString(), HttpStatus.OK), entity);
+        assertEquals(new ResponseEntity<>("Отчет принят\n" + report, HttpStatus.OK), entity);
         verify(reportRepository, times(1)).save(report);
     }
 
@@ -57,7 +58,7 @@ class ReportServiceTest {
 
         ResponseEntity<String> entity = reportService.saveReport(new StudentReport(), "kemenchik");
 
-        Assertions.assertEquals(new ResponseEntity<>("Уже есть отчет на эту дату", HttpStatus.CONFLICT), entity);
+        assertEquals(new ResponseEntity<>("Уже есть отчет на эту дату", HttpStatus.CONFLICT), entity);
         verify(userService, times(0)).findPlatformUserByLogin(any());
     }
 
