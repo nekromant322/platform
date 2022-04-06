@@ -3,6 +3,7 @@ package com.override.controller;
 import com.github.benmanes.caffeine.cache.Cache;
 import dtos.HelpMeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,23 @@ public class PageController {
         } else {
             return "helpMe";
         }
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/statistics")
+    public String statisticPage(){
+        return "statistics";
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/questionsAdmin")
+    public String questionsAdminPage() {
+        return "questionsAdmin";
+    }
+
+    @GetMapping("/questions")
+    public String questionsPage() {
+        return "questions";
     }
 
     @GetMapping("/report")

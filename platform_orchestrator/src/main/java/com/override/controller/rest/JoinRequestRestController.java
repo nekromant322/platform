@@ -5,6 +5,7 @@ import com.override.service.JoinRequestService;
 import dtos.JoinRequestStatusDTO;
 import dtos.RegisterUserRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -20,17 +21,20 @@ public class JoinRequestRestController {
         return requestService.saveRequest(requestDTO);
     }
 
-    @GetMapping("/admin/join/request")
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/join/request")
     public List<JoinRequest> getAllJoinRequests() {
         return requestService.getAllRequests();
     }
 
-    @PostMapping("/admin/join/request/accept/{id}")
+    @Secured("ROLE_ADMIN")
+    @PostMapping("/join/request/accept/{id}")
     public void acceptJoinRequest(@PathVariable Long id) {
         requestService.responseForJoinRequest(true, id);
     }
 
-    @PostMapping("/admin/join/request/decline/{id}")
+    @Secured("ROLE_ADMIN")
+    @PostMapping("/join/request/decline/{id}")
     public void declineJoinRequest(@PathVariable Long id) {
         requestService.responseForJoinRequest(false, id);
     }
