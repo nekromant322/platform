@@ -13,8 +13,6 @@ public class PersonalDataService {
     @Autowired
     private PersonalDataRepository personalDataRepository;
 
-    @Autowired
-    private PlatformUserRepository platformUserRepository;
 
     @Autowired
     private PlatformUserService platformUserService;
@@ -25,7 +23,5 @@ public class PersonalDataService {
         personalData.setId(data.getId());
         personalData.setUser(user);
         personalDataRepository.save(personalData);
-        user.setPersonalData(personalData);
-        platformUserRepository.save(user);
     }
 }
