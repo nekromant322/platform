@@ -1,6 +1,7 @@
 package com.override.models;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -27,6 +28,7 @@ public class PersonalData {
     private String contractNumber;
 
     @Column(name = "date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date date;
 
     @Column(name = "fullName")
@@ -42,9 +44,11 @@ public class PersonalData {
     private String passportIssued;
 
     @Column(name = "issueDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date issueDate;
 
     @Column(name = "birthDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthDate;
 
     @Column(name = "registration")
