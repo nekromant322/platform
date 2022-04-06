@@ -41,9 +41,8 @@ public class PlatformUserService {
     public PlatformUser generateAccount(String login, String chatId) {
         String password = passwordGeneratorService.generateStrongPassword();
         List<Authority> roles = Collections.singletonList(authorityService.getAuthorityByRole(Role.USER));
-        PersonalData personalData = new PersonalData();
 
-        PlatformUser account = new PlatformUser(null, login, password, chatId, roles, personalData);
+        PlatformUser account = new PlatformUser(null, login, password, chatId, roles, new PersonalData());
         register(account);
 
         return account;
