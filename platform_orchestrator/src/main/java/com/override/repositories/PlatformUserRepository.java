@@ -15,17 +15,17 @@ public interface PlatformUserRepository extends CrudRepository<PlatformUser, Lon
 
     List<PlatformUser> findByAuthoritiesNotContaining(Authority authority);
 
-    @Query(value = "select pu.id, pu.login, pu.password, pu.telegram_chat_id " +
-            "from platform_user pu" +
-            "         left join student_report sr on pu.id = sr.student_id " +
-            "where pu.id not in (select sr.student_id " +
-            "                    from student_report sr " +
-            "                    where sr.date = current_date) " +
-            "  and pu.id not in (select ua.user_id " +
-            "                    from users_authorities ua " +
-            "                             join role_t rt on rt.id = ua.authority_id " +
-            "                    where rt.authority like 'ROLE_ADMIN') " +
-            "group by pu.id, pu.login, pu.password, pu.telegram_chat_id",
+    @Query(value = "select p_user.id, p_user.login, p_user.password, p_user.telegram_chat_id " +
+            "from platform_user p_user" +
+            "         left join student_report report on p_user.id = report.student_id " +
+            "where p_user.id not in (select report.student_id " +
+            "                    from student_report report " +
+            "                    where report.date = current_date) " +
+            "  and p_user.id not in (select authorities.user_id " +
+            "                    from users_authorities authorities " +
+            "                             join role_t role on role.id = authorities.authority_id " +
+            "                    where role.authority like 'ROLE_ADMIN') " +
+            "group by p_user.id, p_user.login, p_user.password, p_user.telegram_chat_id",
             nativeQuery = true)
     List<PlatformUser> findStudentsWithoutReportOfCurrentDay();
 }

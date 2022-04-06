@@ -1,17 +1,16 @@
 package com.override.utils;
 
-import com.override.models.Authority;
-import com.override.models.CodeTry;
-import com.override.models.PlatformUser;
-import com.override.models.Question;
+import com.override.models.*;
 import dtos.CodeTryDTO;
 import dtos.QuestionDTO;
 import dtos.TaskIdentifierDTO;
 import dtos.TestResultDTO;
 import enums.CodeExecutionStatus;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 public class TestFieldsUtil {
 
@@ -22,6 +21,17 @@ public class TestFieldsUtil {
     public static PlatformUser generateTestUser() {
         return new PlatformUser(null, "Andrey", "a", "a",
                 Collections.singletonList(new Authority(null, "admin")));
+    }
+
+    public static List<PlatformUser> generateTestListOfThreeUsersWithoutReportsOnCurrentDay() {
+        PlatformUser firstUserWithoutReport = new PlatformUser(1L, "1", "1", "1",
+                Collections.singletonList(new Authority(1L, "ROLE_USER")));
+        PlatformUser secondUserWithoutReport = new PlatformUser(2L, "2", "2", "2",
+                Collections.singletonList(new Authority(1L, "ROLE_USER")));
+        PlatformUser thirdUserWithoutReport = new PlatformUser(3L, "3", "3", "3",
+                Collections.singletonList(new Authority(1L, "ROLE_USER")));
+
+        return List.of(firstUserWithoutReport, secondUserWithoutReport, thirdUserWithoutReport);
     }
 
     public static TaskIdentifierDTO generateTestTaskIdentifierDTO() {
@@ -59,7 +69,7 @@ public class TestFieldsUtil {
                 .build();
     }
 
-    public static QuestionDTO generateTestQuestionDTO(){
+    public static QuestionDTO generateTestQuestionDTO() {
         PlatformUser user = generateTestUser();
         Question testQuestion = generateTestQuestion();
         return QuestionDTO.builder()
