@@ -32,27 +32,26 @@ public class ReviewService {
         reviewRepository.deleteById(reviewDTO.getId());
     }
 
-    public List<Review> findReviewByMentorLogin(ReviewDTO reviewDTO) {
-        return reviewRepository.findReviewByMentorLogin(reviewDTO.getMentorLogin());
-    }
-
-    public List<Review> findReviewByStudentLogin(ReviewDTO reviewDTO) {
-        return reviewRepository.findReviewByStudentLogin(reviewDTO.getStudentLogin());
-    }
-
-    public List<Review> findReviewByMentorLoginAndStudentLogin(ReviewDTO reviewDTO) {
-        return reviewRepository.findReviewByMentorLoginAndStudentLogin(reviewDTO.getMentorLogin(), reviewDTO.getStudentLogin());
-    }
-
-    public List<Review> findReviewByBookedDate(ReviewDTO reviewDTO) {
-        return reviewRepository.findReviewByBookedDate(reviewDTO.getBookedDate());
-    }
-
-    public List<Review> findReviewByBookedDateAndTime(ReviewDTO reviewDTO) {
-        return reviewRepository.findReviewByBookedDateAndBookedTime(reviewDTO.getBookedDate(), reviewDTO.getBookedTime());
-    }
-
-    public List<Review> findReviewByMentorIsNull() {
-        return reviewRepository.findReviewByMentorIsNull();
+    public List<Review> findReview(ReviewDTO reviewDTO) {
+        if (reviewDTO.getMentorLogin() != null && reviewDTO.getStudentLogin() == null) {
+            return reviewRepository.findReviewByMentorLogin(reviewDTO.getMentorLogin());
+        }
+        if (reviewDTO.getStudentLogin() != null && reviewDTO.getMentorLogin() == null) {
+            return reviewRepository.findReviewByStudentLogin(reviewDTO.getStudentLogin());
+        }
+        if (reviewDTO.getStudentLogin() != null && reviewDTO.getMentorLogin() != null) {
+            return reviewRepository.findReviewByMentorLoginAndStudentLogin(reviewDTO.getMentorLogin(),
+                    reviewDTO.getStudentLogin());
+        }
+        if (reviewDTO.getBookedDate() != null && reviewDTO.getBookedTime() == null) {
+            return reviewRepository.findReviewByBookedDate(reviewDTO.getBookedDate());
+        }
+        if (reviewDTO.getBookedDate() != null && reviewDTO.getBookedTime() != null) {
+            return reviewRepository.findReviewByBookedDateAndBookedTime(reviewDTO.getBookedDate(),
+                    reviewDTO.getBookedTime());
+        }
+        else {
+            return reviewRepository.findReviewByMentorIsNull();
+        }
     }
 }

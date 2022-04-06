@@ -62,10 +62,14 @@ public class ReviewServiceTest {
         testReview.add(generateTestReview());
         ReviewDTO testReviewDTO = generateTestReviewDTO();
 
+        ReviewDTO testFindReviewDTO = generateTestReviewDTO();
+        testFindReviewDTO.setStudentLogin(null);
+        testFindReviewDTO.setBookedDate(null);
+
         when(reviewRepository.findReviewByMentorLogin(testReviewDTO.getMentorLogin()))
                 .thenReturn(testReview);
 
-        List<Review> review = reviewService.findReviewByMentorLogin(testReviewDTO);
+        List<Review> review = reviewService.findReview(testFindReviewDTO);
         Assertions.assertEquals(review.iterator().next(), testReview.iterator().next());
     }
 
@@ -75,10 +79,14 @@ public class ReviewServiceTest {
         testReview.add(generateTestReview());
         ReviewDTO testReviewDTO = generateTestReviewDTO();
 
+        ReviewDTO testFindReviewDTO = generateTestReviewDTO();
+        testFindReviewDTO.setMentorLogin(null);
+        testFindReviewDTO.setBookedDate(null);
+
         when(reviewRepository.findReviewByStudentLogin(testReviewDTO.getStudentLogin()))
                 .thenReturn(testReview);
 
-        List<Review> review = reviewService.findReviewByStudentLogin(testReviewDTO);
+        List<Review> review = reviewService.findReview(testFindReviewDTO);
         Assertions.assertEquals(review.iterator().next(), testReview.iterator().next());
     }
 
@@ -88,10 +96,13 @@ public class ReviewServiceTest {
         testReview.add(generateTestReview());
         ReviewDTO testReviewDTO = generateTestReviewDTO();
 
+        ReviewDTO testFindReviewDTO = generateTestReviewDTO();
+        testFindReviewDTO.setBookedDate(null);
+
         when(reviewRepository.findReviewByMentorLoginAndStudentLogin(testReviewDTO.getMentorLogin(),
                 testReviewDTO.getStudentLogin())).thenReturn(testReview);
 
-        List<Review> review = reviewService.findReviewByMentorLoginAndStudentLogin(testReviewDTO);
+        List<Review> review = reviewService.findReview(testFindReviewDTO);
         Assertions.assertEquals(review.iterator().next(), testReview.iterator().next());
     }
 
@@ -101,10 +112,15 @@ public class ReviewServiceTest {
         testReview.add(generateTestReview());
         ReviewDTO testReviewDTO = generateTestReviewDTO();
 
+        ReviewDTO testFindReviewDTO = generateTestReviewDTO();
+        testFindReviewDTO.setMentorLogin(null);
+        testFindReviewDTO.setStudentLogin(null);
+        testFindReviewDTO.setBookedTime(null);
+
         when(reviewRepository.findReviewByBookedDate(testReviewDTO.getBookedDate()))
                 .thenReturn(testReview);
 
-        List<Review> review = reviewService.findReviewByBookedDate(testReviewDTO);
+        List<Review> review = reviewService.findReview(testFindReviewDTO);
         Assertions.assertEquals(review.iterator().next(), testReview.iterator().next());
     }
 
@@ -114,10 +130,14 @@ public class ReviewServiceTest {
         testReview.add(generateTestReview());
         ReviewDTO testReviewDTO = generateTestReviewDTO();
 
+        ReviewDTO testFindReviewDTO = generateTestReviewDTO();
+        testFindReviewDTO.setMentorLogin(null);
+        testFindReviewDTO.setStudentLogin(null);
+
         when(reviewRepository.findReviewByBookedDateAndBookedTime(testReviewDTO.getBookedDate(),
                 testReviewDTO.getBookedTime())).thenReturn(testReview);
 
-        List<Review> review = reviewService.findReviewByBookedDateAndTime(testReviewDTO);
+        List<Review> review = reviewService.findReview(testFindReviewDTO);
         Assertions.assertEquals(review.iterator().next(), testReview.iterator().next());
     }
 
@@ -128,9 +148,14 @@ public class ReviewServiceTest {
         List<Review> testReviewList = new ArrayList<>();
         testReviewList.add(testReview);
 
+        ReviewDTO testFindReviewDTO = generateTestReviewDTO();
+        testFindReviewDTO.setMentorLogin(null);
+        testFindReviewDTO.setStudentLogin(null);
+        testFindReviewDTO.setBookedDate(null);
+
         when(reviewRepository.findReviewByMentorIsNull()).thenReturn(testReviewList);
 
-        List<Review> review = reviewService.findReviewByMentorIsNull();
+        List<Review> review = reviewService.findReview(testFindReviewDTO);
         Assertions.assertEquals(review.iterator().next(), testReviewList.iterator().next());
     }
 }

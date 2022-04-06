@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/review")
+@RequestMapping("/reviews")
 public class ReviewRestController {
 
     @Autowired
@@ -26,24 +26,7 @@ public class ReviewRestController {
 
     @GetMapping
     public List<Review> findReview(@RequestBody ReviewDTO reviewDTO) {
-        if (reviewDTO.getMentorLogin() != null && reviewDTO.getStudentLogin() == null) {
-            return reviewService.findReviewByMentorLogin(reviewDTO);
-        }
-        if (reviewDTO.getStudentLogin() != null && reviewDTO.getMentorLogin() == null) {
-            return reviewService.findReviewByStudentLogin(reviewDTO);
-        }
-        if (reviewDTO.getStudentLogin() != null && reviewDTO.getMentorLogin() != null) {
-            return reviewService.findReviewByMentorLoginAndStudentLogin(reviewDTO);
-        }
-        if (reviewDTO.getBookedDate() != null && reviewDTO.getBookedTime() == null) {
-            return reviewService.findReviewByBookedDate(reviewDTO);
-        }
-        if (reviewDTO.getBookedDate() != null && reviewDTO.getBookedTime() != null) {
-            return reviewService.findReviewByBookedDateAndTime(reviewDTO);
-        }
-        else {
-            return reviewService.findReviewByMentorIsNull();
-        }
+        return reviewService.findReview(reviewDTO);
     }
 
     @Secured("ROLE_ADMIN")
