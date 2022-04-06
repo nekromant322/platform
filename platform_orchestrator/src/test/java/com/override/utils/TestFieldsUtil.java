@@ -1,17 +1,18 @@
 package com.override.utils;
 
 import com.override.models.*;
-import dtos.CodeTryDTO;
-import dtos.QuestionDTO;
-import dtos.TaskIdentifierDTO;
-import dtos.TestResultDTO;
+
+import dtos.*;
 import enums.CodeExecutionStatus;
 
 import java.time.LocalDate;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -102,6 +103,35 @@ public class TestFieldsUtil {
                 .login(user.getLogin())
                 .answered(testQuestion.isAnswered())
                 .question(testQuestion.getQuestion())
+                .build();
+    }
+
+    public static Review generateTestReview() {
+        return Review.builder()
+                .id(1L)
+                .title("Тема 1")
+                .student(generateTestUser())
+                .mentor(generateTestUser())
+                .bookedDate(LocalDate.of(2022, 4, 4))
+                .bookedTime(LocalTime.of(16, 30))
+                .firstTimeSlot(LocalTime.of(16, 30))
+                .secondTimeSlot(LocalTime.of(17, 30))
+                .thirdTimeSlot(LocalTime.of(18, 30))
+                .build();
+    }
+
+    public static ReviewDTO generateTestReviewDTO() {
+        Review testReview = generateTestReview();
+        return ReviewDTO.builder()
+                .id(testReview.getId())
+                .title(testReview.getTitle())
+                .studentLogin(testReview.getStudent().getLogin())
+                .mentorLogin(testReview.getMentor().getLogin())
+                .bookedDate(testReview.getBookedDate())
+                .bookedTime(testReview.getBookedTime())
+                .firstTimeSlot(testReview.getFirstTimeSlot())
+                .secondTimeSlot(testReview.getSecondTimeSlot())
+                .thirdTimeSlot(testReview.getThirdTimeSlot())
                 .build();
     }
 }
