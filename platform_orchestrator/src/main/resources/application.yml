@@ -65,3 +65,9 @@ jwt:
     path: keys/keystore.jks
     password: password
     alias: jwtsigning
+
+schedulers:
+  zone: "Europe/Moscow"
+  report-reminders:
+    cron: 0 0 22 * * *
+

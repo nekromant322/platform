@@ -1,11 +1,14 @@
 package com.override.service;
 
+import com.override.feigns.NotificatorFeign;
 import com.override.models.PlatformUser;
 import com.override.models.StudentReport;
 import com.override.repositories.StudentReportRepository;
+import dtos.MessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +18,8 @@ public class ReportService {
     private StudentReportRepository reportRepository;
     @Autowired
     private PlatformUserService userService;
+    @Autowired
+    private NotificatorFeign notificatorFeign;
 
     public ResponseEntity<String> saveReport(StudentReport report, String studentLogin) {
         if (reportRepository.findFirstByDateAndStudentLogin(report.getDate(), studentLogin) != null) {
@@ -24,5 +29,16 @@ public class ReportService {
         report.setStudent(student);
         reportRepository.save(report);
         return new ResponseEntity<>("Отчет принят\n" + report.toString(), HttpStatus.OK);
+    }
+
+    @Scheduled(cron = "${schedulers.report-reminders.cron}", zone = "${schedulers.zone}")
+    public void sendDailyReminderOfReport() {
+        for (PlatformUser user : userService.findStudentsWithoutReportOfCurrentDay()) {
+            MessageDTO message = MessageDTO.builder()
+                    .message("Привет, не забудь написать отчет \uD83D\uDE4A")
+                    .chatId(user.getTelegramChatId())
+                    .build();
+            notificatorFeign.sendTelegramMessages(message);
+        }
     }
 }
