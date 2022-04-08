@@ -1,7 +1,6 @@
 package com.override.mappers;
 
 import com.override.models.CodeTry;
-import com.override.models.PlatformUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,15 +16,10 @@ public class CodeTryMapperTest {
 
     @Test
     void testDtoToEntity() {
-        final PlatformUser user = generateTestUser();
-        final CodeTry testCodeTry = generateTestCodeTry();
-        final CodeTry codeTry = codeTryMapper.dtoToEntity(generateTestCodeTryDTO(), generateTestTestResultDTO(), user);
-
-
         final CodeTry codeTry = codeTryMapper.dtoToEntity(generateTestCodeTryDTO(), generateTestTestResultDTO(), generateTestUser());
-        CodeTry testCodeTry = generateTestCodeTry();
+        final CodeTry testCodeTry = generateTestCodeTry();
       
-        assertEquals(codeTry.getUser(), user);
+        assertEquals(codeTry.getUser(), generateTestUser());
         assertEquals(codeTry.getChapter(), testCodeTry.getChapter());
         assertEquals(codeTry.getStep(), testCodeTry.getStep());
         assertEquals(codeTry.getLesson(), testCodeTry.getLesson());

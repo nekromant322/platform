@@ -1,10 +1,7 @@
 package com.override.utils;
 
 import com.override.models.*;
-import dtos.CodeTryDTO;
-import dtos.QuestionDTO;
-import dtos.TaskIdentifierDTO;
-import dtos.TestResultDTO;
+import dtos.*;
 import enums.CodeExecutionStatus;
 
 import java.time.LocalDate;
@@ -13,7 +10,6 @@ import java.time.LocalTime;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,11 +27,11 @@ public class TestFieldsUtil {
 
     public static List<PlatformUser> generateTestListOfThreeUsersWithoutReportsOnCurrentDay() {
         PlatformUser firstUserWithoutReport = new PlatformUser(1L, "1", "1", "1",
-                Collections.singletonList(new Authority(1L, "ROLE_USER")));
+                Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData());
         PlatformUser secondUserWithoutReport = new PlatformUser(2L, "2", "2", "2",
-                Collections.singletonList(new Authority(1L, "ROLE_USER")));
+                Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData());
         PlatformUser thirdUserWithoutReport = new PlatformUser(3L, "3", "3", "3",
-                Collections.singletonList(new Authority(1L, "ROLE_USER")));
+                Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData());
 
         return List.of(firstUserWithoutReport, secondUserWithoutReport, thirdUserWithoutReport);
     }
