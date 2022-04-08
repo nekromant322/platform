@@ -160,6 +160,7 @@ class PlatformUserServiceTest {
         String login = "login";
         PlatformUser notNullUser = new PlatformUser();
         notNullUser.setLogin(login);
+        notNullUser.setPersonalData(new PersonalData());
 
         when(accountRepository.findFirstByLogin(login)).thenReturn(null);
         when(accountRepository.save(notNullUser)).thenReturn(notNullUser);
