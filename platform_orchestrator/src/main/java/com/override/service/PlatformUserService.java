@@ -91,4 +91,8 @@ public class PlatformUserService {
     public PlatformUser findPlatformUserByLogin(String login) {
         return accountRepository.findFirstByLogin(login);
     }
+
+    public List<PlatformUser> findStudentsWithoutReportOfCurrentDay() {
+        return accountRepository.findStudentsWithoutReportOfCurrentDay();
+    }
 }

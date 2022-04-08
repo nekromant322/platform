@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static com.override.utils.TestFieldsUtil.generateTestUser;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
@@ -43,7 +44,7 @@ class AuthServiceTest {
 
         String loginToken = authService.login(user.getLogin(), user.getPassword());
 
-        Assertions.assertEquals(token, loginToken);
+        assertEquals(token, loginToken);
         verify(studentDetailService, times(1)).loadUserByUsername(user.getLogin());
         verify(jwtProvider, times(1)).generateToken(userDetails.getUsername(), userDetails.getAuthorities());
     }
@@ -54,7 +55,7 @@ class AuthServiceTest {
 
         when(studentDetailService.loadUserByUsername(user.getLogin())).thenThrow(UsernameNotFoundException.class);
 
-        Assertions.assertThrows(UsernameNotFoundException.class, () -> authService.login(user.getLogin(), user.getPassword()));
+        assertThrows(UsernameNotFoundException.class, () -> authService.login(user.getLogin(), user.getPassword()));
         verify(studentDetailService, times(1)).loadUserByUsername(user.getLogin());
     }
 
@@ -66,7 +67,7 @@ class AuthServiceTest {
         when(studentDetailService.loadUserByUsername(user.getLogin())).thenReturn(userDetails);
         when(passwordEncoder.matches(user.getPassword(), userDetails.getPassword())).thenReturn(false);
 
-        Assertions.assertThrows(AuthException.class, () -> authService.login(user.getLogin(), user.getPassword()));
+        assertThrows(AuthException.class, () -> authService.login(user.getLogin(), user.getPassword()));
         verify(studentDetailService, times(1)).loadUserByUsername(user.getLogin());
     }
 }

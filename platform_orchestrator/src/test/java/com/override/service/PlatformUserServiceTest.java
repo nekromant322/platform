@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
@@ -57,19 +58,19 @@ class PlatformUserServiceTest {
 
         ResponseEntity<String> entity = userService.updateToAdmin(1L);
 
-        Assertions.assertEquals(student.getAuthorities(), new ArrayList<>() {{
+        assertEquals(student.getAuthorities(), new ArrayList<>() {{
             add(userAuthority);
             add(adminAuthority);
         }});
         verify(accountRepository, times(1)).save(student);
-        Assertions.assertEquals(new ResponseEntity<>("OK", HttpStatus.OK), entity);
+        assertEquals(new ResponseEntity<>("OK", HttpStatus.OK), entity);
     }
 
     @Test
     public void testUpdateUserToAdminWhenUserNotExist() {
         when(accountRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(UsernameNotFoundException.class, () -> userService.updateToAdmin(1L));
+        assertThrows(UsernameNotFoundException.class, () -> userService.updateToAdmin(1L));
         verify(accountRepository, times(1)).findById(1L);
     }
 
@@ -85,7 +86,7 @@ class PlatformUserServiceTest {
 
         List<PlatformUser> allStudents = userService.getAllStudents();
 
-        Assertions.assertEquals(platformUsers, allStudents);
+        assertEquals(platformUsers, allStudents);
         verify(accountRepository, times(1)).findByAuthoritiesNotContaining(adminAuthority);
     }
 
@@ -98,7 +99,7 @@ class PlatformUserServiceTest {
 
         PlatformUser student = userService.findPlatformUserByLogin(login);
 
-        Assertions.assertEquals(notNullUser, student);
+        assertEquals(notNullUser, student);
         verify(accountRepository, times(1)).findFirstByLogin(login);
     }
 
@@ -125,7 +126,7 @@ class PlatformUserServiceTest {
 
         PlatformUser student = userService.generateAccount(login, chatId);
 
-        Assertions.assertEquals(student, user);
+        assertEquals(student, user);
         verify(accountRepository, times(1)).save(user);
     }
 
@@ -137,7 +138,7 @@ class PlatformUserServiceTest {
 
         when(accountRepository.findFirstByLogin(login)).thenReturn(notNullUser);
 
-        Assertions.assertThrows(UserAlreadyExistException.class, () -> userService.generateAccount(login, chatId));
+        assertThrows(UserAlreadyExistException.class, () -> userService.generateAccount(login, chatId));
         verify(accountRepository, times(1)).findFirstByLogin(login);
         verify(accountRepository, times(0)).save(any());
     }
@@ -151,7 +152,7 @@ class PlatformUserServiceTest {
 
         PlatformUser accountByChatId = userService.getAccountByChatId(chatId);
 
-        Assertions.assertEquals(accountByChatId, notNullUser);
+        assertEquals(accountByChatId, notNullUser);
         verify(accountRepository, times(1)).findFirstByTelegramChatId(chatId);
     }
 
@@ -167,7 +168,7 @@ class PlatformUserServiceTest {
 
         PlatformUser user = userService.save(notNullUser);
 
-        Assertions.assertEquals(user, notNullUser);
+        assertEquals(user, notNullUser);
         verify(accountRepository, times(1)).save(notNullUser);
     }
 
@@ -179,7 +180,7 @@ class PlatformUserServiceTest {
 
         when(accountRepository.findFirstByLogin(login)).thenReturn(notNullUser);
 
-        Assertions.assertThrows(UserAlreadyExistException.class, () -> userService.save(notNullUser));
+        assertThrows(UserAlreadyExistException.class, () -> userService.save(notNullUser));
         verify(accountRepository, times(0)).save(notNullUser);
     }
 }

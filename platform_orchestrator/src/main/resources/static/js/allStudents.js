@@ -48,7 +48,7 @@ function updateToAdmin(id) {
         url: '/promote-student/' + id,
         type: 'POST',
         contentType: 'application/json',
-        success: function (response) {
+        success: function () {
             getStudents();
         },
         error: function (error) {

@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.override.utils.TestFieldsUtil.generateTestUser;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -23,8 +24,8 @@ class PlatformUserMapperTest {
 
         PlatformUserDTO platformUserDTO = platformUserMapper.entityToDto(user);
 
-        Assertions.assertEquals(platformUserDTO.getLogin(), user.getLogin());
-        Assertions.assertEquals(platformUserDTO.getPassword(), user.getPassword());
-        Assertions.assertEquals(platformUserDTO.getTelegramChatId(), user.getTelegramChatId());
+        assertEquals(platformUserDTO.getLogin(), user.getLogin());
+        assertEquals(platformUserDTO.getPassword(), user.getPassword());
+        assertEquals(platformUserDTO.getTelegramChatId(), user.getTelegramChatId());
     }
 }
