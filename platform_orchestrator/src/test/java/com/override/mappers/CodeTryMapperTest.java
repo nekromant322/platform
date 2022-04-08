@@ -18,13 +18,14 @@ public class CodeTryMapperTest {
     void testDtoToEntity() {
 
         final CodeTry codeTry = codeTryMapper.dtoToEntity(generateTestCodeTryDTO(), generateTestTestResultDTO(), generateTestUser());
+        CodeTry testCodeTry = generateTestCodeTry();
 
         Assertions.assertEquals(codeTry.getUser(), generateTestUser());
-        Assertions.assertEquals(codeTry.getChapter(), generateTestCodeTry().getChapter());
-        Assertions.assertEquals(codeTry.getStep(), generateTestCodeTry().getStep());
-        Assertions.assertEquals(codeTry.getLesson(), generateTestCodeTry().getLesson());
+        Assertions.assertEquals(codeTry.getChapter(), testCodeTry.getChapter());
+        Assertions.assertEquals(codeTry.getStep(), testCodeTry.getStep());
+        Assertions.assertEquals(codeTry.getLesson(), testCodeTry.getLesson());
         Assertions.assertNotNull(codeTry.getDate());
         Assertions.assertEquals(codeTry.getStudentsCode(), generateTestCode());
-        Assertions.assertEquals(codeTry.getCodeExecutionStatus(), generateTestCodeTry().getCodeExecutionStatus());
+        Assertions.assertEquals(codeTry.getCodeExecutionStatus(), testCodeTry.getCodeExecutionStatus());
     }
 }
