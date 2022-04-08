@@ -2,17 +2,15 @@ package com.override.models;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
 public class PersonalData {
 
@@ -60,7 +58,4 @@ public class PersonalData {
     @Column(name = "phoneNumber")
     private Long phoneNumber;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "personalData")
-    private PlatformUser user;
 }

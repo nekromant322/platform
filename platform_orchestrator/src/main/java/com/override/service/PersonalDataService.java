@@ -21,7 +21,6 @@ public class PersonalDataService {
         PlatformUser user = platformUserService.findPlatformUserByLogin(login);
         PersonalData data = user.getPersonalData();
         personalData.setId(data.getId());
-        personalData.setUser(user);
         personalDataRepository.save(personalData);
     }
 }

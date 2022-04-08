@@ -12,7 +12,7 @@ import static com.override.utils.TestFieldsUtil.*;
 @ExtendWith(MockitoExtension.class)
 public class CodeTryMapperTest {
     @InjectMocks
-    CodeTryMapper codeTryMapper;
+    private CodeTryMapper codeTryMapper;
 
     @Test
     void testDtoToEntity() {
