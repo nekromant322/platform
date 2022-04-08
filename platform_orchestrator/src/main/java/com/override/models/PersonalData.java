@@ -29,23 +29,23 @@ public class PersonalData {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date date;
 
-    @Column(name = "fullName")
+    @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "passportSeries")
+    @Column(name = "passport_series")
     private Long passportSeries;
 
-    @Column(name = "passportNumber")
+    @Column(name = "passport_number")
     private Long passportNumber;
 
-    @Column(name = "passportIssued")
+    @Column(name = "passport_issued")
     private String passportIssued;
 
-    @Column(name = "issueDate")
+    @Column(name = "issue_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date issueDate;
 
-    @Column(name = "birthDate")
+    @Column(name = "birth_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthDate;
 
@@ -55,7 +55,7 @@ public class PersonalData {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "phoneNumber")
+    @Column(name = "phone_number")
     private Long phoneNumber;
 
 }
