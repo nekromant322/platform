@@ -23,7 +23,28 @@ public class ActGenerationService {
     private TemplateEngine templateEngine;
 
     public void createPDF(PersonalData personalData) {
+
+        try {
+            OutputStream outputStream = new FileOutputStream("act" + personalData.getActNumber() + ".pdf");
+            String processHTML = templateEngine.process("docs/actGenerationTemplate",
+                    contextCreation(personalData));
+
+            ITextRenderer renderer = new ITextRenderer();
+            renderer.setDocumentFromString(processHTML);
+            renderer.getFontResolver().addFont("/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            renderer.layout();
+            renderer.createPDF(outputStream, false);
+            renderer.finishPDF();
+            outputStream.close();
+        } catch (Exception e) {
+            log.warn("При создании акта №" + personalData.getActNumber() + " произошла ошибка!");
+        }
+    }
+
+    public Context contextCreation(PersonalData personalData) {
+
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+
         Context context = new Context();
 
         try {
@@ -40,21 +61,9 @@ public class ActGenerationService {
             context.setVariable("email", personalData.getEmail());
             context.setVariable("phoneNumber", personalData.getPhoneNumber());
             context.setVariable("actualDate", LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-
-            OutputStream outputStream = new FileOutputStream("act" + personalData.getActNumber() + ".pdf");
-            String processHTML = templateEngine.process("docs/actGenerationTemplate", context);
-
-            ITextRenderer renderer = new ITextRenderer();
-            renderer.setDocumentFromString(processHTML);
-            renderer.getFontResolver().addFont("/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-            renderer.layout();
-            renderer.createPDF(outputStream, false);
-            renderer.finishPDF();
-            outputStream.close();
-        } catch (DocumentException | IOException e) {
-            log.warn("При создании акта №" + personalData.getActNumber() + " произошла ошибка!");
         } catch (NullPointerException e) {
             log.warn("Данные пользователя содержат пустые поля");
         }
+        return context;
     }
 }
