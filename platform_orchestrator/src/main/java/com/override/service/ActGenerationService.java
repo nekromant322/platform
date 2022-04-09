@@ -1,6 +1,6 @@
 package com.override.service;
 
-import com.itextpdf.text.DocumentException;
+
 import com.itextpdf.text.pdf.BaseFont;
 import com.override.models.PersonalData;
 import lombok.extern.slf4j.Slf4j;
