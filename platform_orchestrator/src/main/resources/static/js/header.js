@@ -18,7 +18,7 @@ function renderNavbar(navbar) {
 async function getData() {
     const cacheVersion = 1;
     const cacheName = `navbar-${cacheVersion}`;
-    const url = 'http://localhost:8000/navbar';
+    const url = '/navbar';
     let cachedData = await getCachedData(cacheName, url);
 
     if (cachedData) {
