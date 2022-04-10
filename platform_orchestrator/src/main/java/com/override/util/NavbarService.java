@@ -17,9 +17,7 @@ public class NavbarService {
     public List<NavbarElement> getNavbar(HttpServletRequest request) {
         if (request.isUserInRole("ROLE_ADMIN")) {
             return converter.convertListOfStringToListOfNavbarElement(navbarProperties.getAdmin());
-        } else {
-            return converter.convertListOfStringToListOfNavbarElement(navbarProperties.getUser());
         }
+        return converter.convertListOfStringToListOfNavbarElement(navbarProperties.getUser());
     }
-
 }

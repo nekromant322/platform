@@ -1,38 +1,29 @@
-window.onload = getNavbar();
-
 function logout() {
     deleteCookie("token");
     window.location.href = "/login";
 
 }
 
-function getNavbar() {
-    $.ajax({
-        url: '/navbar',
-        type: 'GET',
-        contentType: 'application/json',
-        async: false,
-        success: function (navbar) {
-            var html = ""
-            for (var i = 0; i < navbar.length; i++) {
-                html += "<li class=\"nav-item\">\n" + "<a class=\"nav-link\" href=\"" + navbar[i].url + "\">"
-                    + navbar[i].text + "</a>\n</li>";
-            }
-            html += "<li class=\"nav-item\">\n<button class=\"button__logout\" onclick=\"logout()\">Выйти</button>\n</li>";
-            document.getElementById("navbar").innerHTML = html
-        }
-    });
+function renderNavbar(navbar) {
+    let html = "";
+    for (let i = 0; i < navbar.length; i++) {
+        html += "<li class=\"nav-item\">\n" + "<a class=\"nav-link\" href=\"" + navbar[i].url + "\">"
+            + navbar[i].text + "</a>\n</li>";
+    }
+    html += "<li class=\"nav-item\">\n<button class=\"button__logout\" onclick=\"logout()\">Выйти</button>\n</li>";
+    document.getElementById("navbar").innerHTML = html;
 }
 
 // Try to get data from the cache, but fall back to fetching it live.
 async function getData() {
     const cacheVersion = 1;
-    const cacheName = `myapp-${cacheVersion}`;
-    const url = '/navbar';
+    const cacheName = `navbar-${cacheVersion}`;
+    const url = 'http://localhost:8000/navbar';
     let cachedData = await getCachedData(cacheName, url);
 
     if (cachedData) {
         console.log('Retrieved cached data');
+        renderNavbar(cachedData);
         return cachedData;
     }
 
@@ -42,6 +33,7 @@ async function getData() {
     await cacheStorage.add(url);
     cachedData = await getCachedData(cacheName, url);
     await deleteOldCaches(cacheName);
+    renderNavbar(cachedData);
 
     return cachedData;
 }
