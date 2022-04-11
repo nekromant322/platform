@@ -1,4 +1,5 @@
 function logout() {
+    deleteOldCaches("delete");
     deleteCookie("token");
     window.location.href = "/login";
 
@@ -16,8 +17,7 @@ function renderNavbar(navbar) {
 
 // Try to get data from the cache, but fall back to fetching it live.
 async function getData() {
-    const cacheVersion = 1;
-    const cacheName = `navbar-${cacheVersion}`;
+    let cacheName = "navbar";
     const url = '/navbar';
     let cachedData = await getCachedData(cacheName, url);
 
@@ -55,7 +55,7 @@ async function deleteOldCaches(currentCache) {
     const keys = await caches.keys();
 
     for (const key of keys) {
-        const isOurCache = 'myapp-' === key.substr(0, 6);
+        const isOurCache = 'navbar' === key.substring(0, 6);
 
         if (currentCache === key || !isOurCache) {
             continue;
