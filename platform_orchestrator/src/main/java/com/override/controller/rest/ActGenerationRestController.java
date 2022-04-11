@@ -9,7 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/actGeneration")
+@RequestMapping("/act")
 public class ActGenerationRestController {
 
     @Autowired
