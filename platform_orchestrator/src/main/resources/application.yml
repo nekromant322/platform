@@ -71,3 +71,24 @@ schedulers:
   report-reminders:
     cron: 0 0 22 * * *
 
+navbar:
+  admin:
+    - Курсы
+      /courses
+    - Баланс 
+      /balancePage
+    - Все студенты 
+      /allStudents
+    - Запросы на регистрацию
+      /joinRequests
+    - Вопросы к ревью 
+      /questionsAdmin
+    - Статистика 
+      /statistics
+  user:
+    - Курсы 
+      /courses
+    - Написать отчет 
+      /report
+    - Вопросы к ревью 
+      /questions
