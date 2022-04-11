@@ -1,7 +1,10 @@
 package com.override.service;
 
 import com.override.mappers.ReviewMapper;
+import com.override.models.Authority;
+import com.override.models.PlatformUser;
 import com.override.models.Review;
+import com.override.models.enums.Role;
 import com.override.repositories.PlatformUserRepository;
 import com.override.repositories.ReviewRepository;
 import dtos.ReviewDTO;
@@ -22,7 +25,12 @@ public class ReviewService {
     @Autowired
     private ReviewMapper reviewMapper;
 
-    public void saveOrUpdateReview(ReviewDTO reviewDTO) {
+    public void saveOrUpdateReview(ReviewDTO reviewDTO, String userLogin) {
+        if (reviewDTO.getId() == null && reviewDTO.getStudentLogin() == null) {
+            reviewDTO.setStudentLogin(userLogin);
+        } else {
+            reviewDTO.setMentorLogin(userLogin);
+        }
         reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
                 platformUserRepository.findFirstByLogin(reviewDTO.getStudentLogin()),
                 platformUserRepository.findFirstByLogin(reviewDTO.getMentorLogin())));

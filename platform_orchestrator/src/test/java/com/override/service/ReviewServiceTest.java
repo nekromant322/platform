@@ -44,7 +44,7 @@ public class ReviewServiceTest {
         when(platformUserRepository.findFirstByLogin(testReviewDTO.getMentorLogin()))
                 .thenReturn(testUser);
 
-        reviewService.saveOrUpdateReview(testReviewDTO);
+        reviewService.saveOrUpdateReview(testReviewDTO, testUser.getLogin());
         verify(reviewRepository, times(1)).save(any());
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
     }

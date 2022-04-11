@@ -60,6 +60,11 @@ public class PageController {
         return "report";
     }
 
+    @GetMapping("/reviewRequest")
+    public String reviewRequestForm() {
+        return "fragments/reviewRequestButton";
+    }
+
     @GetMapping("/login")
     public String authPage() {
         return "login";

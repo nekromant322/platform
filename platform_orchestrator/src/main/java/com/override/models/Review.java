@@ -1,5 +1,6 @@
 package com.override.models;
 
+import com.override.converter.TimeSlotsConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -20,8 +23,8 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "topic")
+    private String topic;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
@@ -37,12 +40,7 @@ public class Review {
     @Column(name = "booked_time")
     private LocalTime bookedTime;
 
-    @Column(name = "first_time_slot")
-    private LocalTime firstTimeSlot;
-
-    @Column(name = "second_time_slot")
-    private LocalTime secondTimeSlot;
-
-    @Column(name = "third_time_slot")
-    private LocalTime thirdTimeSlot;
+    @Convert(converter = TimeSlotsConverter.class)
+    @Column(name = "time_slots")
+    private Set<String> timeSlots;
 }

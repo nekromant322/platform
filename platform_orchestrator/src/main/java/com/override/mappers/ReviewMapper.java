@@ -13,14 +13,12 @@ public class ReviewMapper {
                               PlatformUser mentor){
         return Review.builder()
                 .id(reviewDTO.getId())
-                .title(reviewDTO.getTitle())
+                .topic(reviewDTO.getTopic())
                 .student(student)
                 .mentor(mentor)
                 .bookedDate(reviewDTO.getBookedDate())
                 .bookedTime(reviewDTO.getBookedTime())
-                .firstTimeSlot(reviewDTO.getFirstTimeSlot())
-                .secondTimeSlot(reviewDTO.getSecondTimeSlot())
-                .thirdTimeSlot(reviewDTO.getThirdTimeSlot())
+                .timeSlots(reviewDTO.getTimeSlots())
                 .build();
     }
 }

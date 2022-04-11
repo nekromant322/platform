@@ -10,11 +10,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class TestFieldsUtil {
 
@@ -107,16 +103,18 @@ public class TestFieldsUtil {
     }
 
     public static Review generateTestReview() {
+        Set<String> testTimeSlots = new HashSet<>();
+        testTimeSlots.add("16:30 pm");
+        testTimeSlots.add("17:30 pm");
+        testTimeSlots.add("18:30 pm");
         return Review.builder()
                 .id(1L)
-                .title("Тема 1")
+                .topic("Тема 1")
                 .student(generateTestUser())
                 .mentor(generateTestUser())
                 .bookedDate(LocalDate.of(2022, 4, 4))
                 .bookedTime(LocalTime.of(16, 30))
-                .firstTimeSlot(LocalTime.of(16, 30))
-                .secondTimeSlot(LocalTime.of(17, 30))
-                .thirdTimeSlot(LocalTime.of(18, 30))
+                .timeSlots(testTimeSlots)
                 .build();
     }
 
@@ -124,14 +122,12 @@ public class TestFieldsUtil {
         Review testReview = generateTestReview();
         return ReviewDTO.builder()
                 .id(testReview.getId())
-                .title(testReview.getTitle())
+                .topic(testReview.getTopic())
                 .studentLogin(testReview.getStudent().getLogin())
                 .mentorLogin(testReview.getMentor().getLogin())
                 .bookedDate(testReview.getBookedDate())
                 .bookedTime(testReview.getBookedTime())
-                .firstTimeSlot(testReview.getFirstTimeSlot())
-                .secondTimeSlot(testReview.getSecondTimeSlot())
-                .thirdTimeSlot(testReview.getThirdTimeSlot())
+                .timeSlots(testReview.getTimeSlots())
                 .build();
     }
 }
