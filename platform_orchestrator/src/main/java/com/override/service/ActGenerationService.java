@@ -23,21 +23,20 @@ public class ActGenerationService {
     @Autowired
     private TemplateEngine templateEngine;
 
+    @Autowired
+    private ITextRenderer iTextRenderer;
+
     public void createPDF(PersonalData personalData) {
 
-        try {
-            OutputStream outputStream = new FileOutputStream("act" + personalData.getActNumber() + ".pdf");
+        try (OutputStream outputStream = new FileOutputStream("act" + personalData.getActNumber() + ".pdf")) {
 
             String processHTML = templateEngine.process("docs/actGenerationTemplate",
                     contextCreation(personalData));
 
-            ITextRenderer renderer = new ITextRenderer();
-            renderer.setDocumentFromString(processHTML);
-            renderer.getFontResolver().addFont("/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-            renderer.layout();
-            renderer.createPDF(outputStream, false);
-            renderer.finishPDF();
-            outputStream.close();
+            iTextRenderer.setDocumentFromString(processHTML);
+            iTextRenderer.layout();
+            iTextRenderer.createPDF(outputStream, false);
+            iTextRenderer.finishPDF();
 
         } catch (DocumentException | IOException e) {
             log.warn("При создании акта №" + personalData.getActNumber() + " произошла ошибка!");
