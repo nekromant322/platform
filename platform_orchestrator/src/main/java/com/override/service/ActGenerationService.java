@@ -37,7 +37,6 @@ public class ActGenerationService {
             iTextRenderer.layout();
             iTextRenderer.createPDF(outputStream, false);
             iTextRenderer.finishPDF();
-
         } catch (DocumentException | IOException e) {
             log.warn("При создании акта №" + personalData.getActNumber() + " произошла ошибка!");
         } catch (NullPointerException e) {
