@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -66,7 +67,7 @@ class ReportServiceTest {
     @Test
     public void testWhenSendDailyReminderOfReport() {
         List<PlatformUser> userList = List.of(new PlatformUser(null, "123", "123", "123",
-                Collections.singletonList(new Authority(null, "ROLE_USER")), new PersonalData()));
+                Collections.singletonList(new Authority(null, "ROLE_USER")), new PersonalData(), new HashMap<>()));
 
         when(userService.findStudentsWithoutReportOfCurrentDay()).thenReturn(userList);
 

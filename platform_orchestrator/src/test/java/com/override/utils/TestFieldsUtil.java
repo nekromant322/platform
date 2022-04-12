@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class TestFieldsUtil {
@@ -22,16 +23,16 @@ public class TestFieldsUtil {
 
     public static PlatformUser generateTestUser() {
         return new PlatformUser(null, "Andrey", "a", "a",
-                Collections.singletonList(new Authority(null, "admin")), new PersonalData());
+                Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new HashMap<>());
     }
 
     public static List<PlatformUser> generateTestListOfThreeUsersWithoutReportsOnCurrentDay() {
         PlatformUser firstUserWithoutReport = new PlatformUser(1L, "1", "1", "1",
-                Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData());
+                Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new HashMap<>());
         PlatformUser secondUserWithoutReport = new PlatformUser(2L, "2", "2", "2",
-                Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData());
+                Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new HashMap<>());
         PlatformUser thirdUserWithoutReport = new PlatformUser(3L, "3", "3", "3",
-                Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData());
+                Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new HashMap<>());
 
         return List.of(firstUserWithoutReport, secondUserWithoutReport, thirdUserWithoutReport);
     }

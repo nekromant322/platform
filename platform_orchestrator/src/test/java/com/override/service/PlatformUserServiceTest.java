@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -116,7 +117,8 @@ class PlatformUserServiceTest {
                 new ArrayList<>() {{
                     add(userAuthority);
                 }},
-                new PersonalData()
+                new PersonalData(),
+                new HashMap<>()
         );
 
         when(authorityService.getAuthorityByRole(Role.USER)).thenReturn(userAuthority);

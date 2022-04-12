@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -42,7 +43,7 @@ public class PlatformUserService {
         String password = passwordGeneratorService.generateStrongPassword();
         List<Authority> roles = Collections.singletonList(authorityService.getAuthorityByRole(Role.USER));
 
-        PlatformUser account = new PlatformUser(null, login, password, chatId, roles, new PersonalData());
+        PlatformUser account = new PlatformUser(null, login, password, chatId, roles, new PersonalData(), new HashMap<>());
         register(account);
 
         return account;
@@ -56,7 +57,8 @@ public class PlatformUserService {
                 passwordEncoder.encode(studentAccount.getPassword()),
                 studentAccount.getTelegramChatId(),
                 studentAccount.getAuthorities(),
-                new PersonalData()
+                new PersonalData(),
+                new HashMap<>()
         );
 
         if (accountRepository.findFirstByLogin(login) == null) {
