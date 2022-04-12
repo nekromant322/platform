@@ -94,3 +94,5 @@ navbar:
       /report
     - Вопросы к ревью 
       /questions
+    - Персональные данные
+      /personalData
