@@ -22,9 +22,8 @@ public class AppConfig {
     @Bean
     public ITextRenderer iTextRenderer() throws DocumentException, IOException {
         ITextRenderer iTextRenderer = new ITextRenderer();
-
         iTextRenderer.getFontResolver().addFont("/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-
+        iTextRenderer.getFontResolver().addFont("/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
         return iTextRenderer;
     }
 }
