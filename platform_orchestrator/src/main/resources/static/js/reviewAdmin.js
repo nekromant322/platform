@@ -1,18 +1,21 @@
-let mentorLogin;
-let today = new Date().getDate();
-let tomorrow = new Date().getDate() + MILLIS_PER_DAY;
+let today = new Date();
+let tomorrow = new Date(today.getTime() + MILLIS_PER_DAY);
+let btnCase;
+let mentor;
 
-// confirm() // подтверждение действия
-// window.onload = newReviewRequests();
+window.onload = function () {
+    getCurrentMentor();
+    newReviewRequests();
+};
 
 function findReview(reviewDTO) {
-    alert(reviewDTO);
     $.ajax({
-        method: 'GET',
+        method: 'POST',
         url: '/reviews',
         contentType: 'application/json',
         data: JSON.stringify(reviewDTO),
         success: function (response) {
+            console.log(response);
             drawColumns(response);
         },
         error: function (error) {
@@ -32,6 +35,7 @@ function drawColumns(data) {
 function addColumn(data) {
     let table = document.getElementById("review-table").getElementsByTagName("tbody")[0];
     let tr = table.insertRow(table.rows.length);
+    let td;
 
     insertTd(data.id, tr);
     insertTd(data.topic, tr);
@@ -40,6 +44,49 @@ function addColumn(data) {
     insertTd(data.bookedDate, tr);
     insertTd(data.bookedTime, tr);
     insertTd(data.timeSlots, tr);
+
+    let review = {}
+    review.id = data.id;
+    review.topic = data.topic;
+    review.studentLogin = data.studentLogin;
+    review.mentorLogin = data.mentorLogin;
+    review.bookedDate = data.bookedDate;
+    review.bookedTime = data.bookedTime;
+    review.timeSlots = data.timeSlots;
+
+    if (btnCase === 1) {
+        let acceptBtn = document.createElement("button");
+        acceptBtn.className = "btn btn-success";
+        acceptBtn.innerHTML = "Accept";
+        acceptBtn.type = "submit";
+        acceptBtn.addEventListener("click", () => {
+            editReview(review);
+        });
+        td = tr.insertCell(7);
+        td.insertAdjacentElement("beforeend", acceptBtn);
+    }
+
+    if (btnCase === 2) {
+        let updateBtn = document.createElement("button");
+        updateBtn.className = "btn btn-success";
+        updateBtn.innerHTML = "Edit";
+        updateBtn.type = "submit";
+        updateBtn.addEventListener("click", () => {
+            editReview(review);
+        });
+        td = tr.insertCell(7);
+        td.insertAdjacentElement("beforeend", updateBtn);
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.className = "btn btn-danger";
+        deleteBtn.innerHTML = "Cancel";
+        deleteBtn.type = "submit";
+        deleteBtn.addEventListener("click", () => {
+            deleteReview(data.id);
+        });
+        td = tr.insertCell(8);
+        td.insertAdjacentElement("beforeend", deleteBtn);
+    }
 }
 
 function insertTd(value, parent) {
@@ -49,93 +96,92 @@ function insertTd(value, parent) {
     parent.insertAdjacentElement("beforeend", element)
 }
 
+function getCurrentMentor() {
+    $.ajax({
+        url: 'questions/current',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (currentUser) {
+            mentor = currentUser.login;
+        }
+    })
+}
+
 function newReviewRequests() {
+    btnCase = 1;
     let reviewDTO = {};
     reviewDTO.bookedDate = null;
-    reviewDTO.bookedTime = null;
     reviewDTO.mentorLogin = null;
     reviewDTO.studentLogin = null;
-    reviewDTO.json();
     findReview(reviewDTO);
 }
 
 function myReview() {
+    btnCase = 2;
     let reviewDTO = {};
     reviewDTO.bookedDate = null;
-    reviewDTO.bookedTime = null;
-    reviewDTO.mentorLogin = mentorLogin;
+    reviewDTO.mentorLogin = mentor;
     reviewDTO.studentLogin = null;
-    reviewDTO.json();
     findReview(reviewDTO);
 }
 
 function todayReview() {
+    btnCase = 1;
     let reviewDTO = {};
     reviewDTO.mentorLogin = null;
     reviewDTO.studentLogin = null;
-    reviewDTO.bookedTime = null;
     reviewDTO.bookedDate = today;
-    reviewDTO.json();
     findReview(reviewDTO);
 }
 
 function tomorrowReview() {
+    btnCase = 1;
     let reviewDTO = {};
     reviewDTO.mentorLogin = null;
     reviewDTO.studentLogin = null;
-    reviewDTO.bookedTime = null;
     reviewDTO.bookedDate = tomorrow;
-    reviewDTO.json();
     findReview(reviewDTO);
-}
-
-function searchReview() {
-    let reviewDTO = {};
-    reviewDTO.json();
-    findReview(reviewDTO);
-}
-
-function acceptReview(reviewDTO) {
-    $.ajax({
-        url: '/reviews',
-        method: 'PATCH',
-        contentType: 'application/json',
-        data: JSON.stringify(reviewDTO),
-        success: function () {
-            console.log('accepted')
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    })
 }
 
 function editReview(reviewDTO) {
-    $.ajax({
-        url: '/reviews',
-        method: 'PATCH',
-        contentType: 'application/json',
-        data: JSON.stringify(reviewDTO),
-        success: function () {
-            console.log('edited')
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    })
+    let confirmation = false;
+    if (btnCase === 1) {
+        confirmation = confirm("Вы уверены, что хотите взять ревью " + reviewDTO.id + "?");
+    }
+    if (btnCase === 2) {
+        confirmation = confirm("Вы уверены, что хотите изменить время ревью " + reviewDTO.id + "?");
+    }
+    if (confirmation === true) {
+        reviewDTO.bookedTime = prompt("Назначьте время ревью", "hh:mm");
+        $.ajax({
+            url: '/reviews',
+            method: 'PATCH',
+            contentType: 'application/json',
+            data: JSON.stringify(reviewDTO),
+            success: function () {
+                console.log('accepted')
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+        location.reload();
+    }
 }
 
-function deleteReview(reviewDTO) {
-    $.ajax({
-        url: '/reviews',
-        method: 'DELETE',
-        contentType: 'application/json',
-        data: JSON.stringify(reviewDTO),
-        success: function () {
-            console.log('deleted')
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    })
+function deleteReview(id) {
+    let confirmation = confirm("Вы уверены, что хотите отменить ревью " + id + "?");
+    if (confirmation === true) {
+        $.ajax({
+            url: '/reviews?id=' + id,
+            method: 'DELETE',
+            success: function () {
+                console.log('deleted')
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+        location.reload();
+    }
 }

@@ -34,4 +34,20 @@ public class ReviewMapperTest {
         Assertions.assertEquals(review.getBookedTime(), testReview.getBookedTime());
         Assertions.assertEquals(review.getTimeSlots(), testReview.getTimeSlots());
     }
+
+    @Test
+    public void testEntityToDto() {
+        Review testReview = generateTestReview();
+        ReviewDTO testReviewDTO = generateTestReviewDTO();
+
+        ReviewDTO reviewDTO = reviewMapper.entityToDto(testReview);
+
+        Assertions.assertEquals(reviewDTO.getId(), testReviewDTO.getId());
+        Assertions.assertEquals(reviewDTO.getTopic(), testReviewDTO.getTopic());
+        Assertions.assertEquals(reviewDTO.getStudentLogin(), testReviewDTO.getStudentLogin());
+        Assertions.assertEquals(reviewDTO.getMentorLogin(), testReviewDTO.getMentorLogin());
+        Assertions.assertEquals(reviewDTO.getBookedDate(), testReviewDTO.getBookedDate());
+        Assertions.assertEquals(reviewDTO.getBookedTime(), testReviewDTO.getBookedTime());
+        Assertions.assertEquals(reviewDTO.getTimeSlots(), testReviewDTO.getTimeSlots());
+    }
 }

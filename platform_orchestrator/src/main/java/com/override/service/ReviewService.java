@@ -1,10 +1,6 @@
 package com.override.service;
 
 import com.override.mappers.ReviewMapper;
-import com.override.models.Authority;
-import com.override.models.PlatformUser;
-import com.override.models.Review;
-import com.override.models.enums.Role;
 import com.override.repositories.PlatformUserRepository;
 import com.override.repositories.ReviewRepository;
 import dtos.ReviewDTO;
@@ -36,30 +32,21 @@ public class ReviewService {
                 platformUserRepository.findFirstByLogin(reviewDTO.getMentorLogin())));
     }
 
-    public void deleteReview(ReviewDTO reviewDTO) {
-        reviewRepository.deleteById(reviewDTO.getId());
+    public void deleteReview(Long id) {
+        reviewRepository.deleteById(id);
     }
 
-    public List<Review> findReview(ReviewDTO reviewDTO) {
-        if (reviewDTO.getMentorLogin() != null && reviewDTO.getStudentLogin() == null) {
-            return reviewRepository.findReviewByMentorLogin(reviewDTO.getMentorLogin());
+    public List<ReviewDTO> findReview(ReviewDTO reviewDTO) {
+        if (reviewDTO.getMentorLogin() != null) {
+            return reviewMapper.entitiesToDto(reviewRepository.findReviewByMentorLogin(reviewDTO.getMentorLogin()));
         }
-        if (reviewDTO.getStudentLogin() != null && reviewDTO.getMentorLogin() == null) {
-            return reviewRepository.findReviewByStudentLogin(reviewDTO.getStudentLogin());
+        if (reviewDTO.getStudentLogin() != null) {
+            return reviewMapper.entitiesToDto(reviewRepository.findReviewByStudentLogin(reviewDTO.getStudentLogin()));
         }
-        if (reviewDTO.getStudentLogin() != null && reviewDTO.getMentorLogin() != null) {
-            return reviewRepository.findReviewByMentorLoginAndStudentLogin(reviewDTO.getMentorLogin(),
-                    reviewDTO.getStudentLogin());
-        }
-        if (reviewDTO.getBookedDate() != null && reviewDTO.getBookedTime() == null) {
-            return reviewRepository.findReviewByBookedDate(reviewDTO.getBookedDate());
-        }
-        if (reviewDTO.getBookedDate() != null && reviewDTO.getBookedTime() != null) {
-            return reviewRepository.findReviewByBookedDateAndBookedTime(reviewDTO.getBookedDate(),
-                    reviewDTO.getBookedTime());
-        }
-        else {
-            return reviewRepository.findReviewByMentorIsNull();
+        if (reviewDTO.getBookedDate() != null) {
+            return reviewMapper.entitiesToDto(reviewRepository.findReviewByBookedDate(reviewDTO.getBookedDate()));
+        } else {
+            return reviewMapper.entitiesToDto(reviewRepository.findReviewByMentorIsNull());
         }
     }
 }

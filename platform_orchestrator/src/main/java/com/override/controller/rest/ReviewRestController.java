@@ -1,6 +1,5 @@
 package com.override.controller.rest;
 
-import com.override.models.Review;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.ReviewService;
 import dtos.ReviewDTO;
@@ -27,15 +26,15 @@ public class ReviewRestController {
         return new ResponseEntity<>("Ревью сохранено!", HttpStatus.OK);
     }
 
-    @GetMapping
-    public List<Review> findReview(@RequestBody ReviewDTO reviewDTO) {
+    @PostMapping
+    public List<ReviewDTO> findReview(@RequestBody ReviewDTO reviewDTO) {
         return reviewService.findReview(reviewDTO);
     }
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping
-    public ResponseEntity<String> deleteReview(@RequestBody ReviewDTO reviewDTO) {
-        reviewService.deleteReview(reviewDTO);
+    public ResponseEntity<String> deleteReview(@RequestParam Long id) {
+        reviewService.deleteReview(id);
         return new ResponseEntity<>("Ревью удалено!", HttpStatus.OK);
     }
 }
