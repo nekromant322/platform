@@ -45,9 +45,6 @@ public class InitializationService {
     private PlatformUserService userService;
 
     @Autowired
-    private PersonalDataService personalDataService;
-
-    @Autowired
     private CodeTryService codeTryService;
 
     @Autowired
@@ -103,7 +100,6 @@ public class InitializationService {
         List<Authority> roles = getAuthorityListFromRoles(userRoles);
         PlatformUser account = new PlatformUser(null, login, password, telegramChatId, roles, new PersonalData());
         userService.save(account);
-        personalDataInit(account);
     }
 
     private List<Authority> getAuthorityListFromRoles(Role... roles) {
@@ -203,33 +199,5 @@ public class InitializationService {
             joinRequestService.saveRequest(new RegisterUserRequestDTO(faker.name().username(),
                     String.valueOf(faker.number().numberBetween(1000, 10000))));
         }
-    }
-
-    private void personalDataInit(PlatformUser user) {
-
-        int day = faker.number().numberBetween(1,30);
-        int month = faker.number().numberBetween(1,12);
-        int year = 2022;
-
-        PersonalData personalData = user.getPersonalData();
-        personalData.setActNumber(faker.number().numberBetween(1L,1000L));
-        personalData.setContractNumber(day + "/" + month + "/" + year);
-        personalData.setDate(new Date(year-1900, month-1, day+1));
-        personalData.setFullName(faker.name().fullName());
-        personalData.setPassportSeries(Long.valueOf(faker.bothify("####")));
-        personalData.setPassportNumber(Long.valueOf(faker.bothify("######")));
-        personalData.setPassportIssued(faker.address().fullAddress());
-        personalData.setIssueDate(new Date(faker.number().numberBetween(123, 127),
-                faker.number().numberBetween(0,11),
-                faker.number().numberBetween(1,30)));
-        personalData.setBirthDate(new Date(faker.number().numberBetween(90, 104),
-                faker.number().numberBetween(0,11),
-                faker.number().numberBetween(1,30)));
-        personalData.setRegistration(faker.address().fullAddress());
-        personalData.setEmail(faker.name().firstName().toLowerCase(Locale.ROOT) +
-                faker.bothify("##@") + "gmail.com");
-        personalData.setPhoneNumber(Long.valueOf("8" + faker.bothify("##########")));
-
-        personalDataService.save(personalData, user.getLogin());
     }
 }
