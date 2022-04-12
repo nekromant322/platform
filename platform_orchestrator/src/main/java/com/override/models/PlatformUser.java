@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -32,5 +33,8 @@ public class PlatformUser {
 
     @OneToOne(cascade = CascadeType.ALL)
     private PersonalData personalData;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Map<String, Boolean> lessonProgress;
 
 }
