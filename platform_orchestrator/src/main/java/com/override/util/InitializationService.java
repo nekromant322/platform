@@ -215,7 +215,7 @@ public class InitializationService {
         personalData.setActNumber(faker.number().numberBetween(1L,1000L));
         personalData.setContractNumber(day + "/" + month + "/" + year);
         personalData.setDate(new Date(year-1900, month-1, day+1));
-        personalData.setFullName(String.valueOf(faker.name().fullName()));
+        personalData.setFullName(faker.name().fullName());
         personalData.setPassportSeries(Long.valueOf(faker.bothify("####")));
         personalData.setPassportNumber(Long.valueOf(faker.bothify("######")));
         personalData.setPassportIssued(faker.address().fullAddress());
