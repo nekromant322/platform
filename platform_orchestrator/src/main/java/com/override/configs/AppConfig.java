@@ -25,7 +25,7 @@ public class AppConfig {
         try {
             iTextRenderer.getFontResolver().addFont("/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
         } catch (DocumentException | IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return iTextRenderer;
     }
