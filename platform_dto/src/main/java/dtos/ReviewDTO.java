@@ -16,5 +16,5 @@ public class ReviewDTO {
     private String mentorLogin;
     private LocalDate bookedDate;
     private LocalTime bookedTime;
-    private Set<String> timeSlots;
+    private Set<LocalTime> timeSlots;
 }

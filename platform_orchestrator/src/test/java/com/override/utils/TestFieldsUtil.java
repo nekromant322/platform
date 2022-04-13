@@ -102,10 +102,10 @@ public class TestFieldsUtil {
     }
 
     public static Review generateTestReview() {
-        Set<String> testTimeSlots = new HashSet<>();
-        testTimeSlots.add("16:30 pm");
-        testTimeSlots.add("17:30 pm");
-        testTimeSlots.add("18:30 pm");
+        Set<LocalTime> testTimeSlots = new HashSet<>();
+        testTimeSlots.add(LocalTime.of(16, 30));
+        testTimeSlots.add(LocalTime.of(17, 30));
+        testTimeSlots.add(LocalTime.of(18, 30));
         return Review.builder()
                 .id(1L)
                 .topic("Тема 1")

@@ -6,14 +6,16 @@
 
     <title>Review</title>
 
+    <link rel="stylesheet" type="text/css" href="/css/review.css">
+
     <header th:replace="fragments/navbar.html :: header"></header>
 </head>
 <body>
 <div class="sidenav">
-    <nav class="btn" onclick="newReviewRequests()">Запросы на ревью</nav>
-    <nav class="btn" onclick="myReview()">Мои ревью</nav>
-    <nav class="btn" onclick="todayReview()">Все ревью на сегодня</nav>
-    <nav class="btn" onclick="tomorrowReview()">Все ревью на завтра</nav>
+    <nav class="btn btn-dark" onclick="newReviewRequests()">Запросы на ревью</nav>
+    <nav class="btn btn-dark" onclick="myReview()">Мои ревью</nav>
+    <nav class="btn btn-dark" onclick="todayReview()">Все ревью на сегодня</nav>
+    <nav class="btn btn-dark" onclick="tomorrowReview()">Все ревью на завтра</nav>
 </div>
 
 <div class="main">
@@ -26,9 +28,7 @@
             <th scope="col"> Mentor </th>
             <th scope="col"> Date </th>
             <th scope="col"> Time </th>
-            <th scope="col"> Time slots </th>
-            <th scope="col">  </th>
-            <th scope="col">  </th>
+            <th scope="col" id="lastColumn0">  </th>
         </tr>
         </thead>
         <tbody class="table-light">

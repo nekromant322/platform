@@ -43,7 +43,6 @@ function addColumn(data) {
     insertTd(data.mentorLogin, tr);
     insertTd(data.bookedDate, tr);
     insertTd(data.bookedTime, tr);
-    insertTd(data.timeSlots, tr);
 
     let review = {}
     review.id = data.id;
@@ -54,29 +53,26 @@ function addColumn(data) {
     review.bookedTime = data.bookedTime;
     review.timeSlots = data.timeSlots;
 
+    let times = data.timeSlots.toString().split(",");
+
     if (btnCase === 1) {
-        let acceptBtn = document.createElement("button");
-        acceptBtn.className = "btn btn-success";
-        acceptBtn.innerHTML = "Accept";
-        acceptBtn.type = "submit";
-        acceptBtn.addEventListener("click", () => {
-            editReview(review);
-        });
-        td = tr.insertCell(7);
-        td.insertAdjacentElement("beforeend", acceptBtn);
+        for (let i = 0; i < times.length; i++) {
+            let sumId = "#lastColumn" + i;
+            $(sumId).append("<th scope=\"col\" id=\"lastColumn" + i + "\">  </th>");
+            let acceptBtn = document.createElement("button");
+            acceptBtn.className = "btn btn-success";
+            acceptBtn.innerHTML = times[i];
+            acceptBtn.type = "submit";
+            acceptBtn.addEventListener("click", () => {
+                review.bookedTime = times[i];
+                editReview(review);
+            });
+            td = tr.insertCell(6 + i);
+            td.insertAdjacentElement("beforeend", acceptBtn);
+        }
     }
 
     if (btnCase === 2) {
-        let updateBtn = document.createElement("button");
-        updateBtn.className = "btn btn-success";
-        updateBtn.innerHTML = "Edit";
-        updateBtn.type = "submit";
-        updateBtn.addEventListener("click", () => {
-            editReview(review);
-        });
-        td = tr.insertCell(7);
-        td.insertAdjacentElement("beforeend", updateBtn);
-
         let deleteBtn = document.createElement("button");
         deleteBtn.className = "btn btn-danger";
         deleteBtn.innerHTML = "Cancel";
@@ -84,7 +80,7 @@ function addColumn(data) {
         deleteBtn.addEventListener("click", () => {
             deleteReview(data.id);
         });
-        td = tr.insertCell(8);
+        td = tr.insertCell(6);
         td.insertAdjacentElement("beforeend", deleteBtn);
     }
 }
@@ -144,15 +140,8 @@ function tomorrowReview() {
 }
 
 function editReview(reviewDTO) {
-    let confirmation = false;
-    if (btnCase === 1) {
-        confirmation = confirm("Вы уверены, что хотите взять ревью " + reviewDTO.id + "?");
-    }
-    if (btnCase === 2) {
-        confirmation = confirm("Вы уверены, что хотите изменить время ревью " + reviewDTO.id + "?");
-    }
+    let confirmation = confirm("Вы уверены, что хотите взять ревью " + reviewDTO.id + " и назначить его время на " + reviewDTO.bookedTime + "?");
     if (confirmation === true) {
-        reviewDTO.bookedTime = prompt("Назначьте время ревью", "hh:mm");
         $.ajax({
             url: '/reviews',
             method: 'PATCH',

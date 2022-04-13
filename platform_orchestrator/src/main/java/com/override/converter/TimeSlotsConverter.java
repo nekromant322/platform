@@ -2,16 +2,17 @@ package com.override.converter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Converter
-public class TimeSlotsConverter implements AttributeConverter<Set<String>, String> {
+public class TimeSlotsConverter implements AttributeConverter<Set<LocalTime>, String> {
     private final String GROUP_DELIMITER = ",";
 
     @Override
-    public String convertToDatabaseColumn(Set<String> timeList) {
+    public String convertToDatabaseColumn(Set<LocalTime> timeList) {
         if (timeList == null) {
             return "";
         }
@@ -19,7 +20,7 @@ public class TimeSlotsConverter implements AttributeConverter<Set<String>, Strin
     }
 
     @Override
-    public Set<String> convertToEntityAttribute(String string) {
-        return Arrays.stream(string.split(GROUP_DELIMITER)).map(String::valueOf).collect(Collectors.toSet());
+    public Set<LocalTime> convertToEntityAttribute(String string) {
+        return Arrays.stream(string.split(GROUP_DELIMITER)).map(LocalTime::parse).collect(Collectors.toSet());
     }
 }

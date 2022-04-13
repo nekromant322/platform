@@ -54,10 +54,10 @@ function sendRequest() {
 
 $(document).ready(function() {
     $("#review-timeSlots0").timepicker({
-        timeFormat: 'h:mm a',
+        timeFormat: 'HH:mm',
         interval: 30,
-        minTime: '0:00 am',
-        maxTime: '11:30 pm',
+        minTime: '0:00',
+        maxTime: '23:30',
     });
 });
 
@@ -69,10 +69,10 @@ function renderAdditionalButton() {
         .ready(function() {
             let sumId = "#review-timeSlots" + timeSlotCounter;
             $(sumId).timepicker({
-                timeFormat: 'h:mm a',
+                timeFormat: 'HH:mm',
                 interval: 30,
-                minTime: '0:00 am',
-                maxTime: '11:30 pm',
+                minTime: '0:00',
+                maxTime: '23:30',
             });
         });
 }
