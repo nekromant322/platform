@@ -1,13 +1,10 @@
 package com.override.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.override.converter.TimeSlotsConverter;
+import com.override.util.TimeSlotsConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.checkerframework.checker.units.qual.Time;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
