@@ -68,5 +68,10 @@ Git Branching:
     
 ![alt](https://i.ibb.co/j8S68TD/img-6.png) ![alt](https://i.ibb.co/7vx42gV/img-5.png)
 
+Как проверить какая часть кода покрыта тестами:
+1) Выполнить mvn verify
+2) В target найти папку jacoco-report
+3) Открыть index.html, в котором можно посмотреть какой % кода покрыт тестами, а так же какая часть кода покрыта, а какая нет.
+
 Полезные ссылки:
 https://trello.com/b/zN2JnsWE/платформа
