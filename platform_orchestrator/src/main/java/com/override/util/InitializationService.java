@@ -248,6 +248,7 @@ public class InitializationService {
                 .bookedTime(selectedTimeSlots.iterator().next())
                 .timeSlots(selectedTimeSlots)
                 .build(), student.getLogin());
+    }
 
     private void personalDataInit(PlatformUser user) {
 
