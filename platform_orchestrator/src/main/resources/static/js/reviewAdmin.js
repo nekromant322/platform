@@ -8,12 +8,12 @@ window.onload = function () {
     newReviewRequests();
 };
 
-function findReview(reviewDTO) {
+function findReview(reviewFilterDTO) {
     $.ajax({
         method: 'POST',
         url: '/reviews',
         contentType: 'application/json',
-        data: JSON.stringify(reviewDTO),
+        data: JSON.stringify(reviewFilterDTO),
         success: function (response) {
             console.log(response);
             drawColumns(response);
@@ -105,38 +105,38 @@ function getCurrentMentor() {
 
 function newReviewRequests() {
     btnCase = 1;
-    let reviewDTO = {};
-    reviewDTO.bookedDate = null;
-    reviewDTO.mentorLogin = null;
-    reviewDTO.studentLogin = null;
-    findReview(reviewDTO);
+    let reviewFilterDTO = {};
+    reviewFilterDTO.bookedDate = null;
+    reviewFilterDTO.mentorLogin = null;
+    reviewFilterDTO.studentLogin = null;
+    findReview(reviewFilterDTO);
 }
 
 function myReview() {
     btnCase = 2;
-    let reviewDTO = {};
-    reviewDTO.bookedDate = null;
-    reviewDTO.mentorLogin = mentor;
-    reviewDTO.studentLogin = null;
-    findReview(reviewDTO);
+    let reviewFilterDTO = {};
+    reviewFilterDTO.bookedDate = null;
+    reviewFilterDTO.mentorLogin = mentor;
+    reviewFilterDTO.studentLogin = null;
+    findReview(reviewFilterDTO);
 }
 
 function todayReview() {
     btnCase = 1;
-    let reviewDTO = {};
-    reviewDTO.mentorLogin = null;
-    reviewDTO.studentLogin = null;
-    reviewDTO.bookedDate = today;
-    findReview(reviewDTO);
+    let reviewFilterDTO = {};
+    reviewFilterDTO.mentorLogin = null;
+    reviewFilterDTO.studentLogin = null;
+    reviewFilterDTO.bookedDate = today;
+    findReview(reviewFilterDTO);
 }
 
 function tomorrowReview() {
     btnCase = 1;
-    let reviewDTO = {};
-    reviewDTO.mentorLogin = null;
-    reviewDTO.studentLogin = null;
-    reviewDTO.bookedDate = tomorrow;
-    findReview(reviewDTO);
+    let reviewFilterDTO = {};
+    reviewFilterDTO.mentorLogin = null;
+    reviewFilterDTO.studentLogin = null;
+    reviewFilterDTO.bookedDate = tomorrow;
+    findReview(reviewFilterDTO);
 }
 
 function editReview(reviewDTO) {

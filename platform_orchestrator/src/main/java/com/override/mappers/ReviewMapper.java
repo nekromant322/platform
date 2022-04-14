@@ -5,9 +5,6 @@ import com.override.models.Review;
 import dtos.ReviewDTO;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
 public class ReviewMapper {
 
@@ -26,34 +23,18 @@ public class ReviewMapper {
     }
 
     public ReviewDTO entityToDto(Review review) {
-        if (review.getMentor() == null) {
-            return ReviewDTO.builder()
-                    .id(review.getId())
-                    .topic(review.getTopic())
-                    .studentLogin(review.getStudent().getLogin())
-                    .mentorLogin("")
-                    .bookedDate(review.getBookedDate())
-                    .bookedTime(review.getBookedTime())
-                    .timeSlots(review.getTimeSlots())
-                    .build();
-        } else {
-            return ReviewDTO.builder()
-                    .id(review.getId())
-                    .topic(review.getTopic())
-                    .studentLogin(review.getStudent().getLogin())
-                    .mentorLogin(review.getMentor().getLogin())
-                    .bookedDate(review.getBookedDate())
-                    .bookedTime(review.getBookedTime())
-                    .timeSlots(review.getTimeSlots())
-                    .build();
+        ReviewDTO reviewDTO = ReviewDTO.builder()
+                .id(review.getId())
+                .topic(review.getTopic())
+                .studentLogin(review.getStudent().getLogin())
+                .mentorLogin("")
+                .bookedDate(review.getBookedDate())
+                .bookedTime(review.getBookedTime())
+                .timeSlots(review.getTimeSlots())
+                .build();
+        if (review.getMentor() != null) {
+            reviewDTO.setMentorLogin(review.getMentor().getLogin());
         }
-    }
-
-    public List<ReviewDTO> entitiesToDto(List<Review> reviews) {
-        List<ReviewDTO> dtoList = new ArrayList<>();
-        for (Review review : reviews) {
-            dtoList.add(entityToDto(review));
-        }
-        return dtoList;
+        return reviewDTO;
     }
 }

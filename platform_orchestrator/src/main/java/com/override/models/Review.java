@@ -1,6 +1,6 @@
 package com.override.models;
 
-import com.override.util.TimeSlotsConverter;
+import com.override.converter.TimeSlotsConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "topic")
+    @Column
     private String topic;
 
     @ManyToOne

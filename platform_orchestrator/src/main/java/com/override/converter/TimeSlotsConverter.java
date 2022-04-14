@@ -1,4 +1,4 @@
-package com.override.util;
+package com.override.converter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

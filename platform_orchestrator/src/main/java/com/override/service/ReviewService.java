@@ -4,10 +4,12 @@ import com.override.mappers.ReviewMapper;
 import com.override.repositories.PlatformUserRepository;
 import com.override.repositories.ReviewRepository;
 import dtos.ReviewDTO;
+import dtos.ReviewFilterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
@@ -21,6 +23,13 @@ public class ReviewService {
     @Autowired
     private ReviewMapper reviewMapper;
 
+    /**
+     * Saves a new or changes an existing review
+     * If the review is new, then the user's login is assigned to the student
+     * Only the mentor can change the review, so the username is assigned to the mentor
+     * @param reviewDTO review information obtained from the request
+     * @param userLogin username of the user making the request
+     */
     public void saveOrUpdateReview(ReviewDTO reviewDTO, String userLogin) {
         if (reviewDTO.getId() == null && reviewDTO.getStudentLogin() == null) {
             reviewDTO.setStudentLogin(userLogin);
@@ -36,17 +45,28 @@ public class ReviewService {
         reviewRepository.deleteById(id);
     }
 
-    public List<ReviewDTO> findReview(ReviewDTO reviewDTO) {
-        if (reviewDTO.getMentorLogin() != null) {
-            return reviewMapper.entitiesToDto(reviewRepository.findReviewByMentorLogin(reviewDTO.getMentorLogin()));
+    /**
+     * Searches for the necessary reviews using the filter
+     * Reviews can be found by student or mentor login and by date
+     * If these parameters have null, then we are looking for new reviews that have not yet assigned a mentor and time
+     * @param reviewFilterDTO comes from request
+     * @return returns a list of reviewDTOs obtained by mapping the list of found reviews
+     */
+    public List<ReviewDTO> findReview(ReviewFilterDTO reviewFilterDTO) {
+        if (reviewFilterDTO.getMentorLogin() != null) {
+            return (reviewRepository.findReviewByMentorLogin(reviewFilterDTO.getMentorLogin())).stream()
+                    .map(reviewMapper::entityToDto).collect(Collectors.toList());
         }
-        if (reviewDTO.getStudentLogin() != null) {
-            return reviewMapper.entitiesToDto(reviewRepository.findReviewByStudentLogin(reviewDTO.getStudentLogin()));
+        if (reviewFilterDTO.getStudentLogin() != null) {
+            return (reviewRepository.findReviewByStudentLogin(reviewFilterDTO.getStudentLogin())).stream()
+                    .map(reviewMapper::entityToDto).collect(Collectors.toList());
         }
-        if (reviewDTO.getBookedDate() != null) {
-            return reviewMapper.entitiesToDto(reviewRepository.findReviewByBookedDate(reviewDTO.getBookedDate()));
+        if (reviewFilterDTO.getBookedDate() != null) {
+            return (reviewRepository.findReviewByBookedDate(reviewFilterDTO.getBookedDate())).stream()
+                    .map(reviewMapper::entityToDto).collect(Collectors.toList());
         } else {
-            return reviewMapper.entitiesToDto(reviewRepository.findReviewByMentorIsNull());
+            return (reviewRepository.findReviewByMentorIsNull()).stream()
+                    .map(reviewMapper::entityToDto).collect(Collectors.toList());
         }
     }
 }

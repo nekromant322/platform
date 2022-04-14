@@ -3,6 +3,7 @@ package com.override.controller.rest;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.ReviewService;
 import dtos.ReviewDTO;
+import dtos.ReviewFilterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,8 @@ public class ReviewRestController {
     }
 
     @PostMapping
-    public List<ReviewDTO> findReview(@RequestBody ReviewDTO reviewDTO) {
-        return reviewService.findReview(reviewDTO);
+    public List<ReviewDTO> findReview(@RequestBody ReviewFilterDTO reviewFilterDTO) {
+        return reviewService.findReview(reviewFilterDTO);
     }
 
     @Secured("ROLE_ADMIN")
