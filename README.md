@@ -1,18 +1,9 @@
-Добавление переменных окружения (Environment variables):
-- Edit Configurations -> Выбираем нужный сервис -> Вставляем нужные значения* в строку как на картинке** -> Apply
-
-*Значения берём из колонки Utils (Notification и orchestrator) в Trello (ссылка внизу)
-
-**Если строка не отображается, то Modify options -> Environment variables (или Alt+E) -> Вставляем данные-> Apply
-
-![image](https://user-images.githubusercontent.com/94536519/160645457-6ae66f72-fe18-4fd9-8a23-01d806b14e70.png)
-
-Перед запуском:
+## Перед запуском:
 - Установи JDK 11
 - Idea-> Plugins -> Lombok -> Install
 - Idea -> Settings -> Build, Execution, Deployment -> Compiler -> Annotation Proccesor -> Enable annotation Proccesing
 
-Git Branching:
+### Git Branching:
 - Новые ветки с изменениями должны называться feature/task-name! (пример: feature/telegram-bot)
 - Изменения в master только через pull request, в тайтле указать суть изменений, либо название задачи из trello
 - Прежде чем начать работу над задачей :
@@ -23,7 +14,17 @@ Git Branching:
 
 Мы инжектим бины через поля (не через сеттер/конструктор)!
 
-Для разворачивания Postgres:
+## Начало работы
+### Добавление переменных окружения (Environment variables):
+- Edit Configurations -> Выбираем нужный сервис -> Вставляем нужные значения* в строку как на картинке** -> Apply
+
+*Значения берём из колонки Utils (Notification и orchestrator) в Trello (ссылка внизу)
+
+**Если строка не отображается, то Modify options -> Environment variables (или Alt+E) -> Вставляем данные-> Apply
+
+![image](https://user-images.githubusercontent.com/94536519/160645457-6ae66f72-fe18-4fd9-8a23-01d806b14e70.png)
+
+### Для разворачивания Postgres:
 1) Установи Docker Desktop.
 2) Перезагрузи компьютер. Запусти Docker Desktop и удали предыдущие версии контейнеров. 
 Выполни в терминале IDEA `mvn clean install`. Это очень важный пункт, если у тебя что-то не получается и в интернете 
@@ -48,9 +49,14 @@ Git Branching:
     \c POSTGRES_DB
 9) Если приглашение к вводу сменилось на `POSTGRES_DB=#`, то можешь выполнить `\dt` для получения списка таблиц или любой SQL-запрос
 И помни, если у тебя что-то не получается - никогда не поздно попробовать повторить п.2!
+### Profiles
+Мы используем по два профиля для **каждого** микросервиса: **dev** и **prod**. Настройки профилей хранятся в application-dev.yml и application-prod.yml в папке resources.
+В application.yml выставлен дефолтный профиль (сейчас dev), а так же можно переключить профиль, поменяв значение `spring.profiles.active`.
 
+**_Важно:_** при использовании prod свойства подключения к БД берутся из переменных окружения, описанных в application-prod.yml. Для **каждого** микросервиса переменные разные и вставлять их надо в конфиг каждого сервиса отдельно. 
 
-Для тестирования через Postman:
+## Тестирование
+### Для тестирования через Postman:
     
 1) Получаем token, для этого делаем запрос на /login с логином и паролем в формате json
     
@@ -68,10 +74,10 @@ Git Branching:
     
 ![alt](https://i.ibb.co/j8S68TD/img-6.png) ![alt](https://i.ibb.co/7vx42gV/img-5.png)
 
-Как проверить какая часть кода покрыта тестами:
+### Как проверить какая часть кода покрыта тестами:
 1) Выполнить mvn verify
 2) В target найти папку jacoco-report
 3) Открыть index.html, в котором можно посмотреть какой % кода покрыт тестами, а так же какая часть кода покрыта, а какая нет.
 
-Полезные ссылки:
+## Полезные ссылки:
 https://trello.com/b/zN2JnsWE/платформа
