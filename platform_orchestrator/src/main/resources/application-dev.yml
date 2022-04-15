@@ -1,13 +1,14 @@
+---
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile: dev
 ---
 spring:
   datasource:
-    password: ${NOTIFICATION_DB_PASSWORD}
-    username: ${NOTIFICATION_DB_USERNAME}
-    url: ${NOTIFICATION_DB_URL}
+    password: postgres
+    username: postgres
+    url: jdbc:postgresql://localhost:5430/orchestrator-db
     driver-class-name: org.postgresql.Driver
   jpa:
     properties:
@@ -18,4 +19,4 @@ spring:
         use_sql_comments: true
     hibernate:
       ddl-auto: create
-    generate-ddl: false
+    generate-ddl: true
