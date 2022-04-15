@@ -7,22 +7,14 @@ sms:
   api:
     id: ${SMS_API_ID}
 
+---
 spring:
-  datasource:
-    password: postgres
-    username: postgres
-    url: jdbc:postgresql://localhost:5431/notification-db
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL81Dialect
-        show_sql: false
-        format_sql: true
-        use_sql_comments: true
-    hibernate:
-      ddl-auto: create
-    generate-ddl: false
+  profiles:
+    default: dev
+    active: dev
+#    active: prod
+---
+spring:
   cloud:
     loadbalancer:
       ribbon:
