@@ -58,16 +58,16 @@ public class JoinRequestService {
         JoinRequest request = requestRepository.findById(id).get();
         PlatformUserDTO student;
         ResponseJoinRequestDTO responseDTO;
-        RecipientDTO recipientDTO;
+        RecipientDTO recipientDTO = RecipientDTO.builder().login(request.getNickName()).telegramId(request.getChatId()).build();
+        notificatorFeign.saveRecipient(recipientDTO);
         if (approve) {
             student = accountMapper.entityToDto(accountService.generateAccount(request.getNickName()));
             responseDTO = ResponseJoinRequestDTO.builder().accountDTO(student).status(RequestStatus.APPROVED).build();
-            recipientDTO = RecipientDTO.builder().login(request.getNickName()).telegramId(request.getChatId()).build();
-            notificatorFeign.saveRecipients(recipientDTO);
             log.info("Запрос от {} в чате № {} разрешен", request.getNickName(), request.getChatId());
         } else {
             student = PlatformUserDTO.builder().login(request.getNickName()).build();
             responseDTO = ResponseJoinRequestDTO.builder().status(RequestStatus.DECLINED).accountDTO(student).build();
+            notificatorFeign.deleteRecipient(recipientDTO);
             log.info("Запрос от {} в чате № {} отклонен", request.getNickName(), request.getChatId());
         }
         requestRepository.delete(request);

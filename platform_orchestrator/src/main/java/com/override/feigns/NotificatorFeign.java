@@ -5,6 +5,7 @@ import dtos.MessageDTO;
 import dtos.RecipientDTO;
 import enums.Communications;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +21,15 @@ public interface NotificatorFeign {
     @PostMapping("/teleMessages")
     void sendTelegramMessages(@RequestBody MessageDTO message);
 
-    @PostMapping("/saveRecipients")
-    void saveRecipients(@RequestBody RecipientDTO recipientDTO);
+    @PostMapping("/recipients/save")
+    void saveRecipient(@RequestBody RecipientDTO recipientDTO);
+
+    @PostMapping("/recipients/delete")
+    void deleteRecipient(@RequestBody RecipientDTO recipientDTO);
 
     @PostMapping("/communications")
-    ResponseEntity<String> sendMessage(@RequestParam("user") String user, @RequestParam("message") String message, @RequestParam("type") Communications... type);
+    ResponseEntity<HttpStatus> sendMessage(
+            @RequestParam("login") String login,
+            @RequestParam("message") String message,
+            @RequestParam("type") Communications... type);
 }
