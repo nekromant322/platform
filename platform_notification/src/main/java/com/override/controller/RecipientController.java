@@ -13,8 +13,13 @@ public class RecipientController {
     @Autowired
     private RecipientService recipientService;
 
-    @PostMapping("/saveRecipients")
-    void saveRecipients(@RequestBody RecipientDTO recipientDTO) {
+    @PostMapping("/recipients/save")
+    void saveRecipient(@RequestBody RecipientDTO recipientDTO) {
         recipientService.save(recipientDTO);
+    }
+
+    @PostMapping("/recipients/delete")
+    void deleteRecipient(@RequestBody RecipientDTO recipientDTO) {
+     recipientService.delete(recipientDTO);
     }
 }
