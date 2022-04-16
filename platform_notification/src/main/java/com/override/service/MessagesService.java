@@ -22,7 +22,7 @@ public class MessagesService {
     @Autowired
     private RecipientService recipientService;
 
-    public ResponseEntity<String> sendMessages(String login, String message, Communications... communications) {
+    public ResponseEntity<String> sendMessage(String login, String message, Communications... communications) {
         Recipient recipient = recipientService.getRecipientByLogin(login);
         for (Communications type : communications) {
             if (!recipient.getTelegramId().isEmpty() && type.equals(Communications.TELEGRAM)) {
@@ -31,6 +31,7 @@ public class MessagesService {
                         .message(message)
                         .build());
                 Logger.getGlobal().info("tg");
+                break;
             }
             if (!recipient.getEmail().isEmpty() && type.equals(Communications.EMAIL)) {
                 emailService.sendSimpleMail(MailDTO.builder()
@@ -39,6 +40,7 @@ public class MessagesService {
                         .subject("test")
                         .build());
                 Logger.getGlobal().info("email");
+                break;
             }
         }
         return new ResponseEntity<>(HttpStatus.OK);

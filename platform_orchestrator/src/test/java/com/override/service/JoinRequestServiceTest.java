@@ -47,8 +47,9 @@ public class JoinRequestServiceTest {
     public void testWhenAlreadyExistJoinRequest() {
         RegisterUserRequestDTO requestDTO = RegisterUserRequestDTO.builder()
                 .telegramUserName("Marandyuk_Anatolii")
+                .chatId("1234")
                 .build();
-        when(requestRepository.getJoinRequestByNickName("Marandyuk_Anatolii")).thenReturn(new JoinRequest(1L, "Marandyuk_Anatolii"));
+        when(requestRepository.findFirstByChatId("1234")).thenReturn(new JoinRequest(1L, "Marandyuk_Anatolii", "1234"));
 
         JoinRequestStatusDTO joinRequestStatusDTO = joinRequestService.saveRequest(requestDTO);
 
@@ -60,9 +61,11 @@ public class JoinRequestServiceTest {
     public void testWhenAlreadyExistUserInPlatform() {
         RegisterUserRequestDTO requestDTO = RegisterUserRequestDTO.builder()
                 .telegramUserName("Marandyuk_Anatolii")
+
+                .chatId("1234")
                 .build();
 
-        when(requestRepository.getJoinRequestByNickName("Marandyuk_Anatolii")).thenReturn(null);
+        when(requestRepository.findFirstByChatId("1234")).thenReturn(null);
         when(accountService.findPlatformUserByLogin("Marandyuk_Anatolii")).thenReturn(new PlatformUser());
 
 
@@ -75,10 +78,11 @@ public class JoinRequestServiceTest {
     public void testWhenNewUser() {
         RegisterUserRequestDTO requestDTO = RegisterUserRequestDTO.builder()
                 .telegramUserName("Marandyuk_Anatolii")
+                .chatId("1234")
                 .build();
-        JoinRequest requestEntity = new JoinRequest(1L, "Marandyuk_Anatolii");
+        JoinRequest requestEntity = new JoinRequest(1L, "Marandyuk_Anatolii", "1234");
 
-        when(requestRepository.getJoinRequestByNickName("Marandyuk_Anatolii")).thenReturn(null);
+        when(requestRepository.findFirstByChatId("1234")).thenReturn(null);
         when(accountService.findPlatformUserByLogin("Marandyuk_Anatolii")).thenReturn(null);
         when(joinRequestMapper.dtoToEntity(any())).thenReturn(requestEntity);
 

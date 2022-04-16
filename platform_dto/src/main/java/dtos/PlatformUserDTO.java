@@ -8,5 +8,4 @@ import lombok.Data;
 public class PlatformUserDTO {
     private String login;
     private String password;
-    private String telegramChatId;
 }

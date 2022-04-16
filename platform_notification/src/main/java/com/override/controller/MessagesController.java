@@ -17,7 +17,10 @@ public class MessagesController {
     private MessagesService messagesService;
 
     @PostMapping
-    ResponseEntity<String> sendMessages(@RequestParam("user") String user, @RequestParam("message") String message, @RequestParam("type") Communications... type) {
-        return messagesService.sendMessages(user, message, type);
+    ResponseEntity<String> sendMessage(
+            @RequestParam("user") String user,
+            @RequestParam("message") String message,
+            @RequestParam("type") Communications... type) {
+        return messagesService.sendMessage(user, message, type);
     }
 }

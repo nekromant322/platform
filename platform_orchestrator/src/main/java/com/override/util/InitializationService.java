@@ -90,18 +90,17 @@ public class InitializationService {
             usernameAndPassword = faker.name().firstName();
             saveUser(usernameAndPassword,
                     usernameAndPassword,
-                    String.valueOf(faker.number().numberBetween(1000, 10000)),
                     Role.USER);
         }
     }
 
     private void adminInit() {
-        saveUser(adminLogin, adminPassword, adminTelegramChatId, Role.USER, Role.ADMIN);
+        saveUser(adminLogin, adminPassword, Role.USER, Role.ADMIN);
     }
 
-    private void saveUser(String login, String password, String telegramChatId, Role... userRoles) {
+    private void saveUser(String login, String password, Role... userRoles) {
         List<Authority> roles = getAuthorityListFromRoles(userRoles);
-        PlatformUser account = new PlatformUser(null, login, password, telegramChatId, roles, new PersonalData());
+        PlatformUser account = new PlatformUser(null, login, password, roles, new PersonalData());
         userService.save(account);
         personalDataInit(account);
     }
