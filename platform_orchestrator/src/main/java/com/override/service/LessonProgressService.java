@@ -25,7 +25,6 @@ public class LessonProgressService {
         if (!exists.get()) {
             lessonProgress.add(lesson);
             student.setLessonProgress(lessonProgress);
-            lessonProgress.forEach(System.out::println);
             platformUserService.update(student);
         }
     }
