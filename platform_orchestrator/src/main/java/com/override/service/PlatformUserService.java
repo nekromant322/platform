@@ -24,7 +24,7 @@ import java.util.List;
 public class PlatformUserService {
 
     @Autowired
-    private PlatformUserRepository accountRepository;
+    private PlatformUserRepository platformUserRepository;
     @Autowired
     private PasswordGeneratorService passwordGeneratorService;
     @Autowired
@@ -33,7 +33,7 @@ public class PlatformUserService {
     private AuthorityService authorityService;
 
     public PlatformUser getAccountByChatId(String chatId) {
-        return accountRepository.findFirstByTelegramChatId(chatId);
+        return platformUserRepository.findFirstByTelegramChatId(chatId);
     }
 
     public PlatformUser save(PlatformUser platformUser) {
@@ -41,7 +41,7 @@ public class PlatformUserService {
     }
 
     public void update(PlatformUser platformUser) {
-        accountRepository.save(platformUser);
+        platformUserRepository.save(platformUser);
     }
 
     public PlatformUser generateAccount(String login, String chatId) {
@@ -66,8 +66,8 @@ public class PlatformUserService {
                 new ArrayList<>()
         );
 
-        if (accountRepository.findFirstByLogin(login) == null) {
-            PlatformUser user = accountRepository.save(account);
+        if (platformUserRepository.findFirstByLogin(login) == null) {
+            PlatformUser user = platformUserRepository.save(account);
             log.info("Пользователь с логином {} был успешно создан", login);
             return user;
         } else {
@@ -76,14 +76,14 @@ public class PlatformUserService {
     }
 
     public ResponseEntity<String> updateToAdmin(Long id) {
-        PlatformUser student = accountRepository.findById(id)
+        PlatformUser student = platformUserRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + id + " не найден"));
 
         Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
         List<Authority> studentAuthorities = student.getAuthorities();
         studentAuthorities.add(adminAuthority);
 
-        accountRepository.save(student);
+        platformUserRepository.save(student);
 
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
@@ -91,15 +91,15 @@ public class PlatformUserService {
     public List<PlatformUser> getAllStudents() {
         Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
 
-        return accountRepository.findByAuthoritiesNotContaining(adminAuthority);
+        return platformUserRepository.findByAuthoritiesNotContaining(adminAuthority);
     }
 
 
     public PlatformUser findPlatformUserByLogin(String login) {
-        return accountRepository.findFirstByLogin(login);
+        return platformUserRepository.findFirstByLogin(login);
     }
 
     public List<PlatformUser> findStudentsWithoutReportOfCurrentDay() {
-        return accountRepository.findStudentsWithoutReportOfCurrentDay();
+        return platformUserRepository.findStudentsWithoutReportOfCurrentDay();
     }
 }
