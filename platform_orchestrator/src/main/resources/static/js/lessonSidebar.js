@@ -36,14 +36,14 @@ function gatherText(structureOfCourse, courseName) {
     let fullNameOfCourse = "";
     for (let chapterKey in structureOfCourse) {
         text += '<li>';
-        text += ` <a class="btn btn-primary" style="width: 60px; margin-bottom: 10px" href="#${chapterKey}Submenu"
+        text += ` <a class="btn btn-primary dropdown-toggle" style="width: 60px; margin-bottom: 10px" href="#${chapterKey}Submenu"
                   data-toggle="collapse" aria-expanded="false" 
-                  id="chapterKey-${courseName}-${chapterKey}" class="dropdown-toggle">${chapterKey}</a> \n`;
+                  id="chapterKey-${courseName}-${chapterKey}">${chapterKey}</a> \n`;
         text += ` <ul class="collapse list-unstyled" id="${chapterKey}Submenu"> \n`;
         for (let stepKey in structureOfCourse[chapterKey]) {
-            text += `<li> <a class="btn btn-info" style="width: 60px; margin-bottom: 10px" 
+            text += `<li> <a class="btn btn-info dropdown-toggle" style="width: 60px; margin-bottom: 10px" 
                        href="#${chapterKey}-${stepKey}Submenu" data-toggle="collapse" aria-expanded="false" 
-                       id="stepKey-${courseName}-${chapterKey}-${stepKey}" class="dropdown-toggle" >
+                       id="stepKey-${courseName}-${chapterKey}-${stepKey}" >
                        ${chapterKey}.${stepKey}</a> </li>`;
             text += ` <ul class="collapse list-unstyled" id="${chapterKey}-${stepKey}Submenu"> \n`;
             for (let lessonKey in (structureOfCourse[chapterKey])[stepKey]) {
@@ -109,14 +109,14 @@ function checkPassedLessons(structure, courseName) {
 
                     if (passedLessonCount === lessonCount) {
                         document.getElementById("stepKey-" + courseName + "-" +
-                            chapterKey + "-" + stepKey).className = "btn btn-success"
+                            chapterKey + "-" + stepKey).className = "btn btn-success dropdown-toggle"
                         passedStepCount++
                     }
                 }
 
                 if (passedStepCount === stepCount) {
                     document.getElementById("chapterKey-" + courseName + "-" +
-                        chapterKey).className = "btn btn-success"
+                        chapterKey).className = "btn btn-success dropdown-toggle"
                 }
             }
         },
