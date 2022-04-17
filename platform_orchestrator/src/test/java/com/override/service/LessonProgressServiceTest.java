@@ -1,6 +1,5 @@
 package com.override.service;
 
-import com.override.models.PersonalData;
 import com.override.models.PlatformUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
