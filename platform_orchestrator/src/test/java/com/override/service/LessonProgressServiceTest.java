@@ -1,9 +1,11 @@
 package com.override.service;
 
+import com.override.models.PersonalData;
 import com.override.models.PlatformUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,10 +19,14 @@ public class LessonProgressServiceTest {
     @InjectMocks
     private LessonProgressService lessonProgressService;
 
+    @Mock
+    private PlatformUserService platformUserService;
+
     @Test
     public void testSaveLessonProgress() {
         PlatformUser platformUser = new PlatformUser();
         platformUser.setLessonProgress(new ArrayList<>());
+        platformUserService.save(platformUser);
 
         String lesson = "test-1-1-1";
 
@@ -37,15 +43,15 @@ public class LessonProgressServiceTest {
     public void testSaveSameLessonProgress() {
         PlatformUser platformUser = new PlatformUser();
         platformUser.setLessonProgress(new ArrayList<>());
+        platformUserService.save(platformUser);
 
-        String lesson1 = "test-1-1-1";
-        String lesson2 = "test-1-1-1";
+        String lesson = "test-1-1-1";
 
-        lessonProgressService.checkLesson(platformUser, lesson1);
-        lessonProgressService.checkLesson(platformUser, lesson2);
+        lessonProgressService.checkLesson(platformUser, lesson);
+        lessonProgressService.checkLesson(platformUser, lesson);
 
         List<String> lessons = new ArrayList<>();
-        lessons.add(lesson1);
+        lessons.add(lesson);
 
         assertEquals(platformUser.getLessonProgress(), lessons);
     }
