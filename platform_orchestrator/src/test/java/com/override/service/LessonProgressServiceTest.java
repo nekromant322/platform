@@ -9,6 +9,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +29,12 @@ public class LessonProgressServiceTest {
     public void testSaveLessonProgress() {
         PlatformUser platformUser = new PlatformUser();
         platformUser.setLessonProgress(new ArrayList<>());
-        platformUserService.save(platformUser);
 
         String lesson = "test-1-1-1";
 
         lessonProgressService.checkLesson(platformUser, lesson);
+
+        verify(platformUserService, times(1)).update(any());
 
         List<String> lessons = new ArrayList<>();
         lessons.add(lesson);
@@ -43,17 +47,13 @@ public class LessonProgressServiceTest {
     public void testSaveSameLessonProgress() {
         PlatformUser platformUser = new PlatformUser();
         platformUser.setLessonProgress(new ArrayList<>());
-        platformUserService.save(platformUser);
 
         String lesson = "test-1-1-1";
 
         lessonProgressService.checkLesson(platformUser, lesson);
         lessonProgressService.checkLesson(platformUser, lesson);
 
-        List<String> lessons = new ArrayList<>();
-        lessons.add(lesson);
-
-        assertEquals(platformUser.getLessonProgress(), lessons);
+        verify(platformUserService, times(1)).update(any());
     }
 
 }
