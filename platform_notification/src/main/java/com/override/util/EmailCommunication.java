@@ -3,6 +3,7 @@ package com.override.util;
 import com.override.models.Recipient;
 import com.override.service.EmailService;
 import dtos.MailDTO;
+import enums.Communication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,5 +32,10 @@ public class EmailCommunication implements CommunicationStrategy {
     public Recipient setCommunication(Recipient recipient, String value) {
         recipient.setEmail(value);
         return recipient;
+    }
+
+    @Override
+    public Communication getType() {
+        return Communication.EMAIL;
     }
 }

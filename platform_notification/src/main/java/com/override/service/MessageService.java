@@ -3,6 +3,8 @@ package com.override.service;
 import com.override.models.Recipient;
 import com.override.util.CommunicationStrategy;
 import com.override.util.CommunicationStrategyFactory;
+import com.override.util.EmailCommunication;
+import com.override.util.TelegramCommunication;
 import enums.Communication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +37,11 @@ public class MessageService {
         Recipient recipient = recipientService.getRecipientByLogin(login);
         Map<Communication, CommunicationStrategy> senderMap = communicationStrategyFactory.getSenderMap();
         ResponseEntity<HttpStatus> status = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        int httpStatusOk = 200;
+
         for (Communication type : types) {
             status = senderMap.get(type).sendMessage(recipient, message);
-            if (status.getStatusCode().value() == 200) {
+            if (status.getStatusCode().value() == httpStatusOk) {
                 return status;
             }
         }

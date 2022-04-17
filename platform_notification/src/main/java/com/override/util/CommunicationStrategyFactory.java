@@ -10,29 +10,21 @@ import java.util.Map;
 @Component
 public class CommunicationStrategyFactory {
 
-    private CommunicationStrategy communicationStrategy;
-
     @Autowired
-    private EmailCommunication emailMessage;
+    private EmailCommunication emailCommunication;
     @Autowired
-    private TelegramCommunication telegramMessage;
-
-    private void setMessageStrategy(CommunicationStrategy communicationStrategy) {
-        this.communicationStrategy = communicationStrategy;
-    }
+    private TelegramCommunication telegramCommunication;
 
     /**
      * При добавлении новых реализаций отправки сообщений юзерам в новые мессенджеры/соц. сети
      * нужно будет добавлять их в эту мапу
      * @return мапу со всеми способами отправки сообщений юзерам
      */
+    @Autowired
     public Map<Communication, CommunicationStrategy> getSenderMap() {
         Map<Communication, CommunicationStrategy> senderMap = new HashMap<>();
-
-        setMessageStrategy(telegramMessage);
-        senderMap.put(Communication.TELEGRAM, communicationStrategy);
-        setMessageStrategy(emailMessage);
-        senderMap.put(Communication.EMAIL, communicationStrategy);
+        senderMap.put(emailCommunication.getType(), emailCommunication);
+        senderMap.put(telegramCommunication.getType(), telegramCommunication);
         return senderMap;
     }
 }
