@@ -118,7 +118,7 @@ class PlatformUserServiceTest {
                     add(userAuthority);
                 }},
                 new PersonalData(),
-                new HashMap<>()
+                new ArrayList<>()
         );
 
         when(authorityService.getAuthorityByRole(Role.USER)).thenReturn(userAuthority);
@@ -164,6 +164,7 @@ class PlatformUserServiceTest {
         PlatformUser notNullUser = new PlatformUser();
         notNullUser.setLogin(login);
         notNullUser.setPersonalData(new PersonalData());
+        notNullUser.setLessonProgress(new ArrayList<>());
 
         when(accountRepository.findFirstByLogin(login)).thenReturn(null);
         when(accountRepository.save(notNullUser)).thenReturn(notNullUser);
