@@ -17,7 +17,7 @@ public class CommunicationStrategyFactory {
     @Autowired
     private TelegramCommunication telegramMessage;
 
-    private void setMessageStrategy(CommunicationStrategy communicationStrategy) {
+    private void setCommunicationStrategy(CommunicationStrategy communicationStrategy) {
         this.communicationStrategy = communicationStrategy;
     }
 
@@ -29,9 +29,9 @@ public class CommunicationStrategyFactory {
     public Map<Communication, CommunicationStrategy> getSenderMap() {
         Map<Communication, CommunicationStrategy> senderMap = new HashMap<>();
 
-        setMessageStrategy(telegramMessage);
+        setCommunicationStrategy(telegramMessage);
         senderMap.put(Communication.TELEGRAM, communicationStrategy);
-        setMessageStrategy(emailMessage);
+        setCommunicationStrategy(emailMessage);
         senderMap.put(Communication.EMAIL, communicationStrategy);
         return senderMap;
     }
