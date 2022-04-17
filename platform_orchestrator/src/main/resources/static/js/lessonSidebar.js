@@ -41,7 +41,8 @@ function gatherText(structureOfCourse, courseName) {
         text += ` <ul class="collapse list-unstyled" id="${chapterKey}Submenu"> \n`;
         for (let stepKey in structureOfCourse[chapterKey]) {
             text += `<li> <a href="#${chapterKey}-${stepKey}Submenu" data-toggle="collapse" aria-expanded="false" 
-                      id="stepKey-${courseName}-${chapterKey}-${stepKey}" class="dropdown-toggle" >${stepKey}</a> </li>`;
+                      id="stepKey-${courseName}-${chapterKey}-${stepKey}" class="dropdown-toggle" >
+                       ${chapterKey}.${stepKey}</a> </li>`;
             text += ` <ul class="collapse list-unstyled" id="${chapterKey}-${stepKey}Submenu"> \n`;
             for (let lessonKey in (structureOfCourse[chapterKey])[stepKey]) {
                 text += '<li>';
@@ -50,7 +51,8 @@ function gatherText(structureOfCourse, courseName) {
                     nameOfLesson = nameOfLesson.substr(0, nameOfLesson.length - 5);
                     fullNameOfCourse = courseName + "-" + chapterKey + "-" + stepKey + "-" + nameOfLesson;
                     text += `<a href="/lessons/${courseName}/${chapterKey}/${stepKey}/${nameOfLesson}"
-                                id="lesson-${courseName}-${chapterKey}-${stepKey}-${nameOfLesson}">${nameOfLesson}</a> \n`;
+                                id="lesson-${courseName}-${chapterKey}-${stepKey}-${nameOfLesson}">
+                             ${chapterKey}.${stepKey}.${nameOfLesson}</a> \n`;
                     allLessonList.push(fullNameOfCourse);
                 }
                 text += '</li>';
