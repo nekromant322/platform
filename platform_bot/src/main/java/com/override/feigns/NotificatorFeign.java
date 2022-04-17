@@ -1,6 +1,6 @@
 package com.override.feigns;
 
-import enums.Communications;
+import enums.Communication;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,5 +14,5 @@ public interface NotificatorFeign {
     ResponseEntity<HttpStatus> sendMessage(
             @RequestParam("login") String login,
             @RequestParam("message") String message,
-            @RequestParam("type") Communications... type);
+            @RequestParam("type") Communication... type);
 }

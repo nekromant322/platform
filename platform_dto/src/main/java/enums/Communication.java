@@ -1,6 +1,6 @@
 package enums;
 
-public enum Communications {
+public enum Communication {
     EMAIL,
     SMS,
     TELEGRAM,

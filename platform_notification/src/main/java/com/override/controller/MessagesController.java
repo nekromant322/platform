@@ -1,7 +1,7 @@
 package com.override.controller;
 
 import com.override.service.MessagesService;
-import enums.Communications;
+import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class MessagesController {
     ResponseEntity<HttpStatus> sendMessage(
             @RequestParam("login") String login,
             @RequestParam("message") String message,
-            @RequestParam("type") Communications... type) {
+            @RequestParam("type") Communication... type) {
         return messagesService.sendMessage(login, message, type);
     }
 }

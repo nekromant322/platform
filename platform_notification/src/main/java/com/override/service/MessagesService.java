@@ -3,7 +3,7 @@ package com.override.service;
 import com.override.models.Recipient;
 import dtos.MailDTO;
 import dtos.MessageDTO;
-import enums.Communications;
+import enums.Communication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class MessagesService {
     @Autowired
     private RecipientService recipientService;
 
-    public ResponseEntity<HttpStatus> sendToTelegram(Recipient recipient, String message) {
+    private ResponseEntity<HttpStatus> sendToTelegram(Recipient recipient, String message) {
         telegramService.sendMessage(MessageDTO.builder()
                 .chatId(recipient.getTelegramId())
                 .message(message)
@@ -32,7 +32,7 @@ public class MessagesService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<HttpStatus> sendByEmail(Recipient recipient, String message) {
+    private ResponseEntity<HttpStatus> sendByEmail(Recipient recipient, String message) {
         emailService.sendSimpleMail(MailDTO.builder()
                 .to(Collections.singletonList(recipient.getEmail()))
                 .text(message)
@@ -52,13 +52,13 @@ public class MessagesService {
      * @param communications    тип коммуникации с пользователем, например: TELEGRAM, VK, EMAIL
      * @return результат успешной работы или ошибку связанную с отправкой сообщения
      */
-    public ResponseEntity<HttpStatus> sendMessage(String login, String message, Communications... communications) {
+    public ResponseEntity<HttpStatus> sendMessage(String login, String message, Communication... communications) {
         Recipient recipient = recipientService.getRecipientByLogin(login);
-        for (Communications type : communications) {
-            if (!recipient.getTelegramId().isEmpty() && type.equals(Communications.TELEGRAM)) {
+        for (Communication type : communications) {
+            if (!recipient.getTelegramId().isEmpty() && type.equals(Communication.TELEGRAM)) {
                 return sendToTelegram(recipient, message);
             }
-            if (!recipient.getEmail().isEmpty() && type.equals(Communications.EMAIL)) {
+            if (!recipient.getEmail().isEmpty() && type.equals(Communication.EMAIL)) {
                 return sendByEmail(recipient, message);
             }
         }

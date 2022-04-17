@@ -4,7 +4,7 @@ import com.override.feigns.NotificatorFeign;
 import com.override.models.PlatformUser;
 import com.override.models.StudentReport;
 import com.override.repositories.StudentReportRepository;
-import enums.Communications;
+import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +35,6 @@ public class ReportService {
     public void sendDailyReminderOfReport() {
         String message = "Привет, не забудь написать отчет \uD83D\uDE4A";
         userService.findStudentsWithoutReportOfCurrentDay()
-                .forEach(user -> notificatorFeign.sendMessage(user.getLogin(), message, Communications.TELEGRAM));
+                .forEach(user -> notificatorFeign.sendMessage(user.getLogin(), message, Communication.TELEGRAM));
     }
 }
