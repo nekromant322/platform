@@ -98,7 +98,7 @@ public class InitializationService {
 
     private void saveUser(String login, String password, String telegramChatId, Role... userRoles) {
         List<Authority> roles = getAuthorityListFromRoles(userRoles);
-        PlatformUser account = new PlatformUser(null, login, password, telegramChatId, roles, new PersonalData(), new HashMap<>());
+        PlatformUser account = new PlatformUser(null, login, password, telegramChatId, roles, new PersonalData(), new ArrayList<>());
         userService.save(account);
     }
 
