@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -39,11 +40,15 @@ public class PlatformUserService {
         return register(platformUser);
     }
 
+    public void update(PlatformUser platformUser) {
+        accountRepository.save(platformUser);
+    }
+
     public PlatformUser generateAccount(String login, String chatId) {
         String password = passwordGeneratorService.generateStrongPassword();
         List<Authority> roles = Collections.singletonList(authorityService.getAuthorityByRole(Role.USER));
 
-        PlatformUser account = new PlatformUser(null, login, password, chatId, roles, new PersonalData(), new HashMap<>());
+        PlatformUser account = new PlatformUser(null, login, password, chatId, roles, new PersonalData(), new ArrayList<>());
         register(account);
 
         return account;
@@ -58,7 +63,7 @@ public class PlatformUserService {
                 studentAccount.getTelegramChatId(),
                 studentAccount.getAuthorities(),
                 new PersonalData(),
-                new HashMap<>()
+                new ArrayList<>()
         );
 
         if (accountRepository.findFirstByLogin(login) == null) {
