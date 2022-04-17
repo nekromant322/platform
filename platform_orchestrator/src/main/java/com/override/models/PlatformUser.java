@@ -2,6 +2,8 @@ package com.override.models;
 
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -34,7 +36,8 @@ public class PlatformUser {
     @OneToOne(cascade = CascadeType.ALL)
     private PersonalData personalData;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Map<String, Boolean> lessonProgress;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ElementCollection
+    private List<String> lessonProgress;
 
 }
