@@ -3,6 +3,8 @@ package com.override.controller;
 import com.override.service.TelegramService;
 import dtos.MessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +17,7 @@ public class TelegramSendController {
     private TelegramService telegramService;
 
     @PostMapping
-    public void sendTelegramMessages(@RequestBody MessageDTO messageDTO){
-        telegramService.sendMessage(messageDTO);
+    public ResponseEntity<HttpStatus> sendTelegramMessages(@RequestBody MessageDTO messageDTO){
+        return telegramService.sendMessage(messageDTO);
     }
 }

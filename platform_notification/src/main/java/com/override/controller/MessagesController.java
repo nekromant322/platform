@@ -1,6 +1,6 @@
 package com.override.controller;
 
-import com.override.service.MessagesService;
+import com.override.service.MessageService;
 import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessagesController {
 
     @Autowired
-    private MessagesService messagesService;
+    private MessageService messageService;
 
     /**
      * Метод контроллера который необходимо использовать в сервисах, если нужно отправить сообщение пользователю
@@ -30,6 +30,6 @@ public class MessagesController {
             @RequestParam("login") String login,
             @RequestParam("message") String message,
             @RequestParam("type") Communication... type) {
-        return messagesService.sendMessage(login, message, type);
+        return messageService.sendMessage(login, message, type);
     }
 }

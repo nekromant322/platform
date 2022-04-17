@@ -19,7 +19,7 @@ public interface NotificatorFeign {
     Double getBalance();
 
     @PostMapping("/teleMessages")
-    void sendTelegramMessages(@RequestBody MessageDTO message);
+    ResponseEntity<HttpStatus> sendTelegramMessages(@RequestBody MessageDTO message);
 
     @PostMapping("/recipients/save")
     void saveRecipient(@RequestBody RecipientDTO recipientDTO);
