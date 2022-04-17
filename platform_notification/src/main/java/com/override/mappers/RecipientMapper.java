@@ -18,13 +18,12 @@ public class RecipientMapper {
     }
 
     public Recipient dtoToEntity(RecipientDTO recipientDTO) {
-        return new Recipient(
-                null,
-                recipientDTO.getLogin(),
-                recipientDTO.getEmail(),
-                recipientDTO.getPhoneNumber(),
-                recipientDTO.getTelegramId(),
-                recipientDTO.getVkId()
-        );
+        return Recipient.builder()
+                .login(recipientDTO.getLogin())
+                .email(recipientDTO.getEmail())
+                .phoneNumber(recipientDTO.getPhoneNumber())
+                .telegramId(recipientDTO.getTelegramId())
+                .vkId(recipientDTO.getVkId())
+                .build();
     }
 }
