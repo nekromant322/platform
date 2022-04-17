@@ -24,7 +24,7 @@ function init(courseName) {
         }
     });
 
-    window.document.getElementById("courseNameDiv").innerText = courseName;
+    window.document.getElementById("courseNameDiv").innerHTML = "<h5 class='text-center'>" + courseName + "</h5>";
     window.document.getElementById("sideBarBody").innerHTML = gatherText(structure, courseName);
     checkPassedLessons(structure, courseName)
 
@@ -35,13 +35,15 @@ function gatherText(structureOfCourse, courseName) {
     let nameOfLesson = "";
     let fullNameOfCourse = "";
     for (let chapterKey in structureOfCourse) {
-        text += ' <li className="active"> ';
-        text += ` <a href="#${chapterKey}Submenu" data-toggle="collapse" aria-expanded="false" 
+        text += '<li>';
+        text += ` <a class="btn btn-primary" style="width: 60px; margin-bottom: 10px" href="#${chapterKey}Submenu"
+                  data-toggle="collapse" aria-expanded="false" 
                   id="chapterKey-${courseName}-${chapterKey}" class="dropdown-toggle">${chapterKey}</a> \n`;
         text += ` <ul class="collapse list-unstyled" id="${chapterKey}Submenu"> \n`;
         for (let stepKey in structureOfCourse[chapterKey]) {
-            text += `<li> <a href="#${chapterKey}-${stepKey}Submenu" data-toggle="collapse" aria-expanded="false" 
-                      id="stepKey-${courseName}-${chapterKey}-${stepKey}" class="dropdown-toggle" >
+            text += `<li> <a class="btn btn-info" style="width: 60px; margin-bottom: 10px" 
+                       href="#${chapterKey}-${stepKey}Submenu" data-toggle="collapse" aria-expanded="false" 
+                       id="stepKey-${courseName}-${chapterKey}-${stepKey}" class="dropdown-toggle" >
                        ${chapterKey}.${stepKey}</a> </li>`;
             text += ` <ul class="collapse list-unstyled" id="${chapterKey}-${stepKey}Submenu"> \n`;
             for (let lessonKey in (structureOfCourse[chapterKey])[stepKey]) {
@@ -50,7 +52,8 @@ function gatherText(structureOfCourse, courseName) {
                     nameOfLesson = String(((structureOfCourse[chapterKey])[stepKey])[lessonKey]);
                     nameOfLesson = nameOfLesson.substr(0, nameOfLesson.length - 5);
                     fullNameOfCourse = courseName + "-" + chapterKey + "-" + stepKey + "-" + nameOfLesson;
-                    text += `<a href="/lessons/${courseName}/${chapterKey}/${stepKey}/${nameOfLesson}"
+                    text += `<a class="btn btn-secondary" style="width: 60px; margin-bottom: 10px"
+                                href="/lessons/${courseName}/${chapterKey}/${stepKey}/${nameOfLesson}"
                                 id="lesson-${courseName}-${chapterKey}-${stepKey}-${nameOfLesson}">
                              ${chapterKey}.${stepKey}.${nameOfLesson}</a> \n`;
                     allLessonList.push(fullNameOfCourse);
@@ -60,7 +63,7 @@ function gatherText(structureOfCourse, courseName) {
             text += '</ul>';
         }
         text += '</ul>';
-        text += ' </li> ';
+        text += ' </li></div></div> <br> ';
     }
     return text;
 }
@@ -75,7 +78,7 @@ function checkPassedLessons(structure, courseName) {
             $.each(passedLessons, function (i, passedLesson) {
                 $.each(allLessonList, function (i, lesson) {
                     if (lesson === passedLesson) {
-                        document.getElementById("lesson-" + passedLesson).style.color = "yellowgreen";
+                        document.getElementById("lesson-" + passedLesson).className = "btn btn-success";
                     }
                 })
             })
@@ -99,22 +102,21 @@ function checkPassedLessons(structure, courseName) {
                         lessonCount++;
 
                         if (document.getElementById("lesson-" + courseName + "-" +
-                            chapterKey + "-" + stepKey + "-" + nameOfLesson).style.color === "yellowgreen") {
-
+                            chapterKey + "-" + stepKey + "-" + nameOfLesson).className === "btn btn-success") {
                             passedLessonCount++;
                         }
                     }
 
                     if (passedLessonCount === lessonCount) {
                         document.getElementById("stepKey-" + courseName + "-" +
-                            chapterKey + "-" + stepKey).style.color = "yellowgreen"
+                            chapterKey + "-" + stepKey).className = "btn btn-success"
                         passedStepCount++
                     }
                 }
 
                 if (passedStepCount === stepCount) {
                     document.getElementById("chapterKey-" + courseName + "-" +
-                        chapterKey).style.color = "yellowgreen"
+                        chapterKey).className = "btn btn-success"
                 }
             }
         },
