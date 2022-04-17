@@ -23,8 +23,6 @@ public class InitializationService {
                 null,
                 "admin",
                 "1234",
-                "1234",
-                "1234",
                 "1234"
         );
         recipientService.save(recipient);

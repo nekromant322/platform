@@ -11,9 +11,7 @@ public class RecipientMapper {
         return RecipientDTO.builder()
                 .login(recipient.getLogin())
                 .email(recipient.getEmail())
-                .phoneNumber(recipient.getPhoneNumber())
                 .telegramId(recipient.getTelegramId())
-                .vkId(recipient.getVkId())
                 .build();
     }
 
@@ -21,9 +19,7 @@ public class RecipientMapper {
         return Recipient.builder()
                 .login(recipientDTO.getLogin())
                 .email(recipientDTO.getEmail())
-                .phoneNumber(recipientDTO.getPhoneNumber())
                 .telegramId(recipientDTO.getTelegramId())
-                .vkId(recipientDTO.getVkId())
                 .build();
     }
 }

@@ -19,9 +19,5 @@ public class Recipient {
 
     private String email;
 
-    private String phoneNumber;
-
     private String telegramId;
-
-    private String vkId;
 }

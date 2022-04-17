@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface RecipientRepository extends CrudRepository<Recipient, Long> {
 
-    Recipient getRecipientByLogin(String login);
+    Recipient findRecipientByLogin(String login);
 }

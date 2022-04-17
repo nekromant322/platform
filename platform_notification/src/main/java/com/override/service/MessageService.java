@@ -1,8 +1,8 @@
 package com.override.service;
 
 import com.override.models.Recipient;
-import com.override.util.MessageStrategy;
-import com.override.util.MessageStrategyFactory;
+import com.override.util.CommunicationStrategy;
+import com.override.util.CommunicationStrategyFactory;
 import enums.Communication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class MessageService {
     @Autowired
     private RecipientService recipientService;
     @Autowired
-    private MessageStrategyFactory messageStrategyFactory;
+    private CommunicationStrategyFactory communicationStrategyFactory;
 
     /**
      * Метод, в котором определяется каким способом будет отправлено сообщение. Если найдено несколько
@@ -33,7 +33,7 @@ public class MessageService {
      */
     public ResponseEntity<HttpStatus> sendMessage(String login, String message, Communication... types) {
         Recipient recipient = recipientService.getRecipientByLogin(login);
-        Map<Communication, MessageStrategy> senderMap = messageStrategyFactory.getSenderMap(types);
+        Map<Communication, CommunicationStrategy> senderMap = communicationStrategyFactory.getSenderMap();
         ResponseEntity<HttpStatus> status = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         for (Communication type : types) {
             status = senderMap.get(type).sendMessage(recipient, message);
