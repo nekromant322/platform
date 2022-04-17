@@ -91,6 +91,8 @@ navbar:
       /questionsAdmin
     - Статистика
       /statistics
+    - Ревью
+      /reviewAdmin
   user:
     - Курсы
       /courses

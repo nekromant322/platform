@@ -5,17 +5,16 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Set;
 
 @Data
 @Builder
 public class ReviewDTO {
     private Long id;
-    private String title;
+    private String topic;
     private String studentLogin;
     private String mentorLogin;
     private LocalDate bookedDate;
     private LocalTime bookedTime;
-    private LocalTime firstTimeSlot;
-    private LocalTime secondTimeSlot;
-    private LocalTime thirdTimeSlot;
+    private Set<LocalTime> timeSlots;
 }

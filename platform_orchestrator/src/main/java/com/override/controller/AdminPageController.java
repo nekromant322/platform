@@ -25,4 +25,10 @@ public class AdminPageController {
     public String joinRequestsPage() {
         return "joinRequests";
     }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/reviewAdmin")
+    public String reviewAdminPage() {
+        return "reviewAdmin";
+    }
 }

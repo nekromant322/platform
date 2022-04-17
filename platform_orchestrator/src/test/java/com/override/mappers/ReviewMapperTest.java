@@ -27,13 +27,27 @@ public class ReviewMapperTest {
         Review review = reviewMapper.dtoToEntity(testReviewDTO, testStudent, testMentor);
 
         Assertions.assertEquals(review.getId(), testReview.getId());
-        Assertions.assertEquals(review.getTitle(), testReview.getTitle());
+        Assertions.assertEquals(review.getTopic(), testReview.getTopic());
         Assertions.assertEquals(review.getStudent(), testReview.getStudent());
         Assertions.assertEquals(review.getMentor(), testReview.getMentor());
         Assertions.assertEquals(review.getBookedDate(), testReview.getBookedDate());
         Assertions.assertEquals(review.getBookedTime(), testReview.getBookedTime());
-        Assertions.assertEquals(review.getFirstTimeSlot(), testReview.getFirstTimeSlot());
-        Assertions.assertEquals(review.getSecondTimeSlot(), testReview.getSecondTimeSlot());
-        Assertions.assertEquals(review.getThirdTimeSlot(), testReview.getThirdTimeSlot());
+        Assertions.assertEquals(review.getTimeSlots(), testReview.getTimeSlots());
+    }
+
+    @Test
+    public void testEntityToDto() {
+        Review testReview = generateTestReview();
+        ReviewDTO testReviewDTO = generateTestReviewDTO();
+
+        ReviewDTO reviewDTO = reviewMapper.entityToDto(testReview);
+
+        Assertions.assertEquals(reviewDTO.getId(), testReviewDTO.getId());
+        Assertions.assertEquals(reviewDTO.getTopic(), testReviewDTO.getTopic());
+        Assertions.assertEquals(reviewDTO.getStudentLogin(), testReviewDTO.getStudentLogin());
+        Assertions.assertEquals(reviewDTO.getMentorLogin(), testReviewDTO.getMentorLogin());
+        Assertions.assertEquals(reviewDTO.getBookedDate(), testReviewDTO.getBookedDate());
+        Assertions.assertEquals(reviewDTO.getBookedTime(), testReviewDTO.getBookedTime());
+        Assertions.assertEquals(reviewDTO.getTimeSlots(), testReviewDTO.getTimeSlots());
     }
 }

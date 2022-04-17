@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -63,6 +64,9 @@ public class InitializationService {
     private ReportService reportService;
 
     @Autowired
+    private ReviewService reviewService;
+
+    @Autowired
     private Faker faker;
 
     @PostConstruct
@@ -74,7 +78,7 @@ public class InitializationService {
         joinRequestsInit();
         questionsInit();
         reportsInit();
-
+        reviewInit();
     }
 
     private void authorityInit() {
@@ -205,6 +209,47 @@ public class InitializationService {
         }
     }
 
+    private void reviewInit() {
+        List<PlatformUser> students = userService.getAllStudents();
+        students.forEach(this::saveOrUpdateReview);
+    }
+
+    private void saveOrUpdateReview(PlatformUser student) {
+        List<LocalTime> timeSlots = new ArrayList<>();
+        LocalTime time = LocalTime.of(00, 00);
+
+        for (int i = 0; i < 47; i++) {
+            timeSlots.add(time);
+            time = time.plusMinutes(30);
+        }
+
+        Set<LocalTime> selectedTimeSlots = new HashSet<>();
+        selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
+        selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
+
+        reviewService.saveOrUpdateReview(ReviewDTO.builder()
+                .id(null)
+                .topic(faker.book().title())
+                .studentLogin(null)
+                .mentorLogin(null)
+                .bookedDate(LocalDate.now().plusDays(1))
+                .bookedTime(null)
+                .timeSlots(selectedTimeSlots)
+                .build(), student.getLogin());
+
+        selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
+
+        reviewService.saveOrUpdateReview(ReviewDTO.builder()
+                .id(null)
+                .topic(faker.book().title())
+                .studentLogin(null)
+                .mentorLogin(adminLogin)
+                .bookedDate(LocalDate.now())
+                .bookedTime(selectedTimeSlots.iterator().next())
+                .timeSlots(selectedTimeSlots)
+                .build(), student.getLogin());
+    }
+
     private void personalDataInit(PlatformUser user) {
 
         int day = faker.number().numberBetween(1,30);
@@ -231,5 +276,6 @@ public class InitializationService {
         personalData.setPhoneNumber(Long.valueOf("8" + faker.bothify("##########")));
 
         personalDataService.save(personalData, user.getLogin());
+
     }
 }
