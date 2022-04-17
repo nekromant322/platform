@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TelegramMessage implements MessageStrategy {
+public class TelegramCommunication implements CommunicationStrategy {
 
     @Autowired
     private TelegramService telegramService;
@@ -20,5 +20,11 @@ public class TelegramMessage implements MessageStrategy {
                 .chatId(recipient.getTelegramId())
                 .message(message)
                 .build());
+    }
+
+    @Override
+    public Recipient setCommunication(Recipient recipient, String value) {
+        recipient.setTelegramId(value);
+        return recipient;
     }
 }

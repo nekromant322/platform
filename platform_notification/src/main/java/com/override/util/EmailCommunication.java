@@ -7,14 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
 @Component
 @Slf4j
-public class EmailMessage implements MessageStrategy {
+public class EmailCommunication implements CommunicationStrategy {
 
     @Autowired
     private EmailService emailService;
@@ -26,5 +25,11 @@ public class EmailMessage implements MessageStrategy {
                 .text(message)
                 .subject("test")
                 .build());
+    }
+
+    @Override
+    public Recipient setCommunication(Recipient recipient, String value) {
+        recipient.setEmail(value);
+        return recipient;
     }
 }
