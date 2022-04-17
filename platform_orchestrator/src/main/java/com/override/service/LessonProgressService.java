@@ -16,13 +16,14 @@ public class LessonProgressService {
 
     public void checkLesson(PlatformUser student, String lesson) {
         List<String> lessonProgress = student.getLessonProgress();
-        AtomicBoolean exists = new AtomicBoolean(false);
-        lessonProgress.forEach( l -> {
-            if (Objects.equals(l, lesson)) {
-                exists.set(true);
+        boolean exists = false;
+        for (String passedLesson : lessonProgress) {
+            if (Objects.equals(passedLesson, lesson)) {
+                exists = true;
+                break;
             }
-        });
-        if (!exists.get()) {
+        }
+        if (!exists) {
             lessonProgress.add(lesson);
             student.setLessonProgress(lessonProgress);
             platformUserService.update(student);
