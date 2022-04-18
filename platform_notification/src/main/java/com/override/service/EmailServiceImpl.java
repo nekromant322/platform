@@ -21,7 +21,7 @@ public class EmailServiceImpl implements EmailService {
     public EmailMapper emailMapper;
 
     @Override
-    public ResponseEntity<HttpStatus> sendSimpleMail(MailDTO mailDTO) {
+    public ResponseEntity<String> sendSimpleMail(MailDTO mailDTO) {
         List<SimpleMailMessage> messageList = emailMapper.dtoToListOfSimpleMails(mailDTO);
         try {
             for (SimpleMailMessage message : messageList) {
@@ -29,7 +29,7 @@ public class EmailServiceImpl implements EmailService {
             }
         } catch (MailException e) {
             log.error("Email not sent with \"{}\" exception and \"{}\" status", e, HttpStatus.INTERNAL_SERVER_ERROR);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("MailException", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         log.info("Message was sent to {}", mailDTO.getTo());
         return new ResponseEntity<>(HttpStatus.OK);

@@ -3,8 +3,6 @@ package com.override.service;
 import com.override.models.Recipient;
 import com.override.util.CommunicationStrategy;
 import com.override.util.CommunicationStrategyFactory;
-import com.override.util.EmailCommunication;
-import com.override.util.TelegramCommunication;
 import enums.Communication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +29,12 @@ public class MessageService {
      * @param login   логин пользователя, которому будет отправлено сообщение
      * @param message текст сообщения
      * @param types   тип коммуникации с пользователем, например: TELEGRAM, VK, EMAIL
-     * @return результат успешной работы или ошибку связанную с отправкой сообщения
+     * @return результат успешной работы (код 200) или ошибку связанную с отправкой сообщения (код 500)
      */
-    public ResponseEntity<HttpStatus> sendMessage(String login, String message, Communication... types) {
-        Recipient recipient = recipientService.getRecipientByLogin(login);
+    public ResponseEntity<String> sendMessage(String login, String message, Communication... types) {
+        Recipient recipient = recipientService.findRecipientByLogin(login);
         Map<Communication, CommunicationStrategy> senderMap = communicationStrategyFactory.getSenderMap();
-        ResponseEntity<HttpStatus> status = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        ResponseEntity<String> status;
         int httpStatusOk = 200;
 
         for (Communication type : types) {
@@ -45,6 +43,6 @@ public class MessageService {
                 return status;
             }
         }
-        return status;
+        return new ResponseEntity<>("Communication types is empty", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -18,9 +18,6 @@ public interface NotificatorFeign {
     @GetMapping("/calls/balance")
     Double getBalance();
 
-    @PostMapping("/teleMessages")
-    ResponseEntity<HttpStatus> sendTelegramMessages(@RequestBody MessageDTO message);
-
     @PostMapping("/recipients/save")
     void saveRecipient(@RequestBody RecipientDTO recipientDTO);
 
@@ -28,7 +25,7 @@ public interface NotificatorFeign {
     void deleteRecipient(@RequestBody RecipientDTO recipientDTO);
 
     @PostMapping("/communications")
-    ResponseEntity<HttpStatus> sendMessage(
+    ResponseEntity<String> sendMessage(
             @RequestParam("login") String login,
             @RequestParam("message") String message,
             @RequestParam("type") Communication... type);

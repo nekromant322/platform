@@ -26,7 +26,7 @@ public class MessagesController {
      * @return результат успешной работы или ошибку связанную с отправкой сообщения
      */
     @PostMapping
-    ResponseEntity<HttpStatus> sendMessage(
+    ResponseEntity<String> sendMessage(
             @RequestParam("login") String login,
             @RequestParam("message") String message,
             @RequestParam("type") Communication... type) {

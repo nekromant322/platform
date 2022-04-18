@@ -12,7 +12,7 @@ public class TelegramService {
     @Autowired
     private TelegramFeign telegramFeign;
 
-    public ResponseEntity<HttpStatus> sendMessage(MessageDTO messageDTO) {
+    public ResponseEntity<String> sendMessage(MessageDTO messageDTO) {
         return telegramFeign.sendMessage(messageDTO);
     }
 }

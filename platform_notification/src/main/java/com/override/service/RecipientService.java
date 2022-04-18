@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Map;
 
 @Service
@@ -25,7 +26,7 @@ public class RecipientService {
     private CommunicationStrategyFactory strategyFactory;
 
     public void save(RecipientDTO recipientDTO) {
-        if (repository.findRecipientByLogin(recipientDTO.getLogin()) != null) {
+        if (repository.findRecipientByLogin(recipientDTO.getLogin()).isPresent()) {
             log.info("Пользователь с логином {} уже есть в системе", recipientDTO.getLogin());
         } else {
             repository.save(recipientMapper.dtoToEntity(recipientDTO));
@@ -33,7 +34,7 @@ public class RecipientService {
     }
 
     public void save(Recipient recipient) {
-        if (repository.findRecipientByLogin(recipient.getLogin()) != null) {
+        if (repository.findRecipientByLogin(recipient.getLogin()).isPresent()) {
             log.info("User with this login \"{}\" already exists", recipient.getLogin());
         } else {
             repository.save(recipient);
@@ -41,7 +42,8 @@ public class RecipientService {
     }
 
     public void updateCommunication(String login, String value, Communication type) {
-        Recipient recipient = repository.findRecipientByLogin(login);
+        Recipient recipient = repository.findRecipientByLogin(login).orElseThrow(() ->
+                new EntityNotFoundException("Recipient with login " + login + " not found"));
         Map<Communication, CommunicationStrategy> strategyMap = strategyFactory.getSenderMap();
 
         recipient = strategyMap.get(type).setCommunication(recipient, value);
@@ -52,7 +54,7 @@ public class RecipientService {
         repository.delete(recipientMapper.dtoToEntity(recipientDTO));
     }
 
-    public Recipient getRecipientByLogin(String login) {
-        return repository.findRecipientByLogin(login);
+    public Recipient findRecipientByLogin(String login) {
+        return repository.findRecipientByLogin(login).get();
     }
 }
