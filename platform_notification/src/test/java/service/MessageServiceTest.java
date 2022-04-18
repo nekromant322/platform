@@ -8,6 +8,7 @@ import com.override.util.CommunicationStrategyFactory;
 import com.override.util.EmailCommunication;
 import com.override.util.TelegramCommunication;
 import enums.Communication;
+import feign.FeignException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -48,18 +49,18 @@ public class MessageServiceTest {
         String message = "test";
         Communication[] communication = {Communication.TELEGRAM, Communication.EMAIL};
         Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication);
-        ResponseEntity<String> status = new ResponseEntity<>(HttpStatus.OK);
+        ResponseEntity<String> status;
 
         when(recipientService.findRecipientByLogin(recipient.getLogin())).thenReturn(recipient);
         when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
-        when(telegramCommunication.sendMessage(recipient, message)).thenReturn(status);
+        when(telegramCommunication.sendMessage(recipient, message)).thenReturn(HttpStatus.OK);
 
         status = messageService.sendMessage(recipient.getLogin(), message, communication);
 
         verify(recipientService, times(1)).findRecipientByLogin(recipient.getLogin());
         verify(strategyFactory, times(1)).getSenderMap();
         verify(telegramCommunication, times(1)).sendMessage(recipient, message);
-        assertEquals(new ResponseEntity<>(HttpStatus.OK), status);
+        assertEquals(new ResponseEntity<>("OK", HttpStatus.OK), status);
     }
 
     @Test
@@ -77,7 +78,7 @@ public class MessageServiceTest {
 
         verify(recipientService, times(1)).findRecipientByLogin(recipient.getLogin());
         verify(strategyFactory, times(1)).getSenderMap();
-        assertEquals(new ResponseEntity<>("Communication types is empty", HttpStatus.INTERNAL_SERVER_ERROR), status);
+        assertEquals(new ResponseEntity<>("BAD_REQUEST", HttpStatus.BAD_REQUEST), status);
     }
 
     @Test
@@ -97,12 +98,12 @@ public class MessageServiceTest {
         String message = "test";
         Communication[] communication = {Communication.TELEGRAM, Communication.EMAIL};
         Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication);
-        ResponseEntity<String> status = new ResponseEntity<>(HttpStatus.OK);
+        ResponseEntity<String> status ;
 
         when(recipientService.findRecipientByLogin(recipient.getLogin())).thenReturn(recipient);
         when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
-        when(telegramCommunication.sendMessage(recipient, message)).thenReturn(new ResponseEntity<>("TelegramApiException", HttpStatus.INTERNAL_SERVER_ERROR));
-        when(emailCommunication.sendMessage(recipient, message)).thenReturn(status);
+        when(telegramCommunication.sendMessage(recipient, message)).thenReturn(HttpStatus.BAD_REQUEST);
+        when(emailCommunication.sendMessage(recipient, message)).thenReturn(HttpStatus.OK);
 
         status = messageService.sendMessage(recipient.getLogin(), message, communication);
 
@@ -110,6 +111,6 @@ public class MessageServiceTest {
         verify(strategyFactory, times(1)).getSenderMap();
         verify(telegramCommunication, times(1)).sendMessage(recipient, message);
         verify(emailCommunication, times(1)).sendMessage(recipient, message);
-        assertEquals(new ResponseEntity<>(HttpStatus.OK), status);
+        assertEquals(new ResponseEntity<>("OK", HttpStatus.OK), status);
     }
 }

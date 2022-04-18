@@ -31,7 +31,7 @@ public class MessageService {
      * @param types   тип коммуникации с пользователем, например: TELEGRAM, VK, EMAIL
      * @return результат успешной работы (код 200) или ошибку связанную с отправкой сообщения (код 500)
      */
-    public HttpStatus sendMessage(String login, String message, Communication... types) {
+    public ResponseEntity<String> sendMessage(String login, String message, Communication... types) {
         Recipient recipient = recipientService.findRecipientByLogin(login);
         Map<Communication, CommunicationStrategy> senderMap = communicationStrategyFactory.getSenderMap();
         HttpStatus status;
@@ -40,9 +40,9 @@ public class MessageService {
         for (Communication type : types) {
             status = senderMap.get(type).sendMessage(recipient, message);
             if (status.value() == httpStatusOk) {
-                return status;
+                return new ResponseEntity<>("OK", status);
             }
         }
-        return HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>("BAD_REQUEST", HttpStatus.BAD_REQUEST);
     }
 }
