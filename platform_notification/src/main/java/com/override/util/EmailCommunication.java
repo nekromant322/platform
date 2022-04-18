@@ -6,7 +6,7 @@ import dtos.MailDTO;
 import enums.Communication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -19,7 +19,7 @@ public class EmailCommunication implements CommunicationStrategy {
     private EmailService emailService;
 
     @Override
-    public ResponseEntity<String> sendMessage(Recipient recipient, String message) {
+    public HttpStatus sendMessage(Recipient recipient, String message) {
         return emailService.sendSimpleMail(MailDTO.builder()
                 .to(Collections.singletonList(recipient.getEmail()))
                 .text(message)

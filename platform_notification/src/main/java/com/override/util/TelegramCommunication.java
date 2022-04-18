@@ -5,7 +5,7 @@ import com.override.service.TelegramService;
 import dtos.MessageDTO;
 import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +15,7 @@ public class TelegramCommunication implements CommunicationStrategy {
     private TelegramService telegramService;
 
     @Override
-    public ResponseEntity<String> sendMessage(Recipient recipient, String message) {
+    public HttpStatus sendMessage(Recipient recipient, String message) {
         return telegramService.sendMessage(MessageDTO.builder()
                 .chatId(recipient.getTelegramId())
                 .message(message)

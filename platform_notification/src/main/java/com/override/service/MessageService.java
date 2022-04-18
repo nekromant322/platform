@@ -31,18 +31,18 @@ public class MessageService {
      * @param types   тип коммуникации с пользователем, например: TELEGRAM, VK, EMAIL
      * @return результат успешной работы (код 200) или ошибку связанную с отправкой сообщения (код 500)
      */
-    public ResponseEntity<String> sendMessage(String login, String message, Communication... types) {
+    public HttpStatus sendMessage(String login, String message, Communication... types) {
         Recipient recipient = recipientService.findRecipientByLogin(login);
         Map<Communication, CommunicationStrategy> senderMap = communicationStrategyFactory.getSenderMap();
-        ResponseEntity<String> status;
+        HttpStatus status;
         int httpStatusOk = 200;
 
         for (Communication type : types) {
             status = senderMap.get(type).sendMessage(recipient, message);
-            if (status.getStatusCode().value() == httpStatusOk) {
+            if (status.value() == httpStatusOk) {
                 return status;
             }
         }
-        return new ResponseEntity<>("Communication types is empty", HttpStatus.INTERNAL_SERVER_ERROR);
+        return HttpStatus.BAD_REQUEST;
     }
 }

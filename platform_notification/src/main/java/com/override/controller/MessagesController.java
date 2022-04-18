@@ -3,6 +3,7 @@ package com.override.controller;
 import com.override.service.MessageService;
 import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ public class MessagesController {
      * @return результат успешной работы или ошибку связанную с отправкой сообщения
      */
     @PostMapping
-    ResponseEntity<String> sendMessage(
+    HttpStatus sendMessage(
             @RequestParam("login") String login,
             @RequestParam("message") String message,
             @RequestParam("type") Communication... type) {

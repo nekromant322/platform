@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface NotificatorFeign {
 
     @PostMapping("/communications")
-    ResponseEntity<String> sendMessage(
+    HttpStatus sendMessage(
             @RequestParam("login") String login,
             @RequestParam("message") String message,
             @RequestParam("type") Communication... type);

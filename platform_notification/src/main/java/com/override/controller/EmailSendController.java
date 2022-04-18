@@ -3,6 +3,7 @@ package com.override.controller;
 import com.override.service.EmailService;
 import dtos.MailDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class EmailSendController {
     EmailService emailService;
 
     @PostMapping("/mailDTO")
-    public ResponseEntity<String> sendTextFromMailDTO(@RequestBody MailDTO mailDTO) {
+    public HttpStatus sendTextFromMailDTO(@RequestBody MailDTO mailDTO) {
         return emailService.sendSimpleMail(mailDTO);
     }
 

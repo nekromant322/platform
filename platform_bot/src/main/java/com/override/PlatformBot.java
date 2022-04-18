@@ -54,7 +54,7 @@ public class PlatformBot extends TelegramLongPollingCommandBot {
 
 
     @SneakyThrows
-    public ResponseEntity<String> sendMessage(String chatId, String text) {
+    public HttpStatus sendMessage(String chatId, String text) {
         SendMessage message = new SendMessage();
         //убирает превьюшки ссылок
         message.disableWebPagePreview();
@@ -63,10 +63,10 @@ public class PlatformBot extends TelegramLongPollingCommandBot {
         try {
             execute(message);
             log.info("Message was sent to {}", chatId);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return HttpStatus.OK;
         } catch (TelegramApiException ignored) {
             log.error("Message not sent with \"{}\" exception and \"{}\" status", ignored, HttpStatus.INTERNAL_SERVER_ERROR);
-            return new ResponseEntity<>("TelegramApiException", HttpStatus.INTERNAL_SERVER_ERROR);
+            return HttpStatus.BAD_REQUEST;
         }
     }
 }

@@ -25,7 +25,7 @@ public interface NotificatorFeign {
     void deleteRecipient(@RequestBody RecipientDTO recipientDTO);
 
     @PostMapping("/communications")
-    ResponseEntity<String> sendMessage(
+    HttpStatus sendMessage(
             @RequestParam("login") String login,
             @RequestParam("message") String message,
             @RequestParam("type") Communication... type);

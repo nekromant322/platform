@@ -17,7 +17,7 @@ public class TelegramSendController {
     private TelegramService telegramService;
 
     @PostMapping
-    public ResponseEntity<String> sendTelegramMessages(@RequestBody MessageDTO messageDTO){
+    public HttpStatus sendTelegramMessages(@RequestBody MessageDTO messageDTO){
         return telegramService.sendMessage(messageDTO);
     }
 }
