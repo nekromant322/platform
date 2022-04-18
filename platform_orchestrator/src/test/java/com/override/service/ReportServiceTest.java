@@ -100,6 +100,6 @@ class ReportServiceTest {
         reportService.sendDailyReminderOfReport();
 
         verify(userService, times(1)).findStudentsWithoutReportOfCurrentDay();
-        verify(notificatorFeign, times(0)).sendTelegramMessages(any());
+        verify(notificatorFeign, times(0)).sendMessage(any(), any(), any());
     }
 }
