@@ -16,9 +16,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.persistence.EntityExistsException;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static utils.TestFieldsUtil.*;
 
@@ -46,14 +49,15 @@ public class RecipientServiceTest {
     @Test
     public void testWhenSaveByRecipient() {
         Recipient recipient = getRecipient();
+        RecipientDTO recipientDTO = getRecipientDto();
 
-        when(recipientRepository.findRecipientByLogin(recipient.getLogin())).thenReturn(Optional.empty());
-        when(recipientRepository.save(recipient)).thenReturn(recipient);
+        when(recipientRepository.findRecipientByLogin(recipientDTO.getLogin())).thenReturn(Optional.empty());
+        when(recipientRepository.save(recipientMapper.dtoToEntity(recipientDTO))).thenReturn(recipient);
 
-        recipientService.save(recipient);
+        recipientService.save(recipientDTO);
 
-        verify(recipientRepository, times(1)).findRecipientByLogin(recipient.getLogin());
-        verify(recipientRepository, times(1)).save(recipient);
+        verify(recipientRepository, times(1)).findRecipientByLogin(recipientDTO.getLogin());
+        verify(recipientRepository, times(1)).save(recipientMapper.dtoToEntity(recipientDTO));
     }
 
     @Test
@@ -72,28 +76,13 @@ public class RecipientServiceTest {
     }
 
     @Test
-    public void testWhenUserExistByRecipient() {
-        Recipient recipient = getRecipient();
-
-        when(recipientRepository.findRecipientByLogin(recipient.getLogin())).thenReturn(Optional.of(recipient));
-
-        recipientService.save(recipient);
-
-        verify(recipientRepository, times(1)).findRecipientByLogin(recipient.getLogin());
-        verify(recipientRepository, times(0)).save(recipient);
-    }
-
-    @Test
     public void testWhenUserExistByRecipientDto() {
         Recipient recipient = getRecipient();
         RecipientDTO recipientDTO = getRecipientDto();
 
         when(recipientRepository.findRecipientByLogin(recipientDTO.getLogin())).thenReturn(Optional.ofNullable(recipient));
 
-        recipientService.save(recipientDTO);
-
-        verify(recipientRepository, times(1)).findRecipientByLogin(recipient.getLogin());
-        verify(recipientRepository, times(0)).save(recipient);
+        assertThrows(EntityExistsException.class, () -> recipientService.save(recipientDTO));
     }
 
     @Test

@@ -24,13 +24,12 @@ public class MessagesController {
      * @param login   логин пользователя, которому будет отправлено сообщение
      * @param message текст сообщения
      * @param type  тип коммуникации с пользователем, например: TELEGRAM, VK, EMAIL
-     * @return результат успешной работы или ошибку связанную с отправкой сообщения
      */
     @PostMapping
-    ResponseEntity<String> sendMessage(
+    void sendMessage(
             @RequestParam("login") String login,
             @RequestParam("message") String message,
             @RequestParam("type") Communication... type) {
-        return messageService.sendMessage(login, message, type);
+        messageService.sendMessage(login, message, type);
     }
 }

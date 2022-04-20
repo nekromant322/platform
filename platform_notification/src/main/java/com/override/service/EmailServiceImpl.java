@@ -5,6 +5,7 @@ import dtos.MailDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -20,17 +21,15 @@ public class EmailServiceImpl implements EmailService {
     public EmailMapper emailMapper;
 
     @Override
-    public HttpStatus sendSimpleMail(MailDTO mailDTO) {
+    public void sendSimpleMail(MailDTO mailDTO) {
         List<SimpleMailMessage> messageList = emailMapper.dtoToListOfSimpleMails(mailDTO);
         try {
             for (SimpleMailMessage message : messageList) {
                 emailSender.send(message);
             }
-        } catch (MailException e) {
-            log.error("Email not sent with \"{}\" exception", e.getMessage());
-            return HttpStatus.BAD_REQUEST;
+        } catch (MailException exception) {
+            throw exception;
         }
         log.info("Message was sent to {}", mailDTO.getTo());
-        return HttpStatus.OK;
     }
 }

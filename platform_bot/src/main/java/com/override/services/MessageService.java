@@ -11,7 +11,7 @@ public class MessageService {
     @Autowired
     private PlatformBot platformBot;
 
-    public HttpStatus sendMessage(String message, String chatId) {
-        return platformBot.sendMessage(chatId, message);
+    public void sendMessage(String message, String chatId) {
+        platformBot.sendMessage(chatId, message);
     }
 }

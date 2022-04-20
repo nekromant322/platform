@@ -12,7 +12,7 @@ public class TelegramService {
     @Autowired
     private TelegramFeign telegramFeign;
 
-    public HttpStatus sendMessage(MessageDTO messageDTO) {
-        return telegramFeign.sendMessage(messageDTO);
+    public void sendMessage(MessageDTO messageDTO) {
+        telegramFeign.sendMessage(messageDTO);
     }
 }

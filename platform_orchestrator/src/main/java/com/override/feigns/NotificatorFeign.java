@@ -1,12 +1,9 @@
 package com.override.feigns;
 
 
-import dtos.MessageDTO;
 import dtos.RecipientDTO;
 import enums.Communication;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +22,7 @@ public interface NotificatorFeign {
     void deleteRecipient(@RequestBody RecipientDTO recipientDTO);
 
     @PostMapping("/communications")
-    ResponseEntity<String> sendMessage(
+    void sendMessage(
             @RequestParam("login") String login,
             @RequestParam("message") String message,
             @RequestParam("type") Communication... type);

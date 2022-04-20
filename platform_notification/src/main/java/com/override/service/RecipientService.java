@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.Map;
 
@@ -27,18 +28,9 @@ public class RecipientService {
 
     public void save(RecipientDTO recipientDTO) {
         if (repository.findRecipientByLogin(recipientDTO.getLogin()).isPresent()) {
-            log.info("Пользователь с логином {} уже есть в системе", recipientDTO.getLogin());
-        } else {
-            repository.save(recipientMapper.dtoToEntity(recipientDTO));
+            throw new EntityExistsException("Recipient with login " + recipientDTO.getLogin() + " exist already");
         }
-    }
-
-    public void save(Recipient recipient) {
-        if (repository.findRecipientByLogin(recipient.getLogin()).isPresent()) {
-            log.info("User with this login \"{}\" already exists", recipient.getLogin());
-        } else {
-            repository.save(recipient);
-        }
+        repository.save(recipientMapper.dtoToEntity(recipientDTO));
     }
 
     public void updateCommunication(String login, String value, Communication type) {

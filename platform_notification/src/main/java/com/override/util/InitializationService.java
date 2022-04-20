@@ -1,7 +1,9 @@
 package com.override.util;
 
-import com.override.models.Recipient;
+import com.override.mappers.RecipientMapper;
+import com.override.repositories.RecipientRepository;
 import com.override.service.RecipientService;
+import dtos.RecipientDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,17 +17,16 @@ public class InitializationService {
 
     @PostConstruct
     private void init() {
-        createRecipient();
+        createRecipientDTO();
     }
 
-    public void createRecipient() {
-        Recipient recipient = new Recipient(
-                null,
-                "admin",
-                "1234",
-                "1234"
-        );
-        recipientService.save(recipient);
+    public void createRecipientDTO() {
+        RecipientDTO recipientDTO = RecipientDTO.builder()
+                .login("Joe")
+                .email("joe")
+                .telegramId("123")
+                .build();
+        recipientService.save(recipientDTO);
     }
 
 }

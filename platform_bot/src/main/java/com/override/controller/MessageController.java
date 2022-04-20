@@ -14,7 +14,7 @@ public class MessageController {
     private MessageService messageService;
 
     @PostMapping
-    public HttpStatus sendMessage(@RequestBody MessageDTO message){
-       return messageService.sendMessage(message.getMessage(), message.getChatId());
+    public void sendMessage(@RequestBody MessageDTO message){
+       messageService.sendMessage(message.getMessage(), message.getChatId());
     }
 }

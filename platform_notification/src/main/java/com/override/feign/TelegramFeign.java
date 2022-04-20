@@ -12,5 +12,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/messages")
 public interface TelegramFeign {
     @PostMapping
-    HttpStatus sendMessage(@RequestBody MessageDTO message);
+    void sendMessage(@RequestBody MessageDTO message);
 }

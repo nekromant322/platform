@@ -6,7 +6,7 @@ import dtos.MailDTO;
 import enums.Communication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -15,15 +15,18 @@ import java.util.Collections;
 @Slf4j
 public class EmailCommunication implements CommunicationStrategy {
 
+    @Value("${mail.subject}")
+    private String mailSubject;
+
     @Autowired
     private EmailService emailService;
 
     @Override
-    public HttpStatus sendMessage(Recipient recipient, String message) {
-        return emailService.sendSimpleMail(MailDTO.builder()
+    public void sendMessage(Recipient recipient, String message) {
+        emailService.sendSimpleMail(MailDTO.builder()
                 .to(Collections.singletonList(recipient.getEmail()))
                 .text(message)
-                .subject("test")
+                .subject(mailSubject)
                 .build());
     }
 

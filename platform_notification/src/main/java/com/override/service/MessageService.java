@@ -4,12 +4,13 @@ import com.override.models.Recipient;
 import com.override.util.CommunicationStrategy;
 import com.override.util.CommunicationStrategyFactory;
 import enums.Communication;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 
+import java.security.InvalidParameterException;
 import java.util.Map;
 
 @Service
@@ -29,20 +30,25 @@ public class MessageService {
      * @param login   логин пользователя, которому будет отправлено сообщение
      * @param message текст сообщения
      * @param types   тип коммуникации с пользователем, например: TELEGRAM, VK, EMAIL
-     * @return результат успешной работы (код 200) или ошибку связанную с отправкой сообщения (код 500)
      */
-    public ResponseEntity<String> sendMessage(String login, String message, Communication... types) {
+    public void sendMessage(String login, String message, Communication... types) {
         Recipient recipient = recipientService.findRecipientByLogin(login);
         Map<Communication, CommunicationStrategy> senderMap = communicationStrategyFactory.getSenderMap();
-        HttpStatus status;
-        int httpStatusOk = 200;
 
-        for (Communication type : types) {
-            status = senderMap.get(type).sendMessage(recipient, message);
-            if (status.value() == httpStatusOk) {
-                return new ResponseEntity<>("OK", status);
+        if (types.length == 0) {
+            throw new InvalidParameterException("Не указаны типы коммуникации");
+        }
+
+        for (int i = 0; i < types.length; i++) {
+            try {
+                senderMap.get(types[i]).sendMessage(recipient, message);
+                break;
+            } catch (FeignException | MailException e) {
+                if ((types.length - 1) == i) {
+                    throw new InvalidParameterException("Сообщение не доставлено, т.к. были вызваны исключения во всех способах отправки");
+                }
+                log.error("При попытке отправить сообщение по типу коммуникации \"{}\" произошла ошибка \"{}\"", types[i], e.getMessage());
             }
         }
-        return new ResponseEntity<>("BAD_REQUEST", HttpStatus.BAD_REQUEST);
     }
 }

@@ -17,11 +17,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import javax.persistence.EntityExistsException;
+import java.security.InvalidParameterException;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static utils.TestFieldsUtil.*;
 
@@ -49,36 +52,24 @@ public class MessageServiceTest {
         String message = "test";
         Communication[] communication = {Communication.TELEGRAM, Communication.EMAIL};
         Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication);
-        ResponseEntity<String> status;
 
         when(recipientService.findRecipientByLogin(recipient.getLogin())).thenReturn(recipient);
         when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
-        when(telegramCommunication.sendMessage(recipient, message)).thenReturn(HttpStatus.OK);
+        doNothing().when(telegramCommunication).sendMessage(recipient, message);
 
-        status = messageService.sendMessage(recipient.getLogin(), message, communication);
+        messageService.sendMessage(recipient.getLogin(), message, communication);
 
         verify(recipientService, times(1)).findRecipientByLogin(recipient.getLogin());
         verify(strategyFactory, times(1)).getSenderMap();
         verify(telegramCommunication, times(1)).sendMessage(recipient, message);
-        assertEquals(new ResponseEntity<>("OK", HttpStatus.OK), status);
     }
 
     @Test
     public void testWhenCommunicationTypesEmpty() {
         Recipient recipient = getRecipient();
         String message = "test";
-        Communication[] communication = {};
-        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication);
-        ResponseEntity<String> status;
 
-        when(recipientService.findRecipientByLogin(recipient.getLogin())).thenReturn(recipient);
-        when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
-
-        status = messageService.sendMessage(recipient.getLogin(), message, communication);
-
-        verify(recipientService, times(1)).findRecipientByLogin(recipient.getLogin());
-        verify(strategyFactory, times(1)).getSenderMap();
-        assertEquals(new ResponseEntity<>("BAD_REQUEST", HttpStatus.BAD_REQUEST), status);
+        assertThrows(InvalidParameterException.class, () -> messageService.sendMessage(recipient.getLogin(), message));
     }
 
     @Test
@@ -98,19 +89,18 @@ public class MessageServiceTest {
         String message = "test";
         Communication[] communication = {Communication.TELEGRAM, Communication.EMAIL};
         Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication);
-        ResponseEntity<String> status ;
 
         when(recipientService.findRecipientByLogin(recipient.getLogin())).thenReturn(recipient);
         when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
-        when(telegramCommunication.sendMessage(recipient, message)).thenReturn(HttpStatus.BAD_REQUEST);
-        when(emailCommunication.sendMessage(recipient, message)).thenReturn(HttpStatus.OK);
+        doThrow(FeignException.class).when(telegramCommunication).sendMessage(recipient, message);
+        doNothing().when(emailCommunication).sendMessage(recipient, message);
 
-        status = messageService.sendMessage(recipient.getLogin(), message, communication);
+        messageService.sendMessage(recipient.getLogin(), message, communication);
 
         verify(recipientService, times(1)).findRecipientByLogin(recipient.getLogin());
         verify(strategyFactory, times(1)).getSenderMap();
-        verify(telegramCommunication, times(1)).sendMessage(recipient, message);
+        assertThatThrownBy(() -> telegramCommunication.sendMessage(recipient, message))
+                .isInstanceOf(FeignException.class);
         verify(emailCommunication, times(1)).sendMessage(recipient, message);
-        assertEquals(new ResponseEntity<>("OK", HttpStatus.OK), status);
     }
 }
