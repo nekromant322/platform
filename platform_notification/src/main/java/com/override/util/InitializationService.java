@@ -22,9 +22,9 @@ public class InitializationService {
 
     public void createRecipientDTO() {
         RecipientDTO recipientDTO = RecipientDTO.builder()
-                .login("Joe")
-                .email("joe")
-                .telegramId("123")
+                .login("test")
+                .email("test")
+                .telegramId("test")
                 .build();
         recipientService.save(recipientDTO);
     }

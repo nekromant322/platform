@@ -3,6 +3,7 @@ package com.override.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Data
 @Builder
@@ -20,4 +21,12 @@ public class Recipient {
     private String email;
 
     private String telegramId;
+
+    public Optional<String> getEmail() {
+        return Optional.ofNullable(email);
+    }
+
+    public Optional<String> getTelegramId() {
+        return Optional.ofNullable(telegramId);
+    }
 }

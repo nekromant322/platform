@@ -10,8 +10,8 @@ public class RecipientMapper {
     public RecipientDTO entityToDto(Recipient recipient) {
         return RecipientDTO.builder()
                 .login(recipient.getLogin())
-                .email(recipient.getEmail())
-                .telegramId(recipient.getTelegramId())
+                .email(recipient.getEmail().get())
+                .telegramId(recipient.getTelegramId().get())
                 .build();
     }
 
