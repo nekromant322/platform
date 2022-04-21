@@ -94,3 +94,22 @@ navbar:
       /questions
     - Персональные данные
       /personalData
+
+management:
+  info:
+    git:
+      enabled: true
+      mode: full
+    build:
+      enabled: true
+    java:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized
+      show-components: when_authorized
+      roles: ADMIN
