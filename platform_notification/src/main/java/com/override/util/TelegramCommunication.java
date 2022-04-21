@@ -7,6 +7,8 @@ import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class TelegramCommunication implements CommunicationStrategy {
 
@@ -16,7 +18,7 @@ public class TelegramCommunication implements CommunicationStrategy {
     @Override
     public void sendMessage(Recipient recipient, String message) {
         telegramService.sendMessage(MessageDTO.builder()
-                .chatId(recipient.getTelegramId())
+                .chatId(String.valueOf(recipient.getTelegramId()))
                 .message(message)
                 .build());
     }
