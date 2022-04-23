@@ -1,9 +1,12 @@
 package com.override.service;
 
+import com.override.models.LessonProgress;
 import com.override.models.PlatformUser;
+import com.override.repositories.LessonProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -12,21 +15,29 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class LessonProgressService {
 
     @Autowired
-    private PlatformUserService platformUserService;
+    private LessonProgressRepository lessonProgressRepository;
 
     public void checkLesson(PlatformUser student, String lesson) {
-        List<String> lessonProgress = student.getLessonProgress();
+        List<LessonProgress> lessonProgress = lessonProgressRepository.findAllByUserId(student.getId());
         boolean exists = false;
-        for (String passedLesson : lessonProgress) {
-            if (Objects.equals(passedLesson, lesson)) {
+        for (LessonProgress passedLesson : lessonProgress) {
+            if (Objects.equals(passedLesson.getLesson(), lesson)) {
                 exists = true;
                 break;
             }
         }
         if (!exists) {
-            lessonProgress.add(lesson);
-            student.setLessonProgress(lessonProgress);
-            platformUserService.update(student);
+            LessonProgress progress = new LessonProgress();
+            progress.setLesson(lesson);
+            progress.setUser(student);
+            lessonProgressRepository.save(progress);
         }
+    }
+
+    public List<String> getPassedLessons(PlatformUser platformUser) {
+        List<String> progress = new ArrayList<>();
+        lessonProgressRepository.findAllByUserId(platformUser.getId())
+                .forEach(lessonProgress -> progress.add(lessonProgress.getLesson()));
+        return progress;
     }
 }
