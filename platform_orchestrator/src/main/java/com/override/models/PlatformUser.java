@@ -35,9 +35,4 @@ public class PlatformUser {
 
     @OneToOne(cascade = CascadeType.ALL)
     private PersonalData personalData;
-
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @ElementCollection
-    private List<String> lessonProgress;
-
 }

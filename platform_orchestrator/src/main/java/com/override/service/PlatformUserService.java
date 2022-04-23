@@ -40,15 +40,11 @@ public class PlatformUserService {
         return register(platformUser);
     }
 
-    public void update(PlatformUser platformUser) {
-        platformUserRepository.save(platformUser);
-    }
-
     public PlatformUser generateAccount(String login, String chatId) {
         String password = passwordGeneratorService.generateStrongPassword();
         List<Authority> roles = Collections.singletonList(authorityService.getAuthorityByRole(Role.USER));
 
-        PlatformUser account = new PlatformUser(null, login, password, chatId, roles, new PersonalData(), new ArrayList<>());
+        PlatformUser account = new PlatformUser(null, login, password, chatId, roles, new PersonalData());
         register(account);
 
         return account;
@@ -62,8 +58,7 @@ public class PlatformUserService {
                 passwordEncoder.encode(studentAccount.getPassword()),
                 studentAccount.getTelegramChatId(),
                 studentAccount.getAuthorities(),
-                new PersonalData(),
-                new ArrayList<>()
+                new PersonalData()
         );
 
         if (platformUserRepository.findFirstByLogin(login) == null) {
