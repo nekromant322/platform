@@ -1,7 +1,13 @@
 server:
   port: 8000
   address: localhost
-
+---
+spring:
+  profiles:
+    default: dev
+    active: dev
+#    active: prod
+---
 spring:
   datasource:
     password: postgres
@@ -75,22 +81,24 @@ navbar:
   admin:
     - Курсы
       /courses
-    - Баланс 
+    - Баланс
       /balancePage
-    - Все студенты 
+    - Все студенты
       /allStudents
     - Запросы на регистрацию
       /joinRequests
-    - Вопросы к ревью 
+    - Вопросы к ревью
       /questionsAdmin
-    - Статистика 
+    - Статистика
       /statistics
+    - Ревью
+      /reviewAdmin
   user:
-    - Курсы 
+    - Курсы
       /courses
-    - Написать отчет 
+    - Написать отчет
       /report
-    - Вопросы к ревью 
+    - Вопросы к ревью
       /questions
     - Персональные данные
       /personalData

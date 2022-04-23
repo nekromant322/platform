@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,6 +46,9 @@ public class InitializationService {
     private PlatformUserService userService;
 
     @Autowired
+    private PersonalDataService personalDataService;
+
+    @Autowired
     private CodeTryService codeTryService;
 
     @Autowired
@@ -60,6 +64,9 @@ public class InitializationService {
     private ReportService reportService;
 
     @Autowired
+    private ReviewService reviewService;
+
+    @Autowired
     private Faker faker;
 
     @PostConstruct
@@ -71,7 +78,7 @@ public class InitializationService {
         joinRequestsInit();
         questionsInit();
         reportsInit();
-
+        reviewInit();
     }
 
     private void authorityInit() {
@@ -100,6 +107,7 @@ public class InitializationService {
         List<Authority> roles = getAuthorityListFromRoles(userRoles);
         PlatformUser account = new PlatformUser(null, login, password, telegramChatId, roles, new PersonalData(), new ArrayList<>());
         userService.save(account);
+        personalDataInit(account);
     }
 
     private List<Authority> getAuthorityListFromRoles(Role... roles) {
@@ -199,5 +207,75 @@ public class InitializationService {
             joinRequestService.saveRequest(new RegisterUserRequestDTO(faker.name().username(),
                     String.valueOf(faker.number().numberBetween(1000, 10000))));
         }
+    }
+
+    private void reviewInit() {
+        List<PlatformUser> students = userService.getAllStudents();
+        students.forEach(this::saveOrUpdateReview);
+    }
+
+    private void saveOrUpdateReview(PlatformUser student) {
+        List<LocalTime> timeSlots = new ArrayList<>();
+        LocalTime time = LocalTime.of(00, 00);
+
+        for (int i = 0; i < 47; i++) {
+            timeSlots.add(time);
+            time = time.plusMinutes(30);
+        }
+
+        Set<LocalTime> selectedTimeSlots = new HashSet<>();
+        selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
+        selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
+
+        reviewService.saveOrUpdateReview(ReviewDTO.builder()
+                .id(null)
+                .topic(faker.book().title())
+                .studentLogin(null)
+                .mentorLogin(null)
+                .bookedDate(LocalDate.now().plusDays(1))
+                .bookedTime(null)
+                .timeSlots(selectedTimeSlots)
+                .build(), student.getLogin());
+
+        selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
+
+        reviewService.saveOrUpdateReview(ReviewDTO.builder()
+                .id(null)
+                .topic(faker.book().title())
+                .studentLogin(null)
+                .mentorLogin(adminLogin)
+                .bookedDate(LocalDate.now())
+                .bookedTime(selectedTimeSlots.iterator().next())
+                .timeSlots(selectedTimeSlots)
+                .build(), student.getLogin());
+    }
+
+    private void personalDataInit(PlatformUser user) {
+
+        int day = faker.number().numberBetween(1,30);
+        int month = faker.number().numberBetween(1,12);
+        int year = 2022;
+
+        PersonalData personalData = user.getPersonalData();
+        personalData.setActNumber(faker.number().numberBetween(1L,1000L));
+        personalData.setContractNumber(day + "/" + month + "/" + year);
+        personalData.setDate(new Date(year-1900, month-1, day+1));
+        personalData.setFullName(faker.name().fullName());
+        personalData.setPassportSeries(Long.valueOf(faker.bothify("####")));
+        personalData.setPassportNumber(Long.valueOf(faker.bothify("######")));
+        personalData.setPassportIssued(faker.address().fullAddress());
+        personalData.setIssueDate(new Date(faker.number().numberBetween(123, 127),
+                faker.number().numberBetween(0,11),
+                faker.number().numberBetween(1,30)));
+        personalData.setBirthDate(new Date(faker.number().numberBetween(90, 104),
+                faker.number().numberBetween(0,11),
+                faker.number().numberBetween(1,30)));
+        personalData.setRegistration(faker.address().fullAddress());
+        personalData.setEmail(faker.name().firstName().toLowerCase(Locale.ROOT) +
+                faker.bothify("##@") + "gmail.com");
+        personalData.setPhoneNumber(Long.valueOf("8" + faker.bothify("##########")));
+
+        personalDataService.save(personalData, user.getLogin());
+
     }
 }
