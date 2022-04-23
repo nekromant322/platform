@@ -29,12 +29,12 @@ public class LessonProgressRestController {
     @Secured("ROLE_ADMIN")
     @GetMapping("/allStat/{login}")
     public List<String> getPassedLessons(@PathVariable String login) {
-        return platformUserService.findPlatformUserByLogin(login).getLessonProgress();
+        return lessonProgressService.getPassedLessons(platformUserService.findPlatformUserByLogin(login));
     }
 
     @GetMapping("/allStat")
     public List<String> getPassedLessonsForCurrentUser(
             @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
-        return platformUserService.findPlatformUserByLogin(user.getUsername()).getLessonProgress();
+        return lessonProgressService.getPassedLessons(platformUserService.findPlatformUserByLogin(user.getUsername()));
     }
 }
