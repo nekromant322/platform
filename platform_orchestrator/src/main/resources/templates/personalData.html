@@ -16,62 +16,40 @@
         <div class="col-6">
             <br>
             <h5 id="lk">Личный кабинет пользователя : </h5>
-            <div class="card card-body" id="cardBody">
-<!--                <form id="form">-->
-<!--                    <div class="form-group">-->
-<!--                        <h5>Номер акта</h5>-->
-<!--                        <input class="form-control" id="actNumber" type="number"-->
-<!--                               placeholder="actNumber" maxlength="255" required>-->
-<!--                        <br>-->
-<!--                        <h5>Номер контракта</h5>-->
-<!--                        <input class="form-control" id="contractNumber" type="number"-->
-<!--                               placeholder="contractNumber" maxlength="255" required>-->
-<!--                        <br>-->
-<!--                        <h5>Дата</h5>-->
-<!--                        <input class="form-control" id="date" type="date"-->
-<!--                               placeholder="date" required>-->
-<!--                        <br>-->
-<!--                        <h5>Полное имя</h5>-->
-<!--                        <input class="form-control" id="fullName"-->
-<!--                               placeholder="fullName" maxlength="255" required>-->
-<!--                        <br>-->
-<!--                        <h5>Серия паспорта</h5>-->
-<!--                        <input class="form-control" id="passportSeries" type="number"-->
-<!--                               placeholder="passportSeries" maxlength="4" required>-->
-<!--                        <br>-->
-<!--                        <h5>Номер паспорта</h5>-->
-<!--                        <input class="form-control" id="passportNumber" type="number"-->
-<!--                               placeholder="passportNumber" maxlength="6" required>-->
-<!--                        <br>-->
-<!--                        <h5>Выдан</h5>-->
-<!--                        <input class="form-control" id="passportIssued"-->
-<!--                               placeholder="passportIssued" maxlength="255" required>-->
-<!--                        <br>-->
-<!--                        <h5>Годен</h5>-->
-<!--                        <input class="form-control" id="issueDate" type="date"-->
-<!--                               placeholder="issueDate" required>-->
-<!--                        <br>-->
-<!--                        <h5>Дата рождения</h5>-->
-<!--                        <input class="form-control" id="birthDate" type="date"-->
-<!--                               placeholder="birthDate" required>-->
-<!--                        <br>-->
-<!--                        <h5>Регистрация</h5>-->
-<!--                        <input class="form-control" id="registration"-->
-<!--                               placeholder="registration" maxlength="255" required>-->
-<!--                        <br>-->
-<!--                        <h5>Email</h5>-->
-<!--                        <input class="form-control" id="email" type="email"-->
-<!--                               placeholder="email" maxlength="255" required>-->
-<!--                        <br>-->
-<!--                        <h5>Номер телефона</h5>-->
-<!--                        <input class="form-control" id="phoneNumber" type="number"-->
-<!--                               placeholder="phoneNumber" maxlength="11" required>-->
-<!--                        <br>-->
-<!--                        <button type="submit" id="addButton' + studentLogin + i + '"-->
-<!--                                class="btn btn-success">Сохранить-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                </form>-->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab"
+                       aria-controls="info" aria-selected="true">Информация</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab"
+                       aria-controls="documents" aria-selected="false">Документы</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                    <div class="card card-body" id="cardBody">
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+                    <div class="card card-body" id="files">
+
+                        <form id="docForm" action="/document" method="POST" enctype="multipart/form-data" >
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label path="file">Выберите файл для загрузки</label>
+                                    </td>
+                                    <td><input type="file" name="file"/></td>
+                                </tr>
+                                <tr>
+                                    <td><input id="fileSubmit" type="submit" value="Submit"/></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
