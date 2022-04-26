@@ -26,7 +26,7 @@ public class EmailServiceImpl implements EmailService {
                 emailSender.send(message);
             }
         } catch (MailException exception) {
-            throw exception;
+            throw new IllegalArgumentException(exception);
         }
         log.info("Message was sent to {}", mailDTO.getTo());
     }

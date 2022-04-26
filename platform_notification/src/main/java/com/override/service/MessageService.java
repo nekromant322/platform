@@ -36,16 +36,16 @@ public class MessageService {
         Map<Communication, CommunicationStrategy> senderMap = communicationStrategyFactory.getSenderMap();
 
         if (types.length == 0) {
-            throw new InvalidParameterException("Не указаны типы коммуникации");
+            throw new IllegalArgumentException("Не указаны типы коммуникации");
         }
 
         for (int i = 0; i < types.length; i++) {
             try {
                 senderMap.get(types[i]).sendMessage(recipient, message);
                 break;
-            } catch (FeignException | MailException e) {
+            } catch (IllegalArgumentException | FeignException e) {
                 if ((types.length - 1) == i) {
-                    throw new InvalidParameterException("Сообщение не доставлено, т.к. были вызваны исключения во всех способах отправки");
+                    throw new IllegalArgumentException("Сообщение не доставлено, т.к. были вызваны исключения во всех способах отправки");
                 }
                 log.error("При попытке отправить сообщение по типу коммуникации \"{}\" произошла ошибка \"{}\"", types[i], e.getMessage());
             }

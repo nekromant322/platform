@@ -25,7 +25,7 @@ public class EmailCommunication implements CommunicationStrategy {
     @Override
     public void sendMessage(Recipient recipient, String message) {
         emailService.sendSimpleMail(MailDTO.builder()
-                .to(Collections.singletonList(recipient.getEmail().orElse("null")))
+                .to(Collections.singletonList(recipient.getEmail().orElseThrow(IllegalArgumentException::new)))
                 .text(message)
                 .subject(mailSubject)
                 .build());
