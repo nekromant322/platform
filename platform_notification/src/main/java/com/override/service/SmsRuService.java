@@ -6,5 +6,5 @@ public interface SmsRuService {
 
     double getBalance();
 
-    String sendSms(String phoneNumber, String message);
+    void sendSms(String phoneNumber, String message);
 }

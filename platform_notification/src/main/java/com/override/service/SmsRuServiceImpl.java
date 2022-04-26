@@ -32,7 +32,7 @@ public class SmsRuServiceImpl implements SmsRuService {
     }
 
     @Override
-    public String sendSms(String phoneNumber, String message) {
+    public void sendSms(String phoneNumber, String message) {
         SmsResponseDTO smsResponseDTO = smsRuFeign.sendSms(phoneNumber, message, apiID);
         PhoneDTO currentPhone = smsResponseDTO.getSms().getPhoneDTOMap().get(phoneNumber);
         String status = currentPhone.getStatus();
@@ -41,6 +41,5 @@ public class SmsRuServiceImpl implements SmsRuService {
             throw new IllegalArgumentException(currentPhone.getStatusText());
         }
         log.info("Сообщение отправлено по номеру \"{}\"", phoneNumber);
-        return status;
     }
 }

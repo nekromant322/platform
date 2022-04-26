@@ -25,7 +25,7 @@ public class SmsRuController {
     }
 
     @GetMapping("/sms")
-    public String sendSms(@RequestParam("phoneNumber") String phoneNumber, @RequestParam("message") String message) {
-        return smsRuService.sendSms(phoneNumber, message);
+    public void sendSms(@RequestParam("phoneNumber") String phoneNumber, @RequestParam("message") String message) {
+        smsRuService.sendSms(phoneNumber, message);
     }
 }

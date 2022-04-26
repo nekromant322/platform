@@ -3,10 +3,7 @@ package service;
 import com.override.models.Recipient;
 import com.override.service.MessageService;
 import com.override.service.RecipientService;
-import com.override.util.CommunicationStrategy;
-import com.override.util.CommunicationStrategyFactory;
-import com.override.util.EmailCommunication;
-import com.override.util.TelegramCommunication;
+import com.override.util.*;
 import enums.Communication;
 import feign.FeignException;
 import org.junit.jupiter.api.Test;
@@ -44,6 +41,9 @@ public class MessageServiceTest {
     private EmailCommunication emailCommunication;
 
     @Mock
+    private SmsCommunication smsCommunication;
+
+    @Mock
     private CommunicationStrategyFactory strategyFactory;
 
     @Test
@@ -51,7 +51,7 @@ public class MessageServiceTest {
         Recipient recipient = getRecipient();
         String message = "test";
         Communication[] communication = {Communication.TELEGRAM, Communication.EMAIL};
-        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication);
+        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
 
         when(recipientService.findRecipientByLogin(recipient.getLogin())).thenReturn(recipient);
         when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
@@ -69,7 +69,7 @@ public class MessageServiceTest {
         Recipient recipient = getRecipient();
         String message = "test";
 
-        assertThrows(InvalidParameterException.class, () -> messageService.sendMessage(recipient.getLogin(), message));
+        assertThrows(IllegalArgumentException.class, () -> messageService.sendMessage(recipient.getLogin(), message));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class MessageServiceTest {
         Recipient recipient = getRecipient();
         String message = "test";
         Communication[] communication = {Communication.TELEGRAM, Communication.EMAIL};
-        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication);
+        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
 
         when(recipientService.findRecipientByLogin(recipient.getLogin())).thenReturn(recipient);
         when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
