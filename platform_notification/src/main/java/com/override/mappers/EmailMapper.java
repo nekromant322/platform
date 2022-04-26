@@ -1,4 +1,4 @@
-package com.override.util;
+package com.override.mappers;
 
 import dtos.MailDTO;
 import org.springframework.beans.factory.annotation.Value;

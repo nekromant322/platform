@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface PlatformUserRepository extends CrudRepository<PlatformUser, Long> {
 
-    PlatformUser findFirstByTelegramChatId(String chatId);
-
     PlatformUser findFirstByLogin(String login);
 
     List<PlatformUser> findByAuthoritiesNotContaining(Authority authority);
