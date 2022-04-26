@@ -25,9 +25,6 @@ task-test:
 
 management:
   info:
-    git:
-      enabled: true
-      mode: full
     build:
       enabled: true
     java:
@@ -58,12 +55,3 @@ info:
       vendor: ${java.specification.vendor}
       vm-name: ${java.vm.name}
       runtime-version: ${java.runtime.version}
-  git:
-    branch: ${git.branch}
-    commit:
-      id: ${git.commit.id}
-      message: ${git.commit.message.full}
-      time: ${git.commit.time}
-      user:
-        email: ${git.commit.user.email}
-        name: ${git.commit.user.name}

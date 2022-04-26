@@ -221,22 +221,6 @@
             </plugin>
 
             <plugin>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>
-                <version>4.9.10</version>
-                <configuration>
-                    <includeOnlyProperties>
-                        <property>git.branch</property>
-                        <property>git.commit.id</property>
-                        <property>git.commit.message.full</property>
-                        <property>git.commit.time</property>
-                        <property>git.commit.user.email</property>
-                        <property>git.commit.user.name</property>
-                    </includeOnlyProperties>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
