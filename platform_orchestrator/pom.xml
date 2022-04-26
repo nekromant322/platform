@@ -41,11 +41,6 @@
             <version>${postgres.version}</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--        </dependency>-->
-
         <!--  =====================  Spring  =====================  -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -155,10 +150,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -225,16 +216,24 @@
                         <goals>
                             <goal>build-info</goal>
                         </goals>
-                        <configuration>
-                            <additionalProperties>
-                                <encoding.source>UTF-8</encoding.source>
-                                <encoding.reporting>UTF-8</encoding.reporting>
-                                <java.source>${maven.compiler.source}</java.source>
-                                <java.target>${maven.compiler.target}</java.target>
-                            </additionalProperties>
-                        </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>4.9.10</version>
+                <configuration>
+                    <includeOnlyProperties>
+                        <property>git.branch</property>
+                        <property>git.commit.id</property>
+                        <property>git.commit.message.full</property>
+                        <property>git.commit.time</property>
+                        <property>git.commit.user.email</property>
+                        <property>git.commit.user.name</property>
+                    </includeOnlyProperties>
+                </configuration>
             </plugin>
 
             <plugin>
