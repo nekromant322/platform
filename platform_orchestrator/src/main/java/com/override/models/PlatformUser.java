@@ -31,4 +31,6 @@ public class PlatformUser {
     @OneToOne(cascade = CascadeType.ALL)
     private PersonalData personalData;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private UserSettings userSettings;
 }

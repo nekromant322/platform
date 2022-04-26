@@ -65,6 +65,11 @@ public class PageController {
         return "report";
     }
 
+    @GetMapping("/userSettings")
+    public String userSettingsPage() {
+        return "userSettings";
+    }
+
     @GetMapping("/reviewRequest")
     public String reviewRequestForm() {
         return "fragments/reviewRequestButton";
