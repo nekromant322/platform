@@ -64,7 +64,7 @@ public class PlatformBot extends TelegramLongPollingCommandBot {
             execute(message);
             log.info("Message was sent to {}", chatId);
         } catch (TelegramApiException ignored) {
-            throw ignored;
+            throw new IllegalArgumentException(ignored);
         }
     }
 }

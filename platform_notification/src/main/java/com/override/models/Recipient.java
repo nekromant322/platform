@@ -22,11 +22,17 @@ public class Recipient {
 
     private String telegramId;
 
+    private String phoneNumber;
+
     public Optional<String> getEmail() {
         return Optional.ofNullable(email);
     }
 
     public Optional<String> getTelegramId() {
         return Optional.ofNullable(telegramId);
+    }
+
+    public Optional<String> getPhoneNumber() {
+        return Optional.ofNullable(phoneNumber);
     }
 }
