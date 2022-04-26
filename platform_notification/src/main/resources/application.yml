@@ -20,7 +20,7 @@ spring:
     username: postgres
     url: jdbc:postgresql://localhost:5431/notification-db
     driver-class-name: org.postgresql.Driver
-    jpa:
+  jpa:
       properties:
         hibernate:
           dialect: org.hibernate.dialect.PostgreSQL81Dialect
@@ -88,3 +88,6 @@ info:
       vendor: ${java.specification.vendor}
       vm-name: ${java.vm.name}
       runtime-version: ${java.runtime.version}
+
+mail:
+  subject: Оповещение

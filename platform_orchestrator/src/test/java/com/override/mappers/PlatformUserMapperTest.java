@@ -26,6 +26,5 @@ class PlatformUserMapperTest {
 
         assertEquals(platformUserDTO.getLogin(), user.getLogin());
         assertEquals(platformUserDTO.getPassword(), user.getPassword());
-        assertEquals(platformUserDTO.getTelegramChatId(), user.getTelegramChatId());
     }
 }
