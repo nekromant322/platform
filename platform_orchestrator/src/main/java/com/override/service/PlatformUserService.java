@@ -30,19 +30,15 @@ public class PlatformUserService {
     @Autowired
     private AuthorityService authorityService;
 
-    public PlatformUser getAccountByChatId(String chatId) {
-        return accountRepository.findFirstByTelegramChatId(chatId);
-    }
-
     public PlatformUser save(PlatformUser platformUser) {
         return register(platformUser);
     }
 
-    public PlatformUser generateAccount(String login, String chatId) {
+    public PlatformUser generateAccount(String login) {
         String password = passwordGeneratorService.generateStrongPassword();
         List<Authority> roles = Collections.singletonList(authorityService.getAuthorityByRole(Role.USER));
 
-        PlatformUser account = new PlatformUser(null, login, password, chatId, roles, new PersonalData());
+        PlatformUser account = new PlatformUser(null, login, password, roles, new PersonalData());
         register(account);
 
         return account;
@@ -54,7 +50,6 @@ public class PlatformUserService {
         PlatformUser account = new PlatformUser(null,
                 login,
                 passwordEncoder.encode(studentAccount.getPassword()),
-                studentAccount.getTelegramChatId(),
                 studentAccount.getAuthorities(),
                 new PersonalData()
         );

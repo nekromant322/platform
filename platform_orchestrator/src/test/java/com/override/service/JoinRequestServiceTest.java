@@ -8,7 +8,6 @@ import com.override.models.PlatformUser;
 import com.override.repositories.JoinRequestRepository;
 import dtos.JoinRequestStatusDTO;
 import dtos.RegisterUserRequestDTO;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -48,7 +47,6 @@ public class JoinRequestServiceTest {
     public void testWhenAlreadyExistJoinRequest() {
         RegisterUserRequestDTO requestDTO = RegisterUserRequestDTO.builder()
                 .telegramUserName("Marandyuk_Anatolii")
-
                 .chatId("1234")
                 .build();
         when(requestRepository.findFirstByChatId("1234")).thenReturn(new JoinRequest(1L, "Marandyuk_Anatolii", "1234"));
@@ -68,7 +66,7 @@ public class JoinRequestServiceTest {
                 .build();
 
         when(requestRepository.findFirstByChatId("1234")).thenReturn(null);
-        when(accountService.getAccountByChatId("1234")).thenReturn(new PlatformUser());
+        when(accountService.findPlatformUserByLogin("Marandyuk_Anatolii")).thenReturn(new PlatformUser());
 
 
         JoinRequestStatusDTO joinRequestStatusDTO = joinRequestService.saveRequest(requestDTO);
@@ -85,7 +83,7 @@ public class JoinRequestServiceTest {
         JoinRequest requestEntity = new JoinRequest(1L, "Marandyuk_Anatolii", "1234");
 
         when(requestRepository.findFirstByChatId("1234")).thenReturn(null);
-        when(accountService.getAccountByChatId("1234")).thenReturn(null);
+        when(accountService.findPlatformUserByLogin("Marandyuk_Anatolii")).thenReturn(null);
         when(joinRequestMapper.dtoToEntity(any())).thenReturn(requestEntity);
 
         JoinRequestStatusDTO joinRequestStatusDTO = joinRequestService.saveRequest(requestDTO);

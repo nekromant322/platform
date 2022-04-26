@@ -3,6 +3,8 @@ package com.override.controller;
 import com.override.services.MessageService;
 import dtos.MessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,6 +15,6 @@ public class MessageController {
 
     @PostMapping
     public void sendMessage(@RequestBody MessageDTO message){
-        messageService.sendMessage(message.getMessage(), message.getChatId());
+       messageService.sendMessage(message.getMessage(), message.getChatId());
     }
 }
