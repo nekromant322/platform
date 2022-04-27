@@ -24,7 +24,7 @@ public class UserSettingsRestController {
         return platformUserService.findPlatformUserByLogin(user.getUsername());
     }
 
-    @PatchMapping("{userLogin}")
+    @PatchMapping("/{userLogin}")
     public void patch(@RequestBody UserSettings userSettings,
                       @PathVariable String userLogin) {
         userSettingsService.save(userSettings, userLogin);
