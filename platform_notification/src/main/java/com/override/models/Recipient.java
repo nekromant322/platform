@@ -3,6 +3,7 @@ package com.override.models;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Optional;
 
 @Data
@@ -18,10 +19,15 @@ public class Recipient {
 
     private String login;
 
+    @Pattern(regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
     private String telegramId;
 
+    /**
+     * Аннотация @Pattern содержит регулярное выражения для российских номеров
+     */
+    @Pattern(regexp = "^(\\+7|7|8)?[\\s\\-]?\\(?[489][0-9]{2}\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$")
     private String phoneNumber;
 
     public Optional<String> getEmail() {
