@@ -23,8 +23,9 @@ public class InitializationService {
     public void createRecipientDTO() {
         RecipientDTO recipientDTO = RecipientDTO.builder()
                 .login("test")
-                .email("test")
+                .email("test@yandex.ru")
                 .telegramId("test")
+                .phoneNumber("79998887766")
                 .build();
         recipientService.save(recipientDTO);
     }

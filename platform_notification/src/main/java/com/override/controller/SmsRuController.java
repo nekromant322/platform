@@ -23,9 +23,4 @@ public class SmsRuController {
     public double checkBalance() {
         return smsRuService.getBalance();
     }
-
-    @GetMapping("/sms")
-    public void sendSms(@RequestParam("phoneNumber") String phoneNumber, @RequestParam("message") String message) {
-        smsRuService.sendSms(phoneNumber, message);
-    }
 }

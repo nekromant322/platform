@@ -1,5 +1,7 @@
 package com.override.service;
 
+import com.override.exception.SendMessageException;
+import com.override.exception.SmsRuException;
 import com.override.models.Recipient;
 import com.override.util.CommunicationStrategy;
 import com.override.util.CommunicationStrategyFactory;
@@ -8,9 +10,12 @@ import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
+import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Service;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -29,7 +34,7 @@ public class MessageService {
      *
      * @param login   логин пользователя, которому будет отправлено сообщение
      * @param message текст сообщения
-     * @param types   тип коммуникации с пользователем, например: TELEGRAM, VK, EMAIL
+     * @param types   тип коммуникации с пользователем, например: TELEGRAM, SMS, EMAIL
      */
     public void sendMessage(String login, String message, Communication... types) {
         Recipient recipient = recipientService.findRecipientByLogin(login);
@@ -39,15 +44,17 @@ public class MessageService {
             throw new IllegalArgumentException("Не указаны типы коммуникации");
         }
 
+        List<Object> exceptions = new ArrayList<>();
         for (int i = 0; i < types.length; i++) {
             try {
                 senderMap.get(types[i]).sendMessage(recipient, message);
                 break;
-            } catch (IllegalArgumentException | FeignException e) {
-                if ((types.length - 1) == i) {
-                    throw new IllegalArgumentException("Сообщение не доставлено, т.к. были вызваны исключения во всех способах отправки");
-                }
+            } catch (IllegalStateException | SmsRuException | MailSendException | FeignException e) {
                 log.error("При попытке отправить сообщение по типу коммуникации \"{}\" произошла ошибка \"{}\"", types[i], e.getMessage());
+                exceptions.add(e);
+                if ((types.length - 1) == i) {
+                    throw new SendMessageException("Произошли исключения во всех способах отправки сообщений: " + exceptions);
+                }
             }
         }
     }

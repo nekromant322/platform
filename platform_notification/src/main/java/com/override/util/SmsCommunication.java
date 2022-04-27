@@ -14,7 +14,8 @@ public class SmsCommunication implements CommunicationStrategy {
 
     @Override
     public void sendMessage(Recipient recipient, String message) {
-        smsService.sendSms(recipient.getPhoneNumber().orElseThrow(IllegalArgumentException::new), message);
+        smsService.sendSms(recipient.getPhoneNumber().orElseThrow(() -> new IllegalStateException("У пользователя " +
+                recipient.getLogin() + " не найден номер телефона")), message);
     }
 
     @Override

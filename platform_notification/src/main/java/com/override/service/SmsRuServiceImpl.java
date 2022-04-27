@@ -1,5 +1,6 @@
 package com.override.service;
 
+import com.override.exception.SmsRuException;
 import com.override.feign.SmsRuFeign;
 import dtos.CodeCallResponseDTO;
 import dtos.PhoneDTO;
@@ -38,7 +39,7 @@ public class SmsRuServiceImpl implements SmsRuService {
         String status = currentPhone.getStatus();
 
         if (!status.equals("OK")) {
-            throw new IllegalArgumentException(currentPhone.getStatusText());
+            throw new SmsRuException(currentPhone.getStatusText());
         }
         log.info("Сообщение отправлено по номеру \"{}\"", phoneNumber);
     }
