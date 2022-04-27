@@ -14,7 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -22,13 +24,17 @@ import java.util.List;
 public class PlatformUserService {
 
     @Autowired
-    private PlatformUserRepository accountRepository;
+    private PlatformUserRepository platformUserRepository;
     @Autowired
     private PasswordGeneratorService passwordGeneratorService;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AuthorityService authorityService;
+
+    public PlatformUser getAccountByChatId(String chatId) {
+        return platformUserRepository.findFirstByTelegramChatId(chatId);
+    }
 
     public PlatformUser save(PlatformUser platformUser) {
         return register(platformUser);
@@ -54,8 +60,8 @@ public class PlatformUserService {
                 new PersonalData()
         );
 
-        if (accountRepository.findFirstByLogin(login) == null) {
-            PlatformUser user = accountRepository.save(account);
+        if (platformUserRepository.findFirstByLogin(login) == null) {
+            PlatformUser user = platformUserRepository.save(account);
             log.info("Пользователь с логином {} был успешно создан", login);
             return user;
         } else {
@@ -64,14 +70,14 @@ public class PlatformUserService {
     }
 
     public ResponseEntity<String> updateToAdmin(Long id) {
-        PlatformUser student = accountRepository.findById(id)
+        PlatformUser student = platformUserRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + id + " не найден"));
 
         Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
         List<Authority> studentAuthorities = student.getAuthorities();
         studentAuthorities.add(adminAuthority);
 
-        accountRepository.save(student);
+        platformUserRepository.save(student);
 
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
@@ -79,15 +85,15 @@ public class PlatformUserService {
     public List<PlatformUser> getAllStudents() {
         Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
 
-        return accountRepository.findByAuthoritiesNotContaining(adminAuthority);
+        return platformUserRepository.findByAuthoritiesNotContaining(adminAuthority);
     }
 
 
     public PlatformUser findPlatformUserByLogin(String login) {
-        return accountRepository.findFirstByLogin(login);
+        return platformUserRepository.findFirstByLogin(login);
     }
 
     public List<PlatformUser> findStudentsWithoutReportOfCurrentDay() {
-        return accountRepository.findStudentsWithoutReportOfCurrentDay();
+        return platformUserRepository.findStudentsWithoutReportOfCurrentDay();
     }
 }
