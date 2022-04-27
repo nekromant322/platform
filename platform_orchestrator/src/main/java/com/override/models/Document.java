@@ -12,21 +12,21 @@ public class Document {
 
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
-    String name;
+    private String name;
 
-    String type;
+    private String type;
 
     @JsonIgnore
     @Lob
     @Type(type = "org.hibernate.type.ImageType")
-    byte[] content;
+    private byte[] content;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    PlatformUser user;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private PlatformUser user;
 
 
 }
