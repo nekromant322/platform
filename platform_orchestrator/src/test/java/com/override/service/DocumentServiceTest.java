@@ -13,6 +13,8 @@ import org.springframework.mock.web.MockMultipartFile;
 
 import java.util.List;
 
+import static com.override.utils.TestFieldsUtil.generateTestDocument;
+import static com.override.utils.TestFieldsUtil.generateTestUser;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -30,50 +32,41 @@ public class DocumentServiceTest {
 
     @Test
     public void uploadTest() {
-        PlatformUser platformUser = new PlatformUser();
-        platformUser.setLogin("user");
+        PlatformUser platformUser = generateTestUser();
         MockMultipartFile file = new MockMultipartFile("data",
                 "filename.txt",
                 "text/plain",
                 "some content".getBytes());
 
-        when(platformUserService.findPlatformUserByLogin("login")).thenReturn(platformUser);
+        when(platformUserService.findPlatformUserByLogin("Andrey")).thenReturn(platformUser);
 
-        documentService.upload(file, "login");
+        documentService.upload(file, "Andrey");
 
         verify(documentRepository, times(1)).save(any());
     }
 
     @Test
     public void getAllDocsTest() {
-        PlatformUser platformUser = new PlatformUser();
-        platformUser.setLogin("user");
+        PlatformUser platformUser = generateTestUser();
         platformUser.setId(1L);
 
-        when(platformUserService.findPlatformUserByLogin("login")).thenReturn(platformUser);
+        when(platformUserService.findPlatformUserByLogin("Andrey")).thenReturn(platformUser);
 
-        Document document = new Document();
-        document.setName("filename.txt");
-        document.setType("text/plain");
-        document.setContent("some content".getBytes());
+        Document document = generateTestDocument();
         document.setUser(platformUser);
 
         List<Document> list = List.of(document);
 
         when(documentRepository.findAllByUserId(1L)).thenReturn(List.of(document));
 
-        List<Document> userList = documentService.getAllByUserLogin("login");
+        List<Document> userList = documentService.getAllByUserLogin("Andrey");
 
         Assertions.assertEquals(list, userList);
     }
 
     @Test
     public void downloadTest() {
-        Document document = new Document();
-        document.setId(1L);
-        document.setName("filename.txt");
-        document.setType("text/plain");
-        document.setContent("some content".getBytes());
+        Document document = generateTestDocument();
 
         when(documentRepository.getById(1L)).thenReturn(document);
 
@@ -84,13 +77,10 @@ public class DocumentServiceTest {
 
     @Test
     public void deleteTest() {
-        Document document = new Document();
-        document.setId(1L);
-
-        when(documentRepository.getById(1L)).thenReturn(document);
+        Document document = generateTestDocument();
 
         documentService.delete(1L);
 
-        verify(documentRepository, times(1)).delete(document);
+        verify(documentRepository, times(1)).deleteById(document.getId());
     }
 }
