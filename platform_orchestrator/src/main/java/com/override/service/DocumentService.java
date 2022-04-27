@@ -43,6 +43,6 @@ public class DocumentService {
     }
 
     public void delete(Long fileId) {
-        documentRepository.delete(documentRepository.getById(fileId));
+        documentRepository.deleteById(fileId);
     }
 }
