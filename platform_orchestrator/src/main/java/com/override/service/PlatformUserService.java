@@ -32,10 +32,6 @@ public class PlatformUserService {
     @Autowired
     private AuthorityService authorityService;
 
-    public PlatformUser getAccountByChatId(String chatId) {
-        return platformUserRepository.findFirstByTelegramChatId(chatId);
-    }
-
     public PlatformUser save(PlatformUser platformUser) {
         return register(platformUser);
     }
