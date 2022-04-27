@@ -38,13 +38,16 @@
                         <form id="docForm" action="/document" method="POST" enctype="multipart/form-data" >
                             <table>
                                 <tr>
-                                    <td>
-                                        <label path="file">Выберите файл для загрузки</label>
-                                    </td>
+                                    <h4>Выберите файл для загрузки</h4>
+                                </tr>
+                                <tr>
                                     <td><input type="file" name="file"/></td>
                                 </tr>
                                 <tr>
-                                    <td><input id="fileSubmit" type="submit" value="Submit"/></td>
+                                    <td>
+                                        <br>
+                                        <input class="btn btn-lg btn-primary" id="fileSubmit" type="submit" value="Загрузить"/>
+                                    </td>
                                 </tr>
                             </table>
                         </form>

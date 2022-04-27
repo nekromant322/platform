@@ -24,8 +24,7 @@ public class DocumentService {
         try {
             Document document = new Document();
             document.setContent(file.getBytes());
-            document.setType(Objects.requireNonNull(file.getOriginalFilename())
-                    .substring(file.getOriginalFilename().lastIndexOf(".")));
+            document.setType(file.getContentType());
             document.setName(file.getOriginalFilename());
             document.setUser(platformUserService.findPlatformUserByLogin(login));
             documentRepository.save(document);
