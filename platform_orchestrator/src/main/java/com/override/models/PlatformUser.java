@@ -2,12 +2,8 @@ package com.override.models;
 
 
 import lombok.*;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 import java.util.List;
-import java.util.Map;
 
 @Data
 @AllArgsConstructor
