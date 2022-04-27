@@ -23,7 +23,7 @@ public class LessonProgressRestController {
     @PostMapping("/{lesson}")
     public void checkLesson(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
                             @PathVariable String lesson) {
-        lessonProgressService.checkLesson(platformUserService.findPlatformUserByLogin(user.getUsername()), lesson);
+        lessonProgressService.markLessonAsPassed(platformUserService.findPlatformUserByLogin(user.getUsername()), lesson);
     }
 
     @Secured("ROLE_ADMIN")

@@ -29,7 +29,7 @@ public class LessonProgressServiceTest {
 
         String lesson = "test-1-1-1";
 
-        lessonProgressService.checkLesson(platformUser, lesson);
+        lessonProgressService.markLessonAsPassed(platformUser, lesson);
 
         verify(lessonProgressRepository, times(1)).save(any());
     }
@@ -43,7 +43,7 @@ public class LessonProgressServiceTest {
 
         when(lessonProgressRepository.findAllByUserId(1L)).thenReturn(List.of(lessonProgress));
 
-        lessonProgressService.checkLesson(platformUser, "test-1-1-1");
+        lessonProgressService.markLessonAsPassed(platformUser, "test-1-1-1");
 
         verify(lessonProgressRepository, never()).save(any());
     }
@@ -58,8 +58,8 @@ public class LessonProgressServiceTest {
 
         when(lessonProgressRepository.findAllByUserId(1L)).thenReturn(List.of(lessonProgress1, lessonProgress2));
 
-        lessonProgressService.checkLesson(platformUser, "test-1-1-1");
-        lessonProgressService.checkLesson(platformUser, "test-2-2-2");
+        lessonProgressService.markLessonAsPassed(platformUser, "test-1-1-1");
+        lessonProgressService.markLessonAsPassed(platformUser, "test-2-2-2");
 
         List<String> progress = new ArrayList<>();
         progress.add("test-1-1-1");
