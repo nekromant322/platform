@@ -17,7 +17,6 @@ public class LessonProgress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     @JsonIgnore
     private Long id;
 
