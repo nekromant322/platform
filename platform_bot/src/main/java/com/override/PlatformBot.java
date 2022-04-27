@@ -5,6 +5,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -60,8 +62,9 @@ public class PlatformBot extends TelegramLongPollingCommandBot {
         message.setChatId(chatId);
         try {
             execute(message);
+            log.info("Message was sent to {}", chatId);
         } catch (TelegramApiException ignored) {
-            log.error("fix long to int telegram-bot exception");
+            throw ignored;
         }
     }
 }

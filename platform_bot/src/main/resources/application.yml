@@ -22,3 +22,36 @@ eureka:
     enabled: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
+
+management:
+  info:
+    build:
+      enabled: true
+    java:
+      enabled: true
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: info,metrics
+        exclude: health
+
+info:
+  application:
+    parent:
+      groupId: @pom.parent.groupId@
+      artifactId: @pom.parent.artifactId@
+      version: 0.0.1
+    service:
+      artifactId: @pom.artifactId@
+      version: @pom.version@
+      name: @pom.name@
+      description: @pom.description@
+  build:
+    time: @maven.build.timestamp@
+  env:
+    java:
+      vendor: ${java.specification.vendor}
+      vm-name: ${java.vm.name}
+      runtime-version: ${java.runtime.version}
