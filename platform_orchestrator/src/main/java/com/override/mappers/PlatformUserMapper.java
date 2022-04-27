@@ -11,7 +11,6 @@ public class PlatformUserMapper {
         return PlatformUserDTO.builder()
                 .login(account.getLogin())
                 .password(account.getPassword())
-                .telegramChatId(account.getTelegramChatId())
                 .build();
     }
 }

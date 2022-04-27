@@ -4,7 +4,7 @@ import com.override.feigns.NotificatorFeign;
 import com.override.models.PlatformUser;
 import com.override.models.StudentReport;
 import com.override.repositories.StudentReportRepository;
-import dtos.MessageDTO;
+import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,12 +33,8 @@ public class ReportService {
 
     @Scheduled(cron = "${schedulers.report-reminders.cron}", zone = "${schedulers.zone}")
     public void sendDailyReminderOfReport() {
-        for (PlatformUser user : userService.findStudentsWithoutReportOfCurrentDay()) {
-            MessageDTO message = MessageDTO.builder()
-                    .message("Привет, не забудь написать отчет \uD83D\uDE4A")
-                    .chatId(user.getTelegramChatId())
-                    .build();
-            notificatorFeign.sendTelegramMessages(message);
-        }
+        String message = "Привет, не забудь написать отчет \uD83D\uDE4A";
+        userService.findStudentsWithoutReportOfCurrentDay()
+                .forEach(user -> notificatorFeign.sendMessage(user.getLogin(), message, Communication.TELEGRAM));
     }
 }
