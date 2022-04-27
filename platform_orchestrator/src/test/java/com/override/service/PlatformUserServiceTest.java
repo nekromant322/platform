@@ -107,13 +107,11 @@ class PlatformUserServiceTest {
     @Test
     public void testGenerateUser() {
         String login = "login";
-        String chatId = "chatId";
         String password = "password";
         PlatformUser user = new PlatformUser(
                 null,
                 login,
                 password,
-                chatId,
                 new ArrayList<>() {{
                     add(userAuthority);
                 }},
@@ -125,7 +123,7 @@ class PlatformUserServiceTest {
         when(passwordEncoder.encode(password)).thenReturn(password);
         when(accountRepository.findFirstByLogin(login)).thenReturn(null);
 
-        PlatformUser student = userService.generateAccount(login, chatId);
+        PlatformUser student = userService.generateAccount(login);
 
         assertEquals(student, user);
         verify(accountRepository, times(1)).save(user);
@@ -139,7 +137,7 @@ class PlatformUserServiceTest {
 
         when(accountRepository.findFirstByLogin(login)).thenReturn(notNullUser);
 
-        assertThrows(UserAlreadyExistException.class, () -> userService.generateAccount(login, chatId));
+        assertThrows(UserAlreadyExistException.class, () -> userService.generateAccount(login));
         verify(accountRepository, times(1)).findFirstByLogin(login);
         verify(accountRepository, times(0)).save(any());
     }
@@ -147,14 +145,14 @@ class PlatformUserServiceTest {
     @Test
     public void testGetUser() {
         PlatformUser notNullUser = new PlatformUser();
-        String chatId = "chatId";
+        String login = "login";
 
-        when(accountRepository.findFirstByTelegramChatId(chatId)).thenReturn(notNullUser);
+        when(accountRepository.findFirstByLogin(login)).thenReturn(notNullUser);
 
-        PlatformUser accountByChatId = userService.getAccountByChatId(chatId);
+        PlatformUser accountByChatId = userService.findPlatformUserByLogin(login);
 
         assertEquals(accountByChatId, notNullUser);
-        verify(accountRepository, times(1)).findFirstByTelegramChatId(chatId);
+        verify(accountRepository, times(1)).findFirstByLogin(login);
     }
 
     @Test

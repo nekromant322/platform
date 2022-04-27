@@ -14,9 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -24,7 +22,7 @@ import java.util.List;
 public class PlatformUserService {
 
     @Autowired
-    private PlatformUserRepository platformUserRepository;
+    private PlatformUserRepository accountRepository;
     @Autowired
     private PasswordGeneratorService passwordGeneratorService;
     @Autowired
@@ -32,19 +30,15 @@ public class PlatformUserService {
     @Autowired
     private AuthorityService authorityService;
 
-    public PlatformUser getAccountByChatId(String chatId) {
-        return platformUserRepository.findFirstByTelegramChatId(chatId);
-    }
-
     public PlatformUser save(PlatformUser platformUser) {
         return register(platformUser);
     }
 
-    public PlatformUser generateAccount(String login, String chatId) {
+    public PlatformUser generateAccount(String login) {
         String password = passwordGeneratorService.generateStrongPassword();
         List<Authority> roles = Collections.singletonList(authorityService.getAuthorityByRole(Role.USER));
 
-        PlatformUser account = new PlatformUser(null, login, password, chatId, roles, new PersonalData());
+        PlatformUser account = new PlatformUser(null, login, password, roles, new PersonalData());
         register(account);
 
         return account;
@@ -56,13 +50,12 @@ public class PlatformUserService {
         PlatformUser account = new PlatformUser(null,
                 login,
                 passwordEncoder.encode(studentAccount.getPassword()),
-                studentAccount.getTelegramChatId(),
                 studentAccount.getAuthorities(),
                 new PersonalData()
         );
 
-        if (platformUserRepository.findFirstByLogin(login) == null) {
-            PlatformUser user = platformUserRepository.save(account);
+        if (accountRepository.findFirstByLogin(login) == null) {
+            PlatformUser user = accountRepository.save(account);
             log.info("Пользователь с логином {} был успешно создан", login);
             return user;
         } else {
@@ -71,14 +64,14 @@ public class PlatformUserService {
     }
 
     public ResponseEntity<String> updateToAdmin(Long id) {
-        PlatformUser student = platformUserRepository.findById(id)
+        PlatformUser student = accountRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + id + " не найден"));
 
         Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
         List<Authority> studentAuthorities = student.getAuthorities();
         studentAuthorities.add(adminAuthority);
 
-        platformUserRepository.save(student);
+        accountRepository.save(student);
 
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
@@ -86,15 +79,15 @@ public class PlatformUserService {
     public List<PlatformUser> getAllStudents() {
         Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
 
-        return platformUserRepository.findByAuthoritiesNotContaining(adminAuthority);
+        return accountRepository.findByAuthoritiesNotContaining(adminAuthority);
     }
 
 
     public PlatformUser findPlatformUserByLogin(String login) {
-        return platformUserRepository.findFirstByLogin(login);
+        return accountRepository.findFirstByLogin(login);
     }
 
     public List<PlatformUser> findStudentsWithoutReportOfCurrentDay() {
-        return platformUserRepository.findStudentsWithoutReportOfCurrentDay();
+        return accountRepository.findStudentsWithoutReportOfCurrentDay();
     }
 }
