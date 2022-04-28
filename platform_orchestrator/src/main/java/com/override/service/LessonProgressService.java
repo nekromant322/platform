@@ -19,8 +19,9 @@ public class LessonProgressService {
     private LessonProgressRepository lessonProgressRepository;
 
     /**
-     * Метод markLessonAsPassed вносит указанный урок в коллекцию с пройдеными уроками,
-     * тем самым "помечает" его как пройденный.
+     * @param student - пользователь платформы
+     * @param lesson - идентификатор урока в формате "core-1-1"
+     * указанный lesson вносится в коллекцию с пройдеными уроками, тем самым "помечает" его как пройденный.
      */
     public void markLessonAsPassed(PlatformUser student, String lesson) {
         List<LessonProgress> lessonProgress = lessonProgressRepository.findAllByUserId(student.getId());
