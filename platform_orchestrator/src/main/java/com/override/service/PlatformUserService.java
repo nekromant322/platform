@@ -4,6 +4,7 @@ import com.override.exception.UserAlreadyExistException;
 import com.override.models.Authority;
 import com.override.models.PersonalData;
 import com.override.models.PlatformUser;
+import com.override.models.UserSettings;
 import com.override.models.enums.Role;
 import com.override.repositories.PlatformUserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +39,7 @@ public class PlatformUserService {
         String password = passwordGeneratorService.generateStrongPassword();
         List<Authority> roles = Collections.singletonList(authorityService.getAuthorityByRole(Role.USER));
 
-        PlatformUser account = new PlatformUser(null, login, password, roles, new PersonalData());
+        PlatformUser account = new PlatformUser(null, login, password, roles, new PersonalData(), new UserSettings());
         register(account);
 
         return account;
@@ -51,7 +52,8 @@ public class PlatformUserService {
                 login,
                 passwordEncoder.encode(studentAccount.getPassword()),
                 studentAccount.getAuthorities(),
-                new PersonalData()
+                new PersonalData(),
+                new UserSettings()
         );
 
         if (accountRepository.findFirstByLogin(login) == null) {

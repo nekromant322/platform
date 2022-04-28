@@ -1,10 +1,7 @@
 package com.override.util;
 
 import com.github.javafaker.Faker;
-import com.override.models.Authority;
-import com.override.models.PersonalData;
-import com.override.models.PlatformUser;
-import com.override.models.StudentReport;
+import com.override.models.*;
 import com.override.models.enums.Role;
 import com.override.service.*;
 import dtos.*;
@@ -67,6 +64,9 @@ public class InitializationService {
     private ReviewService reviewService;
 
     @Autowired
+    private UserSettingsService userSettingsService;
+
+    @Autowired
     private Faker faker;
 
     @PostConstruct
@@ -104,9 +104,10 @@ public class InitializationService {
 
     private void saveUser(String login, String password, Role... userRoles) {
         List<Authority> roles = getAuthorityListFromRoles(userRoles);
-        PlatformUser account = new PlatformUser(null, login, password, roles, new PersonalData());
+        PlatformUser account = new PlatformUser(null, login, password, roles, new PersonalData(), new UserSettings());
         userService.save(account);
         personalDataInit(account);
+        userSettingsInit(account);
     }
 
     private List<Authority> getAuthorityListFromRoles(Role... roles) {
@@ -276,5 +277,12 @@ public class InitializationService {
 
         personalDataService.save(personalData, user.getLogin());
 
+    }
+
+    public void userSettingsInit(PlatformUser user) {
+        UserSettings userSettings = new UserSettings();
+        userSettings.setTelegramNotification(true);
+        userSettings.setVkNotification(true);
+        userSettingsService.save(userSettings, user.getLogin());
     }
 }

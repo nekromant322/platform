@@ -4,6 +4,7 @@ import com.override.exception.UserAlreadyExistException;
 import com.override.models.Authority;
 import com.override.models.PersonalData;
 import com.override.models.PlatformUser;
+import com.override.models.UserSettings;
 import com.override.models.enums.Role;
 import com.override.repositories.PlatformUserRepository;
 import org.junit.jupiter.api.Assertions;
@@ -114,7 +115,8 @@ class PlatformUserServiceTest {
                 new ArrayList<>() {{
                     add(userAuthority);
                 }},
-                new PersonalData()
+                new PersonalData(),
+                new UserSettings()
         );
 
         when(authorityService.getAuthorityByRole(Role.USER)).thenReturn(userAuthority);
@@ -160,6 +162,7 @@ class PlatformUserServiceTest {
         PlatformUser notNullUser = new PlatformUser();
         notNullUser.setLogin(login);
         notNullUser.setPersonalData(new PersonalData());
+        notNullUser.setUserSettings(new UserSettings());
 
         when(accountRepository.findFirstByLogin(login)).thenReturn(null);
         when(accountRepository.save(notNullUser)).thenReturn(notNullUser);

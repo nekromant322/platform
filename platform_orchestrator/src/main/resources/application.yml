@@ -93,6 +93,8 @@ navbar:
       /statistics
     - Ревью
       /reviewAdmin
+    - Настройки
+      /userSettings
   user:
     - Курсы
       /courses
@@ -102,6 +104,8 @@ navbar:
       /questions
     - Персональные данные
       /personalData
+    - Настройки
+      /userSettings
 
 management:
   info:
