@@ -3,6 +3,7 @@ package utils;
 import com.override.models.Recipient;
 import com.override.util.CommunicationStrategy;
 import com.override.util.EmailCommunication;
+import com.override.util.SmsCommunication;
 import com.override.util.TelegramCommunication;
 import dtos.RecipientDTO;
 import enums.Communication;
@@ -14,10 +15,11 @@ public class TestFieldsUtil {
 
     public static Map<Communication, CommunicationStrategy> getSenderMap(
             TelegramCommunication telegramCommunication,
-            EmailCommunication emailCommunication) {
+            EmailCommunication emailCommunication, SmsCommunication smsCommunication) {
         Map<Communication, CommunicationStrategy> senderMap = new HashMap<>();
         senderMap.put(Communication.EMAIL, emailCommunication);
         senderMap.put(Communication.TELEGRAM, telegramCommunication);
+        senderMap.put(Communication.SMS, smsCommunication);
         return senderMap;
     }
 

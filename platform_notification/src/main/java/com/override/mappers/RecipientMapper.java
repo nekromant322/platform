@@ -12,6 +12,7 @@ public class RecipientMapper {
                 .login(recipient.getLogin())
                 .email(recipient.getEmail().get())
                 .telegramId(recipient.getTelegramId().get())
+                .phoneNumber(recipient.getPhoneNumber().get())
                 .build();
     }
 
@@ -20,6 +21,7 @@ public class RecipientMapper {
                 .login(recipientDTO.getLogin())
                 .email(recipientDTO.getEmail())
                 .telegramId(recipientDTO.getTelegramId())
+                .phoneNumber(recipientDTO.getPhoneNumber())
                 .build();
     }
 }

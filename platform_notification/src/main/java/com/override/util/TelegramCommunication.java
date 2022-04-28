@@ -18,7 +18,8 @@ public class TelegramCommunication implements CommunicationStrategy {
     @Override
     public void sendMessage(Recipient recipient, String message) {
         telegramService.sendMessage(MessageDTO.builder()
-                .chatId(recipient.getTelegramId().orElse("null"))
+                .chatId(recipient.getTelegramId().orElseThrow(() -> new IllegalStateException("У пользователя " +
+                        recipient.getLogin() + " не найден id Телеграма")))
                 .message(message)
                 .build());
     }

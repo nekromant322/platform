@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.Optional;
 
 @Component
 @Slf4j
@@ -25,7 +24,8 @@ public class EmailCommunication implements CommunicationStrategy {
     @Override
     public void sendMessage(Recipient recipient, String message) {
         emailService.sendSimpleMail(MailDTO.builder()
-                .to(Collections.singletonList(recipient.getEmail().orElse("null")))
+                .to(Collections.singletonList(recipient.getEmail().orElseThrow(() -> new IllegalStateException("У пользователя " +
+                        recipient.getLogin() + " не найден email"))))
                 .text(message)
                 .subject(mailSubject)
                 .build());

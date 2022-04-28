@@ -4,10 +4,7 @@ import com.override.mappers.RecipientMapper;
 import com.override.models.Recipient;
 import com.override.repositories.RecipientRepository;
 import com.override.service.RecipientService;
-import com.override.util.CommunicationStrategy;
-import com.override.util.CommunicationStrategyFactory;
-import com.override.util.EmailCommunication;
-import com.override.util.TelegramCommunication;
+import com.override.util.*;
 import dtos.RecipientDTO;
 import enums.Communication;
 import org.junit.jupiter.api.Test;
@@ -45,6 +42,9 @@ public class RecipientServiceTest {
 
     @Mock
     private EmailCommunication emailCommunication;
+
+    @Mock
+    private SmsCommunication smsCommunication;
 
     @Test
     public void testWhenSaveByRecipient() {
@@ -88,7 +88,7 @@ public class RecipientServiceTest {
     @Test
     public void testWhenUpdateCommunication() {
         Recipient recipient = getRecipient();
-        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication);
+        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
         String value = "test";
 
         when(recipientRepository.findRecipientByLogin(recipient.getLogin())).thenReturn(Optional.of(recipient));

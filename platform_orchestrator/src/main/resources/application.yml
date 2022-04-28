@@ -30,6 +30,13 @@ spring:
         enable: false
   application:
     name: orchestrator
+  servlet:
+    multipart:
+      enabled: true
+      location: ${java.io.tmpdir}
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 
 cache:
   timeout: 5 #minutes
@@ -93,6 +100,8 @@ navbar:
       /statistics
     - Ревью
       /reviewAdmin
+    - Настройки
+      /userSettings
   user:
     - Курсы
       /courses
@@ -102,6 +111,8 @@ navbar:
       /questions
     - Персональные данные
       /personalData
+    - Настройки
+      /userSettings
 
 management:
   info:

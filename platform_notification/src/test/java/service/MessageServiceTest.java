@@ -1,12 +1,11 @@
 package service;
 
+import com.override.exception.SendMessageException;
+import com.override.exception.SmsRuException;
 import com.override.models.Recipient;
 import com.override.service.MessageService;
 import com.override.service.RecipientService;
-import com.override.util.CommunicationStrategy;
-import com.override.util.CommunicationStrategyFactory;
-import com.override.util.EmailCommunication;
-import com.override.util.TelegramCommunication;
+import com.override.util.*;
 import enums.Communication;
 import feign.FeignException;
 import org.junit.jupiter.api.Test;
@@ -16,9 +15,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSendException;
 
 import javax.persistence.EntityExistsException;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -44,6 +47,9 @@ public class MessageServiceTest {
     private EmailCommunication emailCommunication;
 
     @Mock
+    private SmsCommunication smsCommunication;
+
+    @Mock
     private CommunicationStrategyFactory strategyFactory;
 
     @Test
@@ -51,7 +57,7 @@ public class MessageServiceTest {
         Recipient recipient = getRecipient();
         String message = "test";
         Communication[] communication = {Communication.TELEGRAM, Communication.EMAIL};
-        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication);
+        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
 
         when(recipientService.findRecipientByLogin(recipient.getLogin())).thenReturn(recipient);
         when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
@@ -69,7 +75,7 @@ public class MessageServiceTest {
         Recipient recipient = getRecipient();
         String message = "test";
 
-        assertThrows(InvalidParameterException.class, () -> messageService.sendMessage(recipient.getLogin(), message));
+        assertThrows(IllegalArgumentException.class, () -> messageService.sendMessage(recipient.getLogin(), message));
     }
 
     @Test
@@ -88,7 +94,7 @@ public class MessageServiceTest {
         Recipient recipient = getRecipient();
         String message = "test";
         Communication[] communication = {Communication.TELEGRAM, Communication.EMAIL};
-        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication);
+        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
 
         when(recipientService.findRecipientByLogin(recipient.getLogin())).thenReturn(recipient);
         when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
@@ -102,5 +108,24 @@ public class MessageServiceTest {
         assertThatThrownBy(() -> telegramCommunication.sendMessage(recipient, message))
                 .isInstanceOf(FeignException.class);
         verify(emailCommunication, times(1)).sendMessage(recipient, message);
+    }
+
+    @Test
+    public void testWhenAllTypeCommunicationReturnError() {
+        Recipient recipient = getRecipient();
+        String message = "test";
+        Communication[] communication = {Communication.TELEGRAM, Communication.SMS};
+        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
+
+        when(recipientService.findRecipientByLogin(recipient.getLogin())).thenReturn(recipient);
+        when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
+        doThrow(FeignException.class).when(telegramCommunication).sendMessage(recipient, message);
+        doThrow(MailSendException.class).when(emailCommunication).sendMessage(recipient, message);
+        doThrow(SmsRuException.class).when(smsCommunication).sendMessage(recipient, message);
+
+        assertThrows(FeignException.class, () -> telegramCommunication.sendMessage(recipient, message));
+        assertThrows(MailSendException.class, () -> emailCommunication.sendMessage(recipient, message));
+        assertThrows(SmsRuException.class, () -> smsCommunication.sendMessage(recipient, message));
+        assertThatThrownBy(() -> messageService.sendMessage(recipient.getLogin(), message, communication)).isInstanceOf(SendMessageException.class);
     }
 }
