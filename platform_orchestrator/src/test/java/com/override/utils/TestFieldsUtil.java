@@ -129,4 +129,13 @@ public class TestFieldsUtil {
                 .timeSlots(testReview.getTimeSlots())
                 .build();
     }
+
+    public static Document generateTestDocument() {
+        Document document = new Document();
+        document.setId(1L);
+        document.setName("filename.txt");
+        document.setType("text/plain");
+        document.setContent("some content".getBytes());
+        return document;
+    }
 }
