@@ -4,87 +4,66 @@ window.onload = function () {
 
 let telegramNotification;
 let vkNotification;
+let currentUserLogin;
+let telegramCheck;
+let vkCheck;
 
 function getCurrentUser() {
 
     $.ajax({
-        url: 'userSettings/current',
+        url: '/userSettings/current',
         type: 'GET',
         contentType: 'application/json',
         cache: false,
         success: function (currentUser) {
             telegramNotification = currentUser.userSettings.telegramNotification;
             vkNotification = currentUser.userSettings.vkNotification;
+            currentUserLogin = currentUser.login;
+            telegramCheck = telegramNotification;
+            vkCheck = vkNotification;
 
-            $('#settingsBox').append(
-                '<div id="settings">' +
-                '<h5>Уведомления:</h5>' +
-                '<h7>Telegram: ' + (telegramNotification === false ? 'No' : 'Yes') +
-                '</h7><br>' +
-                '<h7>VK: ' + (vkNotification === false ? 'No' : 'Yes') +
-                '</h7><br>' +
-                '<br>' +
-                '<button type="button" id="editButton" ' +
-                'class="btn btn-primary">Изменить</button></div>' +
-                '<br>' +
-                '<form id="form">' +
-                '<div class="form-group">' +
-                '<input class="form-check-input" id="telegram" type="checkbox" checked>' +
-                '<label class="form-check-label" for="telegram"> Telegram</label>' +
-                '<script>\n' +
-                'var telegram = document.querySelector(\'#telegram\');\n' +
-                'telegramNotification = true;\n' +
-                'telegram.onclick = function() {\n' +
-                ' if (telegram.checked) {\n' +
-                '  telegramNotification = true;\n' +
-                ' } else {\n' +
-                '  telegramNotification = false;\n' +
-                ' }\n' +
-                '}\n' +
-                '</script>' +
-                '<br>' +
-                '<input class="form-check-input" id="vk" type="checkbox" checked>' +
-                '<label class="form-check-label" for="vk"> VK</label>' +
-                '<script>\n' +
-                'var vk = document.querySelector(\'#vk\');\n' +
-                'vkNotification = true;\n' +
-                'vk.onclick = function() {\n' +
-                ' if (vk.checked) {\n' +
-                '  vkNotification = true;\n' +
-                ' } else {\n' +
-                '  vkNotification = false;\n' +
-                ' }\n' +
-                '}\n' +
-                '</script>' +
-                '<br>' +
-                '<br>' +
-                '<button type="submit" id="addButton" ' +
-                'class="btn btn-success">Сохранить' +
-                '</button>' +
-                '</div>' +
-                '</form>')
+            $('#telegram').append((telegramNotification === false ? 'No' : 'Yes') + ' ');
+            $('#vk').append((vkNotification === false ? 'No' : 'Yes') + ' ');
 
-            $('#form').hide()
+            if (telegramNotification === true) {
+                $('#telegramCheck').prop('checked', true);
+            }
+            if (vkNotification === true) {
+                $('#vkCheck').prop('checked', true);
+            }
+
+            var telegram = document.querySelector('#telegramCheck');
+            telegram.onclick = function() {
+                if (telegram.checked) {
+                    telegramCheck = true;
+                } else {
+                    telegramCheck = false;
+                }
+            }
+            var vk = document.querySelector('#vkCheck');
+            vk.onclick = function() {
+                if (vk.checked) {
+                    vkCheck = true;
+                } else {
+                    vkCheck = false;
+                }
+            }
 
             $('#editButton').click(function () {
-                $('#info').hide()
-                $('#form').show()
-            })
-            $('#form').submit(function () {
-                save(null, telegramNotification, vkNotification,
-                    currentUser.login)
+                saveChanges(null, telegramCheck, vkCheck, currentUserLogin);
+                location.reload();
             })
         }
     })
 }
 
-function save(id, telegramNotification, vkNotification, login) {
+function saveChanges(id, telegramCheck, vkCheck, currentUserLogin) {
     let settings = {};
     settings.id = id;
-    settings.telegramNotification = telegramNotification;
-    settings.vkNotification = vkNotification;
+    settings.telegramNotification = telegramCheck;
+    settings.vkNotification = vkCheck;
     $.ajax({
-        url: '/userSettings/' + login,
+        url: '/userSettings/' + currentUserLogin,
         dataType: 'json',
         method: 'PATCH',
         cache: false,
