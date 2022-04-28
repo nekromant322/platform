@@ -1,0 +1,49 @@
+package com.override.service;
+
+import com.override.models.LessonProgress;
+import com.override.models.PlatformUser;
+import com.override.repositories.LessonProgressRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+
+
+@Component
+public class LessonProgressService {
+
+    @Autowired
+    private LessonProgressRepository lessonProgressRepository;
+
+    /**
+     * @param student - пользователь платформы
+     * @param lesson - идентификатор урока в формате "core-1-1"
+     * указанный lesson вносится в коллекцию с пройдеными уроками, тем самым "помечает" его как пройденный.
+     */
+    public void markLessonAsPassed(PlatformUser student, String lesson) {
+        List<LessonProgress> lessonProgress = lessonProgressRepository.findAllByUserId(student.getId());
+        boolean exists = false;
+        for (LessonProgress passedLesson : lessonProgress) {
+            if (Objects.equals(passedLesson.getLesson(), lesson)) {
+                exists = true;
+                break;
+            }
+        }
+        if (!exists) {
+            LessonProgress progress = new LessonProgress();
+            progress.setLesson(lesson);
+            progress.setUser(student);
+            lessonProgressRepository.save(progress);
+        }
+    }
+
+    public List<String> getPassedLessons(PlatformUser platformUser) {
+        List<String> progress = new ArrayList<>();
+        lessonProgressRepository.findAllByUserId(platformUser.getId())
+                .forEach(lessonProgress -> progress.add(lessonProgress.getLesson()));
+        return progress;
+    }
+}
