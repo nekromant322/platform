@@ -10,11 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Метод markLessonAsPassed вносит указанный урок в коллекцию с пройдеными уроками,
- * тем самым "помечает" его как пройденный.
- * С помощью метода getPassedLessons получаем список таким образом отмеченных уроков.
- */
+
 
 @Component
 public class LessonProgressService {
@@ -22,6 +18,10 @@ public class LessonProgressService {
     @Autowired
     private LessonProgressRepository lessonProgressRepository;
 
+    /**
+     * Метод markLessonAsPassed вносит указанный урок в коллекцию с пройдеными уроками,
+     * тем самым "помечает" его как пройденный.
+     */
     public void markLessonAsPassed(PlatformUser student, String lesson) {
         List<LessonProgress> lessonProgress = lessonProgressRepository.findAllByUserId(student.getId());
         boolean exists = false;
