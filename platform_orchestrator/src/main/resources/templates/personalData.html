@@ -8,6 +8,7 @@
     <title>Personal Data</title>
 
     <header th:replace="fragments/navbar.html :: header"></header>
+    <link rel="stylesheet" href="/css/document.css">
 </head>
 <body>
 <div class="container-fluid">
@@ -19,7 +20,7 @@
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab"
-                       aria-controls="info" aria-selected="true">Информация</a>
+                       aria-controls="info" aria-selected="true">Персональные данные</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab"
@@ -35,22 +36,30 @@
                 <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
                     <div class="card card-body" id="files">
 
-                        <form id="docForm" action="/document" method="POST" enctype="multipart/form-data" >
-                            <table>
-                                <tr>
-                                    <h4>Выберите файл для загрузки</h4>
-                                </tr>
-                                <tr>
-                                    <td><input type="file" name="file"/></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <br>
-                                        <input class="btn btn-lg btn-primary" id="fileSubmit" type="submit" value="Загрузить"/>
-                                    </td>
-                                </tr>
-                            </table>
+                        <form id="upload-container" method="POST" action="/personalData">
+                            <img id="upload-image">
+                            <div>
+                                <input id="file-input" type="file" name="file" multiple>
+                                <label for="file-input">Выберите файл</label>
+                                <span>или перетащите его сюда</span>
+                            </div>
                         </form>
+<!--                        <form id="docForm" action="/document" method="POST" enctype="multipart/form-data" >-->
+<!--                            <table>-->
+<!--                                <tr>-->
+<!--                                    <h4>Выберите файл для загрузки</h4>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td><input type="file" name="file"/></td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>-->
+<!--                                        <br>-->
+<!--                                        <input class="btn btn-lg btn-primary" id="fileSubmit" type="submit" value="Загрузить"/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </table>-->
+<!--                        </form>-->
                     </div>
                 </div>
             </div>
@@ -69,5 +78,6 @@
         crossorigin="anonymous"></script>
 <script src="/js/utils.js"></script>
 <script src="/js/personalData.js"></script>
+<script src="/js/document.js"></script>
 </body>
 </html>

@@ -34,9 +34,6 @@ spring:
     multipart:
       enabled: true
       location: ${java.io.tmpdir}
-      max-file-size: 10MB
-      max-request-size: 10MB
-
 
 cache:
   timeout: 5 #minutes
