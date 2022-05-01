@@ -4,9 +4,11 @@ import com.override.models.Document;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -25,9 +27,14 @@ public class DocumentRestController {
     private DocumentService documentService;
 
     @PostMapping
-    public void uploadToDb(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
-                           @RequestParam("file") MultipartFile multipartFile) {
+    public ResponseEntity<String> uploadToDb(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
+                           @RequestParam("file") MultipartFile multipartFile,
+                           @Value("${documentSizeLimit.forPersonalData}") long maxFileSize) {
+        if (multipartFile.getSize() > maxFileSize) {
+            return new ResponseEntity<>("Размер файла превышает допустимое значение", HttpStatus.BANDWIDTH_LIMIT_EXCEEDED);
+        }
         documentService.upload(multipartFile, user.getUsername());
+        return new ResponseEntity<>("Файл успешно загружен", HttpStatus.OK);
     }
 
     @Secured("ROLE_ADMIN")

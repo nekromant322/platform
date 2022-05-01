@@ -34,14 +34,4 @@ public class PersonalDataRestController {
                       @PathVariable String userLogin) {
         personalDataService.save(personalData, userLogin);
     }
-
-    @PostMapping
-    public void uploadDocument(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
-                           @RequestParam("file") MultipartFile multipartFile) {
-        long maxFileSize = 5242880L;
-        if (multipartFile.getSize() > maxFileSize) {
-            // не загружать, выдать ошибку превышения размера файла
-        }
-        documentService.upload(multipartFile, user.getUsername());
-    }
 }

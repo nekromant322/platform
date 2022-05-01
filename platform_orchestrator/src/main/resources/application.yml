@@ -34,6 +34,10 @@ spring:
     multipart:
       enabled: true
       location: ${java.io.tmpdir}
+      max-file-size: 10MB
+
+documentSizeLimit:
+  forPersonalData: 5242880 # 5 МБ
 
 cache:
   timeout: 5 #minutes
