@@ -1,4 +1,4 @@
-package com.override.controller.rest;
+package com.override.controller;
 
 import com.override.models.Document;
 import com.override.service.CustomStudentDetailService;
@@ -13,41 +13,45 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-
-@RestController
+@Controller
 @RequestMapping("/document")
-public class DocumentRestController {
+public class DocumentController {
 
     @Autowired
     private DocumentService documentService;
 
-    @PostMapping
-    public void uploadToDb(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
-                           @RequestParam("file") MultipartFile multipartFile,
-                           @Value("${documentSizeLimit.forPersonalData}") long maxFileSize)
+    @PostMapping("/personalData")
+    public String personalDataDocumentUpload(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
+                             @RequestParam("file") MultipartFile multipartFile,
+                             @Value("${documentSizeLimit.forPersonalData}") long maxFileSize)
             throws FileUploadException {
 
         documentService.uploadFile(multipartFile, user.getUsername(), maxFileSize);
+        return "redirect:/personalData";
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/{login}")
+    @ResponseBody
     public List<Document> getAllFilesInfo(@PathVariable String login) {
         return documentService.getAllByUserLogin(login);
     }
 
     @GetMapping("/currentUser")
+    @ResponseBody
     public List<Document> getAllFilesInfoForCurrentUser(
             @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return documentService.getAllByUserLogin(user.getUsername());
     }
 
     @GetMapping("/download/{id}")
+    @ResponseBody
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id) {
         Document document = documentService.downloadFile(id);
         return ResponseEntity.ok()
