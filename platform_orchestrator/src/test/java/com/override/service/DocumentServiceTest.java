@@ -3,6 +3,7 @@ package com.override.service;
 import com.override.models.Document;
 import com.override.models.PlatformUser;
 import com.override.repositories.DocumentRepository;
+import org.apache.commons.fileupload.FileUploadException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +32,7 @@ public class DocumentServiceTest {
     private PlatformUserService platformUserService;
 
     @Test
-    public void uploadTest() {
+    public void uploadTest() throws FileUploadException {
         PlatformUser platformUser = generateTestUser();
         MockMultipartFile file = new MockMultipartFile("data",
                 "filename.txt",
@@ -40,7 +41,7 @@ public class DocumentServiceTest {
 
         when(platformUserService.findPlatformUserByLogin("Andrey")).thenReturn(platformUser);
 
-        documentService.upload(file, "Andrey");
+        documentService.uploadFile(file, "Andrey", 5242880L);
 
         verify(documentRepository, times(1)).save(any());
     }

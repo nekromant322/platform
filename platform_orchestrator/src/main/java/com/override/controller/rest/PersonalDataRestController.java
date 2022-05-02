@@ -21,9 +21,6 @@ public class PersonalDataRestController {
     @Autowired
     private PersonalDataService personalDataService;
 
-    @Autowired
-    private DocumentService documentService;
-
     @GetMapping("/current")
     public PlatformUser getUserInfo(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return platformUserService.findPlatformUserByLogin(user.getUsername());

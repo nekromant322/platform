@@ -2,13 +2,13 @@ package com.override.service;
 
 import com.override.models.Document;
 import com.override.repositories.DocumentRepository;
+import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class DocumentService {
@@ -19,7 +19,11 @@ public class DocumentService {
     @Autowired
     private PlatformUserService platformUserService;
 
-    public void upload(MultipartFile file, String login) {
+    public void uploadFile(MultipartFile file, String login, long maxFileSize) throws FileUploadException {
+
+        if (file.getSize() > maxFileSize) {
+            throw new FileUploadException("file size exceeded");
+        }
 
         try {
             Document document = new Document();
