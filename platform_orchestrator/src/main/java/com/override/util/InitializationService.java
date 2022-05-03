@@ -125,21 +125,23 @@ public class InitializationService {
 
     private void addCodeTryForEveryChapter(PlatformUser student) {
         List<String> chapters = lessonStructureService.getChapterNamesList();
-        chapters.forEach(chapter -> generateCodeTryAttempts(student, chapters.indexOf(chapter) + 1));
+        chapters.forEach(chapter -> generateCodeTryAttempts(student, chapters.indexOf(chapter) + 1,
+                chapters.indexOf(chapter) + 1 + new Random().nextInt(chapters.size() + 1),
+                chapters.indexOf(chapter) + 1 + new Random().nextInt(chapters.size() + 2)));
     }
 
-    private void generateCodeTryAttempts(PlatformUser student, int chapter) {
+    private void generateCodeTryAttempts(PlatformUser student, int chapter, int lesson, int step) {
         CodeExecutionStatus status = CodeExecutionStatus
                 .values()[new Random().nextInt(CodeExecutionStatus.values().length)];
         while (status != CodeExecutionStatus.OK) {
-            saveCodeTry(student, chapter, status);
+            saveCodeTry(student, chapter, lesson, step, status);
             status = CodeExecutionStatus
                     .values()[new Random().nextInt(CodeExecutionStatus.values().length)];
         }
-        saveCodeTry(student, chapter, CodeExecutionStatus.OK);
+        saveCodeTry(student, chapter, lesson, step, CodeExecutionStatus.OK);
     }
 
-    private void saveCodeTry(PlatformUser student, int chapter, CodeExecutionStatus status) {
+    private void saveCodeTry(PlatformUser student, int chapter, int lesson, int step, CodeExecutionStatus status) {
         String helloWorld = "class HelloWorld {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        System.out.println(\"Hello World!\");\n" +
@@ -151,8 +153,8 @@ public class InitializationService {
                         .taskIdentifier(TaskIdentifierDTO
                                 .builder()
                                 .chapter(chapter)
-                                .lesson(chapter)
-                                .step(chapter)
+                                .lesson(lesson)
+                                .step(step)
                                 .build())
                         .studentsCode(helloWorld)
                         .build(),
