@@ -3,6 +3,7 @@ package com.override.service;
 import com.override.models.Document;
 import com.override.models.PlatformUser;
 import com.override.repositories.DocumentRepository;
+import dtos.DocumentDTO;
 import org.apache.commons.fileupload.FileUploadException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -71,11 +72,17 @@ public class DocumentServiceTest {
         Document document = generateTestDocument();
         document.setUser(platformUser);
 
-        List<Document> list = List.of(document);
+        DocumentDTO documentDTO = DocumentDTO.builder()
+                .id(document.getId())
+                .name(document.getName())
+                .type(document.getType())
+                .build();
+
+        List<DocumentDTO> list = List.of(documentDTO);
 
         when(documentRepository.findAllByUserId(1L)).thenReturn(List.of(document));
 
-        List<Document> userList = documentService.getAllByUserLogin("Andrey");
+        List<DocumentDTO> userList = documentService.getAllByUserLogin("Andrey");
 
         Assertions.assertEquals(list, userList);
     }

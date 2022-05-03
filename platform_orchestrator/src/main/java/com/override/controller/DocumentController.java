@@ -1,8 +1,9 @@
-package com.override.controller.rest;
+package com.override.controller;
 
 import com.override.models.Document;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.DocumentService;
+import dtos.DocumentDTO;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,15 +14,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-
-@RestController
+@Controller
 @RequestMapping("/document")
-public class DocumentRestController {
+public class DocumentController {
 
     @Autowired
     private DocumentService documentService;
@@ -35,16 +36,20 @@ public class DocumentRestController {
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/{login}")
-    public List<Document> getAllFilesInfo(@PathVariable String login) {
+    @ResponseBody
+    public List<DocumentDTO> getAllFilesInfo(@PathVariable String login) {
         return documentService.getAllByUserLogin(login);
     }
 
     @GetMapping("/currentUser")
-    public List<Document> getAllFilesInfoForCurrentUser(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
+    @ResponseBody
+    public List<DocumentDTO> getAllFilesInfoForCurrentUser(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
+
         return documentService.getAllByUserLogin(user.getUsername());
     }
 
     @GetMapping("/download/{id}")
+    @ResponseBody
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id) {
         Document document = documentService.downloadFile(id);
         return ResponseEntity.ok()
