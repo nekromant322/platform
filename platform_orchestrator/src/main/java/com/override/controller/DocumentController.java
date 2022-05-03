@@ -3,9 +3,9 @@ package com.override.controller;
 import com.override.models.Document;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.DocumentService;
+import dtos.DocumentDTO;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -28,25 +28,22 @@ public class DocumentController {
 
     @PostMapping("/personalData")
     public String personalDataDocumentUpload(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
-                             @RequestParam("file") MultipartFile multipartFile,
-                             @Value("${documentSizeLimit.forPersonalData}") long maxFileSize)
-            throws FileUploadException {
+                                             @RequestParam("file") MultipartFile multipartFile) throws FileUploadException {
 
-        documentService.uploadFile(multipartFile, user.getUsername(), maxFileSize);
+        documentService.uploadFile(multipartFile, user.getUsername());
         return "redirect:/personalData";
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/{login}")
     @ResponseBody
-    public List<Document> getAllFilesInfo(@PathVariable String login) {
+    public List<DocumentDTO> getAllFilesInfo(@PathVariable String login) {
         return documentService.getAllByUserLogin(login);
     }
 
     @GetMapping("/currentUser")
     @ResponseBody
-    public List<Document> getAllFilesInfoForCurrentUser(
-            @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
+    public List<DocumentDTO> getAllFilesInfoForCurrentUser(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return documentService.getAllByUserLogin(user.getUsername());
     }
 
