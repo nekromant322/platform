@@ -28,11 +28,9 @@ public class DocumentRestController {
 
     @PostMapping
     public void uploadToDb(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
-                           @RequestParam("file") MultipartFile multipartFile,
-                           @Value("${documentSizeLimit.forPersonalData}") long maxFileSize)
-            throws FileUploadException {
+                           @RequestParam("file") MultipartFile multipartFile) throws FileUploadException {
 
-        documentService.uploadFile(multipartFile, user.getUsername(), maxFileSize);
+        documentService.uploadFile(multipartFile, user.getUsername());
     }
 
     @Secured("ROLE_ADMIN")
@@ -42,8 +40,7 @@ public class DocumentRestController {
     }
 
     @GetMapping("/currentUser")
-    public List<Document> getAllFilesInfoForCurrentUser(
-            @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
+    public List<Document> getAllFilesInfoForCurrentUser(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return documentService.getAllByUserLogin(user.getUsername());
     }
 

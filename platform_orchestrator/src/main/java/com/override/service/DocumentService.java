@@ -4,6 +4,7 @@ import com.override.models.Document;
 import com.override.repositories.DocumentRepository;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,7 +20,10 @@ public class DocumentService {
     @Autowired
     private PlatformUserService platformUserService;
 
-    public void uploadFile(MultipartFile file, String login, long maxFileSize) throws FileUploadException {
+    @Value("${documentSizeLimit.forPersonalData}")
+    private long maxFileSize;
+
+    public void uploadFile(MultipartFile file, String login) throws FileUploadException {
 
         if (file.getSize() > maxFileSize) {
             throw new FileUploadException("file size exceeded");

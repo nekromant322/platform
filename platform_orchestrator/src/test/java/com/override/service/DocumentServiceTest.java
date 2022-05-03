@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 
@@ -40,9 +41,9 @@ public class DocumentServiceTest {
                 "some content".getBytes());
 
         when(platformUserService.findPlatformUserByLogin("Andrey")).thenReturn(platformUser);
+        ReflectionTestUtils.setField(documentService, "maxFileSize", 5242880L);
 
-        documentService.uploadFile(file, "Andrey", 5242880L);
-
+        documentService.uploadFile(file, "Andrey");
         verify(documentRepository, times(1)).save(any());
     }
 
