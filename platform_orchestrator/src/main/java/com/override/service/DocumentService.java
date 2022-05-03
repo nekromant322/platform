@@ -2,12 +2,15 @@ package com.override.service;
 
 import com.override.models.Document;
 import com.override.repositories.DocumentRepository;
+import dtos.DocumentDTO;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,7 +22,10 @@ public class DocumentService {
     @Autowired
     private PlatformUserService platformUserService;
 
-    public void uploadFile(MultipartFile file, String login, long maxFileSize) throws FileUploadException {
+    @Value("${documentSizeLimit.forPersonalData}")
+    private long maxFileSize;
+
+    public void uploadFile(MultipartFile file, String login) throws FileUploadException {
 
         if (file.getSize() > maxFileSize) {
             throw new FileUploadException("file size exceeded");
@@ -38,8 +44,18 @@ public class DocumentService {
         }
     }
 
-    public List<Document> getAllByUserLogin(String login) {
-        return documentRepository.findAllByUserId(platformUserService.findPlatformUserByLogin(login).getId());
+    public List<DocumentDTO> getAllByUserLogin(String login) {
+        List<Document> documents = documentRepository.findAllByUserId(
+                platformUserService.findPlatformUserByLogin(login).getId());
+        List<DocumentDTO> documentDTOS = new ArrayList<>();
+        for (Document document : documents) {
+            documentDTOS.add(DocumentDTO.builder()
+                            .id(document.getId())
+                            .name(document.getName())
+                            .type(document.getType())
+                            .build());
+        }
+        return documentDTOS;
     }
 
     public Document downloadFile(Long fileId) {

@@ -3,6 +3,7 @@ package com.override.controller;
 import com.override.models.Document;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.DocumentService;
+import dtos.DocumentDTO;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,27 +27,24 @@ public class DocumentController {
     @Autowired
     private DocumentService documentService;
 
-    @PostMapping("/personalData")
-    public String personalDataDocumentUpload(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
-                             @RequestParam("file") MultipartFile multipartFile,
-                             @Value("${documentSizeLimit.forPersonalData}") long maxFileSize)
-            throws FileUploadException {
+    @PostMapping
+    public void uploadToDb(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
+                           @RequestParam("file") MultipartFile multipartFile) throws FileUploadException {
 
-        documentService.uploadFile(multipartFile, user.getUsername(), maxFileSize);
-        return "redirect:/personalData";
+        documentService.uploadFile(multipartFile, user.getUsername());
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/{login}")
     @ResponseBody
-    public List<Document> getAllFilesInfo(@PathVariable String login) {
+    public List<DocumentDTO> getAllFilesInfo(@PathVariable String login) {
         return documentService.getAllByUserLogin(login);
     }
 
     @GetMapping("/currentUser")
     @ResponseBody
-    public List<Document> getAllFilesInfoForCurrentUser(
-            @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
+    public List<DocumentDTO> getAllFilesInfoForCurrentUser(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
+
         return documentService.getAllByUserLogin(user.getUsername());
     }
 
