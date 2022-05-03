@@ -19,7 +19,7 @@
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab"
-                       aria-controls="info" aria-selected="true">Информация</a>
+                       aria-controls="info" aria-selected="true">Персональные данные</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab"
@@ -35,22 +35,27 @@
                 <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
                     <div class="card card-body" id="files">
 
-                        <form id="docForm" action="/document" method="POST" enctype="multipart/form-data" >
+                        <form id="docForm" action="/document" method="POST" enctype="multipart/form-data">
                             <table>
                                 <tr>
-                                    <h4>Выберите файл для загрузки</h4>
-                                </tr>
-                                <tr>
-                                    <td><input type="file" name="file"/></td>
+                                    <h5>Выберите файл для загрузки</h5>
+                                    <h7>Размер файла не должен превышать 5 МБ</h7>
                                 </tr>
                                 <tr>
                                     <td>
                                         <br>
-                                        <input class="btn btn-lg btn-primary" id="fileSubmit" type="submit" value="Загрузить"/>
+                                        <input type="file" name="file"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br>
+                                        <button class="btn btn-lg btn-primary" type="submit">Загрузить</button>
                                     </td>
                                 </tr>
                             </table>
                         </form>
+
                     </div>
                 </div>
             </div>

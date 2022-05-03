@@ -27,6 +27,18 @@ public class AdminPageController {
     }
 
     @Secured("ROLE_ADMIN")
+    @GetMapping("/statistics")
+    public String statisticPage(){
+        return "statistics";
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/questionsAdmin")
+    public String questionsAdminPage() {
+        return "questionsAdmin";
+    }
+
+    @Secured("ROLE_ADMIN")
     @GetMapping("/reviewAdmin")
     public String reviewAdminPage() {
         return "reviewAdmin";

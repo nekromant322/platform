@@ -3,7 +3,9 @@ package com.override.controller.rest;
 import com.override.models.Document;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.DocumentService;
+import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -26,18 +28,19 @@ public class DocumentRestController {
 
     @PostMapping
     public void uploadToDb(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
-                           @RequestParam("file") MultipartFile multipartFile) {
-        documentService.upload(multipartFile, user.getUsername());
+                           @RequestParam("file") MultipartFile multipartFile) throws FileUploadException {
+
+        documentService.uploadFile(multipartFile, user.getUsername());
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/{login}")
-    public List<Document> getAllFilesInfo (@PathVariable String login) {
+    public List<Document> getAllFilesInfo(@PathVariable String login) {
         return documentService.getAllByUserLogin(login);
     }
 
     @GetMapping("/currentUser")
-    public List<Document> getAllFilesInfoForCurrentUser (@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
+    public List<Document> getAllFilesInfoForCurrentUser(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return documentService.getAllByUserLogin(user.getUsername());
     }
 
