@@ -3,18 +3,18 @@ window.onload = function () {
     getUserDoc();
 };
 
-var actNumber
-var contractNumber
-var date
-var fullName
-var passportSeries
-var passportNumber
-var passportIssued
-var issueDate
-var birthDate
-var registration
-var email
-var phoneNumber
+var actNumber;
+var contractNumber;
+var date;
+var fullName;
+var passportSeries;
+var passportNumber;
+var passportIssued;
+var issueDate;
+var birthDate;
+var registration;
+var email;
+var phoneNumber;
 
 function getUserPersonalData() {
 
@@ -25,22 +25,23 @@ function getUserPersonalData() {
         contentType: 'application/json',
         cache: false,
         success: function (currentUser) {
-            actNumber = currentUser.personalData.actNumber
-            contractNumber = currentUser.personalData.contractNumber
-            date = currentUser.personalData.date
-            fullName = currentUser.personalData.fullName
-            passportSeries = currentUser.personalData.passportSeries
-            passportNumber = currentUser.personalData.passportNumber
-            passportIssued = currentUser.personalData.passportIssued
-            issueDate = currentUser.personalData.issueDate
-            birthDate = currentUser.personalData.birthDate
-            registration = currentUser.personalData.registration
-            email = currentUser.personalData.email
-            phoneNumber = currentUser.personalData.phoneNumber
+            actNumber = currentUser.personalData.actNumber;
+            contractNumber = currentUser.personalData.contractNumber;
+            date = currentUser.personalData.date;
+            fullName = currentUser.personalData.fullName;
+            passportSeries = currentUser.personalData.passportSeries;
+            passportNumber = currentUser.personalData.passportNumber;
+            passportIssued = currentUser.personalData.passportIssued;
+            issueDate = currentUser.personalData.issueDate;
+            birthDate = currentUser.personalData.birthDate;
+            registration = currentUser.personalData.registration;
+            email = currentUser.personalData.email;
+            phoneNumber = currentUser.personalData.phoneNumber;
 
-            $('#lk').append(currentUser.login)
+            $('#lk').append(currentUser.login);
+
             $('#cardBody').append(
-                '<div id="info">' +
+                '<div id="infoForm">' +
                 '<h5>Номер акта : ' + (actNumber == null ? empty : actNumber) +
                 '</h5><br>' +
                 '<h5>Номер контракта : ' + (contractNumber == null ? empty : contractNumber) +
@@ -67,7 +68,7 @@ function getUserPersonalData() {
                 '</h5><br>' +
                 '<button type="button" id="editButton" ' +
                 'class="btn btn-primary">Изменить</button></div>' +
-                '<form id="form">' +
+                '<form id="editForm">' +
                 '<div class="form-group">' +
                 '<h5>Номер акта</h5>' +
                 '<input class="form-control input-number" id="actNumber" ' +
@@ -133,26 +134,27 @@ function getUserPersonalData() {
                 'class="btn btn-success">Сохранить' +
                 '</button>' +
                 '</div>' +
-                '</form>')
+                '</form>');
 
-            $('#form').hide()
+            $('#editForm').hide();
 
             $('#editButton').click(function () {
-                $('#info').hide()
-                $('#form').show()
-            })
-            $('#form').submit(function () {
+                $('#infoForm').hide();
+                $('#editForm').show();
+            });
+
+            $('#editForm').submit(function () {
                 save(null, $('#actNumber').val(), $('#contractNumber').val(),
                     $('#date').val(), $('#fullName').val(),
                     $('#passportSeries').val(), $('#passportNumber').val(),
                     $('#passportIssued').val(), $('#issueDate').val(),
                     $('#birthDate').val(), $('#registration').val(),
                     $('#email').val(), $('#phoneNumber').val(),
-                    currentUser.login)
+                    currentUser.login);
                 // getCurrentUser()
-            })
+            });
         }
-    })
+    });
 }
 
 function save(id, actNumber, contractNumber, date, fullName, passportSeries, passportNumber, passportIssued,
@@ -179,9 +181,9 @@ function save(id, actNumber, contractNumber, date, fullName, passportSeries, pas
             phoneNumber: phoneNumber,
         }),
         success: function (data) {
-            console.log(data)
+            console.log(data);
         }
-    })
+    });
 }
 
 $('body').on('input', '.input-number', function () {
@@ -200,7 +202,7 @@ function getUserDoc() {
         error: function (error) {
             console.log(error);
         }
-    })
+    });
 }
 
 function drawColumns(data) {
@@ -234,7 +236,7 @@ function insertTd(value, parent) {
     let element = document.createElement("td");
     element.scope = "row";
     element.innerText = value;
-    parent.insertAdjacentElement("beforeend", element)
+    parent.insertAdjacentElement("beforeend", element);
 }
 
 function downloadFile(id, name) {
