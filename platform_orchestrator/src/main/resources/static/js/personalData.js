@@ -81,7 +81,7 @@ function getUserPersonalData() {
                 'value="' + (contractNumber == null ? empty : contractNumber) + '">' +
                 '<br>' +
                 '<h5>Дата</h5>' +
-                '<input class="form-control" id="date" type="date" min="1950-01-01" max="2030-01-01" ' +
+                '<input class="form-control" id="date" type="text" ' +
                 'placeholder="date" ' +
                 'value="' + (date == null ? empty : date) + '">' +
                 '<br>' +
@@ -106,12 +106,12 @@ function getUserPersonalData() {
                 'value="' + (passportIssued == null ? empty : passportIssued) + '">' +
                 '<br>' +
                 '<h5>Годен</h5>' +
-                '<input class="form-control" id="issueDate" type="date" min="1950-01-01" max="2030-01-01" ' +
+                '<input class="form-control" id="issueDate" type="text" ' +
                 'placeholder="issueDate" ' +
                 'value="' + (issueDate == null ? empty : issueDate) + '">' +
                 '<br>' +
                 '<h5>Дата рождения</h5>' +
-                '<input class="form-control" id="birthDate" type="date" min="1950-01-01" max="2030-01-01" ' +
+                '<input class="form-control" id="birthDate" type="text" ' +
                 'placeholder="birthDate" ' +
                 'value="' + (birthDate == null ? empty : birthDate) + '">' +
                 '<br>' +
