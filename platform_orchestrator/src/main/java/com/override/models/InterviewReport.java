@@ -31,7 +31,7 @@ public class InterviewReport {
 
     private String questions;
 
-    private Byte impression;
+    private Integer impression;
 
     @Column(name = "min_salary")
     private String minSalary;

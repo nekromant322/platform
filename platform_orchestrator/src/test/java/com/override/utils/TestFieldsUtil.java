@@ -139,4 +139,41 @@ public class TestFieldsUtil {
         document.setContent("some content".getBytes());
         return document;
     }
+
+    public static InterviewReport generateTestInterviewReport() {
+        return InterviewReport.builder()
+                .id(1L)
+                .date(LocalDate.of(2022, 02, 22))
+                .email("test@mail.ru")
+                .company("Test Company")
+                .project("Test Project")
+                .questions("standard")
+                .impression(4)
+                .minSalary("220000₽ Gross")
+                .maxSalary("280000₽ Gross")
+                .offerSalary("280000₽ Gross")
+                .resultSalary("280000₽ Gross")
+                .level("Middle")
+                .user(generateTestUser())
+                .build();
+    }
+
+    public static InterviewReportDTO generateTestInterviewReportDTO() {
+        InterviewReport interviewReport = generateTestInterviewReport();
+        return InterviewReportDTO.builder()
+                .id(interviewReport.getId())
+                .date(interviewReport.getDate())
+                .email(interviewReport.getEmail())
+                .company(interviewReport.getCompany())
+                .project(interviewReport.getProject())
+                .questions(interviewReport.getQuestions())
+                .impression(interviewReport.getImpression())
+                .minSalary(interviewReport.getMinSalary())
+                .maxSalary(interviewReport.getMaxSalary())
+                .offerSalary(interviewReport.getOfferSalary())
+                .resultSalary(interviewReport.getResultSalary())
+                .level(interviewReport.getLevel())
+                .userId(interviewReport.getUser().getId())
+                .build();
+    }
 }

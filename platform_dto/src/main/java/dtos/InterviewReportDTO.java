@@ -14,7 +14,7 @@ public class InterviewReportDTO {
     private String company;
     private String project;
     private String questions;
-    private Byte impression;
+    private Integer impression;
     private String minSalary;
     private String maxSalary;
     private String offerSalary;
