@@ -6,7 +6,6 @@ import com.override.service.DocumentService;
 import dtos.DocumentDTO;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -27,11 +26,12 @@ public class DocumentController {
     @Autowired
     private DocumentService documentService;
 
-    @PostMapping
-    public void uploadToDb(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
-                           @RequestParam("file") MultipartFile multipartFile) throws FileUploadException {
+    @PostMapping("/personalData")
+    public String personalDataDocumentUpload(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
+                                             @RequestParam("file") MultipartFile multipartFile) throws FileUploadException {
 
         documentService.uploadFile(multipartFile, user.getUsername());
+        return "redirect:/personalData";
     }
 
     @Secured("ROLE_ADMIN")
@@ -44,7 +44,6 @@ public class DocumentController {
     @GetMapping("/currentUser")
     @ResponseBody
     public List<DocumentDTO> getAllFilesInfoForCurrentUser(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
-
         return documentService.getAllByUserLogin(user.getUsername());
     }
 

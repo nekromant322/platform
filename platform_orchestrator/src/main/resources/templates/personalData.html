@@ -18,21 +18,21 @@
             <h5 id="lk">Личный кабинет пользователя : </h5>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab"
+                    <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab"
                        aria-controls="info" aria-selected="true">Персональные данные</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab"
+                    <a class="nav-link active" id="documents-tab" data-toggle="tab" href="#documents" role="tab"
                        aria-controls="documents" aria-selected="false">Документы</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
                     <div class="card card-body" id="cardBody">
 
                     </div>
                 </div>
-                <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+                <div class="tab-pane fade show active" id="documents" role="tabpanel" aria-labelledby="documents-tab">
                     <div class="card card-body" id="files">
 
                         <form id="docForm" action="/document/personalData" method="POST" enctype="multipart/form-data">
@@ -44,17 +44,31 @@
                                 <tr>
                                     <td>
                                         <br>
-                                        <input type="file" name="file"/>
+                                        <input type="file" name="file" th:required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <br>
-                                        <button class="btn btn-lg btn-primary" type="submit">Загрузить</button>
+                                        <button class="btn btn-lg btn-primary" type="submit">Upload</button>
                                     </td>
                                 </tr>
                             </table>
                         </form>
+
+                        <br>
+                        <h5>Ваши файлы:</h5>
+                        <table class="table table-hover" id="userDoc">
+                            <thead class="table-light">
+                            <tr role="row">
+                                <th scope="col"> Name </th>
+                                <th scope="col"> Type </th>
+                                <th scope="col" id="downloadDocBtn">  </th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-light">
+                            </tbody>
+                        </table>
 
                     </div>
                 </div>
