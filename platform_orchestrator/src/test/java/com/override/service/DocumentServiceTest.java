@@ -1,5 +1,6 @@
 package com.override.service;
 
+import com.override.controller.DocumentController;
 import com.override.models.Document;
 import com.override.models.PlatformUser;
 import com.override.repositories.DocumentRepository;
@@ -30,6 +31,9 @@ public class DocumentServiceTest {
 
     @Mock
     private PlatformUserService platformUserService;
+
+    @Mock
+    private DocumentController documentController;
 
     @Test
     public void uploadTest() {
