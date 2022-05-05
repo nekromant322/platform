@@ -17,8 +17,7 @@ public class InterviewReportDTO {
     private Integer impression;
     private String minSalary;
     private String maxSalary;
-    private String offerSalary;
-    private String resultSalary;
+    private String status;
     private String level;
     private Long userId;
 }

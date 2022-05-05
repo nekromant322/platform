@@ -39,11 +39,7 @@ public class InterviewReport {
     @Column(name = "max_salary")
     private String maxSalary;
 
-    @Column(name = "offer_salary")
-    private String offerSalary;
-
-    @Column(name = "result_salary")
-    private String resultSalary; // 300000₽ Net or 4700$ Gross
+    private String status;
 
     private String level;
 

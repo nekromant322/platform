@@ -20,8 +20,7 @@ public class InterviewReportMapper {
                 .impression(interviewReportDTO.getImpression())
                 .minSalary(interviewReportDTO.getMinSalary())
                 .maxSalary(interviewReportDTO.getMaxSalary())
-                .offerSalary(interviewReportDTO.getOfferSalary())
-                .resultSalary(interviewReportDTO.getResultSalary())
+                .status(interviewReportDTO.getStatus())
                 .level(interviewReportDTO.getLevel())
                 .user(user)
                 .build();
@@ -38,8 +37,7 @@ public class InterviewReportMapper {
                 .impression(interviewReport.getImpression())
                 .minSalary(interviewReport.getMinSalary())
                 .maxSalary(interviewReport.getMaxSalary())
-                .offerSalary(interviewReport.getOfferSalary())
-                .resultSalary(interviewReport.getResultSalary())
+                .status(interviewReport.getStatus())
                 .level(interviewReport.getLevel())
                 .userId(interviewReport.getUser().getId())
                 .build();

@@ -149,10 +149,9 @@ public class TestFieldsUtil {
                 .project("Test Project")
                 .questions("standard")
                 .impression(4)
-                .minSalary("220000₽ Gross")
+                .minSalary("220000₽ Net")
                 .maxSalary("280000₽ Gross")
-                .offerSalary("280000₽ Gross")
-                .resultSalary("280000₽ Gross")
+                .status("Passed/Offer/Accepted")
                 .level("Middle")
                 .user(generateTestUser())
                 .build();
@@ -170,8 +169,7 @@ public class TestFieldsUtil {
                 .impression(interviewReport.getImpression())
                 .minSalary(interviewReport.getMinSalary())
                 .maxSalary(interviewReport.getMaxSalary())
-                .offerSalary(interviewReport.getOfferSalary())
-                .resultSalary(interviewReport.getResultSalary())
+                .status(interviewReport.getStatus())
                 .level(interviewReport.getLevel())
                 .userId(interviewReport.getUser().getId())
                 .build();
