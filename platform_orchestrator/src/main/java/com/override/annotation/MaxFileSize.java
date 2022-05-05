@@ -1,4 +1,4 @@
-package com.override.util;
+package com.override.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,5 +8,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MaxFileSize {
-    long value() default 5;
+    String value();
 }

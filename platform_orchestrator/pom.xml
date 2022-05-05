@@ -173,6 +173,8 @@
                         <exclude>**/controller/**</exclude>
                         <exclude>**/util/**</exclude>
                         <exclude>**/exception/**</exclude>
+                        <exclude>**/aspect/**</exclude>
+                        <exclude>**/annotation/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>

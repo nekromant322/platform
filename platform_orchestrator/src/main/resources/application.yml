@@ -37,7 +37,7 @@ spring:
       max-file-size: 100MB
 
 documentSizeLimit:
-  forPersonalData: 5242880 # 5 МБ
+  forPersonalData: 5 # 5 МБ
 
 cache:
   timeout: 5 #minutes

@@ -2,9 +2,7 @@ package com.override.service;
 
 import com.override.models.Document;
 import com.override.repositories.DocumentRepository;
-import com.override.util.MaxFileSize;
 import dtos.DocumentDTO;
-import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

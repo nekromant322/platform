@@ -3,7 +3,6 @@ package com.override.controller;
 import com.override.models.Document;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.DocumentService;
-import com.override.util.MaxFileSize;
 import dtos.DocumentDTO;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,6 @@ public class DocumentController {
     private DocumentService documentService;
 
     @PostMapping("/personalData")
-    @MaxFileSize
     public String personalDataDocumentUpload(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
                                              @RequestParam("file") MultipartFile multipartFile) throws FileUploadException {
 
