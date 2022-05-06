@@ -7,7 +7,7 @@ let currentUserRole;
 
 function getCurrentUser() {
     $.ajax({
-        url: '/questions/current',
+        url: '/platformUser/current',
         type: 'GET',
         contentType: 'application/json',
         success: function (user) {

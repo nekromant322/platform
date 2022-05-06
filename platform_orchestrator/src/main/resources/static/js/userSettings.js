@@ -11,7 +11,7 @@ let vkCheck;
 function getCurrentUser() {
 
     $.ajax({
-        url: '/userSettings/current',
+        url: '/platformUser/current',
         type: 'GET',
         contentType: 'application/json',
         cache: false,

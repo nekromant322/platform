@@ -20,7 +20,7 @@ function getUserPersonalData() {
 
     var empty = '';
     $.ajax({
-        url: 'personalData/current',
+        url: '/platformUser/current',
         type: 'GET',
         contentType: 'application/json',
         cache: false,
