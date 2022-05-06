@@ -44,16 +44,6 @@ function addColumn(data) {
     let tr = table.insertRow(table.rows.length);
     let td;
 
-    insertTd(data.date, tr);
-    insertTd(data.email, tr);
-    insertTd(data.company, tr);
-    insertTd(data.project, tr);
-    insertTd(data.questions, tr);
-    insertTd(data.impression, tr);
-    insertTd(data.minSalary, tr);
-    insertTd(data.maxSalary, tr);
-    insertTd(data.level, tr);
-
     let interviewReport = {}
     interviewReport.id = data.id;
     interviewReport.date = data.date;
@@ -68,6 +58,27 @@ function addColumn(data) {
     interviewReport.level = data.level;
     interviewReport.userId = data.userId;
 
+    let color;
+    color = 'white';
+
+    if (data.status === "Offer") {
+        color = 'orange';
+    }
+
+    if (data.status === "Accepted") {
+        color = 'green';
+    }
+
+    insertTd(data.date, tr, color);
+    insertTd(data.email, tr, color);
+    insertTd(data.company, tr, color);
+    insertTd(data.project, tr, color);
+    insertTd(data.questions, tr, color);
+    insertTd(data.impression, tr, color);
+    insertTd(data.minSalary, tr, color);
+    insertTd(data.maxSalary, tr, color);
+    insertTd(data.level, tr, color);
+
     if (data.userId === currentUser.id && data.status === "Passed") {
         let offerBtn = document.createElement("button");
         offerBtn.className = "btn btn-warning";
@@ -77,6 +88,7 @@ function addColumn(data) {
             updateInterviewReport(interviewReport);
         });
         td = tr.insertCell(9);
+        td.style.backgroundColor = 'white';
         td.insertAdjacentElement("beforeend", offerBtn);
     }
 
@@ -89,15 +101,17 @@ function addColumn(data) {
             updateInterviewReport(interviewReport);
         });
         td = tr.insertCell(9);
+        td.style.backgroundColor = 'white';
         td.insertAdjacentElement("beforeend", acceptedBtn);
     }
 }
 
-function insertTd(value, parent) {
+function insertTd(value, parent, color) {
     let element = document.createElement("td");
     element.scope = "row";
     element.innerText = value;
-    parent.insertAdjacentElement("beforeend", element)
+    element.style.backgroundColor = color;
+    parent.insertAdjacentElement("beforeend", element);
 }
 
 function saveInterviewReport(interviewReportDTO) {
