@@ -67,6 +67,9 @@ public class InitializationService {
     private UserSettingsService userSettingsService;
 
     @Autowired
+    private InterviewReportService interviewReportService;
+
+    @Autowired
     private Faker faker;
 
     @PostConstruct
@@ -79,6 +82,7 @@ public class InitializationService {
         questionsInit();
         reportsInit();
         reviewInit();
+        interviewReportsInit();
     }
 
     private void authorityInit() {
@@ -286,5 +290,28 @@ public class InitializationService {
         userSettings.setTelegramNotification(true);
         userSettings.setVkNotification(true);
         userSettingsService.save(userSettings, user.getLogin());
+    }
+
+    public void interviewReportsInit() {
+        List<PlatformUser> students = userService.getAllStudents();
+        students.forEach(this::saveOrUpdateInterviewReport);
+    }
+
+    public void saveOrUpdateInterviewReport(PlatformUser user) {
+        List<String> statusList = new ArrayList<>(List.of("Passed", "Offer", "Accepted", "Passed", "Offer", "Accepted"));
+        List<String> levelList = new ArrayList<>(List.of("Junior", "Middle", "Senior", "Middle", "Senior", "Middle"));
+        int salary = (faker.number().numberBetween(150, 350)) * 1000;
+        interviewReportService.saveInterviewReport(InterviewReportDTO.builder()
+                .date(LocalDate.now())
+                .email(user.getLogin() + "@gmail.com")
+                .company(faker.company().name())
+                .project(faker.company().industry())
+                .questions(faker.food().dish())
+                .impression(faker.number().numberBetween(1, 5))
+                .minSalary(salary + "")
+                .maxSalary((salary + 26000) + "")
+                .status(statusList.get(new Random().nextInt(statusList.size())))
+                .level(levelList.get(new Random().nextInt(levelList.size())))
+                .build(), user.getLogin());
     }
 }
