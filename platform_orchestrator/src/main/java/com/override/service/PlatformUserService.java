@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -93,5 +94,13 @@ public class PlatformUserService {
 
     public List<PlatformUser> findStudentsWithoutReportOfCurrentDay() {
         return platformUserRepository.findStudentsWithoutReportOfCurrentDay();
+    }
+
+    public Role checkPlatformUserRole(HttpServletRequest request) {
+        if (request.isUserInRole("ROLE_ADMIN")) {
+            return Role.ADMIN;
+        } else {
+            return Role.USER;
+        }
     }
 }
