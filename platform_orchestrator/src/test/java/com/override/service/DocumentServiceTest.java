@@ -32,9 +32,6 @@ public class DocumentServiceTest {
     @Mock
     private PlatformUserService platformUserService;
 
-    @Mock
-    private DocumentController documentController;
-
     @Test
     public void uploadTest() {
         PlatformUser platformUser = generateTestUser();
