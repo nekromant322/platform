@@ -3,6 +3,7 @@ window.onload = function () {
 };
 
 let currentUser;
+let currentUserRole;
 
 function getCurrentUser() {
     $.ajax({
@@ -15,8 +16,20 @@ function getCurrentUser() {
     })
 }
 
+function getCurrentUserRole() {
+    $.ajax({
+        url: '/platformUser/role',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (role) {
+            currentUserRole = role;
+        }
+    })
+}
+
 function findInterviewReport() {
     getCurrentUser();
+    getCurrentUserRole();
     $.ajax({
         method: 'GET',
         url: '/interviewReport',
@@ -79,7 +92,7 @@ function addColumn(data) {
     insertTd(data.maxSalary, tr, color);
     insertTd(data.level, tr, color);
 
-    if (data.userId === currentUser.id && data.status === "Passed") {
+    if ((data.userId === currentUser.id || currentUserRole === "ADMIN") && data.status === "Passed") {
         let offerBtn = document.createElement("button");
         offerBtn.className = "btn btn-warning";
         offerBtn.innerHTML = "Получил(а) оффер";
@@ -92,7 +105,7 @@ function addColumn(data) {
         td.insertAdjacentElement("beforeend", offerBtn);
     }
 
-    if (data.userId === currentUser.id && data.status === "Offer") {
+    if ((data.userId === currentUser.id || currentUserRole === "ADMIN") && data.status === "Offer") {
         let acceptedBtn = document.createElement("button");
         acceptedBtn.className = "btn btn-success";
         acceptedBtn.innerHTML = "Принял(а) оффер";
