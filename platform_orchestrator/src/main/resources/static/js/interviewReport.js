@@ -71,7 +71,7 @@ function addColumn(data) {
     if (data.userId === currentUser.id && data.status === "Passed") {
         let offerBtn = document.createElement("button");
         offerBtn.className = "btn btn-warning";
-        offerBtn.innerHTML = "Got An Offer";
+        offerBtn.innerHTML = "Получил(а) оффер";
         offerBtn.type = "submit";
         offerBtn.addEventListener("click", () => {
             updateInterviewReport(interviewReport);
@@ -83,7 +83,7 @@ function addColumn(data) {
     if (data.userId === currentUser.id && data.status === "Offer") {
         let acceptedBtn = document.createElement("button");
         acceptedBtn.className = "btn btn-success";
-        acceptedBtn.innerHTML = "Accepted The Offer";
+        acceptedBtn.innerHTML = "Принял(а) оффер";
         acceptedBtn.type = "submit";
         acceptedBtn.addEventListener("click", () => {
             updateInterviewReport(interviewReport);
@@ -146,6 +146,33 @@ function sendInterviewReport() {
     interviewReport.maxSalary = $("#interviewReport-max").val();
     interviewReport.status = $("#interviewReport-status").val();
     interviewReport.level = $("#interviewReport-level").val();
+
+    function emptyField(field) {
+        return String(field).length < 1;
+    }
+    const errorMessage = "Поле не должно быть пустым";
+
+    if (checkAlert("interviewReport-date", "interviewReport-date-alert", errorMessage, emptyField(interviewReport.date))) {
+        return;
+    }
+    if (checkAlert("interviewReport-email", "interviewReport-email-alert", errorMessage, emptyField(interviewReport.email))) {
+        return;
+    }
+    if (checkAlert("interviewReport-company", "interviewReport-company-alert", errorMessage, emptyField(interviewReport.company))) {
+        return;
+    }
+    if (checkAlert("interviewReport-project", "interviewReport-project-alert", errorMessage, emptyField(interviewReport.project))) {
+        return;
+    }
+    if (checkAlert("interviewReport-questions", "interviewReport-questions-alert", errorMessage, emptyField(interviewReport.questions))) {
+        return;
+    }
+    if (checkAlert("interviewReport-min", "interviewReport-min-alert", errorMessage, emptyField(interviewReport.minSalary))) {
+        return;
+    }
+    if (checkAlert("interviewReport-max", "interviewReport-max-alert", errorMessage, emptyField(interviewReport.maxSalary))) {
+        return;
+    }
 
     let confirmation =
         confirm("Отправить отчёт о собеседовании?");
