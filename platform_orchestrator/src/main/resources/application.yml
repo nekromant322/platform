@@ -101,6 +101,8 @@ navbar:
       /statistics
     - Ревью
       /reviewAdmin
+    - Собеседования
+      /interviewReports
     - Настройки
       /userSettings
   user:
@@ -112,6 +114,8 @@ navbar:
       /questions
     - Персональные данные
       /personalData
+    - Собеседования
+      /interviewReports
     - Настройки
       /userSettings
 

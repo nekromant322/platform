@@ -63,6 +63,11 @@ public class PageController {
         return "fragments/reviewRequestButton";
     }
 
+    @GetMapping("/interviewReports")
+    public String interviewReportPage() {
+        return "interviewReport";
+    }
+
     @GetMapping("/login")
     public String authPage() {
         return "login";
