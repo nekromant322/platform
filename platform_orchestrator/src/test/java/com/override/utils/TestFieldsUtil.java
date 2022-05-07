@@ -4,11 +4,10 @@ import com.override.models.*;
 import dtos.*;
 import enums.CodeExecutionStatus;
 
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
-import java.math.BigInteger;
 import java.util.*;
 
 
@@ -144,7 +143,7 @@ public class TestFieldsUtil {
         return InterviewReport.builder()
                 .id(1L)
                 .date(LocalDate.of(2022, 02, 22))
-                .email("test@mail.ru")
+                .userLogin("testUser")
                 .company("Test Company")
                 .project("Test Project")
                 .questions("standard")
@@ -153,7 +152,6 @@ public class TestFieldsUtil {
                 .maxSalary("280000₽ Gross")
                 .status("Passed/Offer/Accepted")
                 .level("Middle")
-                .user(generateTestUser())
                 .build();
     }
 
@@ -162,7 +160,7 @@ public class TestFieldsUtil {
         return InterviewReportDTO.builder()
                 .id(interviewReport.getId())
                 .date(interviewReport.getDate())
-                .email(interviewReport.getEmail())
+                .userLogin(interviewReport.getUserLogin())
                 .company(interviewReport.getCompany())
                 .project(interviewReport.getProject())
                 .questions(interviewReport.getQuestions())
@@ -171,7 +169,6 @@ public class TestFieldsUtil {
                 .maxSalary(interviewReport.getMaxSalary())
                 .status(interviewReport.getStatus())
                 .level(interviewReport.getLevel())
-                .userId(interviewReport.getUser().getId())
                 .build();
     }
 }

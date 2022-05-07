@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.time.LocalDate;
 
 @Data
@@ -22,8 +21,8 @@ public class InterviewReport {
 
     private LocalDate date;
 
-    @Email
-    private String email;
+    @Column(name = "user_login")
+    private String userLogin;
 
     private String company;
 
@@ -42,8 +41,4 @@ public class InterviewReport {
     private String status;
 
     private String level;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private PlatformUser user;
 }

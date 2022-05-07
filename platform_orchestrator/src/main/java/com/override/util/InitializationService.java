@@ -303,7 +303,7 @@ public class InitializationService {
         int salary = (faker.number().numberBetween(150, 350)) * 1000;
         interviewReportService.saveInterviewReport(InterviewReportDTO.builder()
                 .date(LocalDate.now())
-                .email(user.getLogin() + "@gmail.com")
+                .userLogin(user.getLogin())
                 .company(faker.company().name())
                 .project(faker.company().industry())
                 .questions(faker.food().dish())
@@ -312,6 +312,6 @@ public class InitializationService {
                 .maxSalary((salary + 26000) + "")
                 .status(statusList.get(new Random().nextInt(statusList.size())))
                 .level(levelList.get(new Random().nextInt(levelList.size())))
-                .build(), user.getLogin());
+                .build());
     }
 }

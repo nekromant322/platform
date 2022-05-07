@@ -2,7 +2,6 @@ package com.override.service;
 
 import com.override.mappers.InterviewReportMapper;
 import com.override.repositories.InterviewReportRepository;
-import com.override.repositories.PlatformUserRepository;
 import dtos.InterviewReportDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,17 +13,13 @@ import java.util.stream.Collectors;
 public class InterviewReportService {
 
     @Autowired
-    private PlatformUserRepository platformUserRepository;
-
-    @Autowired
     private InterviewReportRepository interviewReportRepository;
 
     @Autowired
     private InterviewReportMapper interviewReportMapper;
 
-    public void saveInterviewReport(InterviewReportDTO interviewReportDTO, String userLogin) {
-        interviewReportRepository.save(interviewReportMapper.dtoToEntity(interviewReportDTO,
-                platformUserRepository.findFirstByLogin(userLogin)));
+    public void saveInterviewReport(InterviewReportDTO interviewReportDTO) {
+        interviewReportRepository.save(interviewReportMapper.dtoToEntity(interviewReportDTO));
     }
 
     public void deleteInterviewReport(Long id) {

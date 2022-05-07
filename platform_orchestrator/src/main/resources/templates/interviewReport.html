@@ -15,7 +15,7 @@
         <thead class="table-light">
         <tr role="row">
             <th scope="col"> Дата </th>
-            <th scope="col"> Почта </th>
+            <th scope="col"> Логин </th>
             <th scope="col"> Компания </th>
             <th scope="col"> Проект </th>
             <th scope="col"> Что спрашивали на собеседовании </th>
@@ -36,8 +36,6 @@
     <form action="#" autocomplete="off" class="form-container" id="interviewReportContainer">
         <label for="interviewReport-date"><b>Дата собеседования</b></label>
         <input type="date" id="interviewReport-date" name="date" th:required="required">
-        <label for="interviewReport-email"><b>Электронная почта</b></label>
-        <input type="text" id="interviewReport-email" placeholder="Ваш адрес эл. почты" name="email" th:required="required">
 
         <div class="autocomplete">
             <label for="interviewReport-company"><b>Компания</b></label>

@@ -2,7 +2,7 @@ window.onload = function () {
     findInterviewReport();
 };
 
-let currentUser;
+let currentUserLogin;
 let currentUserRole;
 var arrayOfCompanies = ["SBER", "TINKOFF", "VK"];
 
@@ -99,7 +99,7 @@ function getCurrentUser() {
         type: 'GET',
         contentType: 'application/json',
         success: function (user) {
-            currentUser = user;
+            currentUserLogin = user.login;
         }
     })
 }
@@ -148,7 +148,7 @@ function addColumn(data) {
     let interviewReport = {}
     interviewReport.id = data.id;
     interviewReport.date = data.date;
-    interviewReport.email = data.email;
+    interviewReport.userLogin = data.userLogin;
     interviewReport.company = data.company;
     interviewReport.project = data.project;
     interviewReport.questions = data.questions;
@@ -157,7 +157,6 @@ function addColumn(data) {
     interviewReport.maxSalary = data.maxSalary;
     interviewReport.status = data.status;
     interviewReport.level = data.level;
-    interviewReport.userId = data.userId;
 
     function isNotDuplicate(company) {
         return company !== data.company;
@@ -179,7 +178,7 @@ function addColumn(data) {
     }
 
     insertTd(data.date, tr, color);
-    insertTd(data.email, tr, color);
+    insertTd(data.userLogin, tr, color);
     insertTd(data.company, tr, color);
     insertTd(data.project, tr, color);
     insertTd(data.questions, tr, color);
@@ -188,7 +187,7 @@ function addColumn(data) {
     insertTd(data.maxSalary, tr, color);
     insertTd(data.level, tr, color);
 
-    if ((data.userId === currentUser.id || currentUserRole === "ADMIN") && data.status === "Passed") {
+    if ((currentUserRole === "ADMIN" || data.userLogin === currentUserLogin) && data.status === "Passed") {
         let offerBtn = document.createElement("button");
         offerBtn.className = "btn btn-warning";
         offerBtn.innerHTML = "Получил(а) оффер";
@@ -201,7 +200,7 @@ function addColumn(data) {
         td.insertAdjacentElement("beforeend", offerBtn);
     }
 
-    if ((data.userId === currentUser.id || currentUserRole === "ADMIN") && data.status === "Offer") {
+    if ((currentUserRole === "ADMIN" || data.userLogin === currentUserLogin) && data.status === "Offer") {
         let acceptedBtn = document.createElement("button");
         acceptedBtn.className = "btn btn-success";
         acceptedBtn.innerHTML = "Принял(а) оффер";
@@ -260,7 +259,7 @@ function updateInterviewReport(interviewReportDTO) {
 function sendInterviewReport() {
     let interviewReport = {}
     interviewReport.date = $("#interviewReport-date").val();
-    interviewReport.email = $("#interviewReport-email").val();
+    interviewReport.userLogin = currentUserLogin;
     interviewReport.company = $("#interviewReport-company").val();
     interviewReport.project = $("#interviewReport-project").val();
     interviewReport.questions = $("#interviewReport-questions").val();
@@ -276,9 +275,6 @@ function sendInterviewReport() {
     const errorMessage = "Поле не должно быть пустым";
 
     if (checkAlert("interviewReport-date", "interviewReport-date-alert", errorMessage, emptyField(interviewReport.date))) {
-        return;
-    }
-    if (checkAlert("interviewReport-email", "interviewReport-email-alert", errorMessage, emptyField(interviewReport.email))) {
         return;
     }
     if (checkAlert("interviewReport-company", "interviewReport-company-alert", errorMessage, emptyField(interviewReport.company))) {

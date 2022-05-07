@@ -1,7 +1,6 @@
 package com.override.mappers;
 
 import com.override.models.InterviewReport;
-import com.override.models.PlatformUser;
 import dtos.InterviewReportDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.override.utils.TestFieldsUtil.*;
+import static com.override.utils.TestFieldsUtil.generateTestInterviewReport;
+import static com.override.utils.TestFieldsUtil.generateTestInterviewReportDTO;
 
 @ExtendWith(MockitoExtension.class)
 public class InterviewReportMapperTest {
@@ -21,13 +21,12 @@ public class InterviewReportMapperTest {
     public void testDtoToEntity() {
         InterviewReport testInterviewReport = generateTestInterviewReport();
         InterviewReportDTO testInterviewReportDTO = generateTestInterviewReportDTO();
-        PlatformUser testUser = generateTestUser();
 
-        InterviewReport interviewReport = interviewReportMapper.dtoToEntity(testInterviewReportDTO, testUser);
+        InterviewReport interviewReport = interviewReportMapper.dtoToEntity(testInterviewReportDTO);
 
         Assertions.assertEquals(interviewReport.getId(), testInterviewReport.getId());
         Assertions.assertEquals(interviewReport.getDate(), testInterviewReport.getDate());
-        Assertions.assertEquals(interviewReport.getEmail(), testInterviewReport.getEmail());
+        Assertions.assertEquals(interviewReport.getUserLogin(), testInterviewReport.getUserLogin());
         Assertions.assertEquals(interviewReport.getCompany(), testInterviewReport.getCompany());
         Assertions.assertEquals(interviewReport.getProject(), testInterviewReport.getProject());
         Assertions.assertEquals(interviewReport.getQuestions(), testInterviewReport.getQuestions());
@@ -36,7 +35,6 @@ public class InterviewReportMapperTest {
         Assertions.assertEquals(interviewReport.getMaxSalary(), testInterviewReport.getMaxSalary());
         Assertions.assertEquals(interviewReport.getStatus(), testInterviewReport.getStatus());
         Assertions.assertEquals(interviewReport.getLevel(), testInterviewReport.getLevel());
-        Assertions.assertEquals(interviewReport.getUser(), testInterviewReport.getUser());
     }
 
     @Test
@@ -48,7 +46,7 @@ public class InterviewReportMapperTest {
 
         Assertions.assertEquals(interviewReportDTO.getId(), testInterviewReportDTO.getId());
         Assertions.assertEquals(interviewReportDTO.getDate(), testInterviewReportDTO.getDate());
-        Assertions.assertEquals(interviewReportDTO.getEmail(), testInterviewReportDTO.getEmail());
+        Assertions.assertEquals(interviewReportDTO.getUserLogin(), testInterviewReportDTO.getUserLogin());
         Assertions.assertEquals(interviewReportDTO.getCompany(), testInterviewReportDTO.getCompany());
         Assertions.assertEquals(interviewReportDTO.getProject(), testInterviewReportDTO.getProject());
         Assertions.assertEquals(interviewReportDTO.getQuestions(), testInterviewReportDTO.getQuestions());
@@ -57,6 +55,5 @@ public class InterviewReportMapperTest {
         Assertions.assertEquals(interviewReportDTO.getMaxSalary(), testInterviewReportDTO.getMaxSalary());
         Assertions.assertEquals(interviewReportDTO.getStatus(), testInterviewReportDTO.getStatus());
         Assertions.assertEquals(interviewReportDTO.getLevel(), testInterviewReportDTO.getLevel());
-        Assertions.assertEquals(interviewReportDTO.getUserId(), testInterviewReportDTO.getUserId());
     }
 }

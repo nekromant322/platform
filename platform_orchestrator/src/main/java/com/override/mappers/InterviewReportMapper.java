@@ -1,19 +1,17 @@
 package com.override.mappers;
 
 import com.override.models.InterviewReport;
-import com.override.models.PlatformUser;
 import dtos.InterviewReportDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class InterviewReportMapper {
 
-    public InterviewReport dtoToEntity(InterviewReportDTO interviewReportDTO,
-                                       PlatformUser user) {
+    public InterviewReport dtoToEntity(InterviewReportDTO interviewReportDTO) {
         return InterviewReport.builder()
                 .id(interviewReportDTO.getId())
                 .date(interviewReportDTO.getDate())
-                .email(interviewReportDTO.getEmail())
+                .userLogin(interviewReportDTO.getUserLogin())
                 .company(interviewReportDTO.getCompany())
                 .project(interviewReportDTO.getProject())
                 .questions(interviewReportDTO.getQuestions())
@@ -22,7 +20,6 @@ public class InterviewReportMapper {
                 .maxSalary(interviewReportDTO.getMaxSalary())
                 .status(interviewReportDTO.getStatus())
                 .level(interviewReportDTO.getLevel())
-                .user(user)
                 .build();
     }
 
@@ -30,7 +27,7 @@ public class InterviewReportMapper {
         return InterviewReportDTO.builder()
                 .id(interviewReport.getId())
                 .date(interviewReport.getDate())
-                .email(interviewReport.getEmail())
+                .userLogin(interviewReport.getUserLogin())
                 .company(interviewReport.getCompany())
                 .project(interviewReport.getProject())
                 .questions(interviewReport.getQuestions())
@@ -39,7 +36,6 @@ public class InterviewReportMapper {
                 .maxSalary(interviewReport.getMaxSalary())
                 .status(interviewReport.getStatus())
                 .level(interviewReport.getLevel())
-                .userId(interviewReport.getUser().getId())
                 .build();
     }
 }

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class InterviewReportDTO {
     private Long id;
     private LocalDate date;
-    private String email;
+    private String userLogin;
     private String company;
     private String project;
     private String questions;
@@ -19,5 +19,4 @@ public class InterviewReportDTO {
     private String maxSalary;
     private String status;
     private String level;
-    private Long userId;
 }
