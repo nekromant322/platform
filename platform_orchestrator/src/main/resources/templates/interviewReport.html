@@ -33,13 +33,17 @@
 </div>
 
 <div class="form-interviewReport" id="interviewReportForm">
-    <form action="#" class="form-container" id="interviewReportContainer">
+    <form action="#" autocomplete="off" class="form-container" id="interviewReportContainer">
         <label for="interviewReport-date"><b>Дата собеседования</b></label>
         <input type="date" id="interviewReport-date" name="date" th:required="required">
         <label for="interviewReport-email"><b>Электронная почта</b></label>
         <input type="text" id="interviewReport-email" placeholder="Ваш адрес эл. почты" name="email" th:required="required">
-        <label for="interviewReport-company"><b>Компания</b></label>
-        <input type="text" id="interviewReport-company" placeholder="Латинскими буквами (SBER, GPB, NATERA)" name="company" th:required="required">
+
+        <div class="autocomplete">
+            <label for="interviewReport-company"><b>Компания</b></label>
+            <input type="text" id="interviewReport-company" placeholder="Латинскими буквами (SBER, GPB, NATERA)" name="company" th:required="required">
+        </div>
+
         <label for="interviewReport-project"><b>Проект</b></label>
         <input type="text" id="interviewReport-project" placeholder="Внутренняя crm, онлайн банк, интеграционная шина, галера(проект какой компании)" name="project" th:required="required">
         <label for="interviewReport-questions"><b>Что спрашивали на собеседовании?</b></label>
@@ -88,5 +92,6 @@
         crossorigin="anonymous"></script>
 <script src="/js/utils.js"></script>
 <script src="/js/interviewReport.js"></script>
+<!--<script src="/js/autocomplete.js"></script>-->
 </body>
 </html>
