@@ -168,24 +168,28 @@ function addColumn(data) {
 
     let color;
     color = 'white';
+    let legend;
+    legend = "Собеседование пройдено";
 
     if (data.status === "Offer") {
         color = 'orange';
+        legend = "Получен оффер";
     }
 
     if (data.status === "Accepted") {
         color = 'green';
+        legend = "Оффер принят";
     }
 
-    insertTd(data.date, tr, color);
-    insertTd(data.userLogin, tr, color);
-    insertTd(data.company, tr, color);
-    insertTd(data.project, tr, color);
-    insertTd(data.questions, tr, color);
-    insertTd(data.impression, tr, color);
-    insertTd(data.minSalary, tr, color);
-    insertTd(data.maxSalary, tr, color);
-    insertTd(data.level, tr, color);
+    insertTd(data.date, tr, color, legend);
+    insertTd(data.userLogin, tr, color, legend);
+    insertTd(data.company, tr, color, legend);
+    insertTd(data.project, tr, color, legend);
+    insertTd(data.questions, tr, color, legend);
+    insertTd(data.impression, tr, color, legend);
+    insertTd(data.minSalary, tr, color, legend);
+    insertTd(data.maxSalary, tr, color, legend);
+    insertTd(data.level, tr, color, legend);
 
     if ((currentUserRole === "ADMIN" || data.userLogin === currentUserLogin) && data.status === "Passed") {
         let offerBtn = document.createElement("button");
@@ -214,11 +218,12 @@ function addColumn(data) {
     }
 }
 
-function insertTd(value, parent, color) {
+function insertTd(value, parent, color, legend) {
     let element = document.createElement("td");
     element.scope = "row";
     element.innerText = value;
     element.style.backgroundColor = color;
+    element.title = legend;
     parent.insertAdjacentElement("beforeend", element);
 }
 
