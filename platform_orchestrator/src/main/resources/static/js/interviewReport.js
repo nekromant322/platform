@@ -266,7 +266,7 @@ function sendInterviewReport() {
     interviewReport.impression = $("#interviewReport-impression").val();
     interviewReport.minSalary = $("#interviewReport-min").val();
     interviewReport.maxSalary = $("#interviewReport-max").val();
-    interviewReport.status = $("#interviewReport-status").val();
+    interviewReport.status = "Passed";
     interviewReport.level = $("#interviewReport-level").val();
 
     function emptyField(field) {

@@ -67,12 +67,6 @@
             <option value="Middle" selected>Middle</option>
             <option value="Senior">Senior</option>
         </select>
-        <label for="interviewReport-status"><b>Статус собеседования</b></label>
-        <select class="form-select" id="interviewReport-status" name="status" th:required="required">
-            <option value="Passed" selected>Passed</option>
-            <option value="Offer">Offer</option>
-            <option value="Accepted">Accepted</option>
-        </select>
 
         <button type="button" class="btn" onclick="sendInterviewReport()">Отправить</button>
         <button type="button" class="btn cancel" onclick="closeInterviewReportForm()">Закрыть</button>
