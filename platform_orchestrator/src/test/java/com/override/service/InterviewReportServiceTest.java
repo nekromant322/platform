@@ -30,29 +30,29 @@ public class InterviewReportServiceTest {
     private InterviewReportMapper interviewReportMapper;
 
     @Test
-    void saveInterviewReport() {
+    void save() {
         InterviewReportDTO testInterviewReportDTO = generateTestInterviewReportDTO();
 
-        interviewReportService.saveInterviewReport(testInterviewReportDTO);
+        interviewReportService.save(testInterviewReportDTO);
         verify(interviewReportRepository, times(1)).save(any());
         verify(interviewReportMapper, times(1)).dtoToEntity(any());
     }
 
     @Test
-    void deleteInterviewReport() {
-        interviewReportService.deleteInterviewReport(1L);
+    void delete() {
+        interviewReportService.delete(1L);
         verify(interviewReportRepository,times(1)).deleteById(1L);
     }
 
     @Test
-    void findAllInterviewReports() {
+    void findAll() {
         List<InterviewReportDTO> testDTOList = List.of(generateTestInterviewReportDTO());
         List<InterviewReport> testList = List.of(generateTestInterviewReport());
 
         when(interviewReportRepository.findAll()).thenReturn(testList);
         when(interviewReportMapper.entityToDto(testList.iterator().next())).thenReturn(testDTOList.iterator().next());
 
-        List<InterviewReportDTO> DTOList = interviewReportService.findAllInterviewReports();
+        List<InterviewReportDTO> DTOList = interviewReportService.findAll();
         Assertions.assertEquals(DTOList.iterator().next(), testDTOList.iterator().next());
     }
 }

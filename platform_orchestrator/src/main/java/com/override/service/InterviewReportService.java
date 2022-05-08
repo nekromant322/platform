@@ -18,15 +18,15 @@ public class InterviewReportService {
     @Autowired
     private InterviewReportMapper interviewReportMapper;
 
-    public void saveInterviewReport(InterviewReportDTO interviewReportDTO) {
+    public void save(InterviewReportDTO interviewReportDTO) {
         interviewReportRepository.save(interviewReportMapper.dtoToEntity(interviewReportDTO));
     }
 
-    public void deleteInterviewReport(Long id) {
+    public void delete(Long id) {
         interviewReportRepository.deleteById(id);
     }
 
-    public List<InterviewReportDTO> findAllInterviewReports() {
+    public List<InterviewReportDTO> findAll() {
         return (interviewReportRepository.findAll()).stream()
                 .map(interviewReportMapper::entityToDto).collect(Collectors.toList());
     }

@@ -16,9 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -96,7 +94,7 @@ public class PlatformUserService {
         return platformUserRepository.findStudentsWithoutReportOfCurrentDay();
     }
 
-    public Role checkPlatformUserRole(HttpServletRequest request) {
+    public Role getPlatformUserRole(HttpServletRequest request) {
         if (request.isUserInRole("ROLE_ADMIN")) {
             return Role.ADMIN;
         } else {

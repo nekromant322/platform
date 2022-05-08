@@ -187,19 +187,19 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    void checkPlatformUserRoleAdmin() {
+    void getPlatformUserRoleAdmin() {
         when(request.isUserInRole("ROLE_ADMIN")).thenReturn(true);
 
-        Role admin = platformUserService.checkPlatformUserRole(request);
+        Role admin = platformUserService.getPlatformUserRole(request);
 
         assertEquals(admin, Role.ADMIN);
     }
 
     @Test
-    void checkPlatformUserRoleUser() {
+    void getPlatformUserRoleUser() {
         when(request.isUserInRole("ROLE_ADMIN")).thenReturn(false);
 
-        Role user = platformUserService.checkPlatformUserRole(request);
+        Role user = platformUserService.getPlatformUserRole(request);
 
         assertEquals(user, Role.USER);
     }

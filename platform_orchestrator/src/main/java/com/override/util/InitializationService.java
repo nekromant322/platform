@@ -301,7 +301,7 @@ public class InitializationService {
         List<String> statusList = new ArrayList<>(List.of("Passed", "Offer", "Accepted", "Passed", "Offer", "Accepted"));
         List<String> levelList = new ArrayList<>(List.of("Junior", "Middle", "Senior", "Middle", "Senior", "Middle"));
         int salary = (faker.number().numberBetween(150, 350)) * 1000;
-        interviewReportService.saveInterviewReport(InterviewReportDTO.builder()
+        interviewReportService.save(InterviewReportDTO.builder()
                 .date(LocalDate.now())
                 .userLogin(user.getLogin())
                 .company(faker.company().name())

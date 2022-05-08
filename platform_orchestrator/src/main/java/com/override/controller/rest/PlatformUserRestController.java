@@ -18,8 +18,8 @@ public class PlatformUserRestController {
     private PlatformUserService platformUserService;
 
     @GetMapping("/role")
-    public Role checkPlatformUserRole(HttpServletRequest request) {
-        return platformUserService.checkPlatformUserRole(request);
+    public Role getPlatformUserRole(HttpServletRequest request) {
+        return platformUserService.getPlatformUserRole(request);
     }
 
     @GetMapping("/current")

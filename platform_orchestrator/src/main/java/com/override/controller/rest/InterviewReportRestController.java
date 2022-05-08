@@ -18,18 +18,18 @@ public class InterviewReportRestController {
 
     @PatchMapping
     public ResponseEntity<String> saveOrUpdateInterviewReport(@RequestBody InterviewReportDTO interviewReportDTO) {
-        interviewReportService.saveInterviewReport(interviewReportDTO);
+        interviewReportService.save(interviewReportDTO);
         return new ResponseEntity<>("Отчёт о собеседовании сохранён!", HttpStatus.OK);
     }
 
     @GetMapping
     public List<InterviewReportDTO> findAllInterviewReports() {
-        return interviewReportService.findAllInterviewReports();
+        return interviewReportService.findAll();
     }
 
     @DeleteMapping
     public ResponseEntity<String> deleteInterviewReport(@RequestParam Long id) {
-        interviewReportService.deleteInterviewReport(id);
+        interviewReportService.delete(id);
         return new ResponseEntity<>("Отчёт о собеседовании удалён!", HttpStatus.OK);
     }
 }
