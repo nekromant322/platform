@@ -10,27 +10,7 @@
     <header th:replace="fragments/navbar.html :: header"></header>
 </head>
 <body>
-<div class="main">
-    <table class="table table-hover" id="interviewReport-table">
-        <thead class="table-light">
-        <tr role="row">
-            <th scope="col"> Дата </th>
-            <th scope="col"> Логин </th>
-            <th scope="col"> Компания </th>
-            <th scope="col"> Проект </th>
-            <th scope="col"> Что спрашивали на собеседовании </th>
-            <th scope="col"> Впечатление </th>
-            <th scope="col"> Мин </th>
-            <th scope="col"> Макс </th>
-            <th scope="col"> Позиция </th>
-            <th scope="col">  </th>
-        </tr>
-        </thead>
-        <tbody class="table-light">
-        </tbody>
-    </table>
-    <button class="button__interviewReport" onclick="openInterviewReportForm()">Написать отчёт</button>
-</div>
+<button class="button__interviewReport" onclick="openInterviewReportForm()">Написать отчёт</button>
 
 <div class="form-interviewReport" id="interviewReportForm">
     <form action="#" autocomplete="off" class="form-container" id="interviewReportContainer">
@@ -73,6 +53,28 @@
     </form>
 </div>
 
+<div class="main">
+    <table class="table table-hover" id="interviewReport-table">
+        <thead class="table-light">
+        <tr role="row">
+            <th scope="col"> Дата </th>
+            <th scope="col"> Логин </th>
+            <th scope="col"> Компания </th>
+            <th scope="col"> Проект </th>
+            <th scope="col"> Что спрашивали на собеседовании </th>
+            <th scope="col"> Впечатление </th>
+            <th scope="col"> Мин </th>
+            <th scope="col"> Макс </th>
+            <th scope="col"> Позиция </th>
+            <th scope="col">  </th>
+        </tr>
+        </thead>
+        <tbody class="table-light">
+        </tbody>
+    </table>
+
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>
@@ -84,6 +86,5 @@
         crossorigin="anonymous"></script>
 <script src="/js/utils.js"></script>
 <script src="/js/interviewReport.js"></script>
-<!--<script src="/js/autocomplete.js"></script>-->
 </body>
 </html>
