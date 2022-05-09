@@ -1,5 +1,6 @@
 package com.override.controller;
 
+import com.override.annotation.MaxFileSize;
 import com.override.models.Document;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.DocumentService;
@@ -27,6 +28,7 @@ public class DocumentController {
     private DocumentService documentService;
 
     @PostMapping("/personalData")
+    @MaxFileSize("${documentSizeLimit.forPersonalData}")
     public String personalDataDocumentUpload(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
                                              @RequestParam("file") MultipartFile multipartFile) throws FileUploadException {
 
