@@ -3,6 +3,7 @@ package com.override.util;
 import com.github.javafaker.Faker;
 import com.override.models.*;
 import com.override.models.enums.Role;
+import com.override.models.enums.Status;
 import com.override.service.*;
 import dtos.*;
 import enums.CodeExecutionStatus;
@@ -298,7 +299,8 @@ public class InitializationService {
     }
 
     public void saveOrUpdateInterviewReport(PlatformUser user) {
-        List<String> statusList = new ArrayList<>(List.of("Passed", "Offer", "Accepted", "Passed", "Offer", "Accepted"));
+        List<String> statusList = new ArrayList<>(List.of(Status.PASSED.name(), Status.OFFER.name(), Status.ACCEPTED.name(),
+                Status.PASSED.name(), Status.OFFER.name(), Status.ACCEPTED.name()));
         List<String> levelList = new ArrayList<>(List.of("Junior", "Middle", "Senior", "Middle", "Senior", "Middle"));
         int salary = (faker.number().numberBetween(150, 350)) * 1000;
         interviewReportService.save(InterviewReportDTO.builder()
@@ -308,8 +310,9 @@ public class InitializationService {
                 .project(faker.company().industry())
                 .questions(faker.food().dish())
                 .impression(faker.number().numberBetween(1, 5))
-                .minSalary(salary + "")
-                .maxSalary((salary + 26000) + "")
+                .minSalary(salary)
+                .maxSalary(salary + 26000)
+                .currency('₽')
                 .status(statusList.get(new Random().nextInt(statusList.size())))
                 .level(levelList.get(new Random().nextInt(levelList.size())))
                 .build());

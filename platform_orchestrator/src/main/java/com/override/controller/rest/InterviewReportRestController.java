@@ -1,5 +1,6 @@
 package com.override.controller.rest;
 
+import com.override.models.enums.Status;
 import com.override.service.InterviewReportService;
 import dtos.InterviewReportDTO;
 import dtos.InterviewReportUpdateDTO;
@@ -23,15 +24,15 @@ public class InterviewReportRestController {
         return new ResponseEntity<>("Отчёт о собеседовании сохранён!", HttpStatus.OK);
     }
 
-    @PatchMapping("/Offer")
+    @PatchMapping("/offer")
     public ResponseEntity<String> changeStatusToOffer(@RequestBody InterviewReportUpdateDTO interviewReportUpdateDTO) {
-        interviewReportService.update(interviewReportUpdateDTO, "Offer");
+        interviewReportService.update(interviewReportUpdateDTO, Status.OFFER);
         return new ResponseEntity<>("Статус собеседования изменён на Offer!", HttpStatus.OK);
     }
 
-    @PatchMapping("/Accepted")
+    @PatchMapping("/accepted")
     public ResponseEntity<String> changeStatusToAccepted(@RequestBody InterviewReportUpdateDTO interviewReportUpdateDTO) {
-        interviewReportService.update(interviewReportUpdateDTO, "Accepted");
+        interviewReportService.update(interviewReportUpdateDTO, Status.ACCEPTED);
         return new ResponseEntity<>("Статус собеседования изменён на Accepted!", HttpStatus.OK);
     }
 

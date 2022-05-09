@@ -180,6 +180,7 @@ function addColumn(data) {
     insertTd(data.impression, tr, color, legend);
     insertTd(data.minSalary, tr, color, legend);
     insertTd(data.maxSalary, tr, color, legend);
+    insertTd(data.currency, tr, color, legend);
     insertTd(data.level, tr, color, legend);
 
     if ((currentUserRole === "ADMIN" || data.userLogin === currentUserLogin) && data.status === "Passed") {
@@ -188,9 +189,9 @@ function addColumn(data) {
         offerBtn.innerHTML = "Получил(а) оффер";
         offerBtn.type = "submit";
         offerBtn.addEventListener("click", () => {
-            changeStatus(interviewReportUpdateDTO, "Offer");
+            changeStatus(interviewReportUpdateDTO, "offer");
         });
-        td = tr.insertCell(9);
+        td = tr.insertCell(10);
         td.style.backgroundColor = 'white';
         td.insertAdjacentElement("beforeend", offerBtn);
     }
@@ -201,9 +202,9 @@ function addColumn(data) {
         acceptedBtn.innerHTML = "Принял(а) оффер";
         acceptedBtn.type = "submit";
         acceptedBtn.addEventListener("click", () => {
-            changeStatus(interviewReportUpdateDTO, "Accepted");
+            changeStatus(interviewReportUpdateDTO, "accepted");
         });
-        td = tr.insertCell(9);
+        td = tr.insertCell(10);
         td.style.backgroundColor = 'white';
         td.insertAdjacentElement("beforeend", acceptedBtn);
     }
@@ -266,6 +267,7 @@ function sendInterviewReport() {
     interviewReportDTO.impression = $("#interviewReport-impression").val();
     interviewReportDTO.minSalary = $("#interviewReport-min").val();
     interviewReportDTO.maxSalary = $("#interviewReport-max").val();
+    interviewReportDTO.currency = $("#interviewReport-currency").val();
     interviewReportDTO.status = "Passed";
     interviewReportDTO.level = $("#interviewReport-level").val();
 

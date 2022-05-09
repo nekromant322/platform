@@ -37,9 +37,16 @@
         </select>
 
         <label for="interviewReport-min"><b>Минимальная зарплата на руки</b></label>
-        <input type="text" id="interviewReport-min" placeholder="Предложили/Оффер/В договоре" name="minSalary" th:required="required">
+        <input type="number" id="interviewReport-min" placeholder="Предложили/Запросил(а)" name="minSalary" th:required="required">
         <label for="interviewReport-max"><b>Максимальная зарплата на руки</b></label>
-        <input type="text" id="interviewReport-max" placeholder="Указать валюту, если не в рублях" name="maxSalary" th:required="required">
+        <input type="number" id="interviewReport-max" placeholder="Предложили/Запросил(а)" name="maxSalary" th:required="required">
+
+        <label for="interviewReport-currency"><b>Валюта</b></label>
+        <select class="form-select" id="interviewReport-currency" name="currency" th:required="required">
+            <option value="$">Доллар США</option>
+            <option value="₽" selected>Рубль</option>
+            <option value="€">Евро</option>
+        </select>
 
         <label for="interviewReport-level"><b>Позиция</b></label>
         <select class="form-select" id="interviewReport-level" name="level" th:required="required">
@@ -65,6 +72,7 @@
             <th scope="col"> Впечатление </th>
             <th scope="col"> Мин </th>
             <th scope="col"> Макс </th>
+            <th scope="col">  </th>
             <th scope="col"> Позиция </th>
             <th scope="col">  </th>
         </tr>

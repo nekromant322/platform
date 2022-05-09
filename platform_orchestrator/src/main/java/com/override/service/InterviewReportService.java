@@ -2,6 +2,7 @@ package com.override.service;
 
 import com.override.mappers.InterviewReportMapper;
 import com.override.models.InterviewReport;
+import com.override.models.enums.Status;
 import com.override.repositories.InterviewReportRepository;
 import dtos.InterviewReportDTO;
 import dtos.InterviewReportUpdateDTO;
@@ -24,7 +25,7 @@ public class InterviewReportService {
         interviewReportRepository.save(interviewReportMapper.dtoToEntity(interviewReportDTO));
     }
 
-    public void update(InterviewReportUpdateDTO interviewReportUpdateDTO, String status) {
+    public void update(InterviewReportUpdateDTO interviewReportUpdateDTO, Status status) {
         InterviewReport interviewReport = interviewReportRepository.getById(interviewReportUpdateDTO.getId());
         interviewReport.setStatus(status);
         interviewReport.setMinSalary(interviewReportUpdateDTO.getSalary());

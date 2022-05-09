@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 public class InterviewReportUpdateDTO {
     private Long id;
-    private String salary;
+    private Integer salary;
 }

@@ -1,6 +1,7 @@
 package com.override.utils;
 
 import com.override.models.*;
+import com.override.models.enums.Status;
 import dtos.*;
 import enums.CodeExecutionStatus;
 
@@ -148,9 +149,10 @@ public class TestFieldsUtil {
                 .project("Test Project")
                 .questions("standard")
                 .impression(4)
-                .minSalary("220000")
-                .maxSalary("280000")
-                .status("Passed")
+                .minSalary(220000)
+                .maxSalary(280000)
+                .currency('₽')
+                .status(Status.PASSED)
                 .level("Middle")
                 .build();
     }
@@ -167,7 +169,8 @@ public class TestFieldsUtil {
                 .impression(interviewReport.getImpression())
                 .minSalary(interviewReport.getMinSalary())
                 .maxSalary(interviewReport.getMaxSalary())
-                .status(interviewReport.getStatus())
+                .currency(interviewReport.getCurrency())
+                .status(interviewReport.getStatus().getName())
                 .level(interviewReport.getLevel())
                 .build();
     }

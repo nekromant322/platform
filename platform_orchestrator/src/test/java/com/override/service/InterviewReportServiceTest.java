@@ -2,6 +2,7 @@ package com.override.service;
 
 import com.override.mappers.InterviewReportMapper;
 import com.override.models.InterviewReport;
+import com.override.models.enums.Status;
 import com.override.repositories.InterviewReportRepository;
 import dtos.InterviewReportDTO;
 import dtos.InterviewReportUpdateDTO;
@@ -45,12 +46,12 @@ public class InterviewReportServiceTest {
         InterviewReportUpdateDTO interviewReportUpdateDTO =
                 InterviewReportUpdateDTO.builder()
                         .id(1L)
-                        .salary("320000")
+                        .salary(320000)
                         .build();
 
         when(interviewReportRepository.getById(interviewReportUpdateDTO.getId())).thenReturn(testInterviewReport);
 
-        interviewReportService.update(interviewReportUpdateDTO, "Offer");
+        interviewReportService.update(interviewReportUpdateDTO, Status.OFFER);
         verify(interviewReportRepository, times(1)).save(any());
     }
 

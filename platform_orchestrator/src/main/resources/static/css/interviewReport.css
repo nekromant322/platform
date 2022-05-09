@@ -39,7 +39,7 @@
 }
 
 .form-container input[type=text], .form-container input[type=date],
-.form-container select[class=form-select] {
+.form-container select[class=form-select], .form-container input[type=number] {
     width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;
@@ -48,7 +48,7 @@
 }
 
 .form-container input[type=text]:focus, .form-container input[type=date]:focus,
-.form-container select[class=form-select]:focus {
+.form-container select[class=form-select]:focus, .form-container input[type=number]:focus {
     background-color: #ddd;
     outline: none;
 }

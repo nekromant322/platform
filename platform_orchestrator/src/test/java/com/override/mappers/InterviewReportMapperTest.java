@@ -33,6 +33,7 @@ public class InterviewReportMapperTest {
         Assertions.assertEquals(interviewReport.getImpression(), testInterviewReport.getImpression());
         Assertions.assertEquals(interviewReport.getMinSalary(), testInterviewReport.getMinSalary());
         Assertions.assertEquals(interviewReport.getMaxSalary(), testInterviewReport.getMaxSalary());
+        Assertions.assertEquals(interviewReport.getCurrency(), testInterviewReport.getCurrency());
         Assertions.assertEquals(interviewReport.getStatus(), testInterviewReport.getStatus());
         Assertions.assertEquals(interviewReport.getLevel(), testInterviewReport.getLevel());
     }
@@ -53,6 +54,7 @@ public class InterviewReportMapperTest {
         Assertions.assertEquals(interviewReportDTO.getImpression(), testInterviewReportDTO.getImpression());
         Assertions.assertEquals(interviewReportDTO.getMinSalary(), testInterviewReportDTO.getMinSalary());
         Assertions.assertEquals(interviewReportDTO.getMaxSalary(), testInterviewReportDTO.getMaxSalary());
+        Assertions.assertEquals(interviewReportDTO.getCurrency(), testInterviewReportDTO.getCurrency());
         Assertions.assertEquals(interviewReportDTO.getStatus(), testInterviewReportDTO.getStatus());
         Assertions.assertEquals(interviewReportDTO.getLevel(), testInterviewReportDTO.getLevel());
     }

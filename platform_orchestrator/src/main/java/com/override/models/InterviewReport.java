@@ -1,5 +1,6 @@
 package com.override.models;
 
+import com.override.models.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,12 +34,15 @@ public class InterviewReport {
     private Integer impression;
 
     @Column(name = "min_salary")
-    private String minSalary;
+    private Integer minSalary;
 
     @Column(name = "max_salary")
-    private String maxSalary;
+    private Integer maxSalary;
 
-    private String status;
+    private Character currency;
+
+    @Enumerated(EnumType.ORDINAL)
+    private Status status;
 
     private String level;
 }

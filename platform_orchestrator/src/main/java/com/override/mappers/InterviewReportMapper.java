@@ -1,7 +1,9 @@
 package com.override.mappers;
 
 import com.override.models.InterviewReport;
+import com.override.models.enums.Status;
 import dtos.InterviewReportDTO;
+import org.apache.logging.log4j.util.Timer;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +20,8 @@ public class InterviewReportMapper {
                 .impression(interviewReportDTO.getImpression())
                 .minSalary(interviewReportDTO.getMinSalary())
                 .maxSalary(interviewReportDTO.getMaxSalary())
-                .status(interviewReportDTO.getStatus())
+                .currency(interviewReportDTO.getCurrency())
+                .status(Status.fromString(interviewReportDTO.getStatus()))
                 .level(interviewReportDTO.getLevel())
                 .build();
     }
@@ -34,7 +37,8 @@ public class InterviewReportMapper {
                 .impression(interviewReport.getImpression())
                 .minSalary(interviewReport.getMinSalary())
                 .maxSalary(interviewReport.getMaxSalary())
-                .status(interviewReport.getStatus())
+                .currency(interviewReport.getCurrency())
+                .status(interviewReport.getStatus().getName())
                 .level(interviewReport.getLevel())
                 .build();
     }
