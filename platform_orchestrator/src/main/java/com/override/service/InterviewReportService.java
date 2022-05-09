@@ -1,8 +1,10 @@
 package com.override.service;
 
 import com.override.mappers.InterviewReportMapper;
+import com.override.models.InterviewReport;
 import com.override.repositories.InterviewReportRepository;
 import dtos.InterviewReportDTO;
+import dtos.InterviewReportUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,14 @@ public class InterviewReportService {
 
     public void save(InterviewReportDTO interviewReportDTO) {
         interviewReportRepository.save(interviewReportMapper.dtoToEntity(interviewReportDTO));
+    }
+
+    public void update(InterviewReportUpdateDTO interviewReportUpdateDTO, String status) {
+        InterviewReport interviewReport = interviewReportRepository.getById(interviewReportUpdateDTO.getId());
+        interviewReport.setStatus(status);
+        interviewReport.setMinSalary(interviewReportUpdateDTO.getSalary());
+        interviewReport.setMaxSalary(interviewReportUpdateDTO.getSalary());
+        interviewReportRepository.save(interviewReport);
     }
 
     public void delete(Long id) {

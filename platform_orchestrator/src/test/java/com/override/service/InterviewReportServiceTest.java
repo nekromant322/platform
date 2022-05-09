@@ -4,6 +4,7 @@ import com.override.mappers.InterviewReportMapper;
 import com.override.models.InterviewReport;
 import com.override.repositories.InterviewReportRepository;
 import dtos.InterviewReportDTO;
+import dtos.InterviewReportUpdateDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +37,21 @@ public class InterviewReportServiceTest {
         interviewReportService.save(testInterviewReportDTO);
         verify(interviewReportRepository, times(1)).save(any());
         verify(interviewReportMapper, times(1)).dtoToEntity(any());
+    }
+
+    @Test
+    void update() {
+        InterviewReport testInterviewReport = generateTestInterviewReport();
+        InterviewReportUpdateDTO interviewReportUpdateDTO =
+                InterviewReportUpdateDTO.builder()
+                        .id(1L)
+                        .salary("320000")
+                        .build();
+
+        when(interviewReportRepository.getById(interviewReportUpdateDTO.getId())).thenReturn(testInterviewReport);
+
+        interviewReportService.update(interviewReportUpdateDTO, "Offer");
+        verify(interviewReportRepository, times(1)).save(any());
     }
 
     @Test

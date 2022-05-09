@@ -148,9 +148,9 @@ public class TestFieldsUtil {
                 .project("Test Project")
                 .questions("standard")
                 .impression(4)
-                .minSalary("220000₽ Net")
-                .maxSalary("280000₽ Gross")
-                .status("Passed/Offer/Accepted")
+                .minSalary("220000")
+                .maxSalary("280000")
+                .status("Passed")
                 .level("Middle")
                 .build();
     }

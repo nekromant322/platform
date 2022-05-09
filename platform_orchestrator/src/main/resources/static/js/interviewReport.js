@@ -145,18 +145,9 @@ function addColumn(data) {
     let tr = table.insertRow(table.rows.length);
     let td;
 
-    let interviewReport = {}
-    interviewReport.id = data.id;
-    interviewReport.date = data.date;
-    interviewReport.userLogin = data.userLogin;
-    interviewReport.company = data.company;
-    interviewReport.project = data.project;
-    interviewReport.questions = data.questions;
-    interviewReport.impression = data.impression;
-    interviewReport.minSalary = data.minSalary;
-    interviewReport.maxSalary = data.maxSalary;
-    interviewReport.status = data.status;
-    interviewReport.level = data.level;
+    let interviewReportUpdateDTO = {}
+    interviewReportUpdateDTO.id = data.id;
+    interviewReportUpdateDTO.salary = data.maxSalary;
 
     function isNotDuplicate(company) {
         return company !== data.company;
@@ -197,7 +188,7 @@ function addColumn(data) {
         offerBtn.innerHTML = "Получил(а) оффер";
         offerBtn.type = "submit";
         offerBtn.addEventListener("click", () => {
-            updateInterviewReport(interviewReport);
+            changeStatus(interviewReportUpdateDTO, "Offer");
         });
         td = tr.insertCell(9);
         td.style.backgroundColor = 'white';
@@ -210,7 +201,7 @@ function addColumn(data) {
         acceptedBtn.innerHTML = "Принял(а) оффер";
         acceptedBtn.type = "submit";
         acceptedBtn.addEventListener("click", () => {
-            updateInterviewReport(interviewReport);
+            changeStatus(interviewReportUpdateDTO, "Accepted");
         });
         td = tr.insertCell(9);
         td.style.backgroundColor = 'white';
@@ -227,6 +218,28 @@ function insertTd(value, parent, color, legend) {
     parent.insertAdjacentElement("beforeend", element);
 }
 
+function changeStatus(interviewReportUpdateDTO, status) {
+    let confirmation = confirm("Вы уверены, что хотите изменить статус на " + status + "?");
+
+    if (confirmation === true) {
+        interviewReportUpdateDTO.salary = prompt("Уточните зарплату на руки", interviewReportUpdateDTO.salary);
+
+        $.ajax({
+            url: '/interviewReport/' + status,
+            method: 'PATCH',
+            contentType: 'application/json',
+            data: JSON.stringify(interviewReportUpdateDTO),
+            success: function () {
+                console.log('updated')
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+        location.reload();
+    }
+}
+
 function saveInterviewReport(interviewReportDTO) {
     $.ajax({
         url: '/interviewReport',
@@ -239,62 +252,44 @@ function saveInterviewReport(interviewReportDTO) {
         error: function (error) {
             console.log(error);
         }
-    })
+    });
     location.reload();
 }
 
-function updateInterviewReport(interviewReportDTO) {
-    let confirmation =
-        confirm("Вы уверены, что хотите изменить статус?");
-
-    if (confirmation === true) {
-        interviewReportDTO.maxSalary = prompt("Уточните зарплату на руки", interviewReportDTO.maxSalary);
-        interviewReportDTO.minSalary = interviewReportDTO.maxSalary;
-
-        if (interviewReportDTO.status === "Offer") {
-            interviewReportDTO.status = "Accepted";
-        }
-        if (interviewReportDTO.status === "Passed") {
-            interviewReportDTO.status = "Offer";
-        }
-        saveInterviewReport(interviewReportDTO);
-    }
-}
-
 function sendInterviewReport() {
-    let interviewReport = {}
-    interviewReport.date = $("#interviewReport-date").val();
-    interviewReport.userLogin = currentUserLogin;
-    interviewReport.company = $("#interviewReport-company").val();
-    interviewReport.project = $("#interviewReport-project").val();
-    interviewReport.questions = $("#interviewReport-questions").val();
-    interviewReport.impression = $("#interviewReport-impression").val();
-    interviewReport.minSalary = $("#interviewReport-min").val();
-    interviewReport.maxSalary = $("#interviewReport-max").val();
-    interviewReport.status = "Passed";
-    interviewReport.level = $("#interviewReport-level").val();
+    let interviewReportDTO = {}
+    interviewReportDTO.date = $("#interviewReport-date").val();
+    interviewReportDTO.userLogin = currentUserLogin;
+    interviewReportDTO.company = $("#interviewReport-company").val();
+    interviewReportDTO.project = $("#interviewReport-project").val();
+    interviewReportDTO.questions = $("#interviewReport-questions").val();
+    interviewReportDTO.impression = $("#interviewReport-impression").val();
+    interviewReportDTO.minSalary = $("#interviewReport-min").val();
+    interviewReportDTO.maxSalary = $("#interviewReport-max").val();
+    interviewReportDTO.status = "Passed";
+    interviewReportDTO.level = $("#interviewReport-level").val();
 
     function emptyField(field) {
         return String(field).length < 1;
     }
     const errorMessage = "Поле не должно быть пустым";
 
-    if (checkAlert("interviewReport-date", "interviewReport-date-alert", errorMessage, emptyField(interviewReport.date))) {
+    if (checkAlert("interviewReport-date", "interviewReport-date-alert", errorMessage, emptyField(interviewReportDTO.date))) {
         return;
     }
-    if (checkAlert("interviewReport-company", "interviewReport-company-alert", errorMessage, emptyField(interviewReport.company))) {
+    if (checkAlert("interviewReport-company", "interviewReport-company-alert", errorMessage, emptyField(interviewReportDTO.company))) {
         return;
     }
-    if (checkAlert("interviewReport-project", "interviewReport-project-alert", errorMessage, emptyField(interviewReport.project))) {
+    if (checkAlert("interviewReport-project", "interviewReport-project-alert", errorMessage, emptyField(interviewReportDTO.project))) {
         return;
     }
-    if (checkAlert("interviewReport-questions", "interviewReport-questions-alert", errorMessage, emptyField(interviewReport.questions))) {
+    if (checkAlert("interviewReport-questions", "interviewReport-questions-alert", errorMessage, emptyField(interviewReportDTO.questions))) {
         return;
     }
-    if (checkAlert("interviewReport-min", "interviewReport-min-alert", errorMessage, emptyField(interviewReport.minSalary))) {
+    if (checkAlert("interviewReport-min", "interviewReport-min-alert", errorMessage, emptyField(interviewReportDTO.minSalary))) {
         return;
     }
-    if (checkAlert("interviewReport-max", "interviewReport-max-alert", errorMessage, emptyField(interviewReport.maxSalary))) {
+    if (checkAlert("interviewReport-max", "interviewReport-max-alert", errorMessage, emptyField(interviewReportDTO.maxSalary))) {
         return;
     }
 
@@ -302,7 +297,7 @@ function sendInterviewReport() {
         confirm("Отправить отчёт о собеседовании?");
 
     if (confirmation === true) {
-        saveInterviewReport(interviewReport);
+        saveInterviewReport(interviewReportDTO);
     }
 }
 
