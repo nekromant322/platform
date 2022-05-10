@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>InterviewReport</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/interviewReport.css">
+    <header th:replace="fragments/navbar.html :: header"></header>
+</head>
+<body>
+<button class="button__interviewReport" onclick="openInterviewReportForm()">Написать отчёт</button>
+
+<div class="form-interviewReport" id="interviewReportForm">
+    <form action="#" autocomplete="off" class="form-container" id="interviewReportContainer">
+        <label for="interviewReport-date"><b>Дата собеседования</b></label>
+        <input type="date" id="interviewReport-date" name="date" th:required="required">
+
+        <div class="autocomplete">
+            <label for="interviewReport-company"><b>Компания</b></label>
+            <input type="text" id="interviewReport-company" placeholder="Латинскими буквами (SBER, GPB, NATERA)" name="company" th:required="required">
+        </div>
+
+        <label for="interviewReport-project"><b>Проект</b></label>
+        <input type="text" id="interviewReport-project" placeholder="Внутренняя crm, онлайн банк, интеграционная шина, галера(проект какой компании)" name="project" th:required="required">
+        <label for="interviewReport-questions"><b>Что спрашивали на собеседовании?</b></label>
+        <input type="text" id="interviewReport-questions" placeholder="Было ли что-то необычное?" name="questions" th:required="required">
+
+        <label for="interviewReport-impression"><b>Общее впечатление от hr и собеседования?</b></label>
+        <select class="form-select" id="interviewReport-impression" name="impression" th:required="required">
+            <option value="1">1 - опоздали, перепутали позицию</option>
+            <option value="2">2 - душно как в автобусе без кондёра летом</option>
+            <option value="3">3 - ни рыба ни мясо, но и не суп из птичьих какашек</option>
+            <option value="4">4 - в целом хорошо, но пивка не предложили</option>
+            <option value="5" selected>5 - мило поболтали, договорились выпить пива в субботу</option>
+        </select>
+
+        <label for="interviewReport-min"><b>Минимальная зарплата на руки</b></label>
+        <input type="number" id="interviewReport-min" placeholder="Предложили/Запросил(а)" name="minSalary" th:required="required">
+        <label for="interviewReport-max"><b>Максимальная зарплата на руки</b></label>
+        <input type="number" id="interviewReport-max" placeholder="Предложили/Запросил(а)" name="maxSalary" th:required="required">
+
+        <label for="interviewReport-currency"><b>Валюта</b></label>
+        <select class="form-select" id="interviewReport-currency" name="currency" th:required="required">
+            <option value="$">Доллар США</option>
+            <option value="₽" selected>Рубль</option>
+            <option value="€">Евро</option>
+        </select>
+
+        <label for="interviewReport-level"><b>Позиция</b></label>
+        <select class="form-select" id="interviewReport-level" name="level" th:required="required">
+            <option value="Junior">Junior</option>
+            <option value="Middle" selected>Middle</option>
+            <option value="Senior">Senior</option>
+        </select>
+
+        <button type="button" class="btn" onclick="sendInterviewReport()">Отправить</button>
+        <button type="button" class="btn cancel" onclick="closeInterviewReportForm()">Закрыть</button>
+    </form>
+</div>
+
+<div class="main">
+    <table class="table table-hover" id="interviewReport-table">
+        <thead class="table-light">
+        <tr role="row">
+            <th scope="col"> Дата </th>
+            <th scope="col"> Логин </th>
+            <th scope="col"> Компания </th>
+            <th scope="col"> Проект </th>
+            <th scope="col"> Что спрашивали на собеседовании </th>
+            <th scope="col"> Впечатление </th>
+            <th scope="col"> Мин </th>
+            <th scope="col"> Макс </th>
+            <th scope="col">  </th>
+            <th scope="col"> Позиция </th>
+            <th scope="col">  </th>
+        </tr>
+        </thead>
+        <tbody class="table-light">
+        </tbody>
+    </table>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/interviewReport.js"></script>
+</body>
+</html>

@@ -1,14 +1,14 @@
 package com.override.utils;
 
 import com.override.models.*;
+import com.override.models.enums.Status;
 import dtos.*;
 import enums.CodeExecutionStatus;
 
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
-import java.math.BigInteger;
 import java.util.*;
 
 
@@ -138,5 +138,40 @@ public class TestFieldsUtil {
         document.setType("text/plain");
         document.setContent("some content".getBytes());
         return document;
+    }
+
+    public static InterviewReport generateTestInterviewReport() {
+        return InterviewReport.builder()
+                .id(1L)
+                .date(LocalDate.of(2022, 02, 22))
+                .userLogin("testUser")
+                .company("Test Company")
+                .project("Test Project")
+                .questions("standard")
+                .impression(4)
+                .minSalary(220000)
+                .maxSalary(280000)
+                .currency('₽')
+                .status(Status.PASSED)
+                .level("Middle")
+                .build();
+    }
+
+    public static InterviewReportDTO generateTestInterviewReportDTO() {
+        InterviewReport interviewReport = generateTestInterviewReport();
+        return InterviewReportDTO.builder()
+                .id(interviewReport.getId())
+                .date(interviewReport.getDate())
+                .userLogin(interviewReport.getUserLogin())
+                .company(interviewReport.getCompany())
+                .project(interviewReport.getProject())
+                .questions(interviewReport.getQuestions())
+                .impression(interviewReport.getImpression())
+                .minSalary(interviewReport.getMinSalary())
+                .maxSalary(interviewReport.getMaxSalary())
+                .currency(interviewReport.getCurrency())
+                .status(interviewReport.getStatus().getName())
+                .level(interviewReport.getLevel())
+                .build();
     }
 }

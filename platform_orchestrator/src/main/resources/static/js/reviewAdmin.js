@@ -94,7 +94,7 @@ function insertTd(value, parent) {
 
 function getCurrentMentor() {
     $.ajax({
-        url: 'questions/current',
+        url: '/platformUser/current',
         type: 'GET',
         contentType: 'application/json',
         success: function (currentUser) {

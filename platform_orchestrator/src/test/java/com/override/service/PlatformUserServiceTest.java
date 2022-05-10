@@ -7,7 +7,6 @@ import com.override.models.PlatformUser;
 import com.override.models.UserSettings;
 import com.override.models.enums.Role;
 import com.override.repositories.PlatformUserRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,10 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -31,10 +28,10 @@ import static org.mockito.Mockito.*;
 class PlatformUserServiceTest {
 
     @InjectMocks
-    private PlatformUserService userService;
+    private PlatformUserService platformUserService;
 
     @Mock
-    private PlatformUserRepository accountRepository;
+    private PlatformUserRepository platformUserRepository;
 
     @Mock
     private PasswordGeneratorService passwordGeneratorService;
@@ -44,6 +41,9 @@ class PlatformUserServiceTest {
 
     @Mock
     private AuthorityService authorityService;
+
+    @Mock
+    private HttpServletRequest request;
 
     private final Authority adminAuthority = new Authority();
     private final Authority userAuthority = new Authority();
@@ -55,25 +55,25 @@ class PlatformUserServiceTest {
             add(userAuthority);
         }});
 
-        when(accountRepository.findById(1L)).thenReturn(Optional.of(student));
+        when(platformUserRepository.findById(1L)).thenReturn(Optional.of(student));
         when(authorityService.getAuthorityByRole(Role.ADMIN)).thenReturn(adminAuthority);
 
-        ResponseEntity<String> entity = userService.updateToAdmin(1L);
+        ResponseEntity<String> entity = platformUserService.updateToAdmin(1L);
 
         assertEquals(student.getAuthorities(), new ArrayList<>() {{
             add(userAuthority);
             add(adminAuthority);
         }});
-        verify(accountRepository, times(1)).save(student);
+        verify(platformUserRepository, times(1)).save(student);
         assertEquals(new ResponseEntity<>("OK", HttpStatus.OK), entity);
     }
 
     @Test
     public void testUpdateUserToAdminWhenUserNotExist() {
-        when(accountRepository.findById(1L)).thenReturn(Optional.empty());
+        when(platformUserRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(UsernameNotFoundException.class, () -> userService.updateToAdmin(1L));
-        verify(accountRepository, times(1)).findById(1L);
+        assertThrows(UsernameNotFoundException.class, () -> platformUserService.updateToAdmin(1L));
+        verify(platformUserRepository, times(1)).findById(1L);
     }
 
     @Test
@@ -84,12 +84,12 @@ class PlatformUserServiceTest {
         }};
 
         when(authorityService.getAuthorityByRole(Role.ADMIN)).thenReturn(adminAuthority);
-        when(accountRepository.findByAuthoritiesNotContaining(adminAuthority)).thenReturn(platformUsers);
+        when(platformUserRepository.findByAuthoritiesNotContaining(adminAuthority)).thenReturn(platformUsers);
 
-        List<PlatformUser> allStudents = userService.getAllStudents();
+        List<PlatformUser> allStudents = platformUserService.getAllStudents();
 
         assertEquals(platformUsers, allStudents);
-        verify(accountRepository, times(1)).findByAuthoritiesNotContaining(adminAuthority);
+        verify(platformUserRepository, times(1)).findByAuthoritiesNotContaining(adminAuthority);
     }
 
     @Test
@@ -97,12 +97,12 @@ class PlatformUserServiceTest {
         String login = "login";
         PlatformUser notNullUser = new PlatformUser();
 
-        when(accountRepository.findFirstByLogin(login)).thenReturn(notNullUser);
+        when(platformUserRepository.findFirstByLogin(login)).thenReturn(notNullUser);
 
-        PlatformUser student = userService.findPlatformUserByLogin(login);
+        PlatformUser student = platformUserService.findPlatformUserByLogin(login);
 
         assertEquals(notNullUser, student);
-        verify(accountRepository, times(1)).findFirstByLogin(login);
+        verify(platformUserRepository, times(1)).findFirstByLogin(login);
     }
 
     @Test
@@ -123,12 +123,12 @@ class PlatformUserServiceTest {
         when(authorityService.getAuthorityByRole(Role.USER)).thenReturn(userAuthority);
         when(passwordGeneratorService.generateStrongPassword()).thenReturn(password);
         when(passwordEncoder.encode(password)).thenReturn(password);
-        when(accountRepository.findFirstByLogin(login)).thenReturn(null);
+        when(platformUserRepository.findFirstByLogin(login)).thenReturn(null);
 
-        PlatformUser student = userService.generateAccount(login);
+        PlatformUser student = platformUserService.generateAccount(login);
 
         assertEquals(student, user);
-        verify(accountRepository, times(1)).save(user);
+        verify(platformUserRepository, times(1)).save(user);
     }
 
     @Test
@@ -137,11 +137,11 @@ class PlatformUserServiceTest {
         String chatId = "chatId";
         PlatformUser notNullUser = new PlatformUser();
 
-        when(accountRepository.findFirstByLogin(login)).thenReturn(notNullUser);
+        when(platformUserRepository.findFirstByLogin(login)).thenReturn(notNullUser);
 
-        assertThrows(UserAlreadyExistException.class, () -> userService.generateAccount(login));
-        verify(accountRepository, times(1)).findFirstByLogin(login);
-        verify(accountRepository, times(0)).save(any());
+        assertThrows(UserAlreadyExistException.class, () -> platformUserService.generateAccount(login));
+        verify(platformUserRepository, times(1)).findFirstByLogin(login);
+        verify(platformUserRepository, times(0)).save(any());
     }
 
     @Test
@@ -149,12 +149,12 @@ class PlatformUserServiceTest {
         PlatformUser notNullUser = new PlatformUser();
         String login = "login";
 
-        when(accountRepository.findFirstByLogin(login)).thenReturn(notNullUser);
+        when(platformUserRepository.findFirstByLogin(login)).thenReturn(notNullUser);
 
-        PlatformUser accountByChatId = userService.findPlatformUserByLogin(login);
+        PlatformUser accountByChatId = platformUserService.findPlatformUserByLogin(login);
 
         assertEquals(accountByChatId, notNullUser);
-        verify(accountRepository, times(1)).findFirstByLogin(login);
+        verify(platformUserRepository, times(1)).findFirstByLogin(login);
     }
 
     @Test
@@ -165,13 +165,13 @@ class PlatformUserServiceTest {
         notNullUser.setPersonalData(new PersonalData());
         notNullUser.setUserSettings(new UserSettings());
 
-        when(accountRepository.findFirstByLogin(login)).thenReturn(null);
-        when(accountRepository.save(notNullUser)).thenReturn(notNullUser);
+        when(platformUserRepository.findFirstByLogin(login)).thenReturn(null);
+        when(platformUserRepository.save(notNullUser)).thenReturn(notNullUser);
 
-        PlatformUser user = userService.save(notNullUser);
+        PlatformUser user = platformUserService.save(notNullUser);
 
         assertEquals(user, notNullUser);
-        verify(accountRepository, times(1)).save(notNullUser);
+        verify(platformUserRepository, times(1)).save(notNullUser);
     }
 
     @Test
@@ -180,9 +180,27 @@ class PlatformUserServiceTest {
         PlatformUser notNullUser = new PlatformUser();
         notNullUser.setLogin(login);
 
-        when(accountRepository.findFirstByLogin(login)).thenReturn(notNullUser);
+        when(platformUserRepository.findFirstByLogin(login)).thenReturn(notNullUser);
 
-        assertThrows(UserAlreadyExistException.class, () -> userService.save(notNullUser));
-        verify(accountRepository, times(0)).save(notNullUser);
+        assertThrows(UserAlreadyExistException.class, () -> platformUserService.save(notNullUser));
+        verify(platformUserRepository, times(0)).save(notNullUser);
+    }
+
+    @Test
+    void getPlatformUserRoleAdmin() {
+        when(request.isUserInRole("ROLE_ADMIN")).thenReturn(true);
+
+        Role admin = platformUserService.getPlatformUserRole(request);
+
+        assertEquals(admin, Role.ADMIN);
+    }
+
+    @Test
+    void getPlatformUserRoleUser() {
+        when(request.isUserInRole("ROLE_ADMIN")).thenReturn(false);
+
+        Role user = platformUserService.getPlatformUserRole(request);
+
+        assertEquals(user, Role.USER);
     }
 }
