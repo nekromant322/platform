@@ -196,7 +196,7 @@ public class InitializationService {
 
     private void saveReport(PlatformUser student) {
         LocalDate startDate = LocalDate.of(2022, 1, 1);
-        LocalDate endDate = LocalDate.now();
+        LocalDate endDate = LocalDate.now().minusDays(2);
 
         List<LocalDate> dates = startDate.datesUntil(endDate).collect(Collectors.toList());
         dates.forEach(date -> {
