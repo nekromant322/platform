@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 @Component
@@ -195,18 +196,30 @@ public class InitializationService {
     }
 
     private void saveReport(PlatformUser student) {
-        LocalDate startDate = LocalDate.of(2022, 1, 1);
-        LocalDate endDate = LocalDate.now().minusDays(2);
+        List<LocalDate> datesOfReports = new ArrayList<>();
+        LocalDate currentDate;
 
-        List<LocalDate> dates = startDate.datesUntil(endDate).collect(Collectors.toList());
-        dates.forEach(date -> {
+        for (int i = 0; i < 5; i++) {
             StudentReport report = new StudentReport();
             report.setStudent(student);
-            report.setDate(date);
+            currentDate = getRandomDate();
+            while (datesOfReports.contains(currentDate)) {
+                currentDate = getRandomDate();
+            }
+
+            report.setDate(currentDate);
+            datesOfReports.add(report.getDate());
             report.setText(faker.elderScrolls().firstName());
             report.setHours((double) faker.number().numberBetween(0, 10));
             reportService.saveReport(report, student.getLogin());
-        });
+        }
+    }
+
+    private LocalDate getRandomDate() {
+        long minDay = LocalDate.now().minusDays(12).toEpochDay();
+        long maxDay = LocalDate.now().minusDays(2).toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        return LocalDate.ofEpochDay(randomDay);
     }
 
     private void joinRequestsInit() {
@@ -259,24 +272,24 @@ public class InitializationService {
 
     private void personalDataInit(PlatformUser user) {
 
-        int day = faker.number().numberBetween(1,30);
-        int month = faker.number().numberBetween(1,12);
+        int day = faker.number().numberBetween(1, 30);
+        int month = faker.number().numberBetween(1, 12);
         int year = 2022;
 
         PersonalData personalData = user.getPersonalData();
-        personalData.setActNumber(faker.number().numberBetween(1L,1000L));
+        personalData.setActNumber(faker.number().numberBetween(1L, 1000L));
         personalData.setContractNumber(day + "/" + month + "/" + year);
-        personalData.setDate(new Date(year-1900, month-1, day+1));
+        personalData.setDate(new Date(year - 1900, month - 1, day + 1));
         personalData.setFullName(faker.name().fullName());
         personalData.setPassportSeries(Long.valueOf(faker.bothify("####")));
         personalData.setPassportNumber(Long.valueOf(faker.bothify("######")));
         personalData.setPassportIssued(faker.address().fullAddress());
         personalData.setIssueDate(new Date(faker.number().numberBetween(123, 127),
-                faker.number().numberBetween(0,11),
-                faker.number().numberBetween(1,30)));
+                faker.number().numberBetween(0, 11),
+                faker.number().numberBetween(1, 30)));
         personalData.setBirthDate(new Date(faker.number().numberBetween(90, 104),
-                faker.number().numberBetween(0,11),
-                faker.number().numberBetween(1,30)));
+                faker.number().numberBetween(0, 11),
+                faker.number().numberBetween(1, 30)));
         personalData.setRegistration(faker.address().fullAddress());
         personalData.setEmail(faker.name().firstName().toLowerCase(Locale.ROOT) +
                 faker.bothify("##@") + "gmail.com");
