@@ -59,4 +59,4 @@ function successHandle(response) {
     console.log(response);
 }
 
-document.getElementById('datePicker').valueAsDate = new Date();
+document.getElementById('report-date').valueAsDate = new Date();
