@@ -106,6 +106,8 @@ navbar:
       /interviewReports
     - Настройки
       /userSettings
+    - Сообщить о ошибке
+      /bugReports
   user:
     - Курсы
       /courses
@@ -119,6 +121,8 @@ navbar:
       /interviewReports
     - Настройки
       /userSettings
+    - Сообщить о ошибке
+      /bugReports
 
 management:
   info:
