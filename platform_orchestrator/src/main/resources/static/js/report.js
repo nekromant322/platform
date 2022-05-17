@@ -58,3 +58,5 @@ function errorHandle(error) {
 function successHandle(response) {
     console.log(response);
 }
+
+document.getElementById('report-date').valueAsDate = new Date();
