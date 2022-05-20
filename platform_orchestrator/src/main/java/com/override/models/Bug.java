@@ -10,12 +10,14 @@ import javax.persistence.*;
 @Entity
 public class Bug {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private  String name;
 
     private String text;
 
-    //private MultipartFile file;
+    ///private MultipartFile file;
 
     private String type;
 
