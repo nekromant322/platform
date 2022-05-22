@@ -1,5 +1,6 @@
-package com.override.controller.rest;
+package com.override.controller;
 
+import com.override.annotation.MaxFileSize;
 import com.override.models.Bug;
 import com.override.service.BugReportService;
 import com.override.service.CustomStudentDetailService;
@@ -11,58 +12,41 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/bugReports")
 public class BugReportController {
 
     @Autowired
     private BugReportService bugReportService;
 
-    @PostMapping("")
-    public void  uploadScreen(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
-                                               @RequestParam("file") MultipartFile multipartFile)throws FileUploadException {
-        bugReportService.uploadFile(multipartFile, user.getUsername());
-//        return new ResponseEntity<>(bugs,HttpStatus.OK) ;
+    @PostMapping("/upload")
+    @MaxFileSize("${documentSizeLimit.forPersonalData}")
+    public String uploadScreen(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
+                                       @RequestParam("file") MultipartFile multipartFile, @RequestParam("text") String text) throws FileUploadException {
+        bugReportService.uploadFile(multipartFile, user.getUsername(), text);
+        return "redirect:http://localhost:8000";
     }
-//    @GetMapping("")
-//    @ResponseBody
-//    public  String soutb(){
-//        System.out.println("mrfimfri");
-//        return "vmfv";
-//    }
 
-//    @Secured("ROLE_ADMIN")
-//    @GetMapping("/{login}")
-//    public List<BugReportsDTO> getAllFilesInfo(@PathVariable String login) {
-//        return bugReportService.getAllByUserLogin(login);
-//    }
-
-    @Secured("ROLE_ADMIN")
-@GetMapping("/checkBugs")
-public String checkBugs(){
-         bugReportService.allBugs();
-        return  "allBugs";
-
-}
-
-    @GetMapping("/current")
+    @GetMapping("/allBugs")
+    @ResponseBody
     public List<BugReportsDTO> getAllFilesInfoForCurrentUser(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return bugReportService.getAll(user.getUsername());
     }
 
     @GetMapping("/download/{id}")
+    @ResponseBody
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id) {
         Bug bug = bugReportService.downloadFile(id);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(bug.getType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; discription=" + bug.getName())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; name=" + bug.getName())
                 .body(new ByteArrayResource(bug.getContent()));
     }
 }

@@ -13,11 +13,9 @@ public class Bug {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private  String name;
+    private String name;
 
     private String text;
-
-    ///private MultipartFile file;
 
     private String type;
 
@@ -30,5 +28,4 @@ public class Bug {
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.EAGER)
     private PlatformUser user;
-
 }

@@ -12,6 +12,8 @@ function renderNavbar(navbar) {
             + navbar[i].text + "</a>\n</li>";
     }
     html += "<li class=\"nav-item\">\n<button class=\"button__logout\" onclick=\"logout()\">Выйти</button>\n</li>";
+    html += "<li class=\"nav-item\">\n<button class=\"button__bugReports\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\">сообщить об ошибке</button>\n</li>";
+
     document.getElementById("navbar").innerHTML = html;
 }
 

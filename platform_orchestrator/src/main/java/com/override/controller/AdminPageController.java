@@ -44,13 +44,7 @@ public class AdminPageController {
     }
 
     @Secured("ROLE_ADMIN")
-    @GetMapping("/bugReports")
-    public String BugReports(){
-        return "bugReport";
-    }
-
-    @Secured("ROLE_ADMIN")
-    @GetMapping("/current")
+    @GetMapping("/allBugs")
     public  String check(){
         return "allBugs";
     }

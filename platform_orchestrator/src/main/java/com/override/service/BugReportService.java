@@ -20,19 +20,14 @@ public class BugReportService {
     @Autowired
     private PlatformUserService platformUserService;
 
-    public List<Bug> allBugs(){
-        return bugReportRepository.findAll();
-    }
-
-    public void uploadFile(MultipartFile file, String login) {
+    public void uploadFile(MultipartFile file, String login, String text) {
 
         try {
             Bug bug = new Bug();
             bug.setContent(file.getBytes());
-            bug.setText("12");
+            bug.setText(text);
             bug.setType(file.getContentType());
             bug.setName(file.getOriginalFilename());
-            ///bug.setFile(file);
             bug.setUser(platformUserService.findPlatformUserByLogin(login));
             bugReportRepository.save(bug);
 
@@ -47,11 +42,11 @@ public class BugReportService {
         List<BugReportsDTO> bugReportsDTOS = new ArrayList<>();
         for (Bug bug : bugs) {
             bugReportsDTOS.add(BugReportsDTO.builder()
-                            .id(bug.getId())
-                            .name(bug.getName())
-                            .text(bug.getText())
-                            .type(bug.getType())
-                    //.files((List<MultipartFile>) bug.getFile())
+                    .id(bug.getId())
+                    .name(bug.getName())
+                    .text(bug.getText())
+                    .type(bug.getType())
+                    .user(bug.getUser().getLogin())
                     .build());
         }
         return bugReportsDTOS;
@@ -59,9 +54,5 @@ public class BugReportService {
 
     public Bug downloadFile(Long fileId) {
         return bugReportRepository.getById(fileId);
-    }
-
-    public void delete(Long fileId) {
-        bugReportRepository.deleteById(fileId);
     }
 }

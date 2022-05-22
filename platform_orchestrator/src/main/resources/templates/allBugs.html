@@ -7,72 +7,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>Title</title>
+    <title>Присланные баги</title>
     <header th:replace="fragments/navbar.html :: header"></header>
 </head>
 <body>
-<header>
-    <div class="container-fluid bg-dark">
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-            <a class="navbar-brand text-white" href="#"><h5><span sec:authentication="name"></span></h5></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </nav>
-    </div>
-</header>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-2">
-        </div>
-        <div class="col-10 p-5 mb-2 bg-light">
-            <h1>User information-page</h1>
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab" aria-controls="admin"
-                       aria-selected="true" href="/current">Bug table</a>
-                </li>
-            </ul>
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <div class="tab-content">
-                        <div class="card">
-                            <div class="card-header">
-                                <b>All Bugs</b>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-striped border">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Type</th>
-                                        <th>Text</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="user_table_body">
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                                <th><span sec:authentication="principal.id"></span></th>
-                                <th><span sec:authentication="principal.type"></span></th>
-                                <th><span sec:authentication="principal.text"></span></th>
-                            </tr>
-                    </div>
-                </div>
+<h1>Присланные баги:</h1>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="tab-content">
+            <div class="card">
+                <table class="table table-hover" id="userBug">
+                    <thead class="table-light">
+                    <tr role="row">
+                        <th scope="col"> ID</th>
+                        <th scope="col"> Name</th>
+                        <th scope="col"> Type</th>
+                        <th scope="col"> User</th>
+                        <th scope="col"> Text</th>
+                        <th scope="col" id="downloadDocBtn"></th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-light">
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>
@@ -83,7 +48,6 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 <script src="/js/utils.js"></script>
-<!--<script src="/js/personalData.js"></script>-->
 <script src="/js/bugReports.js"></script>
 </body>
 </html>

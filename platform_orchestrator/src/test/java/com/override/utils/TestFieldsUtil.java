@@ -140,6 +140,16 @@ public class TestFieldsUtil {
         return document;
     }
 
+    public static Bug generateTestBug() {
+        Bug bug = new Bug();
+        bug.setId(1L);
+        bug.setName("screenshot.txt");
+        bug.setType("image/png");
+        bug.setText("some text");
+        bug.setUser(generateTestUser());
+        bug.setContent("some content".getBytes());
+        return bug;
+    }
     public static InterviewReport generateTestInterviewReport() {
         return InterviewReport.builder()
                 .id(1L)
