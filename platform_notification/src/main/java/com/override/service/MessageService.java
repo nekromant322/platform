@@ -9,11 +9,9 @@ import enums.Communication;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Service;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -57,5 +55,24 @@ public class MessageService {
                 }
             }
         }
+    }
+
+    public List<Communication> checkNotificationMethods(String login) {
+        Recipient recipient = recipientService.findRecipientByLogin(login);
+        List<Communication> communicationList1 = new ArrayList<>();
+
+        if (recipient.getEmail().isPresent()) {
+            communicationList1.add(Communication.valueOf("EMAIL"));
+        }
+
+        if (recipient.getPhoneNumber().isPresent()) {
+            communicationList1.add(Communication.valueOf("SMS"));
+        }
+
+        if (recipient.getTelegramId().isPresent()) {
+            communicationList1.add(Communication.valueOf("TELEGRAM"));
+        }
+
+        return communicationList1;
     }
 }
