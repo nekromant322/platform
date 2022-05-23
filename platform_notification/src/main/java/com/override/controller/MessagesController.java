@@ -29,7 +29,7 @@ public class MessagesController {
         messageService.sendMessage(login, message, type);
     }
 
-    @GetMapping("/check")
+    @GetMapping("/types")
     public List<Communication> CheckNotificationMethods(@RequestParam("login")String login){
         return messageService.checkNotificationMethods(login);
     }
