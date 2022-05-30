@@ -150,6 +150,18 @@ public class TestFieldsUtil {
         bug.setContent("some content".getBytes());
         return bug;
     }
+
+    public static BugReportsDTO generateTestBugReportDTO() {
+        Bug bug = generateTestBug();
+        return BugReportsDTO.builder()
+                .id(bug.getId())
+                .name(bug.getName())
+                .type(bug.getType())
+                .text(bug.getText())
+                .user(bug.getUser().getLogin())
+                .build();
+    }
+
     public static InterviewReport generateTestInterviewReport() {
         return InterviewReport.builder()
                 .id(1L)

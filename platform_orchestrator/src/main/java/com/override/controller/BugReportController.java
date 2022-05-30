@@ -13,13 +13,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/bugReports")
 public class BugReportController {
 
@@ -28,20 +27,18 @@ public class BugReportController {
 
     @PostMapping("/upload")
     @MaxFileSize("${documentSizeLimit.forPersonalData}")
-    public String uploadScreen(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
-                                       @RequestParam("file") MultipartFile multipartFile, @RequestParam("text") String text) throws FileUploadException {
-        bugReportService.uploadFile(multipartFile, user.getUsername(), text);
-        return "redirect:http://localhost:8000";
+    public void uploadBug(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
+                          @RequestPart("file") MultipartFile multipartFile,@RequestPart("bugDescription") String text) throws FileUploadException {
+        bugReportService.uploadFile( multipartFile, user.getUsername(), text);
+        // return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/allBugs")
-    @ResponseBody
-    public List<BugReportsDTO> getAllFilesInfoForCurrentUser(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
-        return bugReportService.getAll(user.getUsername());
+    public List<BugReportsDTO> getAllFilesInfoForCurrentUser() {
+        return bugReportService.getAll();
     }
 
     @GetMapping("/download/{id}")
-    @ResponseBody
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id) {
         Bug bug = bugReportService.downloadFile(id);
         return ResponseEntity.ok()

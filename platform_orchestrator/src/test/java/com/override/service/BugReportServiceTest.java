@@ -1,5 +1,6 @@
 package com.override.service;
 
+import com.override.mappers.BugReportMapper;
 import com.override.models.Bug;
 import com.override.models.PlatformUser;
 import com.override.repositories.BugReportRepository;
@@ -14,8 +15,7 @@ import org.springframework.mock.web.MockMultipartFile;
 
 import java.util.List;
 
-import static com.override.utils.TestFieldsUtil.generateTestBug;
-import static com.override.utils.TestFieldsUtil.generateTestUser;
+import static com.override.utils.TestFieldsUtil.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,6 +29,9 @@ public class BugReportServiceTest {
 
     @Mock
     private PlatformUserService platformUserService;
+
+    @Mock
+    private BugReportMapper bugReportMapper;
 
     @Test
     public void uploadFileTest() {
@@ -45,29 +48,14 @@ public class BugReportServiceTest {
 
     @Test
     public void getAllDocsTest() {
-        PlatformUser platformUser = generateTestUser();
-        platformUser.setId(1L);
+        List<BugReportsDTO> bugReportsDTOS = List.of(generateTestBugReportDTO());
+        List<Bug> testList = List.of(generateTestBug());
 
-        when(platformUserService.findPlatformUserByLogin("Andrey")).thenReturn(platformUser);
+        when(bugReportRepository.findAll()).thenReturn(testList);
+        when(bugReportMapper.entityToDTO(testList.iterator().next())).thenReturn(bugReportsDTOS.iterator().next());
 
-        Bug bug = generateTestBug();
-        bug.setUser(platformUser);
-
-        BugReportsDTO bugReportsDTO = BugReportsDTO.builder()
-                .id(bug.getId())
-                .name(bug.getName())
-                .type(bug.getType())
-                .text(bug.getText())
-                .user(platformUser.getLogin())
-                .build();
-
-        List<BugReportsDTO> list = List.of(bugReportsDTO);
-
-        when(bugReportRepository.findAllByUserId(1L)).thenReturn(List.of(bug));
-
-        List<BugReportsDTO> userList = bugReportService.getAll("Andrey");
-
-        Assertions.assertEquals(list, userList);
+        List<BugReportsDTO> bugReportServiceAll = bugReportService.getAll();
+        Assertions.assertEquals(bugReportsDTOS, bugReportServiceAll);
     }
 
     @Test

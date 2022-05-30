@@ -70,3 +70,21 @@ function downloadFile(id, name) {
         }
     });
 }
+
+$('#bugButton').on('click', function upload(e) {
+    let files = new FormData(document.bugForm);
+
+    $.ajax({
+        type: 'POST',
+        url: '/bugReports/upload',
+        processData: false,
+        contentType: false,
+        data: files,
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+});

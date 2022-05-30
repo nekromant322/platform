@@ -1,5 +1,7 @@
 package com.override.service;
 
+import com.override.exception.BugReportException;
+import com.override.mappers.BugReportMapper;
 import com.override.models.Bug;
 import com.override.repositories.BugReportRepository;
 import dtos.BugReportsDTO;
@@ -20,34 +22,29 @@ public class BugReportService {
     @Autowired
     private PlatformUserService platformUserService;
 
+    @Autowired
+    private BugReportMapper bugReportMapper;
+
     public void uploadFile(MultipartFile file, String login, String text) {
-
         try {
-            Bug bug = new Bug();
-            bug.setContent(file.getBytes());
-            bug.setText(text);
-            bug.setType(file.getContentType());
-            bug.setName(file.getOriginalFilename());
-            bug.setUser(platformUserService.findPlatformUserByLogin(login));
-            bugReportRepository.save(bug);
-
+            bugReportRepository.save(Bug.builder()
+                    .content(file.getBytes())
+                    .text(text)
+                    .type(file.getContentType())
+                    .name(file.getOriginalFilename())
+                    .user(platformUserService.findPlatformUserByLogin(login))
+                    .build());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new BugReportException("Неверный формат файла");
         }
     }
 
-    public List<BugReportsDTO> getAll(String login) {
-        List<Bug> bugs = bugReportRepository.findAllByUserId(
-                platformUserService.findPlatformUserByLogin(login).getId());
+    public List<BugReportsDTO> getAll() {
+        List<Bug> bugs = bugReportRepository.findAll();
         List<BugReportsDTO> bugReportsDTOS = new ArrayList<>();
+
         for (Bug bug : bugs) {
-            bugReportsDTOS.add(BugReportsDTO.builder()
-                    .id(bug.getId())
-                    .name(bug.getName())
-                    .text(bug.getText())
-                    .type(bug.getType())
-                    .user(bug.getUser().getLogin())
-                    .build());
+            bugReportsDTOS.add(bugReportMapper.entityToDTO(bug));
         }
         return bugReportsDTOS;
     }
