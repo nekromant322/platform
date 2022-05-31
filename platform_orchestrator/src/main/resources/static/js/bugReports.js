@@ -44,7 +44,9 @@ function addColumn(data) {
         downloadFile(data.id, data.name);
     });
     td = tr.insertCell(5);
-    td.insertAdjacentElement("beforeend", downloadBtn);
+    if (data.name !== ("-")) {
+        td.insertAdjacentElement("beforeend", downloadBtn);
+    }
 }
 
 function insertTd(value, parent) {

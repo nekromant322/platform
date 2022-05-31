@@ -26,14 +26,24 @@ public class BugReportService {
     private BugReportMapper bugReportMapper;
 
     public void uploadFile(MultipartFile file, String login, String text) {
+
         try {
-            bugReportRepository.save(Bug.builder()
-                    .content(file.getBytes())
-                    .text(text)
-                    .type(file.getContentType())
-                    .name(file.getOriginalFilename())
-                    .user(platformUserService.findPlatformUserByLogin(login))
-                    .build());
+            if (!file.isEmpty()) {
+                bugReportRepository.save(Bug.builder()
+                        .content(file.getBytes())
+                        .text(text)
+                        .type(file.getContentType())
+                        .name(file.getOriginalFilename())
+                        .user(platformUserService.findPlatformUserByLogin(login))
+                        .build());
+            } else {
+                bugReportRepository.save(Bug.builder()
+                        .text(text)
+                        .type("text")
+                        .name("-")
+                        .user(platformUserService.findPlatformUserByLogin(login))
+                        .build());
+            }
         } catch (IOException e) {
             throw new BugReportException("Неверный формат файла");
         }

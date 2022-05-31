@@ -1,4 +1,4 @@
-package com.override.controller;
+package com.override.controller.rest;
 
 import com.override.annotation.MaxFileSize;
 import com.override.models.Bug;
@@ -20,21 +20,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/bugReports")
-public class BugReportController {
+public class BugReportRestController {
 
     @Autowired
     private BugReportService bugReportService;
 
     @PostMapping("/upload")
-    @MaxFileSize("${documentSizeLimit.forPersonalData}")
+    @MaxFileSize("${documentSizeLimit.forBugReports}")
     public void uploadBug(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
-                          @RequestPart("file") MultipartFile multipartFile,@RequestPart("bugDescription") String text) throws FileUploadException {
-        bugReportService.uploadFile( multipartFile, user.getUsername(), text);
-        // return new ResponseEntity<>(HttpStatus.OK);
+                          @RequestPart("file") MultipartFile multipartFile, @RequestPart("bugDescription") String text) throws FileUploadException {
+        bugReportService.uploadFile(multipartFile, user.getUsername(), text);
     }
 
     @GetMapping("/allBugs")
-    public List<BugReportsDTO> getAllFilesInfoForCurrentUser() {
+    public List<BugReportsDTO> getAllBugs() {
         return bugReportService.getAll();
     }
 

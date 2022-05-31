@@ -14,45 +14,37 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">опишите вашу проблему</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">опишите проблему</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade" id="infos" role="tabpanel" aria-labelledby="info-tab"></div>
-                            <div class="tab-pane fade show active" id="document" role="tabpanel"
-                                 aria-labelledby="documents-tab">
-                                <div class="card card-body" >
-                                    <form id="bugForm" name="bugForm">
-                                        <table>
-                                        <textarea class="form-control" id="bugDescription" name="bugDescription"
-                                                         placeholder="введите описание вашей проблемы" rows="1"
-                                                         maxlength="255" required="true"></textarea><br>
-                                            <tr>
-                                                <h5>Выберите файл для загрузки</h5>
-                                                <h7>Размер файла не должен превышать 5 МБ</h7>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <br>
-                                                    <input id="file" type="file" name="file" required/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <br>
-                                                    <button id="bugButton" class="btn btn-lg btn-primary"
-                                                            type="submit">Upload
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </form>
-                                    <br>
-                                </div>
-                            </div>
-                        </div>
+                <div class="tab-pane fade" id="infos" role="tabpanel" aria-labelledby="info-tab"></div>
+                <div class="tab-pane fade show active" id="document" role="tabpanel" aria-labelledby="documents-tab">
+                    <div class="card card-body">
+                        <form id="bugForm" name="bugForm">
+                            <table>
+                                <textarea class="form-control" id="bugDescription" name="bugDescription"
+                                          placeholder="введите описание проблемы" rows="1" maxlength="255"
+                                          required="true"></textarea><br>
+                                <tr>
+                                    <h5>Выберите файл для загрузки</h5>
+                                    <h7>Размер файла не должен превышать 5 МБ</h7>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br>
+                                        <input id="file" type="file" name="file" accept="image/*"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br>
+                                        <button id="bugButton" class="btn btn-lg btn-primary" type="submit">Upload
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                        <br>
                     </div>
                 </div>
             </div>
