@@ -19,25 +19,25 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bugReports")
+@RequestMapping("/bugs")
 public class BugReportRestController {
 
     @Autowired
     private BugReportService bugReportService;
 
-    @PostMapping("/upload")
+    @PostMapping("")
     @MaxFileSize("${documentSizeLimit.forBugReports}")
     public void uploadBug(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
                           @RequestPart("file") MultipartFile multipartFile, @RequestPart("bugDescription") String text) throws FileUploadException {
         bugReportService.uploadFile(multipartFile, user.getUsername(), text);
     }
 
-    @GetMapping("/allBugs")
+    @GetMapping("")
     public List<BugReportsDTO> getAllBugs() {
         return bugReportService.getAll();
     }
 
-    @GetMapping("/download/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id) {
         Bug bug = bugReportService.downloadFile(id);
         return ResponseEntity.ok()

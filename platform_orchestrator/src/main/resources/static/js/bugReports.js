@@ -5,7 +5,7 @@ window.onload = function () {
 function getAllBugs() {
     $.ajax({
         method: 'GET',
-        url: '/bugReports/allBugs',
+        url: '/bugs/',
         contentType: 'application/json',
         success: function (response) {
             console.log(response);
@@ -58,7 +58,7 @@ function insertTd(value, parent) {
 
 function downloadFile(id, name) {
     $.ajax({
-        url: '/bugReports/download/' + id,
+        url: '/bugs/' + id,
         dataType: 'binary',
         xhrFields: {
             'responseType': 'blob'
@@ -78,7 +78,7 @@ $('#bugButton').on('click', function upload(e) {
 
     $.ajax({
         type: 'POST',
-        url: '/bugReports/upload',
+        url: '/bugs/',
         processData: false,
         contentType: false,
         data: files,

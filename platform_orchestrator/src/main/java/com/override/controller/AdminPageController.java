@@ -45,7 +45,7 @@ public class AdminPageController {
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/allBugs")
-    public  String AllBugsPage(){
+    public  String allBugsPage(){
         return "allBugs";
     }
 }

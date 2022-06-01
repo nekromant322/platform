@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BugReportService {
@@ -28,22 +28,13 @@ public class BugReportService {
     public void uploadFile(MultipartFile file, String login, String text) {
 
         try {
-            if (!file.isEmpty()) {
                 bugReportRepository.save(Bug.builder()
-                        .content(file.getBytes())
+                        .content(file.isEmpty() ? null : file.getBytes())
                         .text(text)
-                        .type(file.getContentType())
-                        .name(file.getOriginalFilename())
+                        .type(file.isEmpty() ? "text" : file.getContentType())
+                        .name(file.isEmpty() ? "-" : file.getOriginalFilename())
                         .user(platformUserService.findPlatformUserByLogin(login))
                         .build());
-            } else {
-                bugReportRepository.save(Bug.builder()
-                        .text(text)
-                        .type("text")
-                        .name("-")
-                        .user(platformUserService.findPlatformUserByLogin(login))
-                        .build());
-            }
         } catch (IOException e) {
             throw new BugReportException("Неверный формат файла");
         }
@@ -51,12 +42,8 @@ public class BugReportService {
 
     public List<BugReportsDTO> getAll() {
         List<Bug> bugs = bugReportRepository.findAll();
-        List<BugReportsDTO> bugReportsDTOS = new ArrayList<>();
+        return bugs.stream().map(bugReportMapper::entityToDTO).collect(Collectors.toList());
 
-        for (Bug bug : bugs) {
-            bugReportsDTOS.add(bugReportMapper.entityToDTO(bug));
-        }
-        return bugReportsDTOS;
     }
 
     public Bug downloadFile(Long fileId) {
