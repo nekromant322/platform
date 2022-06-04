@@ -140,6 +140,28 @@ public class TestFieldsUtil {
         return document;
     }
 
+    public static Bug generateTestBug() {
+        Bug bug = new Bug();
+        bug.setId(1L);
+        bug.setName("screenshot.txt");
+        bug.setType("image/png");
+        bug.setText("some text");
+        bug.setUser(generateTestUser());
+        bug.setContent("some content".getBytes());
+        return bug;
+    }
+
+    public static BugReportsDTO generateTestBugReportDTO() {
+        Bug bug = generateTestBug();
+        return BugReportsDTO.builder()
+                .id(bug.getId())
+                .name(bug.getName())
+                .type(bug.getType())
+                .text(bug.getText())
+                .user(bug.getUser().getLogin())
+                .build();
+    }
+
     public static InterviewReport generateTestInterviewReport() {
         return InterviewReport.builder()
                 .id(1L)

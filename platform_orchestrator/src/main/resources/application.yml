@@ -39,6 +39,7 @@ spring:
 
 documentSizeLimit:
   forPersonalData: 5 # 5 МБ
+  forBugReports: 5 # 5 МБ
 
 cache:
   timeout: 5 #minutes
@@ -106,6 +107,8 @@ navbar:
       /interviewReports
     - Настройки
       /userSettings
+    - Баги
+      /allBugs
   user:
     - Курсы
       /courses

@@ -9,9 +9,61 @@
     <link rel="stylesheet" href="/css/video.css">
     <nav id="navbar" class="navbar navbar-dark bg-dark">
     </nav>
+    <!--    Модалка для багов-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Опишите проблему</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="tab-pane fade" id="infos" role="tabpanel" aria-labelledby="info-tab"></div>
+                <div class="tab-pane fade show active" id="document" role="tabpanel" aria-labelledby="documents-tab">
+                    <div class="card card-body">
+                        <form id="bugForm" name="bugForm">
+                            <table>
+                                <textarea class="form-control" id="bugDescription" name="bugDescription"
+                                          placeholder="Введите описание проблемы" rows="1" maxlength="255"
+                                          required="true"></textarea><br>
+                                <tr>
+                                    <h5>Выберите файл для загрузки</h5>
+                                    <h7>Размер файла не должен превышать 5 МБ</h7>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br>
+                                        <input id="file" type="file" name="file" accept="image/*"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br>
+                                        <button id="bugButton" class="btn btn-lg btn-primary" type="submit">Upload
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
     <script src="/js/utils.js"></script>
+    <script src="/js/bugReports.js"></script>
     <script src="/js/header.js"></script>
+
 </header>
 
 </body>
