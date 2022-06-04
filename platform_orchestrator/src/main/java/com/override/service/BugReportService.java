@@ -25,16 +25,19 @@ public class BugReportService {
     @Autowired
     private BugReportMapper bugReportMapper;
 
+    public final String DEFAULT_BUG_REPORT_NAME = "-";
+    public final String DEFAULT_BUG_REPORT_TYPE = "text";
+
     public void uploadFile(MultipartFile file, String login, String text) {
 
         try {
-                bugReportRepository.save(Bug.builder()
-                        .content(file.isEmpty() ? null : file.getBytes())
-                        .text(text)
-                        .type(file.isEmpty() ? "text" : file.getContentType())
-                        .name(file.isEmpty() ? "-" : file.getOriginalFilename())
-                        .user(platformUserService.findPlatformUserByLogin(login))
-                        .build());
+            bugReportRepository.save(Bug.builder()
+                    .content(file.isEmpty() ? null : file.getBytes())
+                    .text(text)
+                    .type(file.isEmpty() ? DEFAULT_BUG_REPORT_TYPE : file.getContentType())
+                    .name(file.isEmpty() ? DEFAULT_BUG_REPORT_NAME : file.getOriginalFilename())
+                    .user(platformUserService.findPlatformUserByLogin(login))
+                    .build());
         } catch (IOException e) {
             throw new BugReportException("Неверный формат файла");
         }

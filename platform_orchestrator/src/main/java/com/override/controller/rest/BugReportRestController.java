@@ -25,14 +25,14 @@ public class BugReportRestController {
     @Autowired
     private BugReportService bugReportService;
 
-    @PostMapping("")
+    @PostMapping
     @MaxFileSize("${documentSizeLimit.forBugReports}")
     public void uploadBug(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
                           @RequestPart("file") MultipartFile multipartFile, @RequestPart("bugDescription") String text) throws FileUploadException {
         bugReportService.uploadFile(multipartFile, user.getUsername(), text);
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<BugReportsDTO> getAllBugs() {
         return bugReportService.getAll();
     }
