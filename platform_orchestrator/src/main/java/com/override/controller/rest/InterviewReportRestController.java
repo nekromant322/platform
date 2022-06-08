@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,8 +26,9 @@ public class InterviewReportRestController {
     }
 
     @PatchMapping("/offer")
-    public ResponseEntity<String> changeStatusToOffer(@RequestBody InterviewReportUpdateDTO interviewReportUpdateDTO) {
-        interviewReportService.update(interviewReportUpdateDTO, Status.OFFER);
+    public ResponseEntity<String> changeStatusToOffer(@RequestBody InterviewReportUpdateDTO interviewReportUpdateDTO,@RequestPart(value = "file",required = false) MultipartFile file) {
+        //interviewReportService.update(interviewReportUpdateDTO, Status.OFFER);
+        interviewReportService.updateOffer(interviewReportUpdateDTO, Status.OFFER, file);
         return new ResponseEntity<>("Статус собеседования изменён на Offer!", HttpStatus.OK);
     }
 
@@ -47,3 +49,4 @@ public class InterviewReportRestController {
         return new ResponseEntity<>("Отчёт о собеседовании удалён!", HttpStatus.OK);
     }
 }
+

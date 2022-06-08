@@ -8,7 +8,9 @@ import dtos.InterviewReportDTO;
 import dtos.InterviewReportUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +35,20 @@ public class InterviewReportService {
         interviewReportRepository.save(interviewReport);
     }
 
+
+    public void updateOffer(InterviewReportUpdateDTO interviewReportUpdateDTO, Status status,MultipartFile multipartFile) {
+        InterviewReport interviewReport = interviewReportRepository.getById(interviewReportUpdateDTO.getId());
+        interviewReport.setStatus(status);
+        interviewReport.setMinSalary(interviewReportUpdateDTO.getSalary());
+        interviewReport.setMaxSalary(interviewReportUpdateDTO.getSalary());
+        try {
+            interviewReport.setFile(multipartFile.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        interviewReportRepository.save(interviewReport);
+    }
+
     public void delete(Long id) {
         interviewReportRepository.deleteById(id);
     }
@@ -42,3 +58,5 @@ public class InterviewReportService {
                 .map(interviewReportMapper::entityToDto).collect(Collectors.toList());
     }
 }
+
+

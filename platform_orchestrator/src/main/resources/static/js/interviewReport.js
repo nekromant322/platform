@@ -5,11 +5,12 @@ window.onload = function () {
 let currentUserLogin;
 let currentUserRole;
 var arrayOfCompanies = ["SBER", "TINKOFF", "VK"];
+let interviewReportMax = $('#interviewReport-maxx');
 
 function autocomplete(inp, arr) {
     var currentFocus;
 
-    inp.addEventListener("input", function(e) {
+    inp.addEventListener("input", function (e) {
         var a, b, i, val = this.value;
 
         closeAllLists();
@@ -30,7 +31,7 @@ function autocomplete(inp, arr) {
                 b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
                 b.innerHTML += arr[i].substr(val.length);
                 b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                b.addEventListener("click", function(e) {
+                b.addEventListener("click", function (e) {
                     inp.value = this.getElementsByTagName("input")[0].value;
                     closeAllLists();
                 });
@@ -39,7 +40,7 @@ function autocomplete(inp, arr) {
         }
     });
 
-    inp.addEventListener("keydown", function(e) {
+    inp.addEventListener("keydown", function (e) {
         var x = document.getElementById(this.id + "autocomplete-list");
         if (x) {
             x = x.getElementsByTagName("div");
@@ -59,6 +60,7 @@ function autocomplete(inp, arr) {
             }
         }
     });
+
     function addActive(x) {
         if (!x) {
             return false;
@@ -72,11 +74,13 @@ function autocomplete(inp, arr) {
         }
         x[currentFocus].classList.add("autocomplete-active");
     }
+
     function removeActive(x) {
         for (var i = 0; i < x.length; i++) {
             x[i].classList.remove("autocomplete-active");
         }
     }
+
     function closeAllLists(element) {
         var x = document.getElementsByClassName("autocomplete-items");
         for (var i = 0; i < x.length; i++) {
@@ -148,6 +152,7 @@ function addColumn(data) {
     let interviewReportUpdateDTO = {}
     interviewReportUpdateDTO.id = data.id;
     interviewReportUpdateDTO.salary = data.maxSalary;
+    interviewReportUpdateDTO.file = $('#filee');
 
     function isNotDuplicate(company) {
         return company !== data.company;
@@ -189,6 +194,7 @@ function addColumn(data) {
         offerBtn.innerHTML = "Получил(а) оффер";
         offerBtn.type = "submit";
         offerBtn.addEventListener("click", () => {
+             $("#InterviewReportModal").modal('show');
             changeStatus(interviewReportUpdateDTO, "offer");
         });
         td = tr.insertCell(10);
@@ -220,16 +226,35 @@ function insertTd(value, parent, color, legend) {
 }
 
 function changeStatus(interviewReportUpdateDTO, status) {
+    // $("#InterviewReportModal").modal('show');
     let confirmation = confirm("Вы уверены, что хотите изменить статус на " + status + "?");
-
+    let formData = new FormData();
     if (confirmation === true) {
         interviewReportUpdateDTO.salary = prompt("Уточните зарплату на руки", interviewReportUpdateDTO.salary);
 
+        formData.append("filee", document.forms['InterviewReportFormFile'].file.files[0]);
+        formData.append('DTO', new Blob([JSON.stringify(interviewReportUpdateDTO
+        )]));
+        //     ,{
+        //     url: '/interviewReport/' + status,
+        //     method: 'PATCH',
+        //     type: "application/json"
+        // }));
+
+        //     interviewReportUpdateDTO.file = $('#filee').val();
+        //interviewReportUpdateDTO.salary.val($(".form-interviewReport #interviewReport-maxx"));
+        // let newSalary
+        // {
+        //     salary : $('#interviewReport-maxx');
+        // }
+        // interviewReportUpdateDTO.salary = newSalary.salary;
+        //interviewReportUpdateDTO.file = files
         $.ajax({
             url: '/interviewReport/' + status,
             method: 'PATCH',
-            contentType: 'application/json',
-            data: JSON.stringify(interviewReportUpdateDTO),
+            contentType: false,
+            data: formData,
+            //JSON.stringify(interviewReportUpdateDTO),
             success: function () {
                 console.log('updated')
             },

@@ -1,5 +1,6 @@
 package com.override.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.override.models.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,4 +46,8 @@ public class InterviewReport {
     private Status status;
 
     private String level;
+
+    @JsonIgnore
+    @Lob
+    private byte[] file;
 }

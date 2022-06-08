@@ -60,6 +60,49 @@
     </form>
 </div>
 
+<div class="modal fade" id="InterviewReportModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Опишите проблему</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="tab-pane fade" id="infoss" role="tabpanel" aria-labelledby="info-tab"></div>
+            <div class="tab-pane fade show active" id="document2" role="tabpanel" aria-labelledby="documents-tab">
+                <div class="card card-body">
+                    <form id="InterviewReportForm2" name="InterviewReportFormFile">
+                        <table>
+<!--                            <label for="interviewReport-max">Уточните зарплату на руки</label>-->
+<!--                            <input type="number" id="interviewReport-maxx"/>-->
+<!--                                <textarea class="form-control" id="bugDescription" name="bugDescription"-->
+<!--                                          placeholder="Введите описание проблемы" rows="1" maxlength="255"-->
+<!--                                          required="true"></textarea><br>-->
+                            <tr>
+                                <h5>Выберите файл для загрузки</h5>
+                                <h7>Размер файла не должен превышать 5 МБ</h7>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <br>
+                                    <input id="filee" type="file" name="filee" accept="image/*"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <br>
+                                    <button id="InterviewReportButton" class="btn btn-lg btn-primary" type="submit">Upload
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="main">
     <table class="table table-hover" id="interviewReport-table">
         <thead class="table-light">
@@ -74,6 +117,7 @@
             <th scope="col"> Макс </th>
             <th scope="col">  </th>
             <th scope="col"> Позиция </th>
+            <th scope ="col"> file</th>
             <th scope="col">  </th>
         </tr>
         </thead>
