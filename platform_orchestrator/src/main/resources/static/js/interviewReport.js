@@ -152,7 +152,7 @@ function addColumn(data) {
     let interviewReportUpdateDTO = {}
     interviewReportUpdateDTO.id = data.id;
     interviewReportUpdateDTO.salary = data.maxSalary;
-    interviewReportUpdateDTO.file = $('#filee');
+    interviewReportUpdateDTO.file = data.file;
 
     function isNotDuplicate(company) {
         return company !== data.company;
@@ -193,10 +193,12 @@ function addColumn(data) {
         offerBtn.className = "btn btn-warning";
         offerBtn.innerHTML = "Получил(а) оффер";
         offerBtn.type = "submit";
-        offerBtn.addEventListener("click", () => {
-             $("#InterviewReportModal").modal('show');
+        offerBtn.addEventListener("click", () =>{
+        $("#InterviewReportModal").modal('show');
+        $('#InterviewReportButton').on("click", () => {
+            // $("#InterviewReportModal").modal('show');
             changeStatus(interviewReportUpdateDTO, "offer");
-        });
+        })})
         td = tr.insertCell(10);
         td.style.backgroundColor = 'white';
         td.insertAdjacentElement("beforeend", offerBtn);
@@ -226,35 +228,19 @@ function insertTd(value, parent, color, legend) {
 }
 
 function changeStatus(interviewReportUpdateDTO, status) {
-    // $("#InterviewReportModal").modal('show');
     let confirmation = confirm("Вы уверены, что хотите изменить статус на " + status + "?");
+    let  data = $("#file").prop("file")[0];
     let formData = new FormData();
-    if (confirmation === true) {
-        interviewReportUpdateDTO.salary = prompt("Уточните зарплату на руки", interviewReportUpdateDTO.salary);
+    formData.append("salary",$("#interviewReport-salary").val());
+    formData.append("file",data);
 
-        formData.append("filee", document.forms['InterviewReportFormFile'].file.files[0]);
-        formData.append('DTO', new Blob([JSON.stringify(interviewReportUpdateDTO
-        )]));
-        //     ,{
-        //     url: '/interviewReport/' + status,
-        //     method: 'PATCH',
-        //     type: "application/json"
-        // }));
-
-        //     interviewReportUpdateDTO.file = $('#filee').val();
-        //interviewReportUpdateDTO.salary.val($(".form-interviewReport #interviewReport-maxx"));
-        // let newSalary
-        // {
-        //     salary : $('#interviewReport-maxx');
-        // }
-        // interviewReportUpdateDTO.salary = newSalary.salary;
-        //interviewReportUpdateDTO.file = files
+     if (confirmation === true) {
         $.ajax({
-            url: '/interviewReport/' + status,
+            url: '/interviewReport/offer',
             method: 'PATCH',
             contentType: false,
+            processData : false,
             data: formData,
-            //JSON.stringify(interviewReportUpdateDTO),
             success: function () {
                 console.log('updated')
             },
@@ -295,6 +281,7 @@ function sendInterviewReport() {
     interviewReportDTO.currency = $("#interviewReport-currency").val();
     interviewReportDTO.status = "Passed";
     interviewReportDTO.level = $("#interviewReport-level").val();
+    interviewReportDTO.file = $("#file").val();
 
     function emptyField(field) {
         return String(field).length < 1;

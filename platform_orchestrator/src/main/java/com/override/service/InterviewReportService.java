@@ -36,13 +36,13 @@ public class InterviewReportService {
     }
 
 
-    public void updateOffer(InterviewReportUpdateDTO interviewReportUpdateDTO, Status status,MultipartFile multipartFile) {
+    public void updateOffer(InterviewReportUpdateDTO interviewReportUpdateDTO, Status status, MultipartFile file) {
         InterviewReport interviewReport = interviewReportRepository.getById(interviewReportUpdateDTO.getId());
         interviewReport.setStatus(status);
         interviewReport.setMinSalary(interviewReportUpdateDTO.getSalary());
         interviewReport.setMaxSalary(interviewReportUpdateDTO.getSalary());
         try {
-            interviewReport.setFile(multipartFile.getBytes());
+            interviewReport.setFile(file.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }

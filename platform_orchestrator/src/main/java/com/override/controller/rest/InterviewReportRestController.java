@@ -7,8 +7,8 @@ import dtos.InterviewReportUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,9 +26,9 @@ public class InterviewReportRestController {
     }
 
     @PatchMapping("/offer")
-    public ResponseEntity<String> changeStatusToOffer(@RequestBody InterviewReportUpdateDTO interviewReportUpdateDTO,@RequestPart(value = "file",required = false) MultipartFile file) {
-        //interviewReportService.update(interviewReportUpdateDTO, Status.OFFER);
-        interviewReportService.updateOffer(interviewReportUpdateDTO, Status.OFFER, file);
+    public ResponseEntity<String> changeStatusToOffer(@RequestBody InterviewReportUpdateDTO interviewReportUpdateDTO, @RequestBody MultiValueMap<String, String> formData) {
+        interviewReportService.update(interviewReportUpdateDTO, Status.OFFER);
+        //interviewReportService.updateOffer(interviewReportUpdateDTO, Status.OFFER, interviewReportUpdateDTO.getFile());
         return new ResponseEntity<>("Статус собеседования изменён на Offer!", HttpStatus.OK);
     }
 
@@ -41,6 +41,7 @@ public class InterviewReportRestController {
     @GetMapping
     public List<InterviewReportDTO> findAllInterviewReports() {
         return interviewReportService.findAll();
+
     }
 
     @DeleteMapping
