@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 @Component
 @ConditionalOnProperty(prefix = "testData", name = "enabled", havingValue = "true")
@@ -75,9 +74,12 @@ public class InitializationService {
     private Faker faker;
 
     @PostConstruct
-    private void init() {
+    private void initAdmin() {
         authorityInit();
         adminInit();
+    }
+
+    public void initTestData() {
         userInit();
         codeTryInit();
         joinRequestsInit();
