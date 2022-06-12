@@ -18,6 +18,6 @@ public class InitializationController {
     @GetMapping
     public String init(){
         initializationService.initTestData();
-        return "redirect:";
+        return "redirect:/";
     }
 }
