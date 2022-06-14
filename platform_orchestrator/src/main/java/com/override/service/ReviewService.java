@@ -1,13 +1,19 @@
 package com.override.service;
 
+import com.override.feigns.NotificatorFeign;
 import com.override.mappers.ReviewMapper;
+import com.override.models.Review;
 import com.override.repositories.PlatformUserRepository;
 import com.override.repositories.ReviewRepository;
 import dtos.ReviewDTO;
 import dtos.ReviewFilterDTO;
+import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +28,9 @@ public class ReviewService {
 
     @Autowired
     private ReviewMapper reviewMapper;
+
+    @Autowired
+    private NotificatorFeign notificatorFeign;
 
     /**
      * Saves a new or changes an existing review
@@ -67,6 +76,32 @@ public class ReviewService {
         } else {
             return (reviewRepository.findReviewByMentorIsNull()).stream()
                     .map(reviewMapper::entityToDto).collect(Collectors.toList());
+        }
+    }
+
+    @Scheduled(cron = "0 25 * * * *")
+    public void checkBookedReviewEveryHalfHour() {
+        sendScheduledNotification();
+    }
+
+    @Scheduled(cron = "0 55 * * * *")
+    public void checkBookedReviewEveryHour() {
+
+        sendScheduledNotification();
+    }
+
+    public void sendScheduledNotification() {
+        List<Review> todayReviewList = reviewRepository.findReviewByBookedDate(LocalDate.now());
+        for (Review review : todayReviewList) {
+            if (review.getBookedTime() != null && review.getBookedTime().equals(LocalTime.now().plusMinutes(5))) {
+                String messageText = "Скоро ревью у @" + review.getStudent().getLogin() +
+                        " с @" + review.getMentor().getLogin() + "\n" +
+                        review.getBookedDate() + " " + review.getBookedTime() +
+                        "\nТема: " + review.getTopic();
+
+                notificatorFeign.sendMessage(review.getStudent().getLogin(), messageText, Communication.TELEGRAM);
+                notificatorFeign.sendMessage(review.getMentor().getLogin(), messageText, Communication.TELEGRAM);
+            }
         }
     }
 }
