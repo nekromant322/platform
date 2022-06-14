@@ -10,6 +10,7 @@ import dtos.ReviewFilterDTO;
 import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.annotation.Schedules;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -36,6 +37,7 @@ public class ReviewService {
      * Saves a new or changes an existing review
      * If the review is new, then the user's login is assigned to the student
      * Only the mentor can change the review, so the username is assigned to the mentor
+     *
      * @param reviewDTO review information obtained from the request
      * @param userLogin username of the user making the request
      */
@@ -58,6 +60,7 @@ public class ReviewService {
      * Searches for the necessary reviews using the filter
      * Reviews can be found by student or mentor login and by date
      * If these parameters have null, then we are looking for new reviews that have not yet assigned a mentor and time
+     *
      * @param reviewFilterDTO comes from request
      * @return returns a list of reviewDTOs obtained by mapping the list of found reviews
      */
@@ -79,14 +82,8 @@ public class ReviewService {
         }
     }
 
-    @Scheduled(cron = "0 25 * * * *")
+    @Schedules({@Scheduled(cron = "0 25 * * * *"), @Scheduled(cron = "0 55 * * * *")})
     public void checkBookedReviewEveryHalfHour() {
-        sendScheduledNotification();
-    }
-
-    @Scheduled(cron = "0 55 * * * *")
-    public void checkBookedReviewEveryHour() {
-
         sendScheduledNotification();
     }
 
