@@ -65,7 +65,7 @@ let timeSlotCounter = 0;
 function renderAdditionalButton() {
     timeSlotCounter++;
     $("#timeContainer")
-        .append("<input type=\"text\" class=\"input-group timepicker\" id=\"review-timeSlots" + timeSlotCounter + "\" name=\"timeSlots\" placeholder=\"Выберите время\" th:required=\"required\">")
+        .append("<input type=\"text\" class=\"input-group timepicker\" id=\"review-timeSlots" + timeSlotCounter + "\" name=\"timeSlots\" placeholder=\"Выберите время\" th:required=\"required\" readonly>")
         .ready(function() {
             let sumId = "#review-timeSlots" + timeSlotCounter;
             $(sumId).timepicker({

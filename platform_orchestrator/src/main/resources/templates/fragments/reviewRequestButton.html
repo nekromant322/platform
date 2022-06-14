@@ -25,7 +25,7 @@
         <input type="date" id="review-date" placeholder="Сегодня или завтра" name="bookedDate" th:required="required">
         <div class="form-container" id="timeContainer">
             <label for="review-timeSlots0"><b>Время</b></label>
-            <input type="text" class="input-group timepicker" id="review-timeSlots0" name="timeSlots" placeholder="Выберите время" th:required="required">
+            <input type="text" class="input-group timepicker" id="review-timeSlots0" name="timeSlots" placeholder="Выберите время" th:required="required" readonly>
         </div>
         <button type="button" class="btn" onclick="renderAdditionalButton()">+</button>
         <button type="button" class="btn" onclick="sendRequest()">Отправить</button>
