@@ -81,9 +81,9 @@ public class ReviewService {
     }
 
     public void sendScheduledNotification() {
-        List<Review> todayReviewList = reviewRepository.findReviewByBookedDate(LocalDate.now());
-        todayReviewList
+        reviewRepository.findReviewByBookedDate(LocalDate.now())
                 .stream()
+                .filter(review -> review.getBookedTime() != null)
                 .filter(review -> review.getBookedTime().isAfter(LocalTime.now()))
                 .filter(review -> review.getBookedTime().isBefore(LocalTime.now().plusMinutes(10)))
                 .forEach(review -> {
