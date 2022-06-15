@@ -9,7 +9,6 @@ import dtos.ReviewDTO;
 import dtos.ReviewFilterDTO;
 import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -79,21 +78,12 @@ public class ReviewService {
         }
     }
 
-    @Scheduled(cron = "0 25 * * * *")
-    public void checkBookedReviewEveryHalfHour() {
-        sendScheduledNotification();
-    }
-
-    @Scheduled(cron = "0 55 * * * *")
-    public void checkBookedReviewEveryHour() {
-
-        sendScheduledNotification();
-    }
-
     public void sendScheduledNotification() {
         List<Review> todayReviewList = reviewRepository.findReviewByBookedDate(LocalDate.now());
         for (Review review : todayReviewList) {
-            if (review.getBookedTime() != null && review.getBookedTime().equals(LocalTime.now().plusMinutes(5))) {
+            if (review.getBookedTime() != null &&
+                    (review.getBookedTime().isAfter(LocalTime.now()) &&
+                            review.getBookedTime().isBefore(LocalTime.now().plusMinutes(10)))) {
                 String messageText = "Скоро ревью у @" + review.getStudent().getLogin() +
                         " с @" + review.getMentor().getLogin() + "\n" +
                         review.getBookedDate() + " " + review.getBookedTime() +
