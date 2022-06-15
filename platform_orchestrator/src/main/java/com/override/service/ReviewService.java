@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -81,10 +82,11 @@ public class ReviewService {
     }
 
     public void sendScheduledNotification() {
-        reviewRepository.findReviewByBookedDate(LocalDate.now())
+        reviewRepository.findReviewByBookedDate(LocalDateTime.now().plusMinutes(10).toLocalDate())
                 .stream()
                 .filter(review -> review.getBookedTime() != null)
-                .filter(review -> review.getBookedTime().isAfter(LocalTime.now()))
+                .filter(review -> LocalDateTime.of(review.getBookedDate(),
+                        review.getBookedTime()).isAfter(LocalDateTime.now()))
                 .filter(review -> review.getBookedTime().isBefore(LocalTime.now().plusMinutes(10)))
                 .forEach(review -> {
                     String messageText = "Скоро ревью у @" + review.getStudent().getLogin() +
