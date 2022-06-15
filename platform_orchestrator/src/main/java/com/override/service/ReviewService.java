@@ -35,6 +35,7 @@ public class ReviewService {
      * Saves a new or changes an existing review
      * If the review is new, then the user's login is assigned to the student
      * Only the mentor can change the review, so the username is assigned to the mentor
+     *
      * @param reviewDTO review information obtained from the request
      * @param userLogin username of the user making the request
      */
@@ -57,6 +58,7 @@ public class ReviewService {
      * Searches for the necessary reviews using the filter
      * Reviews can be found by student or mentor login and by date
      * If these parameters have null, then we are looking for new reviews that have not yet assigned a mentor and time
+     *
      * @param reviewFilterDTO comes from request
      * @return returns a list of reviewDTOs obtained by mapping the list of found reviews
      */
@@ -80,18 +82,18 @@ public class ReviewService {
 
     public void sendScheduledNotification() {
         List<Review> todayReviewList = reviewRepository.findReviewByBookedDate(LocalDate.now());
-        for (Review review : todayReviewList) {
-            if (review.getBookedTime() != null &&
-                    (review.getBookedTime().isAfter(LocalTime.now()) &&
-                            review.getBookedTime().isBefore(LocalTime.now().plusMinutes(10)))) {
-                String messageText = "Скоро ревью у @" + review.getStudent().getLogin() +
-                        " с @" + review.getMentor().getLogin() + "\n" +
-                        review.getBookedDate() + " " + review.getBookedTime() +
-                        "\nТема: " + review.getTopic();
-
-                notificatorFeign.sendMessage(review.getStudent().getLogin(), messageText, Communication.TELEGRAM);
-                notificatorFeign.sendMessage(review.getMentor().getLogin(), messageText, Communication.TELEGRAM);
-            }
-        }
+        todayReviewList
+                .stream()
+                .filter(review -> review.getBookedTime().isAfter(LocalTime.now()))
+                .filter(review -> review.getBookedTime().isBefore(LocalTime.now().plusMinutes(10)))
+                .forEach(review -> {
+                    String messageText = "Скоро ревью у @" + review.getStudent().getLogin() +
+                            " с @" + review.getMentor().getLogin() + "\n" +
+                            review.getBookedDate() + " " + review.getBookedTime() +
+                            "\nТема: " + review.getTopic();
+                    notificatorFeign.sendMessage(review.getStudent().getLogin(), messageText, Communication.TELEGRAM);
+                    notificatorFeign.sendMessage(review.getMentor().getLogin(), messageText, Communication.TELEGRAM);
+                });
     }
 }
+
