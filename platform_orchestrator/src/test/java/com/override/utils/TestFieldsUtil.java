@@ -112,7 +112,7 @@ public class TestFieldsUtil {
                 .topic("Тема 1")
                 .student(generateTestUser())
                 .mentor(generateTestUser())
-                .bookedDate(LocalDate.of(2022, 4, 4))
+                .bookedDate(LocalDate.now())
                 .bookedTime(LocalTime.of(16, 30))
                 .timeSlots(testTimeSlots)
                 .build();
