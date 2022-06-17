@@ -181,6 +181,7 @@
                         <exclude>**/exception/**</exclude>
                         <exclude>**/aspect/**</exclude>
                         <exclude>**/annotation/**</exclude>
+                        <exclude>**/scheduler/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>
