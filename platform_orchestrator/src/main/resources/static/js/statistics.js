@@ -1,8 +1,5 @@
 const statisticsData = getStatistics(20)
 const  salaryData = getStatForSalary();
-//window.onload(getStatForSalary());
-var ctxSalary = document.getElementById('salaryChart').getContext('2d');
-//var ctxSalary = document.getElementById('salaryChart').getContext('2d');
 const dataOfHardTasks = {
     datasets: [{
         label: 'Самые сложные задачи',
@@ -135,43 +132,8 @@ function getStatistics(size) {
             console.log(error);
         }
     });
-
     return data;
  }
-// var statSalary = getStatForSalary();
-// var salaryChart = new Chart(ctxSalary, {
-//     type: 'line',
-//     data: {
-//         labels: statSalary.labels,
-//         datasets: statSalary.userStats
-//     },
-//     options: {
-//         scales: {
-//             yAxes: [{
-//                 ticks: {
-//                     beginAtZero: true
-//                 }
-//             }]
-//         },
-//         responsive: true,
-//         interaction: {
-//             intersect: false,
-//             axis: 'x'
-//         },
-//         plugins: {
-//             title: {
-//                 display: true,
-//                 text: "Зарплаты"
-//             }
-//         },
-//         scales: {
-//             myScale: {
-//                 type: 'logarithmic',
-//                 position: 'right', // `axis` is determined by the position as `'y'`
-//             }
-//         }
-//     }
-// });
 
 function updateHardTaskChart(size){
     hardTaskChart.data = {
@@ -210,38 +172,3 @@ function getStatForSalary() {
     console.log(data);
     return data;
 }
-
-// var statSalary = getStatForSalary();
-// var salaryChart = new Chart(ctxSalary, {
-//     type: 'line',
-//     data: {
-//         labels: statSalary.labels,
-//         datasets: statSalary.userStats
-//     },
-//     options: {
-//         scales: {
-//             yAxes: [{
-//                 ticks: {
-//                     beginAtZero: true
-//                 }
-//             }]
-//         },
-//         responsive: true,
-//         interaction: {
-//             intersect: false,
-//             axis: 'x'
-//         },
-//         plugins: {
-//             title: {
-//                 display: true,
-//                 text: "Зарплаты"
-//             }
-//         },
-//         scales: {
-//             myScale: {
-//                 type: 'logarithmic',
-//                 position: 'right', // `axis` is determined by the position as `'y'`
-//             }
-//         }
-//     }
-// });
