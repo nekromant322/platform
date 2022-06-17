@@ -2,6 +2,7 @@ package com.override.controller.rest;
 
 import com.override.service.StatisticsService;
 import dtos.CodeTryStatDTO;
+import dtos.SalaryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,5 +26,10 @@ public class StatisticsRestController {
     @GetMapping("/data")
     public CodeTryStatDTO countStatsByStatus(@RequestParam int size){
         return statisticsService.getCodeTryStatistics(size);
+    }
+
+    @GetMapping("/salaryStat")
+    public SalaryDTO salaryStat(){
+        return statisticsService.getSalaryStatistics();
     }
 }

@@ -1,4 +1,8 @@
 const statisticsData = getStatistics(20)
+const  salaryData = getStatForSalary();
+//window.onload(getStatForSalary());
+var ctxSalary = document.getElementById('salaryChart').getContext('2d');
+//var ctxSalary = document.getElementById('salaryChart').getContext('2d');
 const dataOfHardTasks = {
     datasets: [{
         label: 'Самые сложные задачи',
@@ -38,6 +42,10 @@ const dataOfStatus = {
         data: statisticsData.codeTryStatus,
     }]
 };
+const dataOfSalary = {
+        labels: salaryData.labels,
+        datasets: salaryData.userStats
+};
 
 const configOfHardTasks = {
     type: 'bar',
@@ -63,6 +71,12 @@ const configOfStatus = {
     options: {}
 };
 
+const configOfSalary = {
+    type: 'line',
+    label: 'Зарплаты',
+    data: dataOfSalary,
+    options: {}
+};
 
 var hardTaskChart = new Chart(
     document.getElementById('statsHardTaskChart'),
@@ -82,6 +96,11 @@ const usersChart = new Chart(
 const statusChart = new Chart(
     document.getElementById('statsStatusChart'),
     configOfStatus
+);
+
+const salaryChart = new Chart(
+    document.getElementById('salaryChart').getContext('2d'),
+    configOfSalary
 );
 
 
@@ -116,8 +135,43 @@ function getStatistics(size) {
             console.log(error);
         }
     });
+
     return data;
-}
+ }
+// var statSalary = getStatForSalary();
+// var salaryChart = new Chart(ctxSalary, {
+//     type: 'line',
+//     data: {
+//         labels: statSalary.labels,
+//         datasets: statSalary.userStats
+//     },
+//     options: {
+//         scales: {
+//             yAxes: [{
+//                 ticks: {
+//                     beginAtZero: true
+//                 }
+//             }]
+//         },
+//         responsive: true,
+//         interaction: {
+//             intersect: false,
+//             axis: 'x'
+//         },
+//         plugins: {
+//             title: {
+//                 display: true,
+//                 text: "Зарплаты"
+//             }
+//         },
+//         scales: {
+//             myScale: {
+//                 type: 'logarithmic',
+//                 position: 'right', // `axis` is determined by the position as `'y'`
+//             }
+//         }
+//     }
+// });
 
 function updateHardTaskChart(size){
     hardTaskChart.data = {
@@ -130,3 +184,64 @@ function updateHardTaskChart(size){
     };
     hardTaskChart.update();
 }
+
+function getStatForSalary() {
+    let data;
+    $.ajax({
+        method: 'GET',
+        url: "/statistics/salaryStat",
+        async: false,
+        success: function (response) {
+            console.log(response)
+            data = response;
+        },
+
+        error: function (error) {
+            console.log(error);
+        }
+    });
+    for (let i = 0; i < data.userStats.length; i++) {
+        for (let j = 0; j < data.userStats[i].data.length; j++) {
+            if (data.userStats[i].data[j] === 0) {
+                data.userStats[i].data[j] = "N/A";
+            }
+        }
+    }
+    console.log(data);
+    return data;
+}
+
+// var statSalary = getStatForSalary();
+// var salaryChart = new Chart(ctxSalary, {
+//     type: 'line',
+//     data: {
+//         labels: statSalary.labels,
+//         datasets: statSalary.userStats
+//     },
+//     options: {
+//         scales: {
+//             yAxes: [{
+//                 ticks: {
+//                     beginAtZero: true
+//                 }
+//             }]
+//         },
+//         responsive: true,
+//         interaction: {
+//             intersect: false,
+//             axis: 'x'
+//         },
+//         plugins: {
+//             title: {
+//                 display: true,
+//                 text: "Зарплаты"
+//             }
+//         },
+//         scales: {
+//             myScale: {
+//                 type: 'logarithmic',
+//                 position: 'right', // `axis` is determined by the position as `'y'`
+//             }
+//         }
+//     }
+// });
