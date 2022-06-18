@@ -1,7 +1,7 @@
 package com.override.controller.rest;
 
 import com.override.service.QuestionService;
-import dtos.QuestionDTO;
+import dto.QuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;

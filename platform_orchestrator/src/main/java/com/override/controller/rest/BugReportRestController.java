@@ -1,10 +1,10 @@
 package com.override.controller.rest;
 
 import com.override.annotation.MaxFileSize;
-import com.override.models.Bug;
+import com.override.model.Bug;
 import com.override.service.BugReportService;
 import com.override.service.CustomStudentDetailService;
-import dtos.BugReportsDTO;
+import dto.BugReportsDTO;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;

@@ -1,6 +1,6 @@
 package com.override.controller.rest;
 
-import com.override.models.Question;
+import com.override.model.Question;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.LessonStructureService;
 import com.override.service.QuestionService;

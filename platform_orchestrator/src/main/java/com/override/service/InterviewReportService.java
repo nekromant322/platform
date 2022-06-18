@@ -1,11 +1,11 @@
 package com.override.service;
 
-import com.override.mappers.InterviewReportMapper;
-import com.override.models.InterviewReport;
-import com.override.models.enums.Status;
-import com.override.repositories.InterviewReportRepository;
-import dtos.InterviewReportDTO;
-import dtos.InterviewReportUpdateDTO;
+import com.override.mapper.InterviewReportMapper;
+import com.override.model.InterviewReport;
+import com.override.model.enums.Status;
+import com.override.repository.InterviewReportRepository;
+import dto.InterviewReportDTO;
+import dto.InterviewReportUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,8 @@
 package com.override.service;
 
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.BaseFont;
 import com.override.exception.InvalidPersonalDataException;
-import com.override.models.PersonalData;
+import com.override.model.PersonalData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

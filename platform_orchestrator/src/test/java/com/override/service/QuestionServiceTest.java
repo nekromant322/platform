@@ -1,10 +1,10 @@
 package com.override.service;
 
-import com.override.mappers.QuestionMapper;
-import com.override.models.PlatformUser;
-import com.override.models.Question;
-import com.override.repositories.QuestionRepository;
-import dtos.QuestionDTO;
+import com.override.mapper.QuestionMapper;
+import com.override.model.PlatformUser;
+import com.override.model.Question;
+import com.override.repository.QuestionRepository;
+import dto.QuestionDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

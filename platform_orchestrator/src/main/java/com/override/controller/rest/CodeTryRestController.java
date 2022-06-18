@@ -1,11 +1,11 @@
 package com.override.controller.rest;
 
-import com.override.feigns.CodeExecutorFeign;
-import com.override.models.CodeTry;
+import com.override.feign.CodeExecutorFeign;
+import com.override.model.CodeTry;
 import com.override.service.CodeTryService;
-import dtos.CodeTryDTO;
-import dtos.TaskIdentifierDTO;
-import dtos.TestResultDTO;
+import dto.CodeTryDTO;
+import dto.TaskIdentifierDTO;
+import dto.TestResultDTO;
 import enums.CodeExecutionStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.math.BigInteger;
 import java.util.List;
-import java.util.Map;
 
 import static com.override.service.CustomStudentDetailService.CustomStudentDetails;
 

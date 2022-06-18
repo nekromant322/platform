@@ -1,10 +1,10 @@
 package com.override.service;
 
 import com.override.exception.BugReportException;
-import com.override.mappers.BugReportMapper;
-import com.override.models.Bug;
-import com.override.repositories.BugReportRepository;
-import dtos.BugReportsDTO;
+import com.override.mapper.BugReportMapper;
+import com.override.model.Bug;
+import com.override.repository.BugReportRepository;
+import dto.BugReportsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

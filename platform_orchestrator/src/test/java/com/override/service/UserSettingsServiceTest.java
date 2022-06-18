@@ -1,8 +1,8 @@
 package com.override.service;
 
-import com.override.models.PlatformUser;
-import com.override.models.UserSettings;
-import com.override.repositories.UserSettingsRepository;
+import com.override.model.PlatformUser;
+import com.override.model.UserSettings;
+import com.override.repository.UserSettingsRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

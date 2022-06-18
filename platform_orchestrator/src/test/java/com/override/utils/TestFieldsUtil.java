@@ -1,8 +1,8 @@
 package com.override.utils;
 
-import com.override.models.*;
-import com.override.models.enums.Status;
-import dtos.*;
+import com.override.model.*;
+import com.override.model.enums.Status;
+import dto.*;
 import enums.CodeExecutionStatus;
 
 import java.math.BigInteger;

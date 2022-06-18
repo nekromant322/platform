@@ -1,9 +1,8 @@
 package com.override.service;
 
-import com.override.models.PersonalData;
-import com.override.models.PlatformUser;
-import com.override.repositories.PersonalDataRepository;
-import com.override.repositories.PlatformUserRepository;
+import com.override.model.PersonalData;
+import com.override.model.PlatformUser;
+import com.override.repository.PersonalDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

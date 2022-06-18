@@ -1,9 +1,9 @@
 package com.override.controller.rest;
 
-import com.override.models.JoinRequest;
+import com.override.model.JoinRequest;
 import com.override.service.JoinRequestService;
-import dtos.JoinRequestStatusDTO;
-import dtos.RegisterUserRequestDTO;
+import dto.JoinRequestStatusDTO;
+import dto.RegisterUserRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;

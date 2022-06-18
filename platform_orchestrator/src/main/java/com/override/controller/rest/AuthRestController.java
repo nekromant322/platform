@@ -1,6 +1,6 @@
 package com.override.controller.rest;
 
-import com.override.models.AuthRequest;
+import com.override.model.AuthRequest;
 import com.override.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,8 +1,8 @@
 package com.override.service;
 
-import com.override.mappers.CodeTryMapper;
-import com.override.models.CodeTry;
-import com.override.repositories.CodeTryRepository;
+import com.override.mapper.CodeTryMapper;
+import com.override.model.CodeTry;
+import com.override.repository.CodeTryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Answers;

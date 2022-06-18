@@ -2,8 +2,8 @@ package com.override.controller.rest;
 
 import com.override.service.CustomStudentDetailService;
 import com.override.service.ReviewService;
-import dtos.ReviewDTO;
-import dtos.ReviewFilterDTO;
+import dto.ReviewDTO;
+import dto.ReviewFilterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package com.override.controller.rest;
 
-import com.override.models.PlatformUser;
+import com.override.model.PlatformUser;
 import com.override.service.PlatformUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

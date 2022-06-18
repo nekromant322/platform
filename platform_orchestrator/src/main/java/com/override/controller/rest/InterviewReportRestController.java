@@ -1,9 +1,9 @@
 package com.override.controller.rest;
 
-import com.override.models.enums.Status;
+import com.override.model.enums.Status;
 import com.override.service.InterviewReportService;
-import dtos.InterviewReportDTO;
-import dtos.InterviewReportUpdateDTO;
+import dto.InterviewReportDTO;
+import dto.InterviewReportUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
