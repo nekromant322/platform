@@ -1,8 +1,8 @@
 package com.override.services;
 
-import com.override.feigns.OrchestratorFeign;
-import dtos.JoinRequestStatusDTO;
-import dtos.RegisterUserRequestDTO;
+import com.override.feign.OrchestratorFeign;
+import dto.JoinRequestStatusDTO;
+import dto.RegisterUserRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

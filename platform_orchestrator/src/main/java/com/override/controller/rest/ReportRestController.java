@@ -1,6 +1,6 @@
 package com.override.controller.rest;
 
-import com.override.models.StudentReport;
+import com.override.model.StudentReport;
 import com.override.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

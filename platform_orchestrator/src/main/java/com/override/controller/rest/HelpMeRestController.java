@@ -2,7 +2,7 @@ package com.override.controller.rest;
 
 
 import com.github.benmanes.caffeine.cache.Cache;
-import dtos.HelpMeDTO;
+import dto.HelpMeDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

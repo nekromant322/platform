@@ -1,13 +1,13 @@
 package com.override.service;
 
-import com.override.feigns.NotificatorFeign;
-import com.override.mappers.ReviewMapper;
-import com.override.models.PlatformUser;
-import com.override.models.Review;
-import com.override.repositories.PlatformUserRepository;
-import com.override.repositories.ReviewRepository;
-import dtos.ReviewDTO;
-import dtos.ReviewFilterDTO;
+import com.override.feign.NotificatorFeign;
+import com.override.mapper.ReviewMapper;
+import com.override.model.PlatformUser;
+import com.override.model.Review;
+import com.override.repository.PlatformUserRepository;
+import com.override.repository.ReviewRepository;
+import dto.ReviewDTO;
+import dto.ReviewFilterDTO;
 import enums.Communication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

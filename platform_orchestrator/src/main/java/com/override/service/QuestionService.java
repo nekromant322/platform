@@ -1,9 +1,9 @@
 package com.override.service;
 
-import com.override.mappers.QuestionMapper;
-import com.override.models.Question;
-import com.override.repositories.QuestionRepository;
-import dtos.QuestionDTO;
+import com.override.mapper.QuestionMapper;
+import com.override.model.Question;
+import com.override.repository.QuestionRepository;
+import dto.QuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.override.service;
 
-import dtos.MailDTO;
+import dto.MailDTO;
 
 public interface EmailService {
 

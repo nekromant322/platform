@@ -1,8 +1,8 @@
 package com.override.util;
 
-import com.override.models.Recipient;
+import com.override.model.Recipient;
 import com.override.service.EmailService;
-import dtos.MailDTO;
+import dto.MailDTO;
 import enums.Communication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.override.util;
 
-import com.override.models.Recipient;
+import com.override.model.Recipient;
 import com.override.service.SmsRuServiceImpl;
 import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;

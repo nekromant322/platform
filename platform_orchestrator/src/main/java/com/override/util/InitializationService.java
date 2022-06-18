@@ -1,11 +1,11 @@
 package com.override.util;
 
 import com.github.javafaker.Faker;
-import com.override.models.*;
-import com.override.models.enums.Role;
-import com.override.models.enums.Status;
+import com.override.model.*;
+import com.override.model.enums.Role;
+import com.override.model.enums.Status;
 import com.override.service.*;
-import dtos.*;
+import dto.*;
 import enums.CodeExecutionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

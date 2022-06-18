@@ -1,11 +1,11 @@
 package utils;
 
-import com.override.models.Recipient;
+import com.override.model.Recipient;
 import com.override.util.CommunicationStrategy;
 import com.override.util.EmailCommunication;
 import com.override.util.SmsCommunication;
 import com.override.util.TelegramCommunication;
-import dtos.RecipientDTO;
+import dto.RecipientDTO;
 import enums.Communication;
 
 import java.util.HashMap;

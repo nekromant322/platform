@@ -1,8 +1,8 @@
 package com.override.service;
 
-import com.override.mappers.CodeTryStatMapper;
-import com.override.repositories.CodeTryRepository;
-import dtos.CodeTryStatDTO;
+import com.override.mapper.CodeTryStatMapper;
+import com.override.repository.CodeTryRepository;
+import dto.CodeTryStatDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.override.feigns;
+package com.override.feign;
 
 import enums.Communication;
 import org.springframework.cloud.openfeign.FeignClient;

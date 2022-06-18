@@ -1,9 +1,9 @@
 package com.override.service;
 
-import com.override.feigns.NotificatorFeign;
-import com.override.models.PlatformUser;
-import com.override.models.StudentReport;
-import com.override.repositories.StudentReportRepository;
+import com.override.feign.NotificatorFeign;
+import com.override.model.PlatformUser;
+import com.override.model.StudentReport;
+import com.override.repository.StudentReportRepository;
 import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

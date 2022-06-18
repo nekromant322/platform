@@ -2,7 +2,7 @@ package com.override.service;
 
 import com.override.exception.SendMessageException;
 import com.override.exception.SmsRuException;
-import com.override.models.Recipient;
+import com.override.model.Recipient;
 import com.override.util.CommunicationStrategy;
 import com.override.util.CommunicationStrategyFactory;
 import enums.Communication;

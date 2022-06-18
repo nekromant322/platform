@@ -1,12 +1,12 @@
 package com.override.service;
 
-import com.override.feigns.NotificatorFeign;
-import com.override.feigns.TelegramBotFeign;
-import com.override.mappers.JoinRequestMapper;
-import com.override.mappers.PlatformUserMapper;
-import com.override.models.JoinRequest;
-import com.override.repositories.JoinRequestRepository;
-import dtos.*;
+import com.override.feign.NotificatorFeign;
+import com.override.feign.TelegramBotFeign;
+import com.override.mapper.JoinRequestMapper;
+import com.override.mapper.PlatformUserMapper;
+import com.override.model.JoinRequest;
+import com.override.repository.JoinRequestRepository;
+import dto.*;
 import enums.RequestStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

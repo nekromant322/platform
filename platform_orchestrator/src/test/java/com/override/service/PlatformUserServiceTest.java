@@ -1,12 +1,12 @@
 package com.override.service;
 
 import com.override.exception.UserAlreadyExistException;
-import com.override.models.Authority;
-import com.override.models.PersonalData;
-import com.override.models.PlatformUser;
-import com.override.models.UserSettings;
-import com.override.models.enums.Role;
-import com.override.repositories.PlatformUserRepository;
+import com.override.model.Authority;
+import com.override.model.PersonalData;
+import com.override.model.PlatformUser;
+import com.override.model.UserSettings;
+import com.override.model.enums.Role;
+import com.override.repository.PlatformUserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

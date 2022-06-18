@@ -1,10 +1,10 @@
 package com.override.service;
 
-import com.override.mappers.BugReportMapper;
-import com.override.models.Bug;
-import com.override.models.PlatformUser;
-import com.override.repositories.BugReportRepository;
-import dtos.BugReportsDTO;
+import com.override.mapper.BugReportMapper;
+import com.override.model.Bug;
+import com.override.model.PlatformUser;
+import com.override.repository.BugReportRepository;
+import dto.BugReportsDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
