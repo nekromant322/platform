@@ -3,6 +3,8 @@ package com.override.mapper;
 import com.override.model.InterviewReport;
 import com.override.model.enums.Status;
 import dto.InterviewReportDTO;
+import dto.SalaryDTO;
+import dto.SalaryStatDTO;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;

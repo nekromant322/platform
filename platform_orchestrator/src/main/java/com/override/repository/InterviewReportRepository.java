@@ -1,6 +1,7 @@
 package com.override.repository;
 
 import com.override.model.InterviewReport;
+import com.override.model.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

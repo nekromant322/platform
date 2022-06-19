@@ -1,11 +1,14 @@
 package com.override.service;
 
 import com.override.mapper.CodeTryStatMapper;
+import com.override.mapper.InterviewReportMapper;
+import com.override.model.InterviewReport;
+import com.override.model.enums.Status;
 import com.override.repository.CodeTryRepository;
 import com.override.repository.InterviewReportRepository;
+import com.override.utils.TestFieldsUtil;
 import dto.SalaryDTO;
 import dto.SalaryStatDTO;
-import com.override.utils.TestFieldsUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

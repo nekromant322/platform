@@ -1,7 +1,11 @@
 package com.override.service;
 
 import com.override.mapper.CodeTryStatMapper;
+import com.override.mapper.InterviewReportMapper;
+import com.override.model.InterviewReport;
+import com.override.model.enums.Status;
 import com.override.repository.CodeTryRepository;
+import com.override.repository.InterviewReportRepository;
 import dto.CodeTryStatDTO;
 import dto.SalaryDTO;
 import dto.SalaryStatDTO;
