@@ -4,10 +4,7 @@ import com.override.service.StatisticsService;
 import dtos.CodeTryStatDTO;
 import dtos.SalaryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -28,8 +25,8 @@ public class StatisticsRestController {
         return statisticsService.getCodeTryStatistics(size);
     }
 
-    @GetMapping("/salaryStat")
-    public SalaryDTO salaryStat(){
+    @GetMapping("/salary")
+    public SalaryDTO getSalaryStat(){
         return statisticsService.getSalaryStatistics();
     }
 }

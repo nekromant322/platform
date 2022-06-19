@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class TestFieldsUtil {
@@ -59,25 +60,25 @@ public class TestFieldsUtil {
         return new CodeTryDTO(generateTestTaskIdentifierDTO(), generateTestCode());
     }
 
-    public static List<Object[]> generateListObjects(){
+    public static List<Object[]> generateListObjects() {
         Object[] obj = new Object[]{"testUser", new BigInteger(Integer.toBinaryString(1))};
         final ArrayList<Object[]> objects = new ArrayList<>();
         objects.add(obj);
-        return  objects;
+        return objects;
     }
 
-    public static List<Integer[]> generateListInteger(){
+    public static List<Integer[]> generateListInteger() {
         Integer[] obj = new Integer[]{1, 2, 3, 4};
         final ArrayList<Integer[]> objects = new ArrayList<>();
         objects.add(obj);
-        return  objects;
+        return objects;
     }
 
-    public static List<Long[]> generateListLong(){
+    public static List<Long[]> generateListLong() {
         Long[] obj = new Long[]{1L, 2L, 3L, 4L};
         final ArrayList<Long[]> objects = new ArrayList<>();
         objects.add(obj);
-        return  objects;
+        return objects;
     }
 
     public static Question generateTestQuestion() {
@@ -194,6 +195,35 @@ public class TestFieldsUtil {
                 .currency(interviewReport.getCurrency())
                 .status(interviewReport.getStatus().getName())
                 .level(interviewReport.getLevel())
+                .build();
+    }
+
+    public static SalaryDTO generateTestSalaryDTO(List<InterviewReport> interviewReportList, SalaryStatDTO salaryStatDTO) {
+        return SalaryDTO.builder()
+                .salaryStats(List.of(salaryStatDTO))
+                .labels(interviewReportList.stream().map(n -> n.getDate().toString()).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static List<InterviewReport> generateReportsList() {
+        List<InterviewReport> interviewReportList = new ArrayList<>();
+
+        InterviewReport interviewReportFirst = TestFieldsUtil.generateTestInterviewReport();
+        InterviewReport interviewReportSecond = TestFieldsUtil.generateTestInterviewReport();
+        InterviewReport interviewReportThird = TestFieldsUtil.generateTestInterviewReport();
+
+        interviewReportList.add(interviewReportFirst);
+        interviewReportList.add(interviewReportSecond);
+        interviewReportList.add(interviewReportThird);
+
+        return interviewReportList;
+    }
+
+    public static SalaryStatDTO generateSalaryStatDto(List<InterviewReport> interviewReportList) {
+        return SalaryStatDTO.builder()
+                .data(interviewReportList.stream().map(InterviewReport::getMaxSalary).collect(Collectors.toList()))
+                .borderWidth(1)
+                .label(interviewReportList.get(0).getUserLogin())
                 .build();
     }
 }
