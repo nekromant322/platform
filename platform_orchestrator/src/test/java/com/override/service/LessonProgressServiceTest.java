@@ -1,8 +1,8 @@
 package com.override.service;
 
-import com.override.models.LessonProgress;
-import com.override.models.PlatformUser;
-import com.override.repositories.LessonProgressRepository;
+import com.override.model.LessonProgress;
+import com.override.model.PlatformUser;
+import com.override.repository.LessonProgressRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

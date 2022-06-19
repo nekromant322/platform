@@ -1,8 +1,8 @@
 package com.override.service.test;
 
 import com.override.utils.TestUtils;
-import dtos.TaskIdentifierDTO;
-import dtos.TestResultDTO;
+import dto.TaskIdentifierDTO;
+import dto.TestResultDTO;
 import enums.CodeExecutionStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

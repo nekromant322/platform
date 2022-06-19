@@ -1,10 +1,10 @@
 package com.override.controller;
 
 import com.override.annotation.MaxFileSize;
-import com.override.models.Document;
+import com.override.model.Document;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.DocumentService;
-import dtos.DocumentDTO;
+import dto.DocumentDTO;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;

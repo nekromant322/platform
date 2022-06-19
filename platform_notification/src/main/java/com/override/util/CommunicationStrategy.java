@@ -1,6 +1,6 @@
 package com.override.util;
 
-import com.override.models.Recipient;
+import com.override.model.Recipient;
 import enums.Communication;
 
 public interface CommunicationStrategy {

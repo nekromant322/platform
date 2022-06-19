@@ -1,11 +1,11 @@
 package service;
 
-import com.override.mappers.RecipientMapper;
-import com.override.models.Recipient;
-import com.override.repositories.RecipientRepository;
+import com.override.mapper.RecipientMapper;
+import com.override.model.Recipient;
+import com.override.repository.RecipientRepository;
 import com.override.service.RecipientService;
 import com.override.util.*;
-import dtos.RecipientDTO;
+import dto.RecipientDTO;
 import enums.Communication;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,8 +1,8 @@
 package com.override.feign;
 
-import dtos.SmsResponseDTO;
-import dtos.SmsRuBalanceResponseDTO;
-import dtos.CodeCallResponseDTO;
+import dto.SmsResponseDTO;
+import dto.SmsRuBalanceResponseDTO;
+import dto.CodeCallResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

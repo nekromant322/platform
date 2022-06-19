@@ -1,7 +1,7 @@
 package com.override.controller.rest;
 
-import com.override.models.PlatformUser;
-import com.override.models.enums.Role;
+import com.override.model.PlatformUser;
+import com.override.model.enums.Role;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.PlatformUserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -174,13 +174,14 @@
                 <configuration>
                     <excludes>
                         <exclude>**/override/PlatformOrchestratorApplication.class</exclude>
-                        <exclude>**/models/**</exclude>
-                        <exclude>**/configs/**</exclude>
+                        <exclude>**/model/**</exclude>
+                        <exclude>**/config/**</exclude>
                         <exclude>**/controller/**</exclude>
                         <exclude>**/util/**</exclude>
                         <exclude>**/exception/**</exclude>
                         <exclude>**/aspect/**</exclude>
                         <exclude>**/annotation/**</exclude>
+                        <exclude>**/scheduler/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>

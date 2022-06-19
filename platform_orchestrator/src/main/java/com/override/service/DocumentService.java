@@ -1,8 +1,8 @@
 package com.override.service;
 
-import com.override.models.Document;
-import com.override.repositories.DocumentRepository;
-import dtos.DocumentDTO;
+import com.override.model.Document;
+import com.override.repository.DocumentRepository;
+import dto.DocumentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

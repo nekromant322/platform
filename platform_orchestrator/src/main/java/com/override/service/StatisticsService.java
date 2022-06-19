@@ -1,14 +1,10 @@
 package com.override.service;
 
-import com.override.mappers.CodeTryStatMapper;
-import com.override.mappers.InterviewReportMapper;
-import com.override.models.InterviewReport;
-import com.override.models.enums.Status;
-import com.override.repositories.CodeTryRepository;
-import com.override.repositories.InterviewReportRepository;
-import dtos.CodeTryStatDTO;
-import dtos.SalaryDTO;
-import dtos.SalaryStatDTO;
+import com.override.mapper.CodeTryStatMapper;
+import com.override.repository.CodeTryRepository;
+import dto.CodeTryStatDTO;
+import dto.SalaryDTO;
+import dto.SalaryStatDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

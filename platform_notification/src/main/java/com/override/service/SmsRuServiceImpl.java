@@ -2,10 +2,10 @@ package com.override.service;
 
 import com.override.exception.SmsRuException;
 import com.override.feign.SmsRuFeign;
-import dtos.CodeCallResponseDTO;
-import dtos.PhoneDTO;
-import dtos.SmsResponseDTO;
-import dtos.SmsRuBalanceResponseDTO;
+import dto.CodeCallResponseDTO;
+import dto.PhoneDTO;
+import dto.SmsResponseDTO;
+import dto.SmsRuBalanceResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

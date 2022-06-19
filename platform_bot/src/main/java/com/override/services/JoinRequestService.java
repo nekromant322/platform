@@ -1,9 +1,9 @@
 package com.override.services;
 
 import com.override.PlatformBot;
-import com.override.feigns.NotificatorFeign;
-import dtos.PlatformUserDTO;
-import dtos.ResponseJoinRequestDTO;
+import com.override.feign.NotificatorFeign;
+import dto.PlatformUserDTO;
+import dto.ResponseJoinRequestDTO;
 import enums.Communication;
 import enums.RequestStatus;
 import org.springframework.beans.factory.annotation.Autowired;

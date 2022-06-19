@@ -1,8 +1,8 @@
 package com.override.command;
 
 import com.override.services.RegisterService;
-import dtos.JoinRequestStatusDTO;
-import dtos.RegisterUserRequestDTO;
+import dto.JoinRequestStatusDTO;
+import dto.RegisterUserRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

@@ -1,7 +1,7 @@
 package com.override.service;
 
-import com.override.models.PlatformUser;
-import com.override.repositories.PlatformUserRepository;
+import com.override.model.PlatformUser;
+import com.override.repository.PlatformUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

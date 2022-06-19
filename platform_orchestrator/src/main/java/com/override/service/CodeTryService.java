@@ -1,18 +1,15 @@
 package com.override.service;
 
-import com.override.mappers.CodeTryMapper;
-import com.override.models.CodeTry;
-import com.override.repositories.CodeTryRepository;
-import dtos.CodeTryDTO;
-import dtos.TaskIdentifierDTO;
-import dtos.TestResultDTO;
+import com.override.mapper.CodeTryMapper;
+import com.override.model.CodeTry;
+import com.override.repository.CodeTryRepository;
+import dto.CodeTryDTO;
+import dto.TaskIdentifierDTO;
+import dto.TestResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CodeTryService {

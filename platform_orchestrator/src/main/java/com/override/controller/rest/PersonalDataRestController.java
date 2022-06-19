@@ -1,6 +1,6 @@
 package com.override.controller.rest;
 
-import com.override.models.PersonalData;
+import com.override.model.PersonalData;
 import com.override.service.PersonalDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

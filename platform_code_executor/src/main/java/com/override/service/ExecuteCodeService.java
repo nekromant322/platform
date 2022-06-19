@@ -2,8 +2,8 @@ package com.override.service;
 
 import com.override.exception.CompilingCodeException;
 import com.override.service.test.AbstractTaskTest;
-import dtos.TaskIdentifierDTO;
-import dtos.TestResultDTO;
+import dto.TaskIdentifierDTO;
+import dto.TestResultDTO;
 import enums.CodeExecutionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

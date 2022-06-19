@@ -1,9 +1,8 @@
 package com.override.service;
 
-import com.override.configs.security.JwtProvider;
+import com.override.config.security.JwtProvider;
 import com.override.exception.AuthException;
-import com.override.models.PlatformUser;
-import org.junit.jupiter.api.Assertions;
+import com.override.model.PlatformUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

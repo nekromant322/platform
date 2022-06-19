@@ -1,12 +1,14 @@
 package com.override.service;
 
-import com.override.mappers.ReviewMapper;
-import com.override.models.PlatformUser;
-import com.override.models.Review;
-import com.override.repositories.PlatformUserRepository;
-import com.override.repositories.ReviewRepository;
-import dtos.ReviewDTO;
-import dtos.ReviewFilterDTO;
+import com.override.feign.NotificatorFeign;
+import com.override.mapper.ReviewMapper;
+import com.override.model.PlatformUser;
+import com.override.model.Review;
+import com.override.repository.PlatformUserRepository;
+import com.override.repository.ReviewRepository;
+import dto.ReviewDTO;
+import dto.ReviewFilterDTO;
+import enums.Communication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +16,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +38,9 @@ public class ReviewServiceTest {
 
     @Mock
     private PlatformUserRepository platformUserRepository;
+
+    @Mock
+    private NotificatorFeign notificatorFeign;
 
     @Test
     void saveOrUpdateReview() {
@@ -139,5 +146,41 @@ public class ReviewServiceTest {
 
         List<ReviewDTO> review = reviewService.findReview(testReviewFilterDTO);
         Assertions.assertEquals(review.iterator().next(), testReviewList.iterator().next());
+    }
+
+    @Test
+    void sendScheduledNotification() {
+        List<Review> reviewList = new ArrayList<>();
+
+        Review review1 = generateTestReview();
+        review1.setId(10L);
+        review1.setBookedTime(null);
+        reviewList.add(review1);
+
+        Review review2 = generateTestReview();
+        review2.setId(20L);
+        review2.setBookedTime(LocalTime.now().plusMinutes(45));
+        reviewList.add(review2);
+
+        Review review3 = generateTestReview();
+        review3.setId(30L);
+        review3.setBookedTime(LocalTime.now().minusMinutes(45));
+        reviewList.add(review3);
+
+        Review review4 = generateTestReview();
+        review4.setId(40L);
+        review4.setBookedTime(LocalTime.now().plusMinutes(5));
+        reviewList.add(review4);
+
+        when(reviewRepository.findReviewByBookedDate(LocalDateTime.now().plusMinutes(10).toLocalDate()))
+                .thenReturn(reviewList);
+
+        String messageText = "Скоро ревью у @" + review4.getStudent().getLogin() +
+                " с @" + review4.getMentor().getLogin() + "\n" +
+                review4.getBookedDate() + " " + review4.getBookedTime() +
+                "\nТема: " + review4.getTopic();
+
+        reviewService.sendScheduledNotification();
+        verify(notificatorFeign, times(2)).sendMessage(review4.getStudent().getLogin(), messageText, Communication.TELEGRAM);
     }
 }

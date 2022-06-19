@@ -1,8 +1,8 @@
 package com.override.service;
 
-import com.override.feigns.NotificatorFeign;
-import com.override.models.*;
-import com.override.repositories.StudentReportRepository;
+import com.override.feign.NotificatorFeign;
+import com.override.model.*;
+import com.override.repository.StudentReportRepository;
 import com.override.utils.TestFieldsUtil;
 import enums.Communication;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

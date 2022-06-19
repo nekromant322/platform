@@ -1,6 +1,6 @@
 package com.override.controller.rest;
 
-import com.override.models.UserSettings;
+import com.override.model.UserSettings;
 import com.override.service.UserSettingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

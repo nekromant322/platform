@@ -1,10 +1,9 @@
 package com.override.service;
 
-import com.override.controller.DocumentController;
-import com.override.models.Document;
-import com.override.models.PlatformUser;
-import com.override.repositories.DocumentRepository;
-import dtos.DocumentDTO;
+import com.override.model.Document;
+import com.override.model.PlatformUser;
+import com.override.repository.DocumentRepository;
+import dto.DocumentDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

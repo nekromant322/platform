@@ -1,8 +1,8 @@
 package com.override.service;
 
-import com.override.models.Authority;
-import com.override.models.enums.Role;
-import com.override.repositories.AuthorityRepository;
+import com.override.model.Authority;
+import com.override.model.enums.Role;
+import com.override.repository.AuthorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

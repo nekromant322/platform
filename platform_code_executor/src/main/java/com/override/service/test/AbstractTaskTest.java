@@ -1,8 +1,8 @@
 package com.override.service.test;
 
 import com.override.exception.AssertionError;
-import dtos.TaskIdentifierDTO;
-import dtos.TestResultDTO;
+import dto.TaskIdentifierDTO;
+import dto.TestResultDTO;
 import enums.CodeExecutionStatus;
 import org.springframework.beans.factory.annotation.Value;
 
