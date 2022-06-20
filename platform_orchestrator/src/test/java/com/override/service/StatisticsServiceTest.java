@@ -55,7 +55,7 @@ class StatisticsServiceTest {
 
     @Test
     void GetSalaryStat() {
-        List<InterviewReport> interviewReportList = TestFieldsUtil.generateReportsList();
+        List<InterviewReport> interviewReportList = TestFieldsUtil.generateInterviewReportsList();
         SalaryStatDTO salaryStatDTO = TestFieldsUtil.generateSalaryStatDto(interviewReportList);
         SalaryDTO salaryDTO = TestFieldsUtil.generateTestSalaryDTO(interviewReportList, salaryStatDTO);
 
@@ -69,8 +69,8 @@ class StatisticsServiceTest {
 
         verify(interviewReportRepository, times(1)).findAll();
         verify(interviewReportRepository, times(1)).findAllByStatus(Status.ACCEPTED);
-        verify(interviewReportRepository, times(1)).findAllByUserLoginAndStatus(anyString(), any(Status.class));
-        verify(interviewReportMapper, times(1)).LoginAndSalariesToDto(anyString(), anyList());
+        verify(interviewReportRepository, times(3)).findAllByUserLoginAndStatus(anyString(), any(Status.class));
+        verify(interviewReportMapper, times(3)).LoginAndSalariesToDto(anyString(), anyList());
         verify(interviewReportMapper, times(1)).salaryStatDtoToSalaryDto(any(), anyList());
 
         assertNotNull(resultSalary.getSalaryStats());

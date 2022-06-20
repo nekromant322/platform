@@ -205,16 +205,40 @@ public class TestFieldsUtil {
                 .build();
     }
 
-    public static List<InterviewReport> generateReportsList() {
+    public static List<InterviewReport> generateInterviewReportsList() {
         List<InterviewReport> interviewReportList = new ArrayList<>();
 
-        InterviewReport interviewReportFirst = TestFieldsUtil.generateTestInterviewReport();
-        InterviewReport interviewReportSecond = TestFieldsUtil.generateTestInterviewReport();
-        InterviewReport interviewReportThird = TestFieldsUtil.generateTestInterviewReport();
+        interviewReportList.add(generateTestInterviewReport());
 
-        interviewReportList.add(interviewReportFirst);
-        interviewReportList.add(interviewReportSecond);
-        interviewReportList.add(interviewReportThird);
+        interviewReportList.add(InterviewReport.builder()
+                .id(2L)
+                .date(LocalDate.of(2022, 01, 19))
+                .userLogin("Kraken")
+                .company("CompanyOfHeroes")
+                .project("ProjectUmbrella")
+                .questions("standard")
+                .impression(3)
+                .minSalary(198000)
+                .maxSalary(260000)
+                .currency('$')
+                .status(Status.OFFER)
+                .level("Junior")
+                .build());
+
+        interviewReportList.add(InterviewReport.builder()
+                .id(3L)
+                .date(LocalDate.of(2022, 03, 17))
+                .userLogin("Joshua")
+                .company("GoodCompany")
+                .project("GoodProject")
+                .questions("standard")
+                .impression(5)
+                .minSalary(240000)
+                .maxSalary(2950000)
+                .currency('$')
+                .status(Status.ACCEPTED)
+                .level("Senior")
+                .build());
 
         return interviewReportList;
     }
