@@ -42,7 +42,10 @@ function addColumn(data) {
     insertTd(data.studentLogin, tr);
     insertTd(data.mentorLogin, tr);
     insertTd(data.bookedDate, tr);
-    insertTd(data.bookedTime, tr);
+    if (data.bookedTime != null){
+        insertTd(data.bookedTime.substring(0, 5), tr);
+    }else  insertTd(data.bookedTime, tr);
+
 
     let review = {}
     review.id = data.id;
@@ -54,6 +57,9 @@ function addColumn(data) {
     review.timeSlots = data.timeSlots;
 
     let times = data.timeSlots.toString().split(",");
+    for (i = 0; i < times.length; i++) {
+        times[i] = times[i].substring(0, 5);
+    }
 
     if (btnCase === 1) {
         for (let i = 0; i < times.length; i++) {
