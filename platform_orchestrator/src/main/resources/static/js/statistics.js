@@ -1,4 +1,5 @@
 const statisticsData = getStatistics(20)
+const salaryData = getStatForSalary();
 const dataOfHardTasks = {
     datasets: [{
         label: 'Самые сложные задачи',
@@ -38,6 +39,10 @@ const dataOfStatus = {
         data: statisticsData.codeTryStatus,
     }]
 };
+const dataOfSalary = {
+    labels: salaryData.labels,
+    datasets: salaryData.salaryStats
+};
 
 const configOfHardTasks = {
     type: 'bar',
@@ -63,6 +68,12 @@ const configOfStatus = {
     options: {}
 };
 
+const configOfSalary = {
+    type: 'line',
+    label: 'Зарплаты',
+    data: dataOfSalary,
+    options: {}
+};
 
 var hardTaskChart = new Chart(
     document.getElementById('statsHardTaskChart'),
@@ -82,6 +93,11 @@ const usersChart = new Chart(
 const statusChart = new Chart(
     document.getElementById('statsStatusChart'),
     configOfStatus
+);
+
+const salaryChart = new Chart(
+    document.getElementById('salaryChart'),
+    configOfSalary
 );
 
 
@@ -119,7 +135,7 @@ function getStatistics(size) {
     return data;
 }
 
-function updateHardTaskChart(size){
+function updateHardTaskChart(size) {
     hardTaskChart.data = {
         datasets: [{
             label: 'Самые сложные задачи',
@@ -129,4 +145,30 @@ function updateHardTaskChart(size){
         }]
     };
     hardTaskChart.update();
+}
+
+function getStatForSalary() {
+    let data;
+    $.ajax({
+        method: 'GET',
+        url: "/statistics/salary",
+        async: false,
+        success: function (response) {
+            console.log(response)
+            data = response;
+        },
+
+        error: function (error) {
+            console.log(error);
+        }
+    });
+    for (let i = 0; i < data.salaryStats.length; i++) {
+        for (let j = 0; j < data.salaryStats[i].data.length; j++) {
+            if (data.salaryStats[i].data[j] === 0) {
+                data.salaryStats[i].data[j] = "N/A";
+            }
+        }
+    }
+    console.log(data);
+    return data;
 }

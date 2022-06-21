@@ -3,7 +3,13 @@ package com.override.mapper;
 import com.override.model.InterviewReport;
 import com.override.model.enums.Status;
 import dto.InterviewReportDTO;
+import dto.SalaryDTO;
+import dto.SalaryStatDTO;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class InterviewReportMapper {
@@ -39,6 +45,21 @@ public class InterviewReportMapper {
                 .currency(interviewReport.getCurrency())
                 .status(interviewReport.getStatus().getName())
                 .level(interviewReport.getLevel())
+                .build();
+    }
+
+    public SalaryStatDTO LoginAndSalariesToDto(String userLogin, List<Integer> salaries) {
+        return SalaryStatDTO.builder()
+                .label(userLogin)
+                .data(salaries)
+                .borderWidth(1)
+                .build();
+    }
+
+    public SalaryDTO salaryStatDtoToSalaryDto(List<LocalDate> localDate, List<SalaryStatDTO> salaryStatDTO) {
+        return SalaryDTO.builder()
+                .labels(localDate.stream().map(LocalDate::toString).collect(Collectors.toList()))
+                .salaryStats(salaryStatDTO)
                 .build();
     }
 }
