@@ -25,6 +25,14 @@ public class AdminRestController {
     }
 
     @Secured("ROLE_ADMIN")
+    @PostMapping("/work-student/{id}/{status}")
+    public ResponseEntity<String> updateWorkStatus(@PathVariable Long id,@PathVariable boolean status) {
+
+        return userService.updateStatus(id, status);
+    }
+
+
+    @Secured("ROLE_ADMIN")
     @GetMapping("/getAllStudents")
     public List<PlatformUser> getAllStudents() {
         return userService.getAllStudents();

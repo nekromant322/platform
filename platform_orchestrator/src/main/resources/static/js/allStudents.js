@@ -1,4 +1,5 @@
 getStudents();
+btnClickListener();
 
 function getStudents() {
     $.ajax({
@@ -18,7 +19,19 @@ function drawColumns(data) {
     while (document.getElementById("requests-table").getElementsByTagName("tbody")[0].rows[0])
         document.getElementById("requests-table").getElementsByTagName("tbody")[0].deleteRow(0);
     for (let i = 0; i < data.length; i++) {
-        addColumn(data[i]);
+        if(data[i].statusUser === "STUDY"){
+            addColumn(data[i]);
+        }
+    }
+    for (let i = 0; i < data.length; i++) {
+        if(data[i].statusUser === "WORK"){
+            addColumn(data[i]);
+        }
+    }
+    for (let i = 0; i < data.length; i++) {
+        if(data[i].statusUser === "BAN"){
+            addColumn(data[i]);
+        }
     }
 }
 
@@ -39,6 +52,75 @@ function addColumn(data) {
     });
     td = tr.insertCell(2);
     td.insertAdjacentElement("beforeend", updateBtn);
+    td = tr.insertCell(3);
+
+
+    if (data.statusUser === "STUDY") {
+
+        td.insertAdjacentHTML("beforeend",
+            `
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#aceptModal${data.id}">
+                Завершить обучение
+            </button>
+
+            <div class="modal fade" id="aceptModal${data.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Устроился на работу?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" data-btn="working" data-id = "${data.id}">Устроился</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-btn="notWorking" data-id = "${data.id}" >Не устроился</button>
+                  </div>
+                </div>
+              </div>
+            </div>            
+           `
+        )
+    } else {
+        let status = document.createElement("span");
+        status.innerHTML = data.statusUser;
+        td.insertAdjacentElement("beforeend",status );
+    }
+    ;
+
+
+}
+
+function setWorkStatus(id, status) {
+    let data = {};
+    data.id = id;
+    $.ajax({
+        url: '/work-student/' + id + '/' + status,
+        type: 'POST',
+        contentType: 'application/json',
+        success: function () {
+            getStudents();
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    })
+}
+
+function btnClickListener() {
+    let table = document.getElementById("requests-table").getElementsByTagName("tbody")[0];
+    table.addEventListener("click", event => {
+        const working = event.target.dataset.btn === "working";
+        const notWorking = event.target.dataset.btn === "notWorking";
+        if (working) {
+            setWorkStatus(event.target.dataset.id, true);
+            getStudents();
+        }
+        if (notWorking) {
+            setWorkStatus(event.target.dataset.id, false);
+            getStudents();
+        }
+    });
 }
 
 function updateToAdmin(id) {

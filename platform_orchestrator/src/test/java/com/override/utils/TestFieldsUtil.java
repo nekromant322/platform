@@ -2,6 +2,7 @@ package com.override.utils;
 
 import com.override.model.*;
 import com.override.model.enums.Status;
+import com.override.model.enums.StatusUser;
 import dto.*;
 import enums.CodeExecutionStatus;
 
@@ -19,16 +20,16 @@ public class TestFieldsUtil {
     }
 
     public static PlatformUser generateTestUser() {
-        return new PlatformUser(null, "Andrey", "a",
+        return new PlatformUser(null, "Andrey", "a", StatusUser.STUDY,
                 Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings());
     }
 
     public static List<PlatformUser> generateTestListOfThreeUsersWithoutReportsOnCurrentDay() {
-        PlatformUser firstUserWithoutReport = new PlatformUser(1L, "1", "1",
+        PlatformUser firstUserWithoutReport = new PlatformUser(1L, "1", "1", StatusUser.STUDY,
                 Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new UserSettings());
-        PlatformUser secondUserWithoutReport = new PlatformUser(2L, "2", "2",
+        PlatformUser secondUserWithoutReport = new PlatformUser(2L, "2", "2", StatusUser.STUDY,
                 Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new UserSettings());
-        PlatformUser thirdUserWithoutReport = new PlatformUser(3L, "3", "3",
+        PlatformUser thirdUserWithoutReport = new PlatformUser(3L, "3", "3", StatusUser.STUDY,
                 Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new UserSettings());
 
         return List.of(firstUserWithoutReport, secondUserWithoutReport, thirdUserWithoutReport);
