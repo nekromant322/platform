@@ -1,6 +1,6 @@
 package com.override.command;
 
-import com.override.services.RegisterService;
+import com.override.service.RegisterService;
 import dto.JoinRequestStatusDTO;
 import dto.RegisterUserRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;

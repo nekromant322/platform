@@ -1,6 +1,6 @@
 package com.override.service.test;
 
-import com.override.utils.TestUtils;
+import com.override.util.TestUtils;
 import dto.TaskIdentifierDTO;
 import dto.TestResultDTO;
 import enums.CodeExecutionStatus;
