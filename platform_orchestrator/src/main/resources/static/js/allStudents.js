@@ -68,9 +68,7 @@ function addColumn(data) {
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Устроился на работу?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" data-btn="working" data-id = "${data.id}">Устроился</button>
@@ -113,11 +111,11 @@ function btnClickListener() {
         const working = event.target.dataset.btn === "working";
         const notWorking = event.target.dataset.btn === "notWorking";
         if (working) {
-            setWorkStatus(event.target.dataset.id, true);
+            setWorkStatus(event.target.dataset.id, "WORK");
             getStudents();
         }
         if (notWorking) {
-            setWorkStatus(event.target.dataset.id, false);
+            setWorkStatus(event.target.dataset.id, "BAN");
             getStudents();
         }
     });

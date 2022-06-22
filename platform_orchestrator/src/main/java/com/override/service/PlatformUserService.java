@@ -104,16 +104,12 @@ public class PlatformUserService {
         }
     }
 
-    public ResponseEntity<String> updateStatus(Long id, boolean status) {
-        PlatformUser student = platformUserRepository.findById(id)
+    public ResponseEntity<String> updateStatus(Long id, StatusUser status) {
+        PlatformUser student = platformUserRepository
+                .findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + id + " не найден"));
 
-        if(status){
-            student.setStatusUser(StatusUser.WORK);
-        }else {
-            student.setStatusUser(StatusUser.BAN);
-        }
-
+        student.setStatusUser(status);
         platformUserRepository.save(student);
 
         return new ResponseEntity<>("OK", HttpStatus.OK);
