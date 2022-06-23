@@ -19,17 +19,17 @@ function drawColumns(data) {
     while (document.getElementById("requests-table").getElementsByTagName("tbody")[0].rows[0])
         document.getElementById("requests-table").getElementsByTagName("tbody")[0].deleteRow(0);
     for (let i = 0; i < data.length; i++) {
-        if(data[i].statusUser === "STUDY"){
+        if(data[i].studyStatus === "STUDY"){
             addColumn(data[i]);
         }
     }
     for (let i = 0; i < data.length; i++) {
-        if(data[i].statusUser === "WORK"){
+        if(data[i].studyStatus === "WORK"){
             addColumn(data[i]);
         }
     }
     for (let i = 0; i < data.length; i++) {
-        if(data[i].statusUser === "BAN"){
+        if(data[i].studyStatus === "BAN"){
             addColumn(data[i]);
         }
     }
@@ -55,7 +55,7 @@ function addColumn(data) {
     td = tr.insertCell(3);
 
 
-    if (data.statusUser === "STUDY") {
+    if (data.studyStatus === "STUDY") {
 
         td.insertAdjacentHTML("beforeend",
             `
@@ -81,7 +81,7 @@ function addColumn(data) {
         )
     } else {
         let status = document.createElement("span");
-        status.innerHTML = data.statusUser;
+        status.innerHTML = data.studyStatus;
         td.insertAdjacentElement("beforeend",status );
     }
     ;
@@ -94,7 +94,7 @@ function setWorkStatus(id, status) {
     data.id = id;
     $.ajax({
         url: '/work-student/' + id + '/' + status,
-        type: 'POST',
+        type: 'PUT',
         contentType: 'application/json',
         success: function () {
             getStudents();
