@@ -62,7 +62,7 @@ public class BugReportServiceTest {
 
         when(authorityService.getAuthorityByRole(Role.ADMIN)).thenReturn(authority);
 
-        when(platformUserRepository.findAll()).thenReturn(platformUsers);
+        when(platformUserRepository.findAllByAuthorities(authority)).thenReturn(platformUsers);
 
         bugReportService.uploadFile(file, platformUser.getLogin(), "some text");
 

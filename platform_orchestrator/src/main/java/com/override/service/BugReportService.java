@@ -10,7 +10,6 @@ import com.override.model.enums.Role;
 import com.override.repository.BugReportRepository;
 import com.override.repository.PlatformUserRepository;
 import dto.BugReportsDTO;
-import dto.RecipientDTO;
 import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,12 +42,13 @@ public class BugReportService {
 
     public final String DEFAULT_BUG_REPORT_NAME = "-";
     public final String DEFAULT_BUG_REPORT_TYPE = "text";
+    public final String NEW_BUG_MESSAGE = "пользователь c логином: %s прислал баг \n с сообщением: %s";
 
     public void uploadFile(MultipartFile file, String login, String text) {
 
         Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
 
-        List<PlatformUser> platformUsers = (List<PlatformUser>) platformUserRepository.findAll();
+        List<PlatformUser> platformUsers = platformUserRepository.findAllByAuthorities(adminAuthority);
 
         try {
             bugReportRepository.save(Bug.builder()
@@ -61,19 +61,8 @@ public class BugReportService {
         } catch (IOException e) {
             throw new BugReportException("Неверный формат файла");
         }
-
-        platformUsers.stream()
-                .filter(platformUser -> platformUser.getAuthorities().contains(adminAuthority))
-                .peek(platformUser ->
-                        notificatorFeign.saveRecipient(RecipientDTO.builder()
-                                .login(platformUser.getLogin())
-                                .email(platformUser.getPersonalData().getEmail())
-                                .build()))
-                .forEach(platformUser -> {
-                    String message = "Пользователь с логином: " + login + " прислал баг" + "\n" +
-                            "с сообщением:" + text;
-                    notificatorFeign.sendMessage(platformUser.getLogin(), message, Communication.EMAIL);
-                });
+        platformUsers
+                .forEach(platformUser -> notificatorFeign.sendMessage(platformUser.getLogin(), String.format(NEW_BUG_MESSAGE, login, text), Communication.EMAIL));
     }
 
     public List<BugReportsDTO> getAll() {
