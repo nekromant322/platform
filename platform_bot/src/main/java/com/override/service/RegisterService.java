@@ -1,4 +1,4 @@
-package com.override.services;
+package com.override.service;
 
 import com.override.feign.OrchestratorFeign;
 import dto.JoinRequestStatusDTO;

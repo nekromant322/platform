@@ -1,6 +1,6 @@
 package com.override.controller;
 
-import com.override.services.MessageService;
+import com.override.service.MessageService;
 import dto.MessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
