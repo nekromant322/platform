@@ -1,6 +1,6 @@
 package com.override.controller;
 
-import com.override.services.JoinRequestService;
+import com.override.service.JoinRequestService;
 import dto.ResponseJoinRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
