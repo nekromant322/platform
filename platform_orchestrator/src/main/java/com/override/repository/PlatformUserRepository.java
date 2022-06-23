@@ -26,4 +26,6 @@ public interface PlatformUserRepository extends CrudRepository<PlatformUser, Lon
             "group by p_user.id, p_user.login, p_user.password, p_user.telegram_chat_id",
             nativeQuery = true)
     List<PlatformUser> findStudentsWithoutReportOfCurrentDay();
+
+    List<PlatformUser> findAllByAuthorities(Authority authority);
 }
