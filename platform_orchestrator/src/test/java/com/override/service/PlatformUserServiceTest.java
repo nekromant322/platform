@@ -6,7 +6,7 @@ import com.override.model.PersonalData;
 import com.override.model.PlatformUser;
 import com.override.model.UserSettings;
 import com.override.model.enums.Role;
-import com.override.model.enums.StatusUser;
+import enums.StudyStatus;
 import com.override.repository.PlatformUserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -114,7 +114,7 @@ class PlatformUserServiceTest {
                 null,
                 login,
                 password,
-                StatusUser.STUDY,
+                StudyStatus.STUDY,
                 new ArrayList<>() {{
                     add(userAuthority);
                 }},

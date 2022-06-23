@@ -1,13 +1,13 @@
-package com.override.model.enums;
+package enums;
 
-public enum StatusUser{
+public enum StudyStatus {
     STUDY("Study"),
     BAN("Ban"),
     WORK("Work");
 
     private final String name;
 
-    StatusUser(String status) {
+    StudyStatus(String status) {
         name = status;
     }
 

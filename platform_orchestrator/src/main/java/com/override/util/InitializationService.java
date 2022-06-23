@@ -4,7 +4,7 @@ import com.github.javafaker.Faker;
 import com.override.model.*;
 import com.override.model.enums.Role;
 import com.override.model.enums.Status;
-import com.override.model.enums.StatusUser;
+import enums.StudyStatus;
 import com.override.service.*;
 import dto.*;
 import enums.CodeExecutionStatus;
@@ -103,15 +103,15 @@ public class InitializationService {
             usernameAndPassword = faker.name().firstName();
             saveUser(usernameAndPassword,
                     usernameAndPassword,
-                    StatusUser.STUDY, Role.USER);
+                    StudyStatus.STUDY, Role.USER);
         }
     }
 
     private void adminInit() {
-        saveUser(adminLogin, adminPassword, StatusUser.STUDY, Role.USER, Role.ADMIN);
+        saveUser(adminLogin, adminPassword, StudyStatus.WORK, Role.USER, Role.ADMIN);
     }
 
-    private void saveUser(String login, String password, StatusUser study, Role... userRoles) {
+    private void saveUser(String login, String password, StudyStatus study, Role... userRoles) {
         List<Authority> roles = getAuthorityListFromRoles(userRoles);
         PlatformUser account = new PlatformUser(null, login, password, study, roles, new PersonalData(), new UserSettings());
         userService.save(account);

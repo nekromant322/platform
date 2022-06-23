@@ -1,7 +1,7 @@
 package com.override.controller.rest;
 
 import com.override.model.PlatformUser;
-import com.override.model.enums.StatusUser;
+import enums.StudyStatus;
 import com.override.service.PlatformUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class AdminRestController {
     @Secured("ROLE_ADMIN")
     @PostMapping("/work-student/{id}/{status}")
     public ResponseEntity<String> updateWorkStatus(@PathVariable Long id,@PathVariable String status) {
-        return userService.updateStatus(id, StatusUser.valueOf(status));
+        return userService.updateStatus(id, StudyStatus.valueOf(status));
     }
 
 

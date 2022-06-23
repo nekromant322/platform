@@ -1,7 +1,7 @@
 package com.override.service;
 
 import com.override.model.PlatformUser;
-import com.override.model.enums.StatusUser;
+import enums.StudyStatus;
 import com.override.repository.PlatformUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,7 +38,7 @@ public class CustomStudentDetailService implements UserDetailsService {
 
         private final String login;
         private final String password;
-        private final StatusUser statusUser;
+        private final StudyStatus studyStatus;
         private final List<GrantedAuthority> authorities;
 
         public CustomStudentDetails(PlatformUser student) {
@@ -49,7 +49,7 @@ public class CustomStudentDetailService implements UserDetailsService {
                     .map(GrantedAuthority::getAuthority)
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
-            this.statusUser = student.getStatusUser();
+            this.studyStatus = student.getStudyStatus();
         }
 
         @Override
@@ -84,7 +84,7 @@ public class CustomStudentDetailService implements UserDetailsService {
 
         @Override
         public boolean isEnabled() {
-            if (statusUser == StatusUser.BAN) {
+            if (studyStatus == StudyStatus.BAN) {
                 return false;
             }
             return true;
