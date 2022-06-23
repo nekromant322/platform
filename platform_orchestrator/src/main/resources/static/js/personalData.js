@@ -130,6 +130,77 @@ function getUserPersonalData() {
                 'placeholder="phoneNumber" maxlength="11" ' +
                 'value="' + (phoneNumber == null ? empty : phoneNumber) + '">' +
                 '<br>' +
+                '</div>' +
+                '  <input class="form-check-input"  type="checkbox" value="" id="flexCheckDefault" required>\n' +
+                '    <label>\n' +
+                '        <a  href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#consentFormModal">Согласие на обработку персональных данных</a>\n' +
+                '\n' +
+                '    </label>\n' +
+                '    <br>\n' +
+                '    <div class="modal fade " id="consentFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
+                '        <div class="modal-dialog modal-xl">' +
+                '            <div class="modal-content">' +
+                '                <div class="modal-header">' +
+                '                    <h5 class="modal-title" id="exampleModalLabel">Согласие на обработку персональных данных</h5>' +
+                '                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+                '                </div>' +
+                '                <div class="modal-body">' +
+                '                  <span>' +
+                '                    \n' +
+                '\n' +
+                'Предоставляя свои персональные данные Пользователь даёт согласие на обработку, хранение и использование' +
+                ' своих персональных данных на основании ФЗ № 152-ФЗ «О персональных данных» от 27.07.2006 г. в ' +
+                'следующих целях:\n' +
+                '</span>' +
+                '\n' +
+                '<ul>\n' +
+                '  <li>Осуществление клиентской поддержки</li>\n' +
+                '  <li>Получения Пользователем информации о маркетинговых событиях</li>\n' +
+                '  <li>Проведения аудита и прочих внутренних исследований с целью повышения качества предоставляемых услуг.</li>\n' +
+                '</ul>' +
+
+                '<span>' +
+                'Под персональными данными подразумевается любая информация личного характера, позволяющая установить' +
+                ' личность Пользователя/Покупателя такая как:\n' +
+                '</span>' +
+                '<ul>\n' +
+                '  <li>Фамилия, Имя, Отчество\n</li>\n' +
+                '  <li>Дата рождения\n</li>\n' +
+                '  <li>Контактный телефон\n</li>\n' +
+                '  <li>Адрес электронной почты\n</li>\n' +
+                '  <li> Почтовый адрес\n\n</li>\n' +
+                '</ul>' +
+                '<span>' +
+                'Персональные данные Пользователей хранятся исключительно на электронных носителях и обрабатываются' +
+                ' с использованием автоматизированных систем, за исключением случаев, когда неавтоматизированная' +
+                ' обработка персональных данных необходима в связи с исполнением требований законодательства.\n' +
+                '\n' +
+                '</span>' +
+                '<span>' +
+                'Компания обязуется не передавать полученные персональные данные третьим лицам, за исключением' +
+                ' следующих случаев:\n' +
+                '</span>' +
+                '\n' +
+                '    По запросам уполномоченных органов государственной власти РФ только по основаниям и в порядке,' +
+                ' установленным законодательством РФ\n' +
+                '<ul>\n' +
+                '  <li> Стратегическим партнерам, которые работают с Компанией для предоставления продуктов и услуг, или' +
+                ' тем из них, которые помогают Компании реализовывать продукты и услуги потребителям. Мы предоставляем' +
+                ' третьим лицам минимальный объем персональных данных, необходимый только для оказания требуемой услуги' +
+                ' или проведения необходимой транзакции.\n</li>\n' +
+                '  <li>Компания оставляет за собой право вносить изменения в одностороннем порядке в настоящие правила,' +
+                ' при условии, что изменения не противоречат действующему законодательству РФ. Изменения условий ' +
+                'настоящих правил вступают в силу после их публикации на Сайте.</li>\n' +
+                '</ul>' +
+
+                '                </span>' +
+                '                </div>' +
+                '                <div class="modal-footer">' +
+                '                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>' +
+                '                </div>' +
+                '            </div>' +
+                '        </div>' +
+                '    </div>' +
                 '<button type="submit" id="addButton" ' +
                 'class="btn btn-success">Сохранить' +
                 '</button>' +
@@ -246,7 +317,7 @@ function downloadFile(id, name) {
         xhrFields: {
             'responseType': 'blob'
         },
-        success: function(data, status, xhr) {
+        success: function (data, status, xhr) {
             var blob = new Blob([data], {type: xhr.getResponseHeader('Content-Type')});
             var link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
