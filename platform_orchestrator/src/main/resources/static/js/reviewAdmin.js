@@ -28,6 +28,10 @@ function drawColumns(data) {
     while (document.getElementById("review-table").getElementsByTagName("tbody")[0].rows[0])
         document.getElementById("review-table").getElementsByTagName("tbody")[0].deleteRow(0);
     for (let i = 0; i < data.length; i++) {
+        data.sort(function (a, b) {
+            var dateA = new Date(a.bookedDate), dateB = new Date(b.bookedDate)
+            return dateA - dateB //sort by date ascending
+        });
         addColumn(data[i]);
     }
 }
@@ -42,9 +46,9 @@ function addColumn(data) {
     insertTd(data.studentLogin, tr);
     insertTd(data.mentorLogin, tr);
     insertTd(data.bookedDate, tr);
-    if (data.bookedTime != null){
+    if (data.bookedTime != null) {
         insertTd(data.bookedTime.substring(0, 5), tr);
-    }else  insertTd(data.bookedTime, tr);
+    } else insertTd(data.bookedTime, tr);
 
 
     let review = {}
@@ -60,6 +64,7 @@ function addColumn(data) {
     for (i = 0; i < times.length; i++) {
         times[i] = times[i].substring(0, 5);
     }
+    times.sort();
 
     if (btnCase === 1) {
         for (let i = 0; i < times.length; i++) {

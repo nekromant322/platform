@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoField;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -249,12 +250,19 @@ public class InitializationService {
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
 
+        LocalDate today = LocalDate.now();
+        LocalDate nextWeakDay = LocalDate.now().plusDays(7);
+        long minDay = LocalDate.of(today.getYear(), today.getMonth(), today.getDayOfMonth()).toEpochDay();
+        long maxDay = LocalDate.of(nextWeakDay.getYear(), nextWeakDay.getMonth(), nextWeakDay.getDayOfMonth()).toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
+
         reviewService.saveOrUpdateReview(ReviewDTO.builder()
                 .id(null)
                 .topic(faker.book().title())
                 .studentLogin(null)
                 .mentorLogin(null)
-                .bookedDate(LocalDate.now().plusDays(1))
+                .bookedDate(randomDate)
                 .bookedTime(null)
                 .timeSlots(selectedTimeSlots)
                 .build(), student.getLogin());
