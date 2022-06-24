@@ -19,17 +19,17 @@ function drawColumns(data) {
     while (document.getElementById("requests-table").getElementsByTagName("tbody")[0].rows[0])
         document.getElementById("requests-table").getElementsByTagName("tbody")[0].deleteRow(0);
     for (let i = 0; i < data.length; i++) {
-        if(data[i].studyStatus === "STUDY"){
+        if (data[i].studyStatus === "STUDY") {
             addColumn(data[i]);
         }
     }
     for (let i = 0; i < data.length; i++) {
-        if(data[i].studyStatus === "WORK"){
+        if (data[i].studyStatus === "WORK") {
             addColumn(data[i]);
         }
     }
     for (let i = 0; i < data.length; i++) {
-        if(data[i].studyStatus === "BAN"){
+        if (data[i].studyStatus === "BAN") {
             addColumn(data[i]);
         }
     }
@@ -47,6 +47,9 @@ function addColumn(data) {
     updateBtn.className = "btn btn-success";
     updateBtn.innerHTML = "Повысить";
     updateBtn.type = "submit";
+    if (data.studyStatus === "BAN") {
+        updateBtn.disabled = true;
+    }
     updateBtn.addEventListener("click", () => {
         updateToAdmin(data.id);
     });
@@ -82,7 +85,7 @@ function addColumn(data) {
     } else {
         let status = document.createElement("span");
         status.innerHTML = data.studyStatus;
-        td.insertAdjacentElement("beforeend",status );
+        td.insertAdjacentElement("beforeend", status);
     }
     ;
 
