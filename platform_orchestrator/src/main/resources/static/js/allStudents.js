@@ -42,19 +42,22 @@ function addColumn(data) {
 }
 
 function updateToAdmin(id) {
-    let data = {};
-    data.id = id;
-    $.ajax({
-        url: '/promote-student/' + id,
-        type: 'POST',
-        contentType: 'application/json',
-        success: function () {
-            getStudents();
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    })
+    let confirmation = confirm("Вы уверены, что хотите повысить студента до админа ?");
+    if (confirmation === true) {
+        let data = {};
+        data.id = id;
+        $.ajax({
+            url: '/promote-student/' + id,
+            type: 'POST',
+            contentType: 'application/json',
+            success: function () {
+                getStudents();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
 }
 
 function insertTd(value, parent) {
