@@ -318,8 +318,11 @@ public class InitializationService {
                 Status.PASSED.name(), Status.OFFER.name(), Status.ACCEPTED.name()));
         List<String> levelList = new ArrayList<>(List.of("Junior", "Middle", "Senior", "Middle", "Senior", "Middle"));
         int salary = (faker.number().numberBetween(150, 350)) * 1000;
+        long minDay = LocalDate.now().minusDays(365).toEpochDay();
+        long maxDay = LocalDate.now().toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         interviewReportService.save(InterviewReportDTO.builder()
-                .date(LocalDate.now())
+                .date(LocalDate.ofEpochDay(randomDay))
                 .userLogin(user.getLogin())
                 .company(faker.company().name())
                 .project(faker.company().industry())
