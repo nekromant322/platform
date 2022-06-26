@@ -250,10 +250,8 @@ public class InitializationService {
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
 
-        LocalDate today = LocalDate.now();
-        LocalDate nextWeakDay = LocalDate.now().plusDays(7);
-        long minDay = LocalDate.of(today.getYear(), today.getMonth(), today.getDayOfMonth()).toEpochDay();
-        long maxDay = LocalDate.of(nextWeakDay.getYear(), nextWeakDay.getMonth(), nextWeakDay.getDayOfMonth()).toEpochDay();
+        long minDay =  LocalDate.now().minusDays(1).toEpochDay();
+        long maxDay = LocalDate.now().plusDays(2).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
 

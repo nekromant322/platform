@@ -23,15 +23,56 @@ function findReview(reviewFilterDTO) {
         }
     })
 }
+function sortDataByTime(data) {
+    //сортировка всего массива по дате ревью
+    data.sort(function (a, b) {
+        var dateA = new Date(a.bookedDate), dateB = new Date(b.bookedDate)
+        return dateA - dateB //sort by date ascending
+    });
+
+    let counter1 = 0;
+    let counter2 = 0;
+    let i = 0;
+    let dataArray = [[], []]
+
+    //разбиение массива на под массивы по одной дате
+    while (i < data.length) {
+        dataArray[counter1][counter2] = data[i]
+        if (data[i + 1] == null) {
+            break;
+        }
+        if (data[i].bookedTime !== data[i + 1].bookedTime) {
+            counter2 = 0;
+            counter1++;
+        } else {
+            counter2++;
+        }
+        i++;
+    }
+    i = 0;
+
+    let newArrayData = [];
+
+    //сортировка отдельно каждого массива и объединение в один
+    while (i < dataArray.length) {
+        dataArray[i].sort(
+            function (a, b) {
+                return a.timeSlots[0] - b.timeSlots[0]
+            }
+        )
+        dataArray[i].forEach(function (item){newArrayData.push(item)})
+        i++;
+    }
+
+    return  newArrayData;
+}
 
 function drawColumns(data) {
     while (document.getElementById("review-table").getElementsByTagName("tbody")[0].rows[0])
         document.getElementById("review-table").getElementsByTagName("tbody")[0].deleteRow(0);
+    //data = sortDataByTime(data);
+
     for (let i = 0; i < data.length; i++) {
-        data.sort(function (a, b) {
-            var dateA = new Date(a.bookedDate), dateB = new Date(b.bookedDate)
-            return dateA - dateB //sort by date ascending
-        });
         addColumn(data[i]);
     }
 }
