@@ -20,6 +20,20 @@ function checkAlert(itemId, alertId, errorMessage, extraErrorCondition) {
     return false;
 }
 
+function getCurrentUser() {
+    let login;
+    $.ajax({
+        url: '/platformUser/current',
+        type: 'GET',
+        contentType: 'application/json',
+        async: false,
+        success: function (currentUser) {
+            login = currentUser.login;
+        }
+    })
+    return login;
+}
+
 //на будущее
 function formatDate(date) {
     var dd = date.getDate();
