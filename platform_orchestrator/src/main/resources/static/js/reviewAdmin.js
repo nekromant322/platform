@@ -24,9 +24,61 @@ function findReview(reviewFilterDTO) {
     })
 }
 
+function sortDataByTime(data) {
+    //сортировка всего массива по дате ревью
+    data.sort(function (a, b) {
+        var dateA = new Date(a.bookedDate), dateB = new Date(b.bookedDate)
+        return dateA - dateB //sort by date ascending
+    });
+
+    if (data[0].bookedTime !== null) {
+        //разбиение массива на под массивы по одной дате
+        let counter1 = 0;
+        let counter2 = 0;
+        let i = 0;
+        let dataArray = [[]];
+
+        while (i < data.length) {
+            dataArray[counter1][counter2] = data[i];
+            if (data[i + 1] == null) {
+                break;
+            }
+            if (data[i].bookedDate !== data[i + 1].bookedDate) {
+                counter2 = 0;
+                counter1++;
+                dataArray[counter1] = [];
+
+            } else {
+                counter2++;
+            }
+            i++;
+        }
+
+        //сортировка отдельно каждого массива и объединение в один
+        let newArrayData = [];
+        i = 0;
+
+        while (i < dataArray.length) {
+            dataArray[i].sort(
+                function (a, b) {
+                    return a.bookedTime.localeCompare(b.bookedTime);
+                }
+            )
+            dataArray[i].forEach(function (item) {
+                newArrayData.push(item)
+            })
+            i++;
+        }
+
+        return newArrayData;
+    } else return data;
+}
+
 function drawColumns(data) {
     while (document.getElementById("review-table").getElementsByTagName("tbody")[0].rows[0])
         document.getElementById("review-table").getElementsByTagName("tbody")[0].deleteRow(0);
+    data = sortDataByTime(data);
+
     for (let i = 0; i < data.length; i++) {
         addColumn(data[i]);
     }
@@ -42,9 +94,9 @@ function addColumn(data) {
     insertTd(data.studentLogin, tr);
     insertTd(data.mentorLogin, tr);
     insertTd(data.bookedDate, tr);
-    if (data.bookedTime != null){
+    if (data.bookedTime != null) {
         insertTd(data.bookedTime.substring(0, 5), tr);
-    }else  insertTd(data.bookedTime, tr);
+    } else insertTd(data.bookedTime, tr);
 
 
     let review = {}
@@ -60,6 +112,7 @@ function addColumn(data) {
     for (i = 0; i < times.length; i++) {
         times[i] = times[i].substring(0, 5);
     }
+    times.sort();
 
     if (btnCase === 1) {
         for (let i = 0; i < times.length; i++) {
