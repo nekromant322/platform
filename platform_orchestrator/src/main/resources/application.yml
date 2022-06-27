@@ -122,6 +122,17 @@ navbar:
       /interviewReports
     - Настройки
       /userSettings
+  graduate:
+    - Курсы
+      /courses
+    - Собеседования
+      /interviewReports
+    - Оплата
+      /pay
+    - Персональные данные
+      /personalData
+    - Настройки
+      /userSettings
 
 management:
   info:

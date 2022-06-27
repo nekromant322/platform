@@ -114,7 +114,7 @@ class PlatformUserServiceTest {
                 null,
                 login,
                 password,
-                StudyStatus.STUDY,
+                StudyStatus.ACTIVE,
                 new ArrayList<>() {{
                     add(userAuthority);
                 }},

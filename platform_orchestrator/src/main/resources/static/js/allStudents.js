@@ -19,12 +19,12 @@ function drawColumns(data) {
     while (document.getElementById("requests-table").getElementsByTagName("tbody")[0].rows[0])
         document.getElementById("requests-table").getElementsByTagName("tbody")[0].deleteRow(0);
     for (let i = 0; i < data.length; i++) {
-        if (data[i].studyStatus === "STUDY") {
+        if (data[i].studyStatus === "ACTIVE" && data[i].authorities[0].authority !== "ROLE_GRADUATE") {
             addColumn(data[i]);
         }
     }
     for (let i = 0; i < data.length; i++) {
-        if (data[i].studyStatus === "WORK") {
+        if (data[i].authorities[0].authority === "ROLE_GRADUATE" && data[i].studyStatus !== "BAN") {
             addColumn(data[i]);
         }
     }
@@ -47,6 +47,9 @@ function addColumn(data) {
     updateBtn.className = "btn btn-success";
     updateBtn.innerHTML = "Повысить";
     updateBtn.type = "submit";
+    if (data.authorities[0].authority === "ROLE_GRADUATE") {
+        document.getElementsByClassName("finish-education").disable = true;
+    }
     if (data.studyStatus === "BAN") {
         updateBtn.disabled = true;
     }
@@ -57,12 +60,11 @@ function addColumn(data) {
     td.insertAdjacentElement("beforeend", updateBtn);
     td = tr.insertCell(3);
 
-
-    if (data.studyStatus === "STUDY") {
+    if (data.studyStatus === "ACTIVE" && data.authorities[0].authority === "ROLE_USER") {
 
         td.insertAdjacentHTML("beforeend",
             `
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#aceptModal${data.id}">
+            <button type="button" class="btn btn-primary finish-education" data-toggle="modal" data-target="#aceptModal${data.id}">
                 Завершить обучение
             </button>
 
@@ -75,14 +77,20 @@ function addColumn(data) {
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" data-btn="working" data-id = "${data.id}">Устроился</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-btn="notWorking" data-id = "${data.id}" >Не устроился</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-btn="ban" data-id = "${data.id}" >Забанить</button>
                   </div>
                 </div>
               </div>
             </div>            
            `
         )
-    } else {
+    }
+    if (data.authorities[0].authority === "ROLE_GRADUATE") {
+        let status = document.createElement("span");
+        status.innerHTML = "GRADUATE ";
+        td.insertAdjacentElement("beforeend", status);
+    }
+    if (data.studyStatus === "BAN") {
         let status = document.createElement("span");
         status.innerHTML = data.studyStatus;
         td.insertAdjacentElement("beforeend", status);
@@ -112,25 +120,25 @@ function btnClickListener() {
     let table = document.getElementById("requests-table").getElementsByTagName("tbody")[0];
     table.addEventListener("click", event => {
         const working = event.target.dataset.btn === "working";
-        const notWorking = event.target.dataset.btn === "notWorking";
+        const ban = event.target.dataset.btn === "ban";
         if (working) {
-            setWorkStatus(event.target.dataset.id, "WORK");
+            updateUserRole(event.target.dataset.id, "GRADUATE");
             getStudents();
         }
-        if (notWorking) {
+        if (ban) {
             setWorkStatus(event.target.dataset.id, "BAN");
             getStudents();
         }
     });
 }
 
-function updateToAdmin(id) {
-    let confirmation = confirm("Вы уверены, что хотите повысить студента до админа ?");
+function updateUserRole(id, status) {
+    let confirmation = confirm("Вы уверены, что хотите повысить студента до " + status + " ?");
     if (confirmation === true) {
         let data = {};
         data.id = id;
         $.ajax({
-            url: '/promote-student/' + id,
+            url: '/promote-student/' + id + '/' + status,
             type: 'POST',
             contentType: 'application/json',
             success: function () {

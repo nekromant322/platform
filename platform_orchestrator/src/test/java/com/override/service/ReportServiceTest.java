@@ -62,7 +62,7 @@ class ReportServiceTest {
 
     @Test
     public void testWhenSendDailyReminderOfReport() {
-        List<PlatformUser> userList = List.of(new PlatformUser(null, "123", "123", StudyStatus.STUDY,
+        List<PlatformUser> userList = List.of(new PlatformUser(null, "123", "123", StudyStatus.ACTIVE,
                 Collections.singletonList(new Authority(null, "ROLE_USER")), new PersonalData(), new UserSettings()));
 
         when(userService.findStudentsWithoutReportOfCurrentDay()).thenReturn(userList);

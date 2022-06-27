@@ -67,6 +67,9 @@ public class PageController {
         return "interviewReport";
     }
 
+    @GetMapping("/pay")
+    public String payPage(){return "pay";}
+
     @GetMapping("/login")
     public String authPage() {
         return "login";

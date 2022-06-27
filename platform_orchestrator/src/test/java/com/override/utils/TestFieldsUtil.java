@@ -21,16 +21,16 @@ public class TestFieldsUtil {
     }
 
     public static PlatformUser generateTestUser() {
-        return new PlatformUser(null, "Andrey", "a", StudyStatus.STUDY,
+        return new PlatformUser(null, "Andrey", "a", StudyStatus.ACTIVE,
                 Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings());
     }
 
     public static List<PlatformUser> generateTestListOfThreeUsersWithoutReportsOnCurrentDay() {
-        PlatformUser firstUserWithoutReport = new PlatformUser(1L, "1", "1", StudyStatus.STUDY,
+        PlatformUser firstUserWithoutReport = new PlatformUser(1L, "1", "1", StudyStatus.ACTIVE,
                 Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new UserSettings());
-        PlatformUser secondUserWithoutReport = new PlatformUser(2L, "2", "2", StudyStatus.STUDY,
+        PlatformUser secondUserWithoutReport = new PlatformUser(2L, "2", "2", StudyStatus.ACTIVE,
                 Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new UserSettings());
-        PlatformUser thirdUserWithoutReport = new PlatformUser(3L, "3", "3", StudyStatus.STUDY,
+        PlatformUser thirdUserWithoutReport = new PlatformUser(3L, "3", "3", StudyStatus.ACTIVE,
                 Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new UserSettings());
 
         return List.of(firstUserWithoutReport, secondUserWithoutReport, thirdUserWithoutReport);
