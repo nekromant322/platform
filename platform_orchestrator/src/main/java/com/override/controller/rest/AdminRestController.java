@@ -21,7 +21,7 @@ public class AdminRestController {
     private final PlatformUserService userService;
 
     @Secured("ROLE_ADMIN")
-    @PostMapping("/promote-student/{id}/{Role}")
+    @PostMapping("/promote-student/{id}/{role}")
     public ResponseEntity<String> updateUserRole(@PathVariable Long id, @PathVariable Role role) {
         return userService.updateUserRole(id, role);
     }
