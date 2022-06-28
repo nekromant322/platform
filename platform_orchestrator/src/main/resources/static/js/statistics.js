@@ -20,7 +20,7 @@ const dataOfSteps = {
 
 const dataOfUsers = {
     datasets: [{
-        label: 'Ученики',
+        label: 'Количество дней',
         backgroundColor: 'rgb(255,0,255)',
         borderColor: 'rgb(100, 99, 132)',
         data: statisticsData.studentsCodeTry,
