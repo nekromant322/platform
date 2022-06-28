@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Обязательные метатеги -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Override платформа</title>
+</head>
+<header th:replace="fragments/navbar.html :: header"></header>
+<body>
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+        <div class="col-1">
+            <div th:replace="fragments/lessonSidebar.html"/>
+        </div>
+        <div class="col-11">
+            <h4>Java pre-project. Практическая задача 1.1.3</h4><br>
+            <p><h5>Практическая задача</h5><br>
+            Задание:<br>
+            <p>В этом задании мы познакомимся с такими технологиями, как:</p>
+            <link>
+            Maven -<a href="https://www.apache-maven.ru/">https://www.apache-maven.ru/</a><br>
+            JDBC - <a href="https://o7planning.org/ru/10167/java-jdbc-tutorial">https://o7planning.org/ru/10167/java-jdbc-tutorial</a>
+            <br>
+            <h5> Для выполнения задания необходимо:</h5>
+            <p>Клонировать/скачать заготовку по <a href="https://github.com/jm-program/CoreTaskTemplate">ссылке</a></p>
+            <p>Установить на компьютер MySqlServer и Workbench. Создать подключение и схему через Workbench.
+                Протестировать возможность соединения с базой через идею с помощью встроенной утилиты, как показано на
+                рисунке:</p>
+
+
+            <p><b>Описание задачи:</b></p>
+            <p>Необходимо ознакомиться с заготовкой и доработать приложение, которое взаимодействует с базой оперируя
+                пользователем ( класс User ) и проверить свои методы заранее написанными JUnit тестами. По итогу все
+                тесты должны быть пройдены. Разрешается посмотреть реализацию тестов.<br>
+                Для запуска теста необходимо найти класс в папке test ( показано в предыдущей лекции ) и при нажатии на
+                него правой кнопкой мыши запустить, выбрав Run "Имя класса"<br>
+                Класс UserHibernateDaoImpl в рамках этой задачи не затрагивается (остаётся пустой)<br>
+                User представляет из себя сущность с полями:
+            <li>Long id</li>
+            <li>String name</li>
+            <li>String lastName</li>
+            <li>Byte age</li>
+            Архитектура приложения создана с опорой на паттерн проектирования MVC ( частично, у нас не WEB приложение)
+            Ознакомиться с паттерном можно <a
+                href="https://pro-java.ru/patterny-proektirovaniya-java/chto-takoe-pattern-proektirovaniya-mvc-v-java/">здесь</a></p>
+            <br>
+
+            <p>Требования к классам приложения:
+                Классы dao/service должны реализовывать соответствующие интерфейсы
+                Класс dao должен иметь конструктор пустой/по умолчанию
+                Все поля должны быть private
+                service переиспользует методы dao
+                Обработка всех исключений, связанных с работой с базой данных должна находиться в dao
+                Класс Util должен содержать логику настройки соединения с базой данных</p>
+            <br>
+
+            <p>Необходимые операции:
+            <ol>
+                <li>Создание таблицы для User(ов) – не должно приводить к исключению, если такая таблица уже
+                    существует
+                </li>
+                <li>Удаление таблицы User(ов) – не должно приводить к исключению, если таблицы не существует</li>
+                <li>Очистка содержания таблицы</li>
+                <li>Добавление User в таблицу</li>
+                <li>Удаление User из таблицы ( по id )</li>
+                <li>Получение всех User(ов) из таблицы</li>
+            </ol>
+            </p>
+            <br>
+            <p>Алгоритм работы приложения:<br>
+                <i>В методе main класса Main должны происходить следующие операции:</i>
+            <ol>
+                <li>Создание таблицы User(ов)</li>
+                <li>Добавление 4 User(ов) в таблицу с данными на свой выбор. После каждого добавления должен быть вывод
+                    в консоль ( User с именем – name добавлен в базу данных )
+                </li>
+                <li>Получение всех User из базы и вывод в консоль ( должен быть переопределен toString в классе User)
+                </li>
+                <li>Очистка таблицы User(ов)</li>
+                Удаление таблицы</li></ol>
+            </p>
+            <img src="/images/prpr1.1.3.png" width=500><br><br>
+            <div th:replace="fragments/links.html :: body"></div>
+            <br>
+            <a href="/lessons/spring/1/1/4" class="btn btn-success btn-lg" role="button" id="nextLesson">Следующий
+                урок</a>
+        </div>
+    </div>
+</div>
+<!-- Вариант 1: Bootstrap в связке с Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
+<script src="/js/nextLessonButton.js"></script>
+<script src="/js/preProjectLink.js"></script>
+</body>
+</html>

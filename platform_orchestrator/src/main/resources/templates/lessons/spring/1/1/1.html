@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css"/>
     <title>Override платформа</title>
 
     <header th:replace="fragments/navbar.html :: header"></header>
@@ -17,17 +18,31 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
         <div class="col-1">
             <div th:replace="fragments/lessonSidebar.html"/>
-            <div th:replace="fragments/myCodeTryButton.html :: body"></div>
         </div>
         <div class="col-11">
-            <h1>Some content</h1>
+
+            <h4>Java pre-project. Практическая задача 1.1.1</h4><br>
+            <p><h5>Практическая задача</h5><br>
+            Задание:<br>
+
+            1. Пройти 2 первых блока в приложении <a href="https://learngitbranching.js.org">https://learngitbranching.js.org</a>
+            (Введение и Едем дальше).<br><br>
+            2. Создать Git репозиторий на GitHub и залить туда пустой проект.<br><br>
+            3. Склонируйте себе свой проект, используя IDE. Для этого необходимо выполнить следующие действия:<br><br>
+            1. На верхней панели найдите вкладку <b>file -> new -> Project from Version Control...</b><br><br>
+            2. В открывшемся окне, необходимо вставить в поле для ввода ссылку на репозиторий и нажать кнопку clone.
+            Ссылку на репозиторий можно получить, нажав на кнопку Clone в вашем репозитории на <a
+                href="https://github.com">https://github.com</a><br><br>
+
+            <img src="/images/Screenshot_161.png" width=750><br><br>
+            <img src="/images/prpr1.1.1(2).png" width=750><br><br><br><br>
+            </p>
         </div>
     </div>
-    <a href="/lessons/spring/1/2/1" class="btn btn-success btn-lg" role="button" id="nextLesson">Следующий урок</a>
+    <div th:replace="fragments/links.html :: body"></div>
+    <br>
+    <a href="/lessons/spring/1/1/2" class="btn btn-success btn-lg" role="button" id="nextLesson">Следующий урок</a>
 </div>
-
-
-<!-- Дополнительный JavaScript; выберите один из двух! -->
 
 <!-- Вариант 1: Bootstrap в связке с Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -35,5 +50,6 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
 <script src="/js/nextLessonButton.js"></script>
+<script src="/js/preProjectLink.js"></script>
 </body>
 </html>
