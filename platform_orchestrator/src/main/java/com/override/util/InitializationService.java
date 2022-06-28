@@ -104,12 +104,18 @@ public class InitializationService {
             usernameAndPassword = faker.name().firstName();
             saveUser(usernameAndPassword,
                     usernameAndPassword,
-                    StudyStatus.STUDY, Role.USER);
+                    StudyStatus.ACTIVE, Role.USER);
+        }
+        for (int i = 0; i < usersCount; i++) {
+            usernameAndPassword = faker.name().firstName();
+            saveUser(usernameAndPassword,
+                    usernameAndPassword,
+                    StudyStatus.ACTIVE, Role.GRADUATE);
         }
     }
 
     private void adminInit() {
-        saveUser(adminLogin, adminPassword, StudyStatus.WORK, Role.USER, Role.ADMIN);
+        saveUser(adminLogin, adminPassword, StudyStatus.ACTIVE, Role.USER, Role.ADMIN);
     }
 
     private void saveUser(String login, String password, StudyStatus study, Role... userRoles) {

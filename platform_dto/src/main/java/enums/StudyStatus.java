@@ -1,9 +1,8 @@
 package enums;
 
 public enum StudyStatus {
-    STUDY("Study"),
-    BAN("Ban"),
-    WORK("Work");
+    ACTIVE("Active"),
+    BAN("Ban");
 
     private final String name;
 

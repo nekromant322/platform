@@ -1,6 +1,7 @@
 package com.override.controller.rest;
 
 import com.override.model.PlatformUser;
+import com.override.model.enums.Role;
 import enums.StudyStatus;
 import com.override.service.PlatformUserService;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +21,9 @@ public class AdminRestController {
     private final PlatformUserService userService;
 
     @Secured("ROLE_ADMIN")
-    @PostMapping("/promote-student/{id}")
-    public ResponseEntity<String> updateToAdmin(@PathVariable Long id) {
-        return userService.updateToAdmin(id);
+    @PostMapping("/promote-student/{id}/{Role}")
+    public ResponseEntity<String> updateUserRole(@PathVariable Long id, @PathVariable Role role) {
+        return userService.updateUserRole(id, role);
     }
 
     @Secured("ROLE_ADMIN")

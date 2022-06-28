@@ -12,4 +12,6 @@ public class NavbarProperties {
     private List<String> admin;
 
     private List<String> user;
+
+    private List<String> graduate;
 }

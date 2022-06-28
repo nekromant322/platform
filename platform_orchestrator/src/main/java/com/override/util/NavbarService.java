@@ -18,6 +18,9 @@ public class NavbarService {
         if (request.isUserInRole("ROLE_ADMIN")) {
             return converter.convertListOfStringToListOfNavbarElement(navbarProperties.getAdmin());
         }
-        return converter.convertListOfStringToListOfNavbarElement(navbarProperties.getUser());
+        if (request.isUserInRole("ROLE_GRADUATE")) {
+            return converter.convertListOfStringToListOfNavbarElement(navbarProperties.getGraduate());
+        }
+            return converter.convertListOfStringToListOfNavbarElement(navbarProperties.getUser());
     }
 }

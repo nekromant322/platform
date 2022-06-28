@@ -9,6 +9,7 @@ import com.override.model.enums.Role;
 import enums.StudyStatus;
 import com.override.repository.PlatformUserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class PlatformUserService {
         String password = passwordGeneratorService.generateStrongPassword();
         List<Authority> roles = Collections.singletonList(authorityService.getAuthorityByRole(Role.USER));
 
-        PlatformUser account = new PlatformUser(null, login, password, StudyStatus.STUDY, roles, new PersonalData(), new UserSettings());
+        PlatformUser account = new PlatformUser(null, login, password, StudyStatus.ACTIVE, roles, new PersonalData(), new UserSettings());
         register(account);
 
         return account;
@@ -113,5 +114,27 @@ public class PlatformUserService {
         platformUserRepository.save(student);
 
         return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> updateUserRole(Long id, Role role) {
+        PlatformUser student = platformUserRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + id + " не найден"));
+
+        if(role.equals(Role.ADMIN)) {
+            Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
+            List<Authority> studentAuthorities = student.getAuthorities();
+            studentAuthorities.add(adminAuthority);
+        }
+        if(role.equals(Role.GRADUATE)){
+            Authority graduateAuthority = authorityService.getAuthorityByRole(Role.GRADUATE);
+            List<Authority> studentAuthorities = student.getAuthorities();
+            studentAuthorities.clear();
+            studentAuthorities.add(graduateAuthority);
+        }
+
+        platformUserRepository.save(student);
+
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+
     }
 }
