@@ -149,7 +149,7 @@ function editReview(reviewDTO) {
     let confirmation = confirm("Вы уверены, что хотите взять ревью " + reviewDTO.id + " и назначить его время на " + reviewDTO.bookedTime + "?");
     if (confirmation === true) {
         $.ajax({
-            url: '/reviews',
+            url: '/reviews/acceptation',
             method: 'PATCH',
             contentType: 'application/json',
             data: JSON.stringify(reviewDTO),
@@ -168,7 +168,7 @@ function deleteReview(id) {
     let confirmation = confirm("Вы уверены, что хотите отменить ревью " + id + "?");
     if (confirmation === true) {
         $.ajax({
-            url: '/reviews?id=' + id,
+            url: '/reviews/cancellation?id=' + id,
             method: 'DELETE',
             success: function () {
                 console.log('deleted')

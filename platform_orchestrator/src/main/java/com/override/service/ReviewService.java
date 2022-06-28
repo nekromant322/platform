@@ -95,5 +95,16 @@ public class ReviewService {
                     notificatorFeign.sendMessage(review.getMentor().getLogin(), messageText, Communication.TELEGRAM);
                 });
     }
+
+    public void acceptReview(ReviewDTO reviewDTO, String username) {
+        saveOrUpdateReview(reviewDTO, username);
+        notificatorFeign.sendMessage(reviewDTO.getStudentLogin(), "Ментор подтвердил ревью", Communication.TELEGRAM);
+    }
+
+    public void cancelReview(Long id) {
+        notificatorFeign.sendMessage(reviewRepository.findById(id).get().getStudent().getLogin(), "Ментор вынужден был отменить ревью. Попробуйте записаться на другое время", Communication.TELEGRAM);
+        deleteReview(id);
+    }
+
 }
 

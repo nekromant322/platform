@@ -27,6 +27,14 @@ public class ReviewRestController {
         return new ResponseEntity<>("Ревью сохранено!", HttpStatus.OK);
     }
 
+    @PatchMapping("/acceptation")
+    public ResponseEntity<String> acceptReview(@RequestBody ReviewDTO reviewDTO,
+                                                     @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
+        reviewService.acceptReview(reviewDTO, user.getUsername());
+        return new ResponseEntity<>("Ревью сохранено!", HttpStatus.OK);
+    }
+
+
     @PostMapping
     public List<ReviewDTO> findReview(@RequestBody ReviewFilterDTO reviewFilterDTO) {
         return reviewService.findReview(reviewFilterDTO);
@@ -36,6 +44,13 @@ public class ReviewRestController {
     @DeleteMapping
     public ResponseEntity<String> deleteReview(@RequestParam Long id) {
         reviewService.deleteReview(id);
+        return new ResponseEntity<>("Ревью удалено!", HttpStatus.OK);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @DeleteMapping("/cancellation")
+    public ResponseEntity<String> deleteReviewNotification(@RequestParam Long id) {
+        reviewService.cancelReview(id);
         return new ResponseEntity<>("Ревью удалено!", HttpStatus.OK);
     }
 }
