@@ -54,7 +54,7 @@ function addColumn(data) {
         updateBtn.disabled = true;
     }
     updateBtn.addEventListener("click", () => {
-        updateToAdmin(data.id);
+        updateUserRole(data.id,"ADMIN");
     });
     td = tr.insertCell(2);
     td.insertAdjacentElement("beforeend", updateBtn);
