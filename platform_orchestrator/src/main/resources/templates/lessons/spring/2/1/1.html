@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css"/>
     <title>Override платформа</title>
 
     <header th:replace="fragments/navbar.html :: header"></header>
@@ -17,23 +18,52 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
         <div class="col-1">
             <div th:replace="fragments/lessonSidebar.html"/>
-            <div th:replace="fragments/myCodeTryButton.html :: body"></div>
         </div>
         <div class="col-11">
-            <h1>Some content</h1>
+            <h4>Java pre-project. Практическая задача 2.1.1</h4><br>
+            <p>Spring Framework (сокр. Spring) - фреймворк для разработки enterprise-приложений. Spring позволяет
+                создавать масштабируемые и легко поддерживаемые решения, что сильно ускоряет разработку.<br><br>
+                Фреймворк имеет высокую модульность, каждый модуль способен запускаться и выполнять свои задачи как
+                самостоятельное приложение, либо же может использоваться в группе с другими модулями (фреймворки во
+                фреймворке).<br><br>
+                Функционал Спринга постоянно обновляется и дополняется, наиболее популярные модули реализуют функционал
+                MVC, работу с базой данных, секьюрность (безопасность) приложений, обмен сообщениями, шаблонизаторы и
+                многое другогое.<br><br>
+                Как это работает.<br><br>
+                Bean – это объект, управляемый Спрингом. В Спринге все будет бинами: и сервисы, и DAO, и контроллеры
+                (группы сервлетов).<br><br>
+                DI-контейнер - технология, держащая в себе бины и отвечающая за их связь. Например, подтягивать DAO к
+                сервису будет именно этот контейнер. Но вашим кодом это не ограничится, контейнер позволит запускать
+                различные модули без жесткой связи между собой, так в модуль Security не потребуется передавать все
+                контроллеры из модуля MVC, контейнер свяжет их неявно.<br><br>
+                Контекст – это окружение, в котором запускается приложение. Их реализовано более десятка, но чаще всего
+                используется следующие три:<br><br>
+            <li>FileSystemXmlApplicationContext - xml-конфиг, раньше был распространен, сейчас устарел (после ввода
+                аннотаций в java 1.6).
+            </li>
+            <li>AnnotationConfigApplicationContext - современный контекст, основывается на аннотациях, изучать и
+                использовать будем именно его.
+            </li>
+            <li>StaticApplicationContext - переходный вариант, прямо в коде связываем бины, используется для
+                тестирования.
+            </li>
+            <br><br>
+
+            И в обратную сторону: Контейнер + метаданные (настройки) образуют ваше приложение с контейнером, который и
+            управляет бинами</p>
+
         </div>
     </div>
-    <a href="/lessons/spring/2/2/1" class="btn btn-success btn-lg" role="button" id="nextLesson">Следующий урок</a>
+    <div th:replace="fragments/PreProjectLink.html :: body"></div>
+    <br>
+    <a href="/lessons/spring/2/1/2" class="btn btn-success btn-lg" role="button" id="nextLesson">Следующий урок</a>
 </div>
-
-
-<!-- Дополнительный JavaScript; выберите один из двух! -->
-
 <!-- Вариант 1: Bootstrap в связке с Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
 <script src="/js/nextLessonButton.js"></script>
+<script src="/js/preProjectLink.js"></script>
 </body>
 </html>
