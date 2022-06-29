@@ -1,6 +1,5 @@
 package com.override.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,13 +22,11 @@ public class PreProjectLesson {
     @Pattern(regexp = "^((http(s)?://)?(github.com)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?)$")
     private String link;
 
-    @JsonIgnore
-    @JoinColumn(name = "user_id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private PlatformUser user;
-
     @Column(name = "task_identifier")
     private String taskIdentifier;
 
+    @JoinColumn(name = "user_id")
+    @ManyToOne
+    private PlatformUser user;
     }
 
