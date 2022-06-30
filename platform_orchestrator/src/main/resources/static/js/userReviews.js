@@ -3,7 +3,7 @@ let tomorrow = new Date(today.getTime() + MILLIS_PER_DAY);
 let student;
 
 window.onload = function () {
-    student = getCurrentUser();
+    student = getCurrentUser().login;
     myReview();
 };
 

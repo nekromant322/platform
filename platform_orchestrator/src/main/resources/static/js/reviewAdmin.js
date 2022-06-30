@@ -4,7 +4,7 @@ let btnCase;
 let mentor;
 
 window.onload = function () {
-    getCurrentMentor();
+    mentor = getCurrentUser().login;
     newReviewRequests();
 };
 
@@ -42,9 +42,9 @@ function addColumn(data) {
     insertTd(data.studentLogin, tr);
     insertTd(data.mentorLogin, tr);
     insertTd(data.bookedDate, tr);
-    if (data.bookedTime != null){
+    if (data.bookedTime != null) {
         insertTd(data.bookedTime.substring(0, 5), tr);
-    }else  insertTd(data.bookedTime, tr);
+    } else insertTd(data.bookedTime, tr);
 
 
     let review = {}
@@ -98,16 +98,6 @@ function insertTd(value, parent) {
     parent.insertAdjacentElement("beforeend", element)
 }
 
-function getCurrentMentor() {
-    $.ajax({
-        url: '/platformUser/current',
-        type: 'GET',
-        contentType: 'application/json',
-        success: function (currentUser) {
-            mentor = currentUser.login;
-        }
-    })
-}
 
 function newReviewRequests() {
     btnCase = 1;
