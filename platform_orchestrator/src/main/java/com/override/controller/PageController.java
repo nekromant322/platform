@@ -67,6 +67,11 @@ public class PageController {
         return "interviewReport";
     }
 
+    @GetMapping("/userReviews")
+    public String showUsersReviews(){
+        return "userReviews";
+    }
+
     @GetMapping("/login")
     public String authPage() {
         return "login";

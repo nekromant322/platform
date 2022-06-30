@@ -1,5 +1,6 @@
 const MILLIS_PER_DAY = 1000 * 60 * 60 * 24
 
+
 function checkAlert(itemId, alertId, errorMessage, extraErrorCondition) {
     let item = document.getElementById(itemId);
     try {
@@ -18,6 +19,20 @@ function checkAlert(itemId, alertId, errorMessage, extraErrorCondition) {
         return true;
     }
     return false;
+}
+
+function getCurrentUser() {
+    let curUser;
+    $.ajax({
+        url: '/platformUser/current',
+        type: 'GET',
+        contentType: 'application/json',
+        async: false,
+        success: function (currentUser) {
+            curUser = currentUser;
+        }
+    })
+    return curUser;
 }
 
 //на будущее
