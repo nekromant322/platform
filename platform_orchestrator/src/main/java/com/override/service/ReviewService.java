@@ -49,8 +49,18 @@ public class ReviewService {
                 platformUserRepository.findFirstByLogin(reviewDTO.getMentorLogin())));
     }
 
+    public void saveOrUpdateReviewTelegramNotification(ReviewDTO reviewDTO, String username) {
+        saveOrUpdateReview(reviewDTO, username);
+        notificatorFeign.sendMessage(reviewDTO.getStudentLogin(), "Ментор подтвердил ревью " + reviewDTO.getBookedDate() + " в " + reviewDTO.getBookedTime(), Communication.TELEGRAM);
+    }
     public void deleteReview(Long id) {
-        reviewRepository.deleteById(id);
+            reviewRepository.deleteById(id);
+    }
+
+    public void deleteReviewTelegramNotification(Long id) {
+        notificatorFeign.sendMessage(reviewRepository.findById(id).get().getStudent().getLogin(), "Ментор вынужден был отменить ревью. Попробуйте записаться на другое время", Communication.TELEGRAM);
+        deleteReview(id);
+
     }
 
     /**
@@ -96,15 +106,9 @@ public class ReviewService {
                 });
     }
 
-    public void acceptReview(ReviewDTO reviewDTO, String username) {
-        saveOrUpdateReview(reviewDTO, username);
-        notificatorFeign.sendMessage(reviewDTO.getStudentLogin(), "Ментор подтвердил ревью", Communication.TELEGRAM);
-    }
 
-    public void cancelReview(Long id) {
-        notificatorFeign.sendMessage(reviewRepository.findById(id).get().getStudent().getLogin(), "Ментор вынужден был отменить ревью. Попробуйте записаться на другое время", Communication.TELEGRAM);
-        deleteReview(id);
-    }
+
+
 
 }
 

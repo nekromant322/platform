@@ -23,17 +23,14 @@ public class ReviewRestController {
     @PatchMapping
     public ResponseEntity<String> saveOrUpdateReview(@RequestBody ReviewDTO reviewDTO,
                                                      @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
-        reviewService.saveOrUpdateReview(reviewDTO, user.getUsername());
+        if (reviewDTO.getBookedTime() != null) {
+            reviewService.saveOrUpdateReviewTelegramNotification(reviewDTO, user.getUsername());
+        } else {
+            reviewService.saveOrUpdateReview(reviewDTO, user.getUsername());
+        }
+
         return new ResponseEntity<>("Ревью сохранено!", HttpStatus.OK);
     }
-
-    @PatchMapping("/acceptation")
-    public ResponseEntity<String> acceptReview(@RequestBody ReviewDTO reviewDTO,
-                                                     @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
-        reviewService.acceptReview(reviewDTO, user.getUsername());
-        return new ResponseEntity<>("Ревью сохранено!", HttpStatus.OK);
-    }
-
 
     @PostMapping
     public List<ReviewDTO> findReview(@RequestBody ReviewFilterDTO reviewFilterDTO) {
@@ -43,14 +40,7 @@ public class ReviewRestController {
     @Secured("ROLE_ADMIN")
     @DeleteMapping
     public ResponseEntity<String> deleteReview(@RequestParam Long id) {
-        reviewService.deleteReview(id);
-        return new ResponseEntity<>("Ревью удалено!", HttpStatus.OK);
-    }
-
-    @Secured("ROLE_ADMIN")
-    @DeleteMapping("/cancellation")
-    public ResponseEntity<String> deleteReviewNotification(@RequestParam Long id) {
-        reviewService.cancelReview(id);
+            reviewService.deleteReviewTelegramNotification(id);
         return new ResponseEntity<>("Ревью удалено!", HttpStatus.OK);
     }
 }

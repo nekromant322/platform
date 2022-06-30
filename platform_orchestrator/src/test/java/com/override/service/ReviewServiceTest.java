@@ -61,6 +61,16 @@ public class ReviewServiceTest {
     void deleteReview() {
         reviewService.deleteReview(1L);
         verify(reviewRepository,times(1)).deleteById(1L);
+
+    }
+
+    @Test
+    void deleteReviewTelegramNotification() {
+
+
+        reviewService.deleteReview(1L);
+        verify(reviewRepository,times(1)).deleteById(1L);
+
     }
 
     @Test
