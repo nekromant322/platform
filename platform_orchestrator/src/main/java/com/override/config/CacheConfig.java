@@ -1,4 +1,4 @@
-package com.override.util;
+package com.override.config;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-public class OrchestratorBeanConfig {
+public class CacheConfig {
 
     @Value("${cache.timeout}")
     private long timeToExpireCache;
@@ -19,12 +19,11 @@ public class OrchestratorBeanConfig {
     private long sizeOfCache;
 
     @Bean
-    Cache<Integer, HelpMeDTO> getCacheBean() {
-        Cache<Integer, HelpMeDTO> resultCache = Caffeine.newBuilder()
+    public Cache<Integer, HelpMeDTO> getCacheBean() {
+        return Caffeine.newBuilder()
                 .expireAfterWrite(timeToExpireCache, TimeUnit.MINUTES)
                 .maximumSize(sizeOfCache)
                 .build();
-        return resultCache;
     }
 
 }

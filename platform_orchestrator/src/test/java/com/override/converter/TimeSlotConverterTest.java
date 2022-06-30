@@ -1,6 +1,5 @@
-package com.override.converters;
+package com.override.converter;
 
-import com.override.converter.TimeSlotsConverter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +33,7 @@ public class TimeSlotConverterTest {
     void convertToEntityAttribute() {
         Set<LocalTime> testTimeSlots = new HashSet<>();
         testTimeSlots.add(LocalTime.of(21, 30));
-        testTimeSlots.add(LocalTime.of(22, 00));
+        testTimeSlots.add(LocalTime.of(22, 0));
         testTimeSlots.add(LocalTime.of(22, 30));
 
         String testString = "21:30,22:00,22:30";
