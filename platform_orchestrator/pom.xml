@@ -182,6 +182,7 @@
                         <exclude>**/aspect/**</exclude>
                         <exclude>**/annotation/**</exclude>
                         <exclude>**/scheduler/**</exclude>
+                        <exclude>**/properties/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>
