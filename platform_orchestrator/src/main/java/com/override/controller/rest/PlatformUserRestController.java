@@ -26,4 +26,10 @@ public class PlatformUserRestController {
     public PlatformUser findPlatformUser(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return platformUserService.findPlatformUserByLogin(user.getUsername());
     }
+
+    @GetMapping("/{login}")
+    public PlatformUser findPlatformUserByLogin(@PathVariable String login) {
+        return platformUserService.findPlatformUserByLogin(login);
+    }
+
 }

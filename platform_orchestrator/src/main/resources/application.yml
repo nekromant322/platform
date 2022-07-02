@@ -105,6 +105,8 @@ navbar:
       /reviewAdmin
     - Собеседования
       /interviewReports
+    - Платежи
+      /allPayments
     - Настройки
       /userSettings
     - Баги
@@ -128,7 +130,7 @@ navbar:
     - Собеседования
       /interviewReports
     - Оплата
-      /pay
+      /payment
     - Персональные данные
       /personalData
     - Настройки
