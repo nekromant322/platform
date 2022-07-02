@@ -1,7 +1,7 @@
 package com.override.controller.rest;
 
-import com.override.util.NavbarElement;
-import com.override.util.NavbarService;
+import com.override.model.domain.NavbarElement;
+import com.override.service.NavbarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

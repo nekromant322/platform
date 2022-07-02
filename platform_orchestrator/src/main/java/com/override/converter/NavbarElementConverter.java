@@ -1,5 +1,6 @@
-package com.override.util;
+package com.override.converter;
 
+import com.override.model.domain.NavbarElement;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

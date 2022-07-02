@@ -1,6 +1,6 @@
 package com.override;
 
-import com.override.util.NavbarProperties;
+import com.override.properties.NavbarProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

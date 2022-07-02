@@ -118,6 +118,8 @@ navbar:
       /report
     - Вопросы к ревью
       /questions
+    - Мои ревью
+      /userReviews
     - Персональные данные
       /personalData
     - Собеседования
