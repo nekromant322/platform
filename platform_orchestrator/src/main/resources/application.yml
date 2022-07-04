@@ -53,6 +53,7 @@ testData:
   enabled: true
   usersCount: 5
   requestsCount: 2
+  paymentsCount: 6
 
 logging:
   file:
@@ -118,6 +119,8 @@ navbar:
       /report
     - Вопросы к ревью
       /questions
+    - Мои ревью
+      /userReviews
     - Персональные данные
       /personalData
     - Собеседования

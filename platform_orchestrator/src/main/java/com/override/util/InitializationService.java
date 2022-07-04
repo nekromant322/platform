@@ -38,7 +38,7 @@ public class InitializationService {
     @Value("${testData.requestsCount}")
     private int requestsCount;
 
-    @Value("6")
+    @Value("${testData.paymentsCount}")
     private int paymentsCount;
 
     @Autowired

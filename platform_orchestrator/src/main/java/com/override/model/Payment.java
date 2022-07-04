@@ -18,12 +18,14 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "student_name")
     private String studentName;
 
     private LocalDate date;
 
     private Long sum;
 
+    @Column(name = "account_number")
     private Long accountNumber;
 
     private String message;

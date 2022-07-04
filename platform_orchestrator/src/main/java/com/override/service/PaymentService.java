@@ -17,7 +17,7 @@ public class PaymentService {
     @Autowired
     private PaymentMapper paymentMapper;
 
-    public void saveOrUpdatePayment(PaymentDTO paymentDTO, String username) {
+    public void saveOrUpdate(PaymentDTO paymentDTO, String username) {
         paymentRepository.save(paymentMapper.dtoToEntity(paymentDTO,username));
     }
 
@@ -25,7 +25,7 @@ public class PaymentService {
         paymentRepository.save(payment);
     }
 
-    public List<Payment> getAllPayment(){
+    public List<Payment> getAll(){
         return paymentRepository.findAll();
     }
 }

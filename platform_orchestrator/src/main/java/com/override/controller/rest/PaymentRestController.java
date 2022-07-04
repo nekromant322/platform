@@ -22,12 +22,12 @@ public class PaymentRestController {
     @PostMapping
     public ResponseEntity<String> saveOrUpdatePayment(@RequestBody PaymentDTO paymentDTO,
                                                       @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
-        paymentService.saveOrUpdatePayment(paymentDTO, user.getUsername());
+        paymentService.saveOrUpdate(paymentDTO, user.getUsername());
         return new ResponseEntity<>("Счет на оплату добавлен!", HttpStatus.OK);
     }
 
     @GetMapping
     private List<Payment> getAllPayments() {
-        return paymentService.getAllPayment();
+        return paymentService.getAll();
     }
 }
