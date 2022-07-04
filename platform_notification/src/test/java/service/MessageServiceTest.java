@@ -5,7 +5,7 @@ import com.override.exception.SmsRuException;
 import com.override.model.Recipient;
 import com.override.service.MessageService;
 import com.override.service.RecipientService;
-import com.override.util.*;
+import com.override.service.strategy.*;
 import enums.Communication;
 import feign.FeignException;
 import org.junit.jupiter.api.Test;

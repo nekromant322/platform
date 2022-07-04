@@ -1,4 +1,4 @@
-package com.override.util;
+package com.override.service.strategy;
 
 import com.override.model.Recipient;
 import enums.Communication;
