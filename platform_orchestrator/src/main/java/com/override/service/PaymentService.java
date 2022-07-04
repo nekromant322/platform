@@ -12,17 +12,16 @@ import java.util.List;
 @Service
 public class PaymentService {
     @Autowired
-    PaymentRepository paymentRepository;
+    private PaymentRepository paymentRepository;
 
     @Autowired
-    PaymentMapper paymentMapper;
+    private PaymentMapper paymentMapper;
 
     public void saveOrUpdatePayment(PaymentDTO paymentDTO, String username) {
-        Payment payment = paymentMapper.dtoToEntity(paymentDTO,username);
-        paymentRepository.save(payment);
+        paymentRepository.save(paymentMapper.dtoToEntity(paymentDTO,username));
     }
 
-    public void savePayment(Payment payment){
+    public void save(Payment payment){
         paymentRepository.save(payment);
     }
 

@@ -110,12 +110,15 @@ public class InitializationService {
         Random rand = new Random();
 
         for (int i = 0; i < paymentsCount; i++) {
-            paymentService.savePayment(new Payment(
-                    graduateUserList.get(rand.nextInt(graduateUserList.size())).getLogin(),
-                    getRandomDate(),
-                    (long) faker.number().numberBetween(10000, 100000),
-                    (long) faker.number().numberBetween(100000000, 900000000),
-                    faker.letterify("???????????????????????????????????????????")));
+            paymentService.save(
+                    Payment.builder()
+                            .studentName(graduateUserList.get(rand.nextInt(graduateUserList.size())).getLogin())
+                            .date(getRandomDate())
+                            .accountNumber((long) faker.number().numberBetween(100000000, 900000000))
+                            .sum((long) faker.number().numberBetween(10000, 100000))
+                            .message(faker.letterify("???????????????????????????????????????????"))
+                            .build()
+            );
         }
     }
 

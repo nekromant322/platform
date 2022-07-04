@@ -7,7 +7,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class PaymentMapper {
     public Payment dtoToEntity(PaymentDTO paymentDTO, String username) {
-        return new Payment(username, paymentDTO.getDate(), paymentDTO.getSum(), paymentDTO.getAccountNumber(),
-                paymentDTO.getComment());
+        return Payment.builder()
+                .studentName(username)
+                .date(paymentDTO.getDate())
+                .sum(paymentDTO.getSum())
+                .accountNumber(paymentDTO.getAccountNumber())
+                .message(paymentDTO.getComment())
+                .build();
     }
 }

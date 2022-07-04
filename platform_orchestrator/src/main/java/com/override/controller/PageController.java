@@ -67,7 +67,7 @@ public class PageController {
         return "interviewReport";
     }
 
-    @GetMapping("/payment")
+    @GetMapping("/payments")
     public String payPage(){return "payment";}
 
     @GetMapping("/allPayments")

@@ -130,7 +130,7 @@ navbar:
     - Собеседования
       /interviewReports
     - Оплата
-      /payment
+      /payments
     - Персональные данные
       /personalData
     - Настройки

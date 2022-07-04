@@ -5,7 +5,7 @@ getAllPayments();
 
 function getAllPayments() {
     $.ajax({
-        url: '/allPayments/getAllPayments',
+        url: '/payment',
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
