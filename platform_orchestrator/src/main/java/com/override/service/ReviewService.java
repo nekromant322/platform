@@ -30,6 +30,9 @@ public class ReviewService {
     @Autowired
     private NotificatorFeign notificatorFeign;
 
+    public static String CONFIRMATED_REVIEW_MESSAGE_TELEGRAM = "Ментор подтвердил ревью";
+    public static String DELETED_REVIEW_MESSAGE_TELEGRAM = "Ментор вынужден был отменить ревью. Попробуйте записаться на другое время";
+
     /**
      * Saves a new or changes an existing review
      * If the review is new, then the user's login is assigned to the student
@@ -51,14 +54,15 @@ public class ReviewService {
 
     public void saveOrUpdateReviewTelegramNotification(ReviewDTO reviewDTO, String username) {
         saveOrUpdateReview(reviewDTO, username);
-        notificatorFeign.sendMessage(reviewDTO.getStudentLogin(), "Ментор подтвердил ревью " + reviewDTO.getBookedDate() + " в " + reviewDTO.getBookedTime(), Communication.TELEGRAM);
+        notificatorFeign.sendMessage(reviewDTO.getStudentLogin(), CONFIRMATED_REVIEW_MESSAGE_TELEGRAM
+                + reviewDTO.getBookedDate() + " в " + reviewDTO.getBookedTime(), Communication.TELEGRAM);
     }
     public void deleteReview(Long id) {
             reviewRepository.deleteById(id);
     }
 
     public void deleteReviewTelegramNotification(Long id) {
-        notificatorFeign.sendMessage(reviewRepository.findById(id).get().getStudent().getLogin(), "Ментор вынужден был отменить ревью. Попробуйте записаться на другое время", Communication.TELEGRAM);
+        notificatorFeign.sendMessage(reviewRepository.findById(id).get().getStudent().getLogin(), DELETED_REVIEW_MESSAGE_TELEGRAM, Communication.TELEGRAM);
         deleteReview(id);
 
     }

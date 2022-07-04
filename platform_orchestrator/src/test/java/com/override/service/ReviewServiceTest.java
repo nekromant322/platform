@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.override.utils.TestFieldsUtil.*;
 import static org.mockito.Mockito.*;
@@ -58,18 +59,37 @@ public class ReviewServiceTest {
     }
 
     @Test
+    void saveOrUpdateReviewTelegramNotification() {
+
+        ReviewDTO testReviewDTO = generateTestReviewDTO();
+        PlatformUser testUser = generateTestUser();
+        String CONFIRMATED_REVIEW_MESSAGE_TELEGRAM_TEST = "Ментор подтвердил ревью" + testReviewDTO.getBookedDate() + " в "
+                + testReviewDTO.getBookedTime();
+
+        reviewService.saveOrUpdateReviewTelegramNotification(testReviewDTO, testUser.getLogin());
+
+        verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(), CONFIRMATED_REVIEW_MESSAGE_TELEGRAM_TEST, Communication.TELEGRAM);
+    }
+
+    @Test
     void deleteReview() {
         reviewService.deleteReview(1L);
-        verify(reviewRepository,times(1)).deleteById(1L);
+        verify(reviewRepository, times(1)).deleteById(1L);
 
     }
 
     @Test
     void deleteReviewTelegramNotification() {
+        String DELETED_REVIEW_MESSAGE_TELEGRAM_TEST = "Ментор вынужден был отменить ревью. Попробуйте записаться на другое время";
+        ReviewDTO testReviewDTO = generateTestReviewDTO();
+        PlatformUser testUser = generateTestUser();
+        Review testReview = generateTestReview();
 
+        when(reviewRepository.findById(any())).thenReturn(Optional.ofNullable(testReview));
 
-        reviewService.deleteReview(1L);
-        verify(reviewRepository,times(1)).deleteById(1L);
+        reviewService.deleteReviewTelegramNotification(testReviewDTO.getId());
+
+        verify(notificatorFeign, times(1)).sendMessage(testUser.getLogin(), DELETED_REVIEW_MESSAGE_TELEGRAM_TEST, Communication.TELEGRAM);
 
     }
 
