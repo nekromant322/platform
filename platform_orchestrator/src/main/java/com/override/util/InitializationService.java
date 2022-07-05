@@ -4,10 +4,10 @@ import com.github.javafaker.Faker;
 import com.override.model.*;
 import com.override.model.enums.Role;
 import com.override.model.enums.Status;
-import enums.StudyStatus;
 import com.override.service.*;
 import dto.*;
 import enums.CodeExecutionStatus;
+import enums.StudyStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoField;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -39,11 +38,17 @@ public class InitializationService {
     @Value("${testData.requestsCount}")
     private int requestsCount;
 
+    @Value("${testData.paymentsCount}")
+    private int paymentsCount;
+
     @Autowired
     private AuthorityService authorityService;
 
     @Autowired
     private PlatformUserService userService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     @Autowired
     private PersonalDataService personalDataService;
@@ -89,6 +94,32 @@ public class InitializationService {
         reportsInit();
         reviewInit();
         interviewReportsInit();
+        paymentInit();
+    }
+
+    private void paymentInit() {
+        List<PlatformUser> userList = userService.getAllStudents();
+        List<PlatformUser> graduateUserList = new ArrayList<>();
+
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getAuthorities().listIterator().next().getAuthority().equals("ROLE_GRADUATE")) {
+                graduateUserList.add(userList.get(i));
+            }
+        }
+
+        Random rand = new Random();
+
+        for (int i = 0; i < paymentsCount; i++) {
+            paymentService.save(
+                    Payment.builder()
+                            .studentName(graduateUserList.get(rand.nextInt(graduateUserList.size())).getLogin())
+                            .date(getRandomDate())
+                            .accountNumber((long) faker.number().numberBetween(100000000, 900000000))
+                            .sum((long) faker.number().numberBetween(10000, 100000))
+                            .message(faker.letterify("???????????????????????????????????????????"))
+                            .build()
+            );
+        }
     }
 
     private void authorityInit() {
@@ -257,7 +288,7 @@ public class InitializationService {
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
 
-        long minDay =  LocalDate.now().minusDays(1).toEpochDay();
+        long minDay = LocalDate.now().minusDays(1).toEpochDay();
         long maxDay = LocalDate.now().plusDays(2).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
