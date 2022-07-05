@@ -58,6 +58,18 @@
 ## Работа с проектом
 ### Тестовые данные
 Для инициализации тестовых данных необходимо перейти на ендпоинт `/init`
+### Поддержание актуальности мастера:
+Не забывайте поддерживать актуальность своей ветки
+Способ 1 (в идее):  
+Git -> Branches -> main -> update  
+Git -> Branches -> feature/yourFeature -> checkout  
+Git -> Branches -> main -> merge main into feature/yourFeature  
+		
+Способ 2 (в консоли):  
+git checkout main  
+git pull origin main  
+git checkout feature/yourFeature  
+git merge main  
 
 ## Тестирование
 ### Для тестирования через Postman:
