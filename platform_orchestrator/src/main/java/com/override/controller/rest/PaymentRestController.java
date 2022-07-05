@@ -22,7 +22,7 @@ public class PaymentRestController {
     @PostMapping
     public ResponseEntity<String> saveOrUpdatePayment(@RequestBody PaymentDTO paymentDTO,
                                                       @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
-        paymentService.saveOrUpdate(paymentDTO, user.getUsername());
+        paymentService.save(paymentDTO, user.getUsername());
         return new ResponseEntity<>("Счет на оплату добавлен!", HttpStatus.OK);
     }
 

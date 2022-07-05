@@ -17,15 +17,15 @@ public class PaymentService {
     @Autowired
     private PaymentMapper paymentMapper;
 
-    public void saveOrUpdate(PaymentDTO paymentDTO, String username) {
-        paymentRepository.save(paymentMapper.dtoToEntity(paymentDTO,username));
+    public void save(PaymentDTO paymentDTO, String username) {
+        paymentRepository.save(paymentMapper.dtoToEntity(paymentDTO, username));
     }
 
-    public void save(Payment payment){
+    public void save(Payment payment) {
         paymentRepository.save(payment);
     }
 
-    public List<Payment> getAll(){
+    public List<Payment> getAll() {
         return paymentRepository.findAll();
     }
 }
