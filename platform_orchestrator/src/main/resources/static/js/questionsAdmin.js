@@ -1,5 +1,8 @@
 window.onload = function () {
     listAllUsers()
+    drawDefaultQuestions()
+
+
 };
 
 function listAllUsers() {
@@ -167,7 +170,7 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
                         'id="checkbox' + studentLogin + i + chapter.id + '">' +
                         '</div>' +
                         '<div class="col-9" style="word-wrap: break-word; max-width: 1400px"><p>' + question.question +
-                        '</p></div>'+
+                        '</p></div>' +
                         '<div class="col-1"><button type="button" id="edit' + studentLogin + i + table + '" ' +
                         'class="btn btn-primary btn-sm" data-toggle="collapse" ' +
                         'data-target="#collapse' + studentLogin + i + table + '" aria-expanded="false" ' +
@@ -245,4 +248,136 @@ function saveQuestion(id, question, chapter, answered, login, tabPane) {
             checkLessonStructure(login, tabPane)
         }
     })
+}
+
+
+function findQuestions(chapter, section, table) {
+    $.ajax({
+        method: 'POST',
+        url: '/defaultQuestions',
+        contentType: 'application/json',
+        async: false,
+        data: JSON.stringify({
+            chapter: chapter,
+            section: section,
+        }),
+        success: function (response) {
+            console.log(response);
+            buildColumns(response, table);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    })
+}
+
+
+function buildColumns(data, table) {
+
+    for (let i = 0; i < data.length; i++) {
+        addColumns(data[i], table);
+    }
+}
+
+function addColumns(data, t) {
+    let table = document.getElementById(t).getElementsByTagName("tbody")[0];
+    let tr = table.insertRow(table.rows.length);
+    insertTd(data.question, tr);
+
+}
+
+function insertTd(value, parent) {
+    let element = document.createElement("td");
+    element.scope = "row";
+    element.innerText = value;
+    parent.insertAdjacentElement("beforeend", element)
+}
+
+function insertTh(value, parent) {
+    let element = document.createElement("th");
+    element.scope = "row";
+    element.innerText = value;
+    parent.insertAdjacentElement("beforeend", element)
+}
+
+function clearQuestions(t) {
+    while (document.getElementById(t).getElementsByTagName("tbody")[0].rows[0])
+        document.getElementById(t).getElementsByTagName("tbody")[0].deleteRow(0);
+}
+
+function drawDefaultQuestions() {
+    clearQuestions("core-table");
+
+    clearQuestions("web-table");
+
+    clearQuestions("spring-table");
+
+
+    let table = document.getElementById("core-table").getElementsByTagName("tbody")[0];
+    let tr = table.insertRow(table.rows.length);
+    insertTh("Core 1+2", tr);
+    findQuestions("core", 12, "core-table");
+
+    tr = table.insertRow(table.rows.length);
+    insertTh("Core 3", tr);
+    findQuestions("core", 3, "core-table");
+
+    tr = table.insertRow(table.rows.length);
+    insertTh("Core 4", tr);
+    findQuestions("core", 4, "core-table");
+
+    tr = table.insertRow(table.rows.length);
+    insertTh("Core 5", tr);
+    findQuestions("core", 5, "core-table");
+
+    tr = table.insertRow(table.rows.length);
+    insertTh("Core 6", tr);
+    findQuestions("core", 6, "core-table");
+
+
+    table = document.getElementById("web-table").getElementsByTagName("tbody")[0];
+    tr = table.insertRow(table.rows.length);
+    insertTh("Web 1", tr);
+    findQuestions("web", 1, "web-table");
+
+    tr = table.insertRow(table.rows.length);
+    insertTh("Web 2", tr);
+    findQuestions("web", 2, "web-table");
+
+    tr = table.insertRow(table.rows.length);
+    insertTh("Web 3", tr);
+    findQuestions("web", 3, "web-table");
+
+    table = document.getElementById("spring-table").getElementsByTagName("tbody")[0];
+    tr = table.insertRow(table.rows.length);
+    insertTh("Spring 1", tr);
+    findQuestions("spring", 1, "spring-table");
+
+    tr = table.insertRow(table.rows.length);
+    insertTh("Spring 2", tr);
+    findQuestions("spring", 2, "spring-table");
+
+    tr = table.insertRow(table.rows.length);
+    insertTh("Spring 3", tr);
+    findQuestions("spring", 3, "spring-table");
+}
+
+$('#core-table').on('click', 'td', function (e) {
+    tableText($(this).html())
+});
+$('#web-table').on('click', 'td', function (e) {
+    tableText($(this).html())
+});
+$('#spring-table').on('click', 'td', function (e) {
+    tableText($(this).html())
+});
+
+function tableText(tableRow) {
+    let myJSON = JSON.stringify(tableRow);
+    navigator.clipboard.writeText(tableRow).then(function () {
+        console.log('Async: Copying to clipboard was successful!');
+    }, function (err) {
+        console.error('Async: Could not copy text: ', err);
+    });
+    console.log(myJSON);
 }

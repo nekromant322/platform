@@ -42,6 +42,11 @@ public class PageController {
         return "questions";
     }
 
+    @GetMapping("/defQuestions")
+    public String defaultQuestionsPage() {
+        return "defaultQuestions";
+    }
+
     @GetMapping("/personalData")
     public String personalDataPage() {
         return "personalData";
@@ -68,7 +73,7 @@ public class PageController {
     }
 
     @GetMapping("/userReviews")
-    public String showUsersReviews(){
+    public String showUsersReviews() {
         return "userReviews";
     }
 
