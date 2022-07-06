@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PaymentMapperTest {
 
     @InjectMocks
-    PaymentMapper paymentMapper;
+    private PaymentMapper paymentMapper;
 
     @Test
     public void dtoToEntity() {
