@@ -23,24 +23,19 @@ public class ReviewRestController {
     @PatchMapping
     public ResponseEntity<String> saveOrUpdateReview(@RequestBody ReviewDTO reviewDTO,
                                                      @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
-        if (reviewDTO.getBookedTime() != null) {
-            reviewService.saveOrUpdateReviewTelegramNotification(reviewDTO, user.getUsername());
-        } else {
-            reviewService.saveOrUpdateReview(reviewDTO, user.getUsername());
-        }
-
+        reviewService.saveOrUpdate(reviewDTO, user.getUsername());
         return new ResponseEntity<>("Ревью сохранено!", HttpStatus.OK);
     }
 
     @PostMapping
     public List<ReviewDTO> findReview(@RequestBody ReviewFilterDTO reviewFilterDTO) {
-        return reviewService.findReview(reviewFilterDTO);
+        return reviewService.find(reviewFilterDTO);
     }
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping
     public ResponseEntity<String> deleteReview(@RequestParam Long id) {
-            reviewService.deleteReviewTelegramNotification(id);
+        reviewService.delete(id);
         return new ResponseEntity<>("Ревью удалено!", HttpStatus.OK);
     }
 }

@@ -44,7 +44,26 @@ public class ReviewServiceTest {
     private NotificatorFeign notificatorFeign;
 
     @Test
-    void saveOrUpdateReview() {
+    public void saveOrUpdateConfirmReview() {
+        ReviewDTO testReviewDTO = generateTestReviewDTO();
+        PlatformUser testUser = generateTestUser();
+        testReviewDTO.setMentorLogin("");
+
+        when(platformUserRepository.findFirstByLogin(testReviewDTO.getStudentLogin()))
+                .thenReturn(testUser);
+
+        reviewService.saveOrUpdate(testReviewDTO, testUser.getLogin());
+
+        verify(reviewRepository, times(1)).save(any());
+        verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
+        verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(), testUser.getLogin() +
+                ReviewService.CONFIRMATED_REVIEW_MESSAGE_TELEGRAM + testReviewDTO.getBookedDate() +
+                " в " + testReviewDTO.getBookedTime(), Communication.TELEGRAM);
+
+    }
+
+    @Test
+    public void saveOrUpdateChangeReviewTime() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         PlatformUser testUser = generateTestUser();
 
@@ -53,33 +72,65 @@ public class ReviewServiceTest {
         when(platformUserRepository.findFirstByLogin(testReviewDTO.getMentorLogin()))
                 .thenReturn(testUser);
 
-        reviewService.saveOrUpdateReview(testReviewDTO, testUser.getLogin());
+        reviewService.saveOrUpdate(testReviewDTO, testReviewDTO.getMentorLogin());
+
+        verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(), ReviewService.CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM +
+                " в " + testReviewDTO.getBookedTime() + testReviewDTO.getBookedDate(), Communication.TELEGRAM);
         verify(reviewRepository, times(1)).save(any());
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
     }
 
     @Test
-    void saveOrUpdateReviewTelegramNotification() {
-
+    public void saveOrUpdateChangeReviewMentor() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         PlatformUser testUser = generateTestUser();
-        String CONFIRMATED_REVIEW_MESSAGE_TELEGRAM_TEST = "Ментор подтвердил ревью" + testReviewDTO.getBookedDate() + " в "
-                + testReviewDTO.getBookedTime();
+        String testUserLogin = "Ivan";
 
-        reviewService.saveOrUpdateReviewTelegramNotification(testReviewDTO, testUser.getLogin());
+        when(platformUserRepository.findFirstByLogin(testReviewDTO.getStudentLogin()))
+                .thenReturn(testUser);
+        when(platformUserRepository.findFirstByLogin(testReviewDTO.getMentorLogin()))
+                .thenReturn(testUser);
 
-        verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(), CONFIRMATED_REVIEW_MESSAGE_TELEGRAM_TEST, Communication.TELEGRAM);
+        reviewService.saveOrUpdate(testReviewDTO, testUserLogin);
+
+        verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(),
+                ReviewService.CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM + testUserLogin + " в "
+                        + testReviewDTO.getBookedTime() + testReviewDTO.getBookedDate(), Communication.TELEGRAM);
+        verify(reviewRepository, times(1)).save(any());
+        verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
     }
 
     @Test
-    void deleteReview() {
-        reviewService.deleteReview(1L);
-        verify(reviewRepository, times(1)).deleteById(1L);
+    public void saveOrUpdateNewReviewMessageTelegram() {
+        ReviewDTO testReviewDTO = generateTestReviewDTO();
+        PlatformUser testUser = generateTestUser();
 
+        testReviewDTO.setId(null);
+        testReviewDTO.setStudentLogin(null);
+        testReviewDTO.setMentorLogin(null);
+        testReviewDTO.setBookedTime(null);
+
+        ArrayList<PlatformUser> testList = new ArrayList<>();
+        testList.add(testUser);
+
+        when(platformUserRepository.findFirstByLogin(testUser.getLogin()))
+                .thenReturn(testUser);
+        when(platformUserRepository.findFirstByLogin(testReviewDTO.getMentorLogin()))
+                .thenReturn(testUser);
+
+        when(platformUserRepository.findByAuthoritiesContains(any()))
+                .thenReturn(testList);
+
+        reviewService.saveOrUpdate(testReviewDTO, testUser.getLogin());
+
+        verify(notificatorFeign, times(1)).sendMessage(testUser.getLogin(),
+                ReviewService.NEW_REVIEW_MESSAGE_TELEGRAM + testUser.getLogin(), Communication.TELEGRAM);
+        verify(reviewRepository, times(1)).save(any());
+        verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
     }
 
     @Test
-    void deleteReviewTelegramNotification() {
+    public void deleteReviewTelegramNotification() {
         String DELETED_REVIEW_MESSAGE_TELEGRAM_TEST = "Ментор вынужден был отменить ревью. Попробуйте записаться на другое время";
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         PlatformUser testUser = generateTestUser();
@@ -87,14 +138,15 @@ public class ReviewServiceTest {
 
         when(reviewRepository.findById(any())).thenReturn(Optional.ofNullable(testReview));
 
-        reviewService.deleteReviewTelegramNotification(testReviewDTO.getId());
+        reviewService.delete(testReviewDTO.getId());
 
+        verify(reviewRepository, times(1)).deleteById(1L);
         verify(notificatorFeign, times(1)).sendMessage(testUser.getLogin(), DELETED_REVIEW_MESSAGE_TELEGRAM_TEST, Communication.TELEGRAM);
 
     }
 
     @Test
-    void findReviewByMentorLogin() {
+    public void findReviewByMentorLogin() {
         List<ReviewDTO> testReviewDTOList = new ArrayList<>();
         testReviewDTOList.add(generateTestReviewDTO());
         ReviewDTO testReviewDTO = generateTestReviewDTO();
@@ -110,12 +162,12 @@ public class ReviewServiceTest {
         when(reviewRepository.findReviewByMentorLogin(testReviewFilterDTO.getMentorLogin())).thenReturn(testReview);
         when(reviewMapper.entityToDto(testReview.iterator().next())).thenReturn(testReviewDTOList.iterator().next());
 
-        List<ReviewDTO> review = reviewService.findReview(testReviewFilterDTO);
+        List<ReviewDTO> review = reviewService.find(testReviewFilterDTO);
         Assertions.assertEquals(review.iterator().next(), testReviewDTOList.iterator().next());
     }
 
     @Test
-    void findReviewByStudentLogin() {
+    public void findReviewByStudentLogin() {
         List<ReviewDTO> testReviewDTOList = new ArrayList<>();
         testReviewDTOList.add(generateTestReviewDTO());
         ReviewDTO testReviewDTO = generateTestReviewDTO();
@@ -131,12 +183,12 @@ public class ReviewServiceTest {
         when(reviewRepository.findReviewByStudentLogin(testReviewFilterDTO.getStudentLogin())).thenReturn(testReview);
         when(reviewMapper.entityToDto(testReview.iterator().next())).thenReturn(testReviewDTOList.iterator().next());
 
-        List<ReviewDTO> review = reviewService.findReview(testReviewFilterDTO);
+        List<ReviewDTO> review = reviewService.find(testReviewFilterDTO);
         Assertions.assertEquals(review.iterator().next(), testReviewDTOList.iterator().next());
     }
 
     @Test
-    void findReviewByBookedDate() {
+    public void findReviewByBookedDate() {
         List<ReviewDTO> testReviewDTOList = new ArrayList<>();
         testReviewDTOList.add(generateTestReviewDTO());
         ReviewDTO testReviewDTO = generateTestReviewDTO();
@@ -152,12 +204,12 @@ public class ReviewServiceTest {
         when(reviewRepository.findReviewByBookedDate(testReviewFilterDTO.getBookedDate())).thenReturn(testReview);
         when(reviewMapper.entityToDto(testReview.iterator().next())).thenReturn(testReviewDTOList.iterator().next());
 
-        List<ReviewDTO> review = reviewService.findReview(testReviewFilterDTO);
+        List<ReviewDTO> review = reviewService.find(testReviewFilterDTO);
         Assertions.assertEquals(review.iterator().next(), testReviewDTOList.iterator().next());
     }
 
     @Test
-    void findReviewByMentorIsNull() {
+    public void findReviewByMentorIsNull() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         testReviewDTO.setMentorLogin(null);
         List<ReviewDTO> testReviewList = new ArrayList<>();
@@ -174,12 +226,12 @@ public class ReviewServiceTest {
         when(reviewRepository.findReviewByMentorIsNull()).thenReturn(testReview);
         when(reviewMapper.entityToDto(testReview.iterator().next())).thenReturn(testReviewList.iterator().next());
 
-        List<ReviewDTO> review = reviewService.findReview(testReviewFilterDTO);
+        List<ReviewDTO> review = reviewService.find(testReviewFilterDTO);
         Assertions.assertEquals(review.iterator().next(), testReviewList.iterator().next());
     }
 
     @Test
-    void sendScheduledNotification() {
+    public void sendScheduledNotification() {
         List<Review> reviewList = new ArrayList<>();
 
         Review review1 = generateTestReview();

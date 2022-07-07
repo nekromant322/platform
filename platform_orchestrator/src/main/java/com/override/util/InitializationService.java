@@ -249,7 +249,7 @@ public class InitializationService {
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
 
-        reviewService.saveOrUpdateReview(ReviewDTO.builder()
+        reviewService.saveOrUpdate(ReviewDTO.builder()
                 .id(null)
                 .topic(faker.book().title())
                 .studentLogin(null)
@@ -261,7 +261,7 @@ public class InitializationService {
 
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
 
-        reviewService.saveOrUpdateReview(ReviewDTO.builder()
+        reviewService.saveOrUpdate(ReviewDTO.builder()
                 .id(null)
                 .topic(faker.book().title())
                 .studentLogin(null)

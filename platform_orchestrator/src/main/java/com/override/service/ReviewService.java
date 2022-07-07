@@ -2,11 +2,14 @@ package com.override.service;
 
 import com.override.feign.NotificatorFeign;
 import com.override.mapper.ReviewMapper;
+import com.override.model.Authority;
+import com.override.model.PlatformUser;
 import com.override.repository.PlatformUserRepository;
 import com.override.repository.ReviewRepository;
 import dto.ReviewDTO;
 import dto.ReviewFilterDTO;
 import enums.Communication;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +33,12 @@ public class ReviewService {
     @Autowired
     private NotificatorFeign notificatorFeign;
 
-    public static String CONFIRMATED_REVIEW_MESSAGE_TELEGRAM = "Ментор подтвердил ревью";
-    public static String DELETED_REVIEW_MESSAGE_TELEGRAM = "Ментор вынужден был отменить ревью. Попробуйте записаться на другое время";
+    public static String CONFIRMATED_REVIEW_MESSAGE_TELEGRAM = " ментор подтвердил ревью ";
+    public static String DELETED_REVIEW_MESSAGE_TELEGRAM = "Ментор вынужден был отменить ревью. " +
+            "Попробуйте записаться на другое время";
+    public static String CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM = "Ментор изменил время ревью. Ревью пройдет ";
+    public static String CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM = "На Ваше ревью сменился ментор. Его проведет: ";
+    public static String NEW_REVIEW_MESSAGE_TELEGRAM = "Новый запрос на ревью от пользователя ";
 
     /**
      * Saves a new or changes an existing review
@@ -41,30 +48,51 @@ public class ReviewService {
      * @param reviewDTO review information obtained from the request
      * @param userLogin username of the user making the request
      */
-    public void saveOrUpdateReview(ReviewDTO reviewDTO, String userLogin) {
-        if (reviewDTO.getId() == null && reviewDTO.getStudentLogin() == null) {
-            reviewDTO.setStudentLogin(userLogin);
-        } else {
+    public void saveOrUpdate(ReviewDTO reviewDTO, String userLogin) {
+
+        if (reviewDTO.getBookedTime() != null && reviewDTO.getMentorLogin() == "") {
+            sendMessage(reviewDTO.getStudentLogin(), userLogin + CONFIRMATED_REVIEW_MESSAGE_TELEGRAM
+                    + reviewDTO.getBookedDate() + " в " + reviewDTO.getBookedTime(), Communication.TELEGRAM);
             reviewDTO.setMentorLogin(userLogin);
+        } else if (reviewDTO.getMentorLogin() != null && reviewDTO.getBookedTime() != null) {
+            if (!reviewDTO.getMentorLogin().equals(userLogin)) {
+                sendMessage(reviewDTO.getStudentLogin(), CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM +
+                        userLogin + " в " + reviewDTO.getBookedTime() + reviewDTO.getBookedDate(), Communication.TELEGRAM);
+            } else {
+                sendMessage(reviewDTO.getStudentLogin(), CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM +
+                        " в " + reviewDTO.getBookedTime() + reviewDTO.getBookedDate(), Communication.TELEGRAM);
+            }
         }
+
+        if (reviewDTO.getId() == null && reviewDTO.getStudentLogin() == null) {
+            List<PlatformUser> mentorList = platformUserRepository.findByAuthoritiesContains(
+                    new Authority(2L, "ROLE_ADMIN"));
+            for (PlatformUser mentor : mentorList) {
+                sendMessage(mentor.getLogin(), NEW_REVIEW_MESSAGE_TELEGRAM +
+                        userLogin, Communication.TELEGRAM);
+                reviewDTO.setStudentLogin(userLogin);
+            }
+
+        }
+
         reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
                 platformUserRepository.findFirstByLogin(reviewDTO.getStudentLogin()),
                 platformUserRepository.findFirstByLogin(reviewDTO.getMentorLogin())));
+
     }
 
-    public void saveOrUpdateReviewTelegramNotification(ReviewDTO reviewDTO, String username) {
-        saveOrUpdateReview(reviewDTO, username);
-        notificatorFeign.sendMessage(reviewDTO.getStudentLogin(), CONFIRMATED_REVIEW_MESSAGE_TELEGRAM
-                + reviewDTO.getBookedDate() + " в " + reviewDTO.getBookedTime(), Communication.TELEGRAM);
-    }
-    public void deleteReview(Long id) {
-            reviewRepository.deleteById(id);
+    public void sendMessage(String login, String message, Communication type) {
+        try {
+            notificatorFeign.sendMessage(login, message, type);
+        } catch (FeignException e) {
+            System.out.println("Такой логин: " + login + " Telegram не существует");
+        }
     }
 
-    public void deleteReviewTelegramNotification(Long id) {
-        notificatorFeign.sendMessage(reviewRepository.findById(id).get().getStudent().getLogin(), DELETED_REVIEW_MESSAGE_TELEGRAM, Communication.TELEGRAM);
-        deleteReview(id);
-
+    public void delete(Long id) {
+        sendMessage(reviewRepository.findById(id).get().getStudent().getLogin(),
+                DELETED_REVIEW_MESSAGE_TELEGRAM, Communication.TELEGRAM);
+        reviewRepository.deleteById(id);
     }
 
     /**
@@ -75,7 +103,7 @@ public class ReviewService {
      * @param reviewFilterDTO comes from request
      * @return returns a list of reviewDTOs obtained by mapping the list of found reviews
      */
-    public List<ReviewDTO> findReview(ReviewFilterDTO reviewFilterDTO) {
+    public List<ReviewDTO> find(ReviewFilterDTO reviewFilterDTO) {
         if (reviewFilterDTO.getMentorLogin() != null) {
             return (reviewRepository.findReviewByMentorLogin(reviewFilterDTO.getMentorLogin())).stream()
                     .map(reviewMapper::entityToDto).collect(Collectors.toList());
@@ -109,9 +137,6 @@ public class ReviewService {
                     notificatorFeign.sendMessage(review.getMentor().getLogin(), messageText, Communication.TELEGRAM);
                 });
     }
-
-
-
 
 
 }
