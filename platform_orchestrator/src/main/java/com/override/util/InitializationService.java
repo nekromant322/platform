@@ -294,7 +294,7 @@ public class InitializationService {
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
 
-        reviewService.saveOrUpdateReview(ReviewDTO.builder()
+        reviewService.saveOrUpdate(ReviewDTO.builder()
                 .id(null)
                 .topic(faker.book().title())
                 .studentLogin(null)
