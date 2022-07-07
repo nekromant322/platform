@@ -24,6 +24,8 @@ spring:
     hibernate:
       ddl-auto: create
     generate-ddl: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
   cloud:
     loadbalancer:
       ribbon:

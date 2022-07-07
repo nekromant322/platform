@@ -41,6 +41,11 @@
             <version>${postgres.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+
         <!--  =====================  Spring  =====================  -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

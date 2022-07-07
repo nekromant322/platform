@@ -1,0 +1,201 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create-all-tables" author="yusov8400">
+
+        <createTable tableName="personal_data">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="act_number" type="bigint"/>
+            <column name="birth_date" type="date"/>
+            <column name="contract_number" type="varchar(255)"/>
+            <column name="date" type="date"/>
+            <column name="email" type="varchar(255)"/>
+            <column name="full_name" type="varchar(255)"/>
+            <column name="issue_date" type="date"/>
+            <column name="passport_issued" type="varchar(255)"/>
+            <column name="passport_number" type="bigint"/>
+            <column name="passport_series" type="bigint"/>
+            <column name="phone_number" type="bigint"/>
+            <column name="registration" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="user_settings">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="telegram_notification" type="boolean"/>
+            <column name="vk_notification" type="boolean"/>
+        </createTable>
+
+        <createTable tableName="role_t">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="authority" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="platform_user">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="login" type="varchar(255)"/>
+            <column name="password" type="varchar(255)"/>
+            <column name="study_status" type="int"/>
+            <column name="personal_data_id" type="bigint">
+                <constraints foreignKeyName="personal_data_id" references="personal_data(id)"/>
+            </column>
+            <column name="user_settings_id" type="bigint">
+                <constraints foreignKeyName="user_settings_id" references="user_settings(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="users_authorities">
+            <column name="authority_id" type="bigint" autoIncrement="true">
+                <constraints foreignKeyName="authority_id" references="role_t(id)"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="user_id" references="platform_user(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="bug">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="type" type="varchar(255)"/>
+            <column name="content" type="blob"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="text" type="varchar(255)"/>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="user_id" references="platform_user(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="code_try">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date" type="date"/>
+            <column name="chapter" type="integer"/>
+            <column name="code_execution_status" type="varchar(255)">
+            </column>
+            <column name="lesson" type="integer"/>
+            <column name="step" type="integer"/>
+            <column name="students_code" type="varchar(255)"/>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="user_id" references="platform_user(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="document">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="content" type="blob"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="type" type="varchar(255)"/>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="user_id" references="platform_user(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="interview_report">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date" type="date"/>
+            <column name="company" type="varchar(255)"/>
+            <column name="currency" type="char"/>
+            <column name="impression" type="integer"/>
+            <column name="level" type="varchar(255)"/>
+            <column name="max_salary" type="integer"/>
+            <column name="min_salary" type="integer"/>
+            <column name="project" type="varchar(255)"/>
+            <column name="questions" type="varchar(255)"/>
+            <column name="status" type="integer"/>
+            <column name="user_login" type="varchar"/>
+        </createTable>
+
+        <createTable tableName="join_request">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="chat_id" type="varchar(255)"/>
+            <column name="nick_name" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="lesson_progress">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="lesson" type="varchar(255)"/>
+            <column name="user_id" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="pre_project_lesson">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="link" type="varchar"/>
+            <column name="task_identifier" type="varchar"/>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="platform_user_id" references="platform_user(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="question">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="question" type="varchar"/>
+            <column name="chapter" type="varchar"/>
+            <column name="answered" type="boolean"/>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="platform_user_id" references="platform_user(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="review">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="booked_date" type="date"/>
+            <column name="booked_time" type="time"/>
+            <column name="mentor_id" type="bigint">
+                <constraints foreignKeyName="platform_user_id" references="platform_user(id)"/>
+            </column>
+            <column name="student_id" type="bigint">
+                <constraints foreignKeyName="review" references="platform_user(id)"/>
+            </column>
+            <column name="time_slots" type="varchar(255)"/>
+            <column name="topic" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="student_report">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date" type="date"/>
+            <column name="hours" type="double"/>
+            <column name="text" type="varchar(255)"/>
+            <column name="student_id" type="bigint">
+                <constraints foreignKeyName="student_report" references="platform_user(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="payment">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date" type="date"/>
+            <column name="account_number" type="bigint"/>
+            <column name="message" type="varchar(255)"/>
+            <column name="student_name" type="varchar(255)"/>
+            <column name="sum" type="bigint"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
