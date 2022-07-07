@@ -1,10 +1,15 @@
 package com.override.service;
 
+import com.override.feign.NotificatorFeign;
 import com.override.mapper.BugReportMapper;
+import com.override.model.Authority;
 import com.override.model.Bug;
 import com.override.model.PlatformUser;
+import com.override.model.enums.Role;
 import com.override.repository.BugReportRepository;
+import com.override.repository.PlatformUserRepository;
 import dto.BugReportsDTO;
+import enums.Communication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.override.utils.TestFieldsUtil.*;
@@ -33,9 +39,20 @@ public class BugReportServiceTest {
     @Mock
     private BugReportMapper bugReportMapper;
 
+    @Mock
+    private AuthorityService authorityService;
+
+    @Mock
+    private PlatformUserRepository platformUserRepository;
+
+    @Mock
+    private NotificatorFeign notificatorFeign;
+
     @Test
     public void uploadFileTest() {
         PlatformUser platformUser = generateTestUser();
+        Authority authority = new Authority();
+        List<PlatformUser> platformUsers = new ArrayList<>();
         MockMultipartFile file = new MockMultipartFile("bug",
                 "Screenshot.png",
                 "image/png",
@@ -43,7 +60,13 @@ public class BugReportServiceTest {
 
         when(platformUserService.findPlatformUserByLogin("Andrey")).thenReturn(platformUser);
 
+        when(authorityService.getAuthorityByRole(Role.ADMIN)).thenReturn(authority);
+
+        when(platformUserRepository.findAllByAuthorities(authority)).thenReturn(platformUsers);
+
         bugReportService.uploadFile(file, platformUser.getLogin(), "some text");
+
+        notificatorFeign.sendMessage(platformUser.getLogin(), "some message", Communication.EMAIL);
     }
 
     @Test

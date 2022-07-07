@@ -21,6 +21,8 @@
         <module>platform_orchestrator</module>
         <module>platform_eureka_server</module>
         <module>platform_notification</module>
+        <module>platform_bot</module>
+        <module>platform_code_executor</module>
     </modules>
 
     <properties>

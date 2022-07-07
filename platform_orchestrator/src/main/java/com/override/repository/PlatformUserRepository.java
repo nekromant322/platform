@@ -29,4 +29,5 @@ public interface PlatformUserRepository extends CrudRepository<PlatformUser, Lon
 
     List<PlatformUser> findByAuthoritiesContains(Authority authority);
 
+    List<PlatformUser> findAllByAuthorities(Authority authority);
 }

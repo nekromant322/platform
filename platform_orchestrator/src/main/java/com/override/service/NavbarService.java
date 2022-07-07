@@ -1,5 +1,8 @@
-package com.override.util;
+package com.override.service;
 
+import com.override.model.domain.NavbarElement;
+import com.override.converter.NavbarElementConverter;
+import com.override.properties.NavbarProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,9 @@ public class NavbarService {
         if (request.isUserInRole("ROLE_ADMIN")) {
             return converter.convertListOfStringToListOfNavbarElement(navbarProperties.getAdmin());
         }
-        return converter.convertListOfStringToListOfNavbarElement(navbarProperties.getUser());
+        if (request.isUserInRole("ROLE_GRADUATE")) {
+            return converter.convertListOfStringToListOfNavbarElement(navbarProperties.getGraduate());
+        }
+            return converter.convertListOfStringToListOfNavbarElement(navbarProperties.getUser());
     }
 }

@@ -1,6 +1,7 @@
 package com.override.model;
 
 
+import enums.StudyStatus;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;
@@ -18,6 +19,8 @@ public class PlatformUser {
     private String login;
 
     private String password;
+
+    private StudyStatus studyStatus;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinTable(

@@ -67,6 +67,17 @@ public class PageController {
         return "interviewReport";
     }
 
+    @GetMapping("/payments")
+    public String payPage(){return "payment";}
+
+    @GetMapping("/allPayments")
+    public String allPaymentsPage(){return "allPayments";}
+
+    @GetMapping("/userReviews")
+    public String showUsersReviews(){
+        return "userReviews";
+    }
+
     @GetMapping("/login")
     public String authPage() {
         return "login";

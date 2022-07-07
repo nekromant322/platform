@@ -1,6 +1,7 @@
 package com.override.service;
 
 import com.override.model.PlatformUser;
+import enums.StudyStatus;
 import com.override.repository.PlatformUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,15 +24,21 @@ public class CustomStudentDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return Optional.ofNullable(studentAccountRepository.findFirstByLogin(login))
+        UserDetails user = Optional.ofNullable(studentAccountRepository.findFirstByLogin(login))
                 .map(CustomStudentDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь с логином " + login + " не найден!"));
+        if (user.isEnabled()) {
+            return user;
+        } else {
+            throw new RuntimeException("Пользователь с логином " + login + " забанен!");
+        }
     }
 
     public static class CustomStudentDetails implements UserDetails {
 
         private final String login;
         private final String password;
+        private final StudyStatus studyStatus;
         private final List<GrantedAuthority> authorities;
 
         public CustomStudentDetails(PlatformUser student) {
@@ -42,6 +49,7 @@ public class CustomStudentDetailService implements UserDetailsService {
                     .map(GrantedAuthority::getAuthority)
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
+            this.studyStatus = student.getStudyStatus();
         }
 
         @Override
@@ -76,6 +84,9 @@ public class CustomStudentDetailService implements UserDetailsService {
 
         @Override
         public boolean isEnabled() {
+            if (studyStatus == StudyStatus.BAN) {
+                return false;
+            }
             return true;
         }
     }

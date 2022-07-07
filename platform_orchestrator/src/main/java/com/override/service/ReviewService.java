@@ -108,6 +108,10 @@ public class ReviewService {
             return (reviewRepository.findReviewByMentorLogin(reviewFilterDTO.getMentorLogin())).stream()
                     .map(reviewMapper::entityToDto).collect(Collectors.toList());
         }
+        if (reviewFilterDTO.getStudentLogin() != null && reviewFilterDTO.getBookedDate() != null) {
+            return (reviewRepository.findReviewByStudentLoginAndBookedDate(reviewFilterDTO.getStudentLogin(),reviewFilterDTO.getBookedDate())).stream()
+                    .map(reviewMapper::entityToDto).collect(Collectors.toList());
+        }
         if (reviewFilterDTO.getStudentLogin() != null) {
             return (reviewRepository.findReviewByStudentLogin(reviewFilterDTO.getStudentLogin())).stream()
                     .map(reviewMapper::entityToDto).collect(Collectors.toList());

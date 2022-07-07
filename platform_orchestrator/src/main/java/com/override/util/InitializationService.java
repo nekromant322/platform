@@ -7,6 +7,7 @@ import com.override.model.enums.Status;
 import com.override.service.*;
 import dto.*;
 import enums.CodeExecutionStatus;
+import enums.StudyStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -37,11 +38,17 @@ public class InitializationService {
     @Value("${testData.requestsCount}")
     private int requestsCount;
 
+    @Value("${testData.paymentsCount}")
+    private int paymentsCount;
+
     @Autowired
     private AuthorityService authorityService;
 
     @Autowired
     private PlatformUserService userService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     @Autowired
     private PersonalDataService personalDataService;
@@ -87,6 +94,32 @@ public class InitializationService {
         reportsInit();
         reviewInit();
         interviewReportsInit();
+        paymentInit();
+    }
+
+    private void paymentInit() {
+        List<PlatformUser> userList = userService.getAllStudents();
+        List<PlatformUser> graduateUserList = new ArrayList<>();
+
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getAuthorities().listIterator().next().getAuthority().equals("ROLE_GRADUATE")) {
+                graduateUserList.add(userList.get(i));
+            }
+        }
+
+        Random rand = new Random();
+
+        for (int i = 0; i < paymentsCount; i++) {
+            paymentService.save(
+                    Payment.builder()
+                            .studentName(graduateUserList.get(rand.nextInt(graduateUserList.size())).getLogin())
+                            .date(getRandomDate())
+                            .accountNumber((long) faker.number().numberBetween(100000000, 900000000))
+                            .sum((long) faker.number().numberBetween(10000, 100000))
+                            .message(faker.letterify("???????????????????????????????????????????"))
+                            .build()
+            );
+        }
     }
 
     private void authorityInit() {
@@ -102,17 +135,23 @@ public class InitializationService {
             usernameAndPassword = faker.name().firstName();
             saveUser(usernameAndPassword,
                     usernameAndPassword,
-                    Role.USER);
+                    StudyStatus.ACTIVE, Role.USER);
+        }
+        for (int i = 0; i < usersCount; i++) {
+            usernameAndPassword = faker.name().firstName();
+            saveUser(usernameAndPassword,
+                    usernameAndPassword,
+                    StudyStatus.ACTIVE, Role.GRADUATE);
         }
     }
 
     private void adminInit() {
-        saveUser(adminLogin, adminPassword, Role.USER, Role.ADMIN);
+        saveUser(adminLogin, adminPassword, StudyStatus.ACTIVE, Role.USER, Role.ADMIN);
     }
 
-    private void saveUser(String login, String password, Role... userRoles) {
+    private void saveUser(String login, String password, StudyStatus study, Role... userRoles) {
         List<Authority> roles = getAuthorityListFromRoles(userRoles);
-        PlatformUser account = new PlatformUser(null, login, password, roles, new PersonalData(), new UserSettings());
+        PlatformUser account = new PlatformUser(null, login, password, study, roles, new PersonalData(), new UserSettings());
         userService.save(account);
         personalDataInit(account);
         userSettingsInit(account);
@@ -249,12 +288,18 @@ public class InitializationService {
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
 
-        reviewService.saveOrUpdate(ReviewDTO.builder()
+
+        long minDay = LocalDate.now().minusDays(1).toEpochDay();
+        long maxDay = LocalDate.now().plusDays(2).toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
+
+        reviewService.saveOrUpdateReview(ReviewDTO.builder()
                 .id(null)
                 .topic(faker.book().title())
                 .studentLogin(null)
                 .mentorLogin(null)
-                .bookedDate(LocalDate.now().plusDays(1))
+                .bookedDate(randomDate)
                 .bookedTime(null)
                 .timeSlots(selectedTimeSlots)
                 .build(), student.getLogin());
@@ -318,8 +363,11 @@ public class InitializationService {
                 Status.PASSED.name(), Status.OFFER.name(), Status.ACCEPTED.name()));
         List<String> levelList = new ArrayList<>(List.of("Junior", "Middle", "Senior", "Middle", "Senior", "Middle"));
         int salary = (faker.number().numberBetween(150, 350)) * 1000;
+        long minDay = LocalDate.now().minusDays(365).toEpochDay();
+        long maxDay = LocalDate.now().toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         interviewReportService.save(InterviewReportDTO.builder()
-                .date(LocalDate.now())
+                .date(LocalDate.ofEpochDay(randomDay))
                 .userLogin(user.getLogin())
                 .company(faker.company().name())
                 .project(faker.company().industry())

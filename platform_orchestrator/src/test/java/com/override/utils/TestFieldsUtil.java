@@ -4,6 +4,7 @@ import com.override.model.*;
 import com.override.model.enums.Status;
 import dto.*;
 import enums.CodeExecutionStatus;
+import enums.StudyStatus;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
@@ -15,21 +16,40 @@ import java.util.stream.Collectors;
 
 public class TestFieldsUtil {
 
+    public static Payment generateTestPayment() {
+        return Payment.builder()
+                .sum(200000L)
+                .message("Первый платеж")
+                .accountNumber(123321L)
+                .studentName("Andrey")
+                .date(LocalDate.of(2022, 7, 24))
+                .build();
+    }
+
+    public static PaymentDTO generateTestPaymentDTO() {
+        return PaymentDTO.builder()
+                .sum(200000L)
+                .comment("Первый платеж")
+                .accountNumber(123321L)
+                .date(LocalDate.of(2022, 7, 24))
+                .build();
+    }
+
     public static String generateTestCode() {
         return "public class MyClass {public static void main(String[] args){ System.out.println(\"This is my Code\");}}";
     }
 
     public static PlatformUser generateTestUser() {
-        return new PlatformUser(null, "Andrey", "a",
+        return new PlatformUser(null, "Andrey", "a", StudyStatus.ACTIVE,
                 Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings());
     }
 
     public static List<PlatformUser> generateTestListOfThreeUsersWithoutReportsOnCurrentDay() {
-        PlatformUser firstUserWithoutReport = new PlatformUser(1L, "1", "1",
+        PlatformUser firstUserWithoutReport = new PlatformUser(1L, "1", "1", StudyStatus.ACTIVE,
                 Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new UserSettings());
-        PlatformUser secondUserWithoutReport = new PlatformUser(2L, "2", "2",
+        PlatformUser secondUserWithoutReport = new PlatformUser(2L, "2", "2", StudyStatus.ACTIVE,
                 Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new UserSettings());
-        PlatformUser thirdUserWithoutReport = new PlatformUser(3L, "3", "3",
+        PlatformUser thirdUserWithoutReport = new PlatformUser(3L, "3", "3", StudyStatus.ACTIVE,
                 Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new UserSettings());
 
         return List.of(firstUserWithoutReport, secondUserWithoutReport, thirdUserWithoutReport);

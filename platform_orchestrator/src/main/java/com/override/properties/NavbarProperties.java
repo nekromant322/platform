@@ -1,4 +1,4 @@
-package com.override.util;
+package com.override.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -12,4 +12,6 @@ public class NavbarProperties {
     private List<String> admin;
 
     private List<String> user;
+
+    private List<String> graduate;
 }

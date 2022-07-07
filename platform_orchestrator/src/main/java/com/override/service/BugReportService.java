@@ -1,10 +1,16 @@
 package com.override.service;
 
 import com.override.exception.BugReportException;
+import com.override.feign.NotificatorFeign;
 import com.override.mapper.BugReportMapper;
+import com.override.model.Authority;
 import com.override.model.Bug;
+import com.override.model.PlatformUser;
+import com.override.model.enums.Role;
 import com.override.repository.BugReportRepository;
+import com.override.repository.PlatformUserRepository;
 import dto.BugReportsDTO;
+import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,12 +29,26 @@ public class BugReportService {
     private PlatformUserService platformUserService;
 
     @Autowired
+    private PlatformUserRepository platformUserRepository;
+
+    @Autowired
     private BugReportMapper bugReportMapper;
+
+    @Autowired
+    private NotificatorFeign notificatorFeign;
+
+    @Autowired
+    private AuthorityService authorityService;
 
     public final String DEFAULT_BUG_REPORT_NAME = "-";
     public final String DEFAULT_BUG_REPORT_TYPE = "text";
+    public final String NEW_BUG_MESSAGE = "пользователь c логином: %s прислал баг \n с сообщением: %s";
 
     public void uploadFile(MultipartFile file, String login, String text) {
+
+        Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
+
+        List<PlatformUser> platformUsers = platformUserRepository.findAllByAuthorities(adminAuthority);
 
         try {
             bugReportRepository.save(Bug.builder()
@@ -41,12 +61,13 @@ public class BugReportService {
         } catch (IOException e) {
             throw new BugReportException("Неверный формат файла");
         }
+        platformUsers
+                .forEach(platformUser -> notificatorFeign.sendMessage(platformUser.getLogin(), String.format(NEW_BUG_MESSAGE, login, text), Communication.EMAIL));
     }
 
     public List<BugReportsDTO> getAll() {
         List<Bug> bugs = bugReportRepository.findAll();
         return bugs.stream().map(bugReportMapper::entityToDTO).collect(Collectors.toList());
-
     }
 
     public Bug downloadFile(Long fileId) {
