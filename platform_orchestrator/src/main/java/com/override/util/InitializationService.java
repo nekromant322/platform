@@ -1,6 +1,7 @@
 package com.override.util;
 
 import com.github.javafaker.Faker;
+import com.override.exception.UserAlreadyExistException;
 import com.override.model.*;
 import com.override.model.enums.Role;
 import com.override.model.enums.Status;
@@ -153,7 +154,8 @@ public class InitializationService {
             userService.save(account);
             personalDataInit(account);
             userSettingsInit(account);
-        } catch (Exception ignore) {
+        } catch (UserAlreadyExistException e) {
+            e.printStackTrace();
         }
     }
 
