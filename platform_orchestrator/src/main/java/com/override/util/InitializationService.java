@@ -1,6 +1,7 @@
 package com.override.util;
 
 import com.github.javafaker.Faker;
+import com.override.exception.UserAlreadyExistException;
 import com.override.model.*;
 import com.override.model.enums.Role;
 import com.override.model.enums.Status;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -80,13 +80,9 @@ public class InitializationService {
     @Autowired
     private Faker faker;
 
-    @PostConstruct
-    private void initAdmin() {
+    public void initTestData() {
         authorityInit();
         adminInit();
-    }
-
-    public void initTestData() {
         userInit();
         codeTryInit();
         joinRequestsInit();
@@ -123,8 +119,10 @@ public class InitializationService {
     }
 
     private void authorityInit() {
-        for (Role role : Role.values()) {
-            authorityService.save(role.getName());
+        if (authorityService.checkIfTableIsEmpty()) {
+            for (Role role : Role.values()) {
+                authorityService.save(role.getName());
+            }
         }
     }
 
@@ -152,9 +150,13 @@ public class InitializationService {
     private void saveUser(String login, String password, StudyStatus study, Role... userRoles) {
         List<Authority> roles = getAuthorityListFromRoles(userRoles);
         PlatformUser account = new PlatformUser(null, login, password, study, roles, new PersonalData(), new UserSettings());
-        userService.save(account);
-        personalDataInit(account);
-        userSettingsInit(account);
+        try {
+            userService.save(account);
+            personalDataInit(account);
+            userSettingsInit(account);
+        } catch (UserAlreadyExistException e) {
+            e.printStackTrace();
+        }
     }
 
     private List<Authority> getAuthorityListFromRoles(Role... roles) {

@@ -1,0 +1,17 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="createRecipientTable" author="yusov8400">
+        <createTable tableName="recipient">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)"/>
+            <column name="login" type="varchar(255)"/>
+            <column name="phone_number" type="varchar(255)"/>
+            <column name="telegram_id" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
