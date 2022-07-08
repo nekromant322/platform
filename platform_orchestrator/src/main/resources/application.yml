@@ -22,7 +22,7 @@ spring:
         format_sql: true
         use_sql_comments: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     generate-ddl: true
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
