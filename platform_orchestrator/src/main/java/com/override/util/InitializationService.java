@@ -139,7 +139,7 @@ public class InitializationService {
         }
         for (int i = 0; i < usersCount; i++) {
             usernameAndPassword = faker.name().firstName();
-            saveUser(usernameAndPassword,
+            saveasdUser(usernameAndPassword,
                     usernameAndPassword,
                     StudyStatus.ACTIVE, Role.GRADUATE);
         }
