@@ -1,20 +1,58 @@
-version: '3.8'
+version: '3'
+
 services:
-  orchestrator-db:
-    image: postgres:14.1-alpine
-    restart: always
-    environment:
-      POSTGRES_DB: orchestrator-db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+  jira:
+    depends_on:
+      - postgresql
+    image: teamatldocker/jira
+    networks:
+      - jiranet
+    volumes:
+      - jiradata:/var/atlassian/jira
     ports:
-      - '5430:5432'
-  notification-db:
-    image: postgres:14.1-alpine
-    restart: always
+      - '80:8080'
     environment:
-      POSTGRES_DB: notification-db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - '5431:5432'
+      - 'JIRA_DATABASE_URL=postgresql://jira@postgresql/jiradb'
+      - 'JIRA_DB_PASSWORD=jellyfish'
+      - 'SETENV_JVM_MINIMUM_MEMORY=2048m'
+      - 'SETENV_JVM_MAXIMUM_MEMORY=4096m'
+      - 'JIRA_PROXY_NAME='
+      - 'JIRA_PROXY_PORT='
+      - 'JIRA_PROXY_SCHEME='
+    logging:
+      # limit logs retained on host to 25MB
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+
+  postgresql:
+    image: postgres:9.5-alpine
+    networks:
+      - jiranet
+    volumes:
+      - postgresqldata:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_USER=jira'
+      # CHANGE THE PASSWORD!
+      - 'POSTGRES_PASSWORD=jellyfish'
+      - 'POSTGRES_DB=jiradb'
+      - 'POSTGRES_ENCODING=UNICODE'
+      - 'POSTGRES_COLLATE=C'
+      - 'POSTGRES_COLLATE_TYPE=C'
+    logging:
+      # limit logs retained on host to 25MB
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+
+volumes:
+  jiradata:
+    external: false
+  postgresqldata:
+    external: false
+
+networks:
+  jiranet:
+    driver: bridge
