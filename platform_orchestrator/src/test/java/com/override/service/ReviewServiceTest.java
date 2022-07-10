@@ -56,9 +56,9 @@ public class ReviewServiceTest {
 
         verify(reviewRepository, times(1)).save(any());
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
-        verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(), testUser.getLogin() +
-                ReviewService.CONFIRMATED_REVIEW_MESSAGE_TELEGRAM + testReviewDTO.getBookedDate() +
-                " в " + testReviewDTO.getBookedTime(), Communication.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(),
+                String.format(ReviewService.CONFIRMATED_REVIEW_MESSAGE_TELEGRAM, testUser.getLogin(), testReviewDTO.getBookedDate(),
+                        testReviewDTO.getBookedTime()), Communication.TELEGRAM);
 
     }
 
@@ -74,8 +74,9 @@ public class ReviewServiceTest {
 
         reviewService.saveOrUpdate(testReviewDTO, testReviewDTO.getMentorLogin());
 
-        verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(), ReviewService.CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM +
-                " в " + testReviewDTO.getBookedTime() + testReviewDTO.getBookedDate(), Communication.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(), String.format(
+                ReviewService.CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM, testReviewDTO.getBookedTime(),
+                testReviewDTO.getBookedDate()), Communication.TELEGRAM);
         verify(reviewRepository, times(1)).save(any());
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
     }
@@ -94,8 +95,8 @@ public class ReviewServiceTest {
         reviewService.saveOrUpdate(testReviewDTO, testUserLogin);
 
         verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(),
-                ReviewService.CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM + testUserLogin + " в "
-                        + testReviewDTO.getBookedTime() + testReviewDTO.getBookedDate(), Communication.TELEGRAM);
+                String.format(ReviewService.CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM, testUserLogin,
+                        testReviewDTO.getBookedTime(), testReviewDTO.getBookedDate()), Communication.TELEGRAM);
         verify(reviewRepository, times(1)).save(any());
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
     }
@@ -124,7 +125,7 @@ public class ReviewServiceTest {
         reviewService.saveOrUpdate(testReviewDTO, testUser.getLogin());
 
         verify(notificatorFeign, times(1)).sendMessage(testUser.getLogin(),
-                ReviewService.NEW_REVIEW_MESSAGE_TELEGRAM + testUser.getLogin(), Communication.TELEGRAM);
+                String.format(ReviewService.NEW_REVIEW_MESSAGE_TELEGRAM, testUser.getLogin()), Communication.TELEGRAM);
         verify(reviewRepository, times(1)).save(any());
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
     }

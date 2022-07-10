@@ -33,59 +33,67 @@ public class ReviewService {
     @Autowired
     private NotificatorFeign notificatorFeign;
 
-    public static String CONFIRMATED_REVIEW_MESSAGE_TELEGRAM = " ментор подтвердил ревью ";
+    public static String CONFIRMATED_REVIEW_MESSAGE_TELEGRAM = "Ментор %s подтвердил ревью %s в %s";
     public static String DELETED_REVIEW_MESSAGE_TELEGRAM = "Ментор вынужден был отменить ревью. " +
             "Попробуйте записаться на другое время";
-    public static String CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM = "Ментор изменил время ревью. Ревью пройдет ";
-    public static String CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM = "На Ваше ревью сменился ментор. Его проведет: ";
-    public static String NEW_REVIEW_MESSAGE_TELEGRAM = "Новый запрос на ревью от пользователя ";
+    public static String CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM = "Ментор изменил время ревью. Ревью пройдет %s в %s";
+    public static String CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM = "На Ваше ревью сменился ментор. Его проведет: %s %s в %s ";
+    public static String NEW_REVIEW_MESSAGE_TELEGRAM = "Новый запрос на ревью от пользователя %s";
 
     /**
      * Saves a new or changes an existing review
      * If the review is new, then the user's login is assigned to the student
-     * Only the mentor can change the review, so the username is assigned to the mentor
+     * Let's deal with conditions.
+     * reviewDTO.getId() == null, reviewDTO.getStudentLogin() == null - A notification is sent to Telegram about
+     * a new review request from a student to a mentor. A student's username is recorded in the data of review.
+     * When a review is just being created, it is assumed that this request is made by a student,
+     * which means that the review does not have an id and its login is not passed to it
+     * <p>
+     * reviewDTO.getBookedTime() != null && reviewDTO.getMentorLogin() == "" -
+     * A review confirmation notification is sent to the student in a telegram.  A mentor's username is recorded in the data of review.
+     * <p>
+     * reviewDTO.getMentorLogin() != null && reviewDTO.getBookedTime() != null - changes are made to an already confirmed review. there is two ways:
+     * !reviewDTO.getMentorLogin().equals(userLogin) -A notification about the change of the mentor will be sent with an indication of the time.
+     * <p>
+     * reviewDTO.getMentorLogin().equals(userLogin) -
+     * if the logins are the same, a time change notification is sent.
      *
      * @param reviewDTO review information obtained from the request
      * @param userLogin username of the user making the request
      */
     public void saveOrUpdate(ReviewDTO reviewDTO, String userLogin) {
-
-        if (reviewDTO.getBookedTime() != null && reviewDTO.getMentorLogin() == "") {
-            sendMessage(reviewDTO.getStudentLogin(), userLogin + CONFIRMATED_REVIEW_MESSAGE_TELEGRAM
-                    + reviewDTO.getBookedDate() + " в " + reviewDTO.getBookedTime(), Communication.TELEGRAM);
-            reviewDTO.setMentorLogin(userLogin);
-        } else if (reviewDTO.getMentorLogin() != null && reviewDTO.getBookedTime() != null) {
-            if (!reviewDTO.getMentorLogin().equals(userLogin)) {
-                sendMessage(reviewDTO.getStudentLogin(), CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM +
-                        userLogin + " в " + reviewDTO.getBookedTime() + reviewDTO.getBookedDate(), Communication.TELEGRAM);
-            } else {
-                sendMessage(reviewDTO.getStudentLogin(), CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM +
-                        " в " + reviewDTO.getBookedTime() + reviewDTO.getBookedDate(), Communication.TELEGRAM);
-            }
-        }
-
         if (reviewDTO.getId() == null && reviewDTO.getStudentLogin() == null) {
             List<PlatformUser> mentorList = platformUserRepository.findByAuthoritiesContains(
                     new Authority(2L, "ROLE_ADMIN"));
             for (PlatformUser mentor : mentorList) {
-                sendMessage(mentor.getLogin(), NEW_REVIEW_MESSAGE_TELEGRAM +
-                        userLogin, Communication.TELEGRAM);
+                sendMessage(mentor.getLogin(), String.format(NEW_REVIEW_MESSAGE_TELEGRAM,
+                        userLogin), Communication.TELEGRAM);
                 reviewDTO.setStudentLogin(userLogin);
             }
-
         }
-
+        if (reviewDTO.getBookedTime() != null && reviewDTO.getMentorLogin() == "") {
+            sendMessage(reviewDTO.getStudentLogin(), String.format(CONFIRMATED_REVIEW_MESSAGE_TELEGRAM, userLogin,
+                    reviewDTO.getBookedDate(), reviewDTO.getBookedTime()), Communication.TELEGRAM);
+            reviewDTO.setMentorLogin(userLogin);
+        } else if (reviewDTO.getMentorLogin() != null && reviewDTO.getBookedTime() != null) {
+            if (!reviewDTO.getMentorLogin().equals(userLogin)) {
+                sendMessage(reviewDTO.getStudentLogin(), String.format(CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM,
+                        userLogin, reviewDTO.getBookedTime(), reviewDTO.getBookedDate()), Communication.TELEGRAM);
+            } else {
+                sendMessage(reviewDTO.getStudentLogin(), String.format(CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM,
+                        reviewDTO.getBookedTime(), reviewDTO.getBookedDate()), Communication.TELEGRAM);
+            }
+        }
         reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
                 platformUserRepository.findFirstByLogin(reviewDTO.getStudentLogin()),
                 platformUserRepository.findFirstByLogin(reviewDTO.getMentorLogin())));
-
     }
 
     public void sendMessage(String login, String message, Communication type) {
         try {
             notificatorFeign.sendMessage(login, message, type);
         } catch (FeignException e) {
-            System.out.println("Такой логин: " + login + " Telegram не существует");
+            System.out.println("FeignException. Возможно, проблема в том, что логин " + login + " Telegram не существует");
         }
     }
 
