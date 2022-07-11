@@ -1,4 +1,4 @@
-package com.override.util;
+package com.override.model.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

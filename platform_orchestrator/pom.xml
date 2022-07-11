@@ -15,7 +15,7 @@
     <description>Orchestration for platform application</description>
 
     <properties>
-        <jacoco.min.coverage>0.45</jacoco.min.coverage>
+        <jacoco.min.coverage>0.59</jacoco.min.coverage>
     </properties>
 
     <dependencies>
@@ -39,6 +39,11 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgres.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
         </dependency>
 
         <!--  =====================  Spring  =====================  -->
@@ -170,7 +175,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.8</version>
+                <version>0.8.4</version>
                 <configuration>
                     <excludes>
                         <exclude>**/override/PlatformOrchestratorApplication.class</exclude>
@@ -182,6 +187,7 @@
                         <exclude>**/aspect/**</exclude>
                         <exclude>**/annotation/**</exclude>
                         <exclude>**/scheduler/**</exclude>
+                        <exclude>**/properties/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>

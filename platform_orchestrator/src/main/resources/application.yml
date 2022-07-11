@@ -22,8 +22,10 @@ spring:
         format_sql: true
         use_sql_comments: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     generate-ddl: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
   cloud:
     loadbalancer:
       ribbon:
@@ -53,6 +55,7 @@ testData:
   enabled: true
   usersCount: 5
   requestsCount: 2
+  paymentsCount: 6
 
 logging:
   file:
@@ -105,6 +108,8 @@ navbar:
       /reviewAdmin
     - Собеседования
       /interviewReports
+    - Платежи
+      /allPayments
     - Настройки
       /userSettings
     - Баги
@@ -130,7 +135,7 @@ navbar:
     - Собеседования
       /interviewReports
     - Оплата
-      /pay
+      /payments
     - Персональные данные
       /personalData
     - Настройки

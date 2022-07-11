@@ -58,6 +58,33 @@
 ## Работа с проектом
 ### Тестовые данные
 Для инициализации тестовых данных необходимо перейти на ендпоинт `/init`
+### Liquibase
+В нашем проекте мы используем систему управления версиями базы данных `Liquibase`
+Основной инструмент для работы с БД это changelog в котором пишутся changeset. changeset — набор изменений), XML-код для описания операторов DDL. Они составляют файлы changelog
+
+Для примера напишем changelog в котором создадим таблицу recipient.
+![alt](https://i.ibb.co/ChtYZJs/img.png)
+
+Смотрим в Таблицу databsechangelog и видим,что там появился новый changeset и таблица recipient появилась в БД.
+![alt](https://i.ibb.co/6RHkN8v/img-1.png)
+
+![alt](https://i.ibb.co/3Mw4jYY/img-2.png)
+
+**_Важно:_** для создания,удаления и даже для изменения имеющийся таблицы необходимо написать новый changeset
+
+Для подробного ознакомления с Liquibase рекуомендуется прочитать статьи(ссылки внизу)
+### Поддержание актуальности мастера:
+Не забывайте поддерживать актуальность своей ветки
+Способ 1 (в идее):  
+Git -> Branches -> main -> update  
+Git -> Branches -> feature/yourFeature -> checkout  
+Git -> Branches -> main -> merge main into feature/yourFeature  
+		
+Способ 2 (в консоли):  
+git checkout main  
+git pull origin main  
+git checkout feature/yourFeature  
+git merge main  
 
 ## Тестирование
 ### Для тестирования через Postman:
@@ -85,3 +112,7 @@
 
 ## Полезные ссылки:
 https://trello.com/b/zN2JnsWE/платформа
+
+https://habr.com/ru/post/178665/
+
+https://struchkov.dev/blog/get-started-liquibase/

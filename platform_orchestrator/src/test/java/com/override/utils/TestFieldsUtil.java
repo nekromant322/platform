@@ -2,9 +2,9 @@ package com.override.utils;
 
 import com.override.model.*;
 import com.override.model.enums.Status;
-import enums.StudyStatus;
 import dto.*;
 import enums.CodeExecutionStatus;
+import enums.StudyStatus;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
@@ -15,6 +15,25 @@ import java.util.stream.Collectors;
 
 
 public class TestFieldsUtil {
+
+    public static Payment generateTestPayment() {
+        return Payment.builder()
+                .sum(200000L)
+                .message("Первый платеж")
+                .accountNumber(123321L)
+                .studentName("Andrey")
+                .date(LocalDate.of(2022, 7, 24))
+                .build();
+    }
+
+    public static PaymentDTO generateTestPaymentDTO() {
+        return PaymentDTO.builder()
+                .sum(200000L)
+                .comment("Первый платеж")
+                .accountNumber(123321L)
+                .date(LocalDate.of(2022, 7, 24))
+                .build();
+    }
 
     public static String generateTestCode() {
         return "public class MyClass {public static void main(String[] args){ System.out.println(\"This is my Code\");}}";
