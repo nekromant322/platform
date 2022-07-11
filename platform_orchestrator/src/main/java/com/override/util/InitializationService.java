@@ -73,6 +73,9 @@ public class InitializationService {
     private InterviewReportService interviewReportService;
 
     @Autowired
+    private DefaultQuestionService defaultQuestionService;
+
+    @Autowired
     private Faker faker;
 
     @PostConstruct
@@ -89,6 +92,7 @@ public class InitializationService {
         reportsInit();
         reviewInit();
         interviewReportsInit();
+        defaultQuestionsInit();
     }
 
     private void authorityInit() {
@@ -257,7 +261,7 @@ public class InitializationService {
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
 
-        long minDay =  LocalDate.now().minusDays(1).toEpochDay();
+        long minDay = LocalDate.now().minusDays(1).toEpochDay();
         long maxDay = LocalDate.now().plusDays(2).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
@@ -347,5 +351,127 @@ public class InitializationService {
                 .status(statusList.get(new Random().nextInt(statusList.size())))
                 .level(levelList.get(new Random().nextInt(levelList.size())))
                 .build());
+    }
+
+    private void defaultQuestionsInit() {
+
+        // 1 + 2
+        defaultQuestionService.save(new DefaultQuestion("jvm jre jdk, что это такое, чем отличаются", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("Запуск HelloWorld из консоли", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("Что происходит (поэтапно) с кодом с момента нажатия на play в ide до вывода сообщения в консоль?", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("Примитивные типы и их размеры", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("Можно ли положить максимальное значения типа long во float переменную?", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("Логические операции: и, или, xor", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("Как в памяти хранятся целые числа? Перевод из двоичной в десятичную и наоборот.", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("Как хранятся дробные числа? Откуда погрешность при вычислениях? Почему 0.1 + 0.7 != 0.8", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("Чем отличаются явные и неявные приведения типов? Когда возможны неявные приведения?", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("AutoBoxing и Unboxing, когда происходят автоматически?", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("Что такое кодировка? Какие бывают кодировки? Чем отличаются?", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("Что такое массив?", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("Зачем нужны регулярные выражения?", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("Что такое рекурсия? Плюсы и минусы использования рекурсии", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("StringBuilder, когда стоит использовать, почему и когда стоит использовать .append() вместо конкатенации строк", "core", 12));
+        defaultQuestionService.save(new DefaultQuestion("Что такое пул строк? Зачем он нужен?", "core", 12));
+
+
+        //4
+        defaultQuestionService.save(new DefaultQuestion("Зачем нужны исключения?", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("Иерархия исключений", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("Можно ли поймать и обработать Error? примеры Error", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("Что такое стектрейс? Какую информацию хранит?", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("какая информация хранится внутри каждого объекта-исключения?", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("Зачем нужен механизм try-catch? как он работает?", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("Что значит \"пробросить исключение\"? Зачем это может быть нужно?", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("Зачем нужен finally? Когда он может не выполниться?", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("Что будет происходить в программе, если исключение выбрасывается в блоке catch, а потом еще одно выбрасывается в блоке finally?", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("Try with resources", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("Объекты каких классов можно использовать в try with resources?", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("Как влияет на использование кода, который бросает исключение, то что эти исключения проверяемые?", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("От чего наследоваться при создании собственных  исключений: когда создавать проверяемые, а когда непроверяемые исключения?", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("Подавленные исключения. Что это? Как достать? Пример кода", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("Зачем нужны логеры? Почему не обойтись использованием System.out.println()?", "core", 4));
+        defaultQuestionService.save(new DefaultQuestion("Как работает instanceOf? В чем отличие от obj.getClass() == MailPackage.class?", "core", 4));
+
+        //5
+        defaultQuestionService.save(new DefaultQuestion("как создать файл на диске?", "core", 5));
+        defaultQuestionService.save(new DefaultQuestion("задача joke.java", "core", 5));
+        defaultQuestionService.save(new DefaultQuestion("задача ecoPersons", "core", 5));
+        defaultQuestionService.save(new DefaultQuestion("что такое поток (данных)?", "core", 5));
+        defaultQuestionService.save(new DefaultQuestion("Как работает flush()?", "core", 5));
+        defaultQuestionService.save(new DefaultQuestion("Какие есть наследники у класса InputStream? Зачем они нужны?", "core", 5));
+        defaultQuestionService.save(new DefaultQuestion("Какой паттерн проектирования лежит в основе иерархии InputStream?", "core", 5));
+        defaultQuestionService.save(new DefaultQuestion("Что такое сериализация?", "core", 5));
+        defaultQuestionService.save(new DefaultQuestion("Как отключить сериализацию поля?", "core", 5));
+        defaultQuestionService.save(new DefaultQuestion("Externalizible, зачем нужен?", "core", 5));
+        defaultQuestionService.save(new DefaultQuestion("Задачка на сериализацию паспорта", "core", 5));
+        defaultQuestionService.save(new DefaultQuestion("Глубокое vs поверхностное клонирование", "core", 5));
+        defaultQuestionService.save(new DefaultQuestion("Как клонировать объекты в java (глубоко)?", "core", 5));
+
+        //6
+        defaultQuestionService.save(new DefaultQuestion("что такое дженерики?", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("какую проблему они решают?", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("optional", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("зачем типизация <T,R> для of?", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("wildcards", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("PECS", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("Iterable vs Iterator", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("иерархия коллекций, какие структуры данных представляют коллекции стандартной библиотеки", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("HashMap, бинарные, красночерные деревья", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("comparable vs comparator", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("Function vs Operator", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("что такое Stream", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("как можно создать стрим?", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("зачем нужны стримы? какие преимущества дают ?", "core", 6));
+        defaultQuestionService.save(new DefaultQuestion("какие операции бывают в стримах?", "core", 6));
+
+        //web1
+
+        defaultQuestionService.save(new DefaultQuestion("Что такое maven?", "web", 1));
+        defaultQuestionService.save(new DefaultQuestion("Какие задачи решает maven?", "web", 1));
+        defaultQuestionService.save(new DefaultQuestion("Что такое зависимость?", "web", 1));
+        defaultQuestionService.save(new DefaultQuestion("Где хранятся зависимости локально?", "web", 1));
+        defaultQuestionService.save(new DefaultQuestion("Maven lifecycle", "web", 1));
+        defaultQuestionService.save(new DefaultQuestion("Что такое Jetty?", "web", 1));
+        defaultQuestionService.save(new DefaultQuestion("HTTP, структура запросов и ответов, методы, коды состояний", "web", 1));
+        defaultQuestionService.save(new DefaultQuestion("Что такое сервлет?", "web", 1));
+
+
+//spring 1
+        defaultQuestionService.save(new DefaultQuestion("Что такое Maven? Для чего он нужен? Как добавлять в проект библиотеки без него?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Как добавить dependency в Maven? Для чего они нужны? Откуда они скачиваются?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Основные фазы проекта под управлением Maven?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Что такое JDBC? Какие классы/интерфейсы относятся к JDBC?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Для чего нужен DriverManager?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Что такое Statement, PreparedStatement, CallableStatement?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Что такое sql-injection?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Что такое ResultSet? Как с ним работать?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Рассказать про паттерн DAO", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Что такое JPA?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("В чем разница между JPA и Hibernate? Как связаны все эти понятия?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Что такое Hibernate?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Какие классы/интерфейсы относятся к JPA/Hibernate?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Основные аннотации Hibernate, рассказать.", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Чем HQL отличается от SQL?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Что такое ORM?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Что такое Query? Как передать в объект Query параметры?", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Какие можно устанавливать параметры в hbm2ddl, рассказать про каждый из них.", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Требования JPA к Entity-классам? Не менее пяти.", "spring", 1));
+        defaultQuestionService.save(new DefaultQuestion("Жизненный цикл Entity в Hibernate? Рассказать.", "spring", 1));
+
+        //spring 2
+        defaultQuestionService.save(new DefaultQuestion("Что такое бин?", "spring", 2));
+        defaultQuestionService.save(new DefaultQuestion("Какие бывают скоупы у бинов?", "spring", 2));
+        defaultQuestionService.save(new DefaultQuestion("Что такое Inversion of Control и как Spring реализует этот принцип?", "spring", 2));
+        defaultQuestionService.save(new DefaultQuestion("Как можно связать бины?", "spring", 2));
+        defaultQuestionService.save(new DefaultQuestion("Что такое Dependency Injection?", "spring", 2));
+        defaultQuestionService.save(new DefaultQuestion("Как получить данные из файла .property?", "spring", 2));
+        defaultQuestionService.save(new DefaultQuestion("Что такое Spring Boot?", "spring", 2));
+        defaultQuestionService.save(new DefaultQuestion("Какая разница между аннотациями @Component, @Repository, @Service и @Controller , @RestController в Spring?", "spring", 2));
+        defaultQuestionService.save(new DefaultQuestion("Как выглядит структура MVC-приложения?", "spring", 2));
+        defaultQuestionService.save(new DefaultQuestion("За что отвечают ViewResolver, DispatcherServlet и как между собой взаимодействуют?", "spring", 2));
+        defaultQuestionService.save(new DefaultQuestion("Как вернуть страницу в контроллере? Как вернуть данные (например в json)?", "spring", 2));
+        defaultQuestionService.save(new DefaultQuestion("Для чего нужны интерфейсы UserDetails и UserDetailsService?", "spring", 2));
+        defaultQuestionService.save(new DefaultQuestion("Как мы можем добавить секьюрность к контроллеру? (минимум 2 способа).", "spring", 2));
+        defaultQuestionService.save(new DefaultQuestion("Что будет являться эквивалентом пользователя и роли в приложении со Spring Security?", "spring", 2));
     }
 }

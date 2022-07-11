@@ -17,30 +17,27 @@ public class DefaultQuestionRestController {
     private DefaultQuestionService defaultQuestionService;
 
     @GetMapping
-    public ResponseEntity<List<DefaultQuestion>> findDefaultQuestions() {
-        return new ResponseEntity<>(defaultQuestionService.findAll(), HttpStatus.OK);
+    public List<DefaultQuestion> findDefaultQuestions() {
+        return defaultQuestionService.findAll();
     }
 
     @PostMapping
-    public ResponseEntity<List<DefaultQuestion>> findDefaultQuestionsByChapterAndSection(@RequestBody DefaultQuestionDTO defaultQuestionDTO) {
-        return new ResponseEntity<>(defaultQuestionService.findAllByChapterAndSection(defaultQuestionDTO.getChapter(), defaultQuestionDTO.getSection()), HttpStatus.OK);
+    public List<DefaultQuestion> findDefaultQuestionsByChapterAndSection(@RequestBody DefaultQuestionDTO defaultQuestionDTO) {
+        return defaultQuestionService.findAllByChapterAndSection(defaultQuestionDTO.getChapter(), defaultQuestionDTO.getSection());
     }
 
     @PatchMapping
-    public ResponseEntity<String> patchDefaultQuestion(@RequestBody DefaultQuestion defaultQuestion) {
+    public void patchDefaultQuestion(@RequestBody DefaultQuestion defaultQuestion) {
         defaultQuestionService.save(defaultQuestion);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<String> editDefaultQuestion(@RequestBody DefaultQuestion defaultQuestion) {
+    public void editDefaultQuestion(@RequestBody DefaultQuestion defaultQuestion) {
         defaultQuestionService.update(defaultQuestion);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping
-    public ResponseEntity<String> delete(@RequestBody int id) {
+    public void delete(@RequestBody int id) {
         defaultQuestionService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

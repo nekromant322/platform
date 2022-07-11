@@ -15,8 +15,6 @@ import java.util.List;
 public class DefaultQuestionService {
     @Autowired
     private DefaultQuestionRepository defaultQuestionRepository;
-    @Autowired
-    private PlatformUserService platformUserService;
 
     public void save(DefaultQuestion defaultQuestion) {
         defaultQuestionRepository.save(defaultQuestion);
