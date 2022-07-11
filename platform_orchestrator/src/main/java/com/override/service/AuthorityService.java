@@ -19,4 +19,8 @@ public class AuthorityService {
     public Authority save(String roleName) {
         return authorityRepository.save(new Authority(null, roleName));
     }
+
+    public boolean checkIfTableIsEmpty(){
+        return  authorityRepository.countAll() == 0;
+    }
 }
