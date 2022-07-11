@@ -41,8 +41,14 @@ public class InitializationService {
     @Value("${testData.paymentsCount}")
     private int paymentsCount;
 
+    @Value("${testData.preProjectLessonCount}")
+    private int preProjectLessonCount;
+
     @Autowired
     private AuthorityService authorityService;
+
+    @Autowired
+    private PreProjectLessonService preProjectLessonService;
 
     @Autowired
     private PlatformUserService userService;
@@ -95,6 +101,24 @@ public class InitializationService {
         reviewInit();
         interviewReportsInit();
         paymentInit();
+        preProjectLessons();
+    }
+
+    private void preProjectLessons() {
+        for (int i = 0; i < preProjectLessonCount; i++) {
+            PlatformUser platformUser = getRandomUser();
+            preProjectLessonService.saveLink(PreProjectLesson.builder()
+                    .link(faker.bothify("https://github.com/??????##/???##??#/####.com"))
+                    .user(platformUser)
+                    .build(), platformUser.getLogin());
+
+        }
+    }
+
+    private PlatformUser getRandomUser() {
+        List<PlatformUser> userList = userService.getAllStudents();
+        Random rand = new Random();
+        return userList.get(rand.nextInt(userList.size()));
     }
 
     private void paymentInit() {

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
 
 @Data
 @Entity
@@ -25,8 +26,17 @@ public class PreProjectLesson {
     @Column(name = "task_identifier")
     private String taskIdentifier;
 
+    @Column
+    private boolean approve;
+
+    @Column
+    private boolean viewed;
+
+    @Column
+    private ArrayList<String> messages;
+
     @JoinColumn(name = "user_id")
     @ManyToOne
     private PlatformUser user;
-    }
+}
 
