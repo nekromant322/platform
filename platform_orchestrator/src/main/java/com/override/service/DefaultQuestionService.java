@@ -24,10 +24,6 @@ public class DefaultQuestionService {
         return defaultQuestionRepository.findAll();
     }
 
-    public List<DefaultQuestion> findAllByChapter(String chapter) {
-        return defaultQuestionRepository.findDefaultQuestionsByChapter(chapter);
-    }
-
     public List<DefaultQuestion> findAllByChapterAndSection(String chapter, int section) {
         return defaultQuestionRepository.findDefaultQuestionsByChapterAndSection(chapter, section);
     }

@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface DefaultQuestionRepository extends JpaRepository<DefaultQuestion, Long> {
-    List<DefaultQuestion> findDefaultQuestionsByChapter(String chapter);
 
     List<DefaultQuestion> findDefaultQuestionsByChapterAndSection(String chapter, int section);
 }
