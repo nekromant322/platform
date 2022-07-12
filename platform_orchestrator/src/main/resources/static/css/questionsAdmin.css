@@ -1,0 +1,8 @@
+.prokrutka {
+    height: 600px; /* высота нашего блока */
+    overflow-x: scroll; /* прокрутка по горизонтали */
+    overflow-y: scroll; /* прокрутка по вертикали */
+}
+h6 {
+    color: white;
+}

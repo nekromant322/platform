@@ -197,5 +197,13 @@
             <column name="student_name" type="varchar(255)"/>
             <column name="sum" type="bigint"/>
         </createTable>
+
+        <createTable tableName="default_question">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="chapter" type="varchar(255)"/>
+            <column name="question" type="varchar(255)"/>
+        </createTable>
     </changeSet>
 </databaseChangeLog>
