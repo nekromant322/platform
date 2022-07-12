@@ -16,6 +16,17 @@ import java.util.stream.Collectors;
 
 public class TestFieldsUtil {
 
+    public static PreProjectLesson generatePreProjectLesson() {
+        return PreProjectLesson.builder()
+                .viewed(false)
+                .link("https://github.com/nekromant/platform")
+                .approve(false)
+                .messages(new ArrayList<>())
+                .taskIdentifier("1/1/1")
+                .user(generateTestUser())
+                .build();
+    }
+
     public static Payment generateTestPayment() {
         return Payment.builder()
                 .sum(200000L)

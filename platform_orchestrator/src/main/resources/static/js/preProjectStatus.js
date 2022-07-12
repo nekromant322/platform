@@ -4,8 +4,8 @@ function getAllProjectMessages() {
     let PrLessons = {}
     PrLessons.taskIdentifier = window.location.pathname;
     $.ajax({
-        type: 'PUT',
-        url: '/preProjectLink',
+        type: 'POST',
+        url: '/preProjectLink/current',
         contentType: "application/json",
         data: JSON.stringify(PrLessons),
         success: function (response) {

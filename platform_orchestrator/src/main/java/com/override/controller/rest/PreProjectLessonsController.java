@@ -23,7 +23,7 @@ public class PreProjectLessonsController {
         return preProjectLessonService.getAll();
     }
 
-    @PutMapping("")
+    @PostMapping("/current")
     public List<PreProjectLesson> getCurrent(@RequestBody PreProjectLesson link, @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return preProjectLessonService.getAllByPathName(link, user.getUsername());
     }
