@@ -5,7 +5,9 @@ import com.override.model.Authority;
 import com.override.model.PersonalData;
 import com.override.model.PlatformUser;
 import com.override.model.UserSettings;
+import com.override.model.enums.CurrentCoursePart;
 import com.override.model.enums.Role;
+import enums.CoursePart;
 import enums.StudyStatus;
 import com.override.repository.PlatformUserRepository;
 import org.junit.jupiter.api.Test;
@@ -115,6 +117,7 @@ class PlatformUserServiceTest {
                 login,
                 password,
                 StudyStatus.ACTIVE,
+                CurrentCoursePart.SPRING,
                 new ArrayList<>() {{
                     add(userAuthority);
                 }},

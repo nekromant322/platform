@@ -1,6 +1,7 @@
 package com.override.service;
 
 import com.override.model.PlatformUser;
+import com.override.model.enums.CurrentCoursePart;
 import enums.StudyStatus;
 import com.override.repository.PlatformUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class CustomStudentDetailService implements UserDetailsService {
         private final String login;
         private final String password;
         private final StudyStatus studyStatus;
+        private final CurrentCoursePart coursePart;
         private final List<GrantedAuthority> authorities;
 
         public CustomStudentDetails(PlatformUser student) {
@@ -50,6 +52,7 @@ public class CustomStudentDetailService implements UserDetailsService {
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
             this.studyStatus = student.getStudyStatus();
+            this.coursePart = student.getCoursePart();
         }
 
         @Override
@@ -66,6 +69,10 @@ public class CustomStudentDetailService implements UserDetailsService {
         public String getUsername() {
             return login;
         }
+
+      ///  public CurrentCoursePart getCoursePart() {
+//            return coursePart;
+//        }
 
         @Override
         public boolean isAccountNonExpired() {

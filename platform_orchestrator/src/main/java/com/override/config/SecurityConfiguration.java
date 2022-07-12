@@ -1,5 +1,7 @@
 package com.override.config;
 
+import com.override.model.enums.CurrentCoursePart;
+import enums.CoursePart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,6 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/js/**", "/css/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/**").hasAnyRole("USER", "ADMIN","GRADUATE")
+//                .antMatchers("/lessons/spring/1/1/1").hasRole(CurrentCoursePart.SPRING.getName())
+//                .antMatchers("/lessons/web/**").access("principal")
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler)

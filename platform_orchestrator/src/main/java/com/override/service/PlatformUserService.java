@@ -5,7 +5,9 @@ import com.override.model.Authority;
 import com.override.model.PersonalData;
 import com.override.model.PlatformUser;
 import com.override.model.UserSettings;
+import com.override.model.enums.CurrentCoursePart;
 import com.override.model.enums.Role;
+import enums.CoursePart;
 import enums.StudyStatus;
 import com.override.repository.PlatformUserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +44,7 @@ public class PlatformUserService {
         String password = passwordGeneratorService.generateStrongPassword();
         List<Authority> roles = Collections.singletonList(authorityService.getAuthorityByRole(Role.USER));
 
-        PlatformUser account = new PlatformUser(null, login, password, StudyStatus.ACTIVE, roles, new PersonalData(), new UserSettings());
+        PlatformUser account = new PlatformUser(null, login, password, StudyStatus.ACTIVE, CurrentCoursePart.CORE, roles, new PersonalData(), new UserSettings());
         register(account);
 
         return account;
@@ -55,6 +57,7 @@ public class PlatformUserService {
                 login,
                 passwordEncoder.encode(studentAccount.getPassword()),
                 studentAccount.getStudyStatus(),
+                studentAccount.getCoursePart(),
                 studentAccount.getAuthorities(),
                 new PersonalData(),
                 new UserSettings()
@@ -120,12 +123,12 @@ public class PlatformUserService {
         PlatformUser student = platformUserRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + id + " не найден"));
 
-        if(role.equals(Role.ADMIN)) {
+        if (role.equals(Role.ADMIN)) {
             Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
             List<Authority> studentAuthorities = student.getAuthorities();
             studentAuthorities.add(adminAuthority);
         }
-        if(role.equals(Role.GRADUATE)){
+        if (role.equals(Role.GRADUATE)) {
             Authority graduateAuthority = authorityService.getAuthorityByRole(Role.GRADUATE);
             List<Authority> studentAuthorities = student.getAuthorities();
             studentAuthorities.clear();
@@ -136,5 +139,16 @@ public class PlatformUserService {
 
         return new ResponseEntity<>("OK", HttpStatus.OK);
 
+    }
+
+    public ResponseEntity<String> updateCurrentCoursePart(Long id, CurrentCoursePart coursePart) {
+        PlatformUser student = platformUserRepository
+                .findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + id + " не найден"));
+
+        student.setCoursePart(coursePart);
+        platformUserRepository.save(student);
+
+        return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }
