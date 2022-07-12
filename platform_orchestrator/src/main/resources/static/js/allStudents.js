@@ -40,6 +40,21 @@ function addColumn(data) {
     let tr = table.insertRow(table.rows.length);
     let td;
 
+    let color;
+    color = 'orange';
+    let legend;
+    legend = "CORE";
+
+    if (data.coursePart === "WEB") {
+        color = 'blue';
+        legend = "WEB";
+    }
+
+    if (data.coursePart === "SPRING") {
+        color = 'green';
+        legend = "SPRING";
+    }
+
     insertTd(data.id, tr);
     insertTd(data.login, tr);
 
@@ -50,7 +65,9 @@ function addColumn(data) {
 
     let update = document.createElement("button");
     update.className = "btn btn-success";
-    update.innerHTML = "Level Up";
+    update.innerHTML = legend;
+    update.title = legend;
+    update.style.backgroundColor = color;
     update.type = "submit";
     if (data.authorities[0].authority === "ROLE_GRADUATE") {
         document.getElementsByClassName("finish-education").disable = true;
@@ -228,7 +245,7 @@ function updateUserRole(id, status) {
 }
 
 function updateCurrentCoursePart(id, coursePart) {
-    let confirmation = confirm("Вы уверены, что хотите перейти на этап " + coursePart + " ?");
+    let confirmation = confirm("Вы уверены, что хотите перевести пользователя на этап " + coursePart + " ?");
     if (confirmation === true) {
         let data = {};
         data.id = id;

@@ -53,14 +53,4 @@ public class JwtFilter extends GenericFilterBean {
         }
         return null;
     }
-////
-//    public void checkStatus(PlatformUser platformUser,HttpServletRequest request,ServletResponse servletResponse){
-//
-//        if (platformUser.getCoursePart() == CurrentCoursePart.WEB) {
-//            Arrays.stream(request.;
-//                    request.isUserInRole("SPRING");
-//                    //request.
-//        }
-
-    //}
 }

@@ -1,9 +1,9 @@
 package com.override.model.enums;
 
 public enum CurrentCoursePart {
-    CORE("CORE"),
-    WEB("WEB"),
-    SPRING("SPRING");
+    CORE("ROLE_CORE"),
+    WEB("ROLE_WEB"),
+    SPRING("ROLE_SPRING");
 
     private final String name;
 

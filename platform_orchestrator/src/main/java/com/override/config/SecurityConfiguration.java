@@ -39,9 +39,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/join/request/**", "/init").permitAll()
                 .antMatchers("/js/**", "/css/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/lessons/spring/**").hasRole("SPRING")
+                .antMatchers("/lessons/web/**").hasAnyRole("WEB","SPRING")
                 .antMatchers("/**").hasAnyRole("USER", "ADMIN","GRADUATE")
-//                .antMatchers("/lessons/spring/1/1/1").hasRole(CurrentCoursePart.SPRING.getName())
-//                .antMatchers("/lessons/web/**").access("principal")
+
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler)
