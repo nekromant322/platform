@@ -261,12 +261,13 @@ public class InitializationService {
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
 
+
         long minDay = LocalDate.now().minusDays(1).toEpochDay();
         long maxDay = LocalDate.now().plusDays(2).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
 
-        reviewService.saveOrUpdateReview(ReviewDTO.builder()
+        reviewService.saveOrUpdate(ReviewDTO.builder()
                 .id(null)
                 .topic(faker.book().title())
                 .studentLogin(null)
@@ -278,7 +279,7 @@ public class InitializationService {
 
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
 
-        reviewService.saveOrUpdateReview(ReviewDTO.builder()
+        reviewService.saveOrUpdate(ReviewDTO.builder()
                 .id(null)
                 .topic(faker.book().title())
                 .studentLogin(null)
