@@ -10,6 +10,7 @@ import dto.ReviewDTO;
 import dto.ReviewFilterDTO;
 import enums.Communication;
 import feign.FeignException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ReviewService {
 
@@ -33,7 +35,7 @@ public class ReviewService {
     @Autowired
     private NotificatorFeign notificatorFeign;
 
-    public static String CONFIRMATED_REVIEW_MESSAGE_TELEGRAM = "Ментор %s подтвердил ревью %s в %s";
+    public static String CONFIRMED_REVIEW_MESSAGE_TELEGRAM = "Ментор %s подтвердил ревью %s в %s";
     public static String DELETED_REVIEW_MESSAGE_TELEGRAM = "Ментор вынужден был отменить ревью. " +
             "Попробуйте записаться на другое время";
     public static String CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM = "Ментор изменил время ревью. Ревью пройдет %s в %s";
@@ -41,22 +43,24 @@ public class ReviewService {
     public static String NEW_REVIEW_MESSAGE_TELEGRAM = "Новый запрос на ревью от пользователя %s";
 
     /**
-     * Saves a new or changes an existing review
-     * If the review is new, then the user's login is assigned to the student
-     * Let's deal with conditions.
-     * reviewDTO.getId() == null, reviewDTO.getStudentLogin() == null - A notification is sent to Telegram about
-     * a new review request from a student to a mentor. A student's username is recorded in the data of review.
-     * When a review is just being created, it is assumed that this request is made by a student,
-     * which means that the review does not have an id and its login is not passed to it
+     * Сохраняет новое или изменяет существующее ревью.
+     * Если ревью новое, то логин пользователя присваивается ученику.
+     * Разберемся с условиями.
+     * reviewDTO.getId() == null, reviewDTO.getStudentLogin() == null — будет отправлено уведомление в Telegram
+     * ментору о новом запросе на ревью от студента. Имя пользователя студента отправляется в reviewDTO.
+     * Когда ревью только создается, подразумевается, что этот запрос делает студент,
+     * значит у ревью нет айди и в дто не передается его логин, поэтому сетим логин студента и сохраняем.
      * <p>
      * reviewDTO.getBookedTime() != null && reviewDTO.getMentorLogin() == "" -
-     * A review confirmation notification is sent to the student in a telegram.  A mentor's username is recorded in the data of review.
+     * будет отправлено уведомление в Telegram студенту о подтверждении ревью ментором. Имя пользователя ментора
+     * отправляется в reviewDTO.
      * <p>
-     * reviewDTO.getMentorLogin() != null && reviewDTO.getBookedTime() != null - changes are made to an already confirmed review. there is two ways:
-     * !reviewDTO.getMentorLogin().equals(userLogin) -A notification about the change of the mentor will be sent with an indication of the time.
+     * reviewDTO.getMentorLogin() != null && reviewDTO.getBookedTime() != null - изменения вносятся в уже
+     * подтвержденное ревью. А дальше уже два пути:
      * <p>
-     * reviewDTO.getMentorLogin().equals(userLogin) -
-     * if the logins are the same, a time change notification is sent.
+     * !reviewDTO.getMentorLogin().equals(userLogin) - будет отправлено уведомление о смене ментора с указанием времени.
+     * reviewDTO.getMentorLogin().equals(userLogin) - если логины совпадают, отправляется уведомление об изменении
+     * времени.
      *
      * @param reviewDTO review information obtained from the request
      * @param userLogin username of the user making the request
@@ -70,9 +74,8 @@ public class ReviewService {
                         userLogin), Communication.TELEGRAM);
                 reviewDTO.setStudentLogin(userLogin);
             }
-        }
-        if (reviewDTO.getBookedTime() != null && reviewDTO.getMentorLogin() == "") {
-            sendMessage(reviewDTO.getStudentLogin(), String.format(CONFIRMATED_REVIEW_MESSAGE_TELEGRAM, userLogin,
+        } else if (reviewDTO.getBookedTime() != null && reviewDTO.getMentorLogin() == "") {
+            sendMessage(reviewDTO.getStudentLogin(), String.format(CONFIRMED_REVIEW_MESSAGE_TELEGRAM, userLogin,
                     reviewDTO.getBookedDate(), reviewDTO.getBookedTime()), Communication.TELEGRAM);
             reviewDTO.setMentorLogin(userLogin);
         } else if (reviewDTO.getMentorLogin() != null && reviewDTO.getBookedTime() != null) {
@@ -93,7 +96,7 @@ public class ReviewService {
         try {
             notificatorFeign.sendMessage(login, message, type);
         } catch (FeignException e) {
-            System.out.println("FeignException. Возможно, проблема в том, что логин " + login + " Telegram не существует");
+            log.error("Не удалось отправить сообщение в Telegram пользователю " + login);
         }
     }
 

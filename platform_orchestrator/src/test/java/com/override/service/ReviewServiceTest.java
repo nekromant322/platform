@@ -57,7 +57,7 @@ public class ReviewServiceTest {
         verify(reviewRepository, times(1)).save(any());
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
         verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(),
-                String.format(ReviewService.CONFIRMATED_REVIEW_MESSAGE_TELEGRAM, testUser.getLogin(), testReviewDTO.getBookedDate(),
+                String.format(ReviewService.CONFIRMED_REVIEW_MESSAGE_TELEGRAM, testUser.getLogin(), testReviewDTO.getBookedDate(),
                         testReviewDTO.getBookedTime()), Communication.TELEGRAM);
 
     }
