@@ -13,6 +13,10 @@ public interface PlatformUserRepository extends CrudRepository<PlatformUser, Lon
 
     List<PlatformUser> findByAuthoritiesNotContaining(Authority authority);
 
+    List<PlatformUser> findByAuthoritiesContains(Authority authority);
+
+    List<PlatformUser> findAllByAuthorities(Authority authority);
+
     @Query(value = "select p_user.id, p_user.login, p_user.password, p_user.telegram_chat_id " +
             "from platform_user p_user" +
             "         left join student_report report on p_user.id = report.student_id " +
@@ -26,6 +30,4 @@ public interface PlatformUserRepository extends CrudRepository<PlatformUser, Lon
             "group by p_user.id, p_user.login, p_user.password, p_user.telegram_chat_id",
             nativeQuery = true)
     List<PlatformUser> findStudentsWithoutReportOfCurrentDay();
-
-    List<PlatformUser> findAllByAuthorities(Authority authority);
 }
