@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -32,8 +33,9 @@ public class PreProjectLesson {
     @Column
     private boolean viewed;
 
-    @Column
-    private ArrayList<String> messages;
+    @JoinColumn(name = "pre_project_lesson_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<PreProjectComments> comments = new ArrayList<>();
 
     @JoinColumn(name = "user_id")
     @ManyToOne

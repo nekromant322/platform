@@ -1,11 +1,12 @@
 package com.override.controller.rest;
 
-import com.override.model.PreProjectLesson;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.PreProjectLessonService;
+import dto.PreProjectLessonDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,24 +19,26 @@ public class PreProjectLessonsController {
     @Autowired
     private PreProjectLessonService preProjectLessonService;
 
+    @Secured("ROLE_ADMIN")
     @GetMapping()
-    public List<PreProjectLesson> getAll() {
+    public List<PreProjectLessonDTO> getAll() {
         return preProjectLessonService.getAll();
     }
 
+
     @PostMapping("/current")
-    public List<PreProjectLesson> getCurrent(@RequestBody PreProjectLesson link, @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
-        return preProjectLessonService.getAllByPathName(link, user.getUsername());
+    public List<PreProjectLessonDTO> getCurrent(@RequestBody PreProjectLessonDTO preProjectLessonDTO, @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
+        return preProjectLessonService.getAllByPathName(preProjectLessonDTO, user.getUsername());
     }
 
     @PostMapping()
-    public PreProjectLesson savePreProjectLessonLink(@RequestBody PreProjectLesson link, @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
-        return preProjectLessonService.saveLink(link, user.getUsername());
+    public PreProjectLessonDTO savePreProjectLessonLink(@RequestBody PreProjectLessonDTO preProjectLessonDTO, @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
+        return preProjectLessonService.save(preProjectLessonDTO, user.getUsername());
     }
 
     @PatchMapping()
-    public ResponseEntity<String> updatePreProjectLessonLink(@RequestBody PreProjectLesson link) {
-        preProjectLessonService.update(link);
+    public ResponseEntity<String> updatePreProjectLessonLink(@RequestBody PreProjectLessonDTO preProjectLessonDTO) {
+        preProjectLessonService.update(preProjectLessonDTO);
         return new ResponseEntity<>("Комментарии сохранены!", HttpStatus.OK);
     }
 }

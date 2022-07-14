@@ -16,12 +16,23 @@ import java.util.stream.Collectors;
 
 public class TestFieldsUtil {
 
-    public static PreProjectLesson generatePreProjectLesson() {
+    public static PreProjectLessonDTO generateTestPreProjectLessonDTO() {
+        return PreProjectLessonDTO.builder()
+                .viewed(false)
+                .link("https://github.com/nekromant/platform")
+                .approve(false)
+                .comments(new ArrayList<>())
+                .login(generateTestUser().getLogin())
+                .taskIdentifier("1/1/1")
+                .build();
+    }
+
+    public static PreProjectLesson generateTestPreProjectLesson() {
         return PreProjectLesson.builder()
                 .viewed(false)
                 .link("https://github.com/nekromant/platform")
                 .approve(false)
-                .messages(new ArrayList<>())
+                .comments(new ArrayList<>())
                 .taskIdentifier("1/1/1")
                 .user(generateTestUser())
                 .build();

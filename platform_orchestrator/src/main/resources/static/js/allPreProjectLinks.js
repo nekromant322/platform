@@ -34,7 +34,7 @@ function addColumn(data) {
     let td;
 
     insertTd(data.id, tr);
-    insertTd(data.user.login, tr);
+    insertTd(data.login, tr);
     insertTdLink(data.link, tr);
 
     let approveBtn = document.createElement("button");
@@ -63,7 +63,7 @@ function addColumn(data) {
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                     <ol class="list-group list-group-numbered" id="lastMessages${data.id}" data-messages ="${data.messages}">
+                     <ol class="list-group list-group-numbered" id="lastComments${data.id}" data-comments ="${data.comments}">
                      <label class="form-label">Проверьте старые правки</label>
                      </ol>
                      
@@ -79,13 +79,13 @@ function addColumn(data) {
             </div>            
            `
     )
-    if (data.messages != null) {
-        let ol = document.getElementById("lastMessages" + data.id);
-        for (i = 0; i < data.messages.length; i++) {
-            ol.insertAdjacentHTML("beforeend", ` <li class="list-group-item">"${data.messages[i]}"</li>`)
+    if (data.comments.length != 0) {
+        let ol = document.getElementById("lastComments" + data.id);
+        for (i = 0; i < data.comments.length; i++) {
+            ol.insertAdjacentHTML("beforeend", ` <li class="list-group-item">"${data.comments[i]}"</li>`)
         }
     } else {
-        let ol = document.getElementById("lastMessages" + data.id);
+        let ol = document.getElementById("lastComments" + data.id);
         ol.style.visibility = "hidden";
     }
 
@@ -118,34 +118,34 @@ function btnClickListener() {
         const approve = event.target.dataset.btn === "Approve";
         let id = (event.target.dataset.id)
         if (edit) {
-            let messages = getAllUlValues(document.getElementById("lastMessages" + id));
+            let comments = getAllUlValues(document.getElementById("lastComments" + id));
             sendEdit(id, document.getElementById("editTextArea" + id).value,
-                messages, true, false
+                comments, true, false
             )
             ;
         }
         if (approve) {
-            let messages = getAllUlValues(document.getElementById("lastMessages" + id));
-            sendEdit(id, "done", messages, true, true);
+            let comments = getAllUlValues(document.getElementById("lastComments" + id));
+            sendEdit(id, "", comments, true, true);
         }
     })
 }
 
 function getAllUlValues(elem) {
     let listLi = elem.querySelectorAll('li');
-    let message = new Array();
+    let comments = new Array();
     for (i = 0; i < listLi.length; i++) {
-        message[i] = listLi[i].innerText.replace(/^.|.$/g, "");
+        comments[i] = listLi[i].innerText.replace(/^.|.$/g, "");
     }
-    return message;
+    return comments;
 }
 
-function sendEdit(id, newMessage, messages, view, approve) {
+function sendEdit(id, newComments, comments, view, approve) {
     let PrLessons = {}
     PrLessons.id = id;
-    PrLessons.messages = messages;
-    PrLessons.messages[messages.length] = newMessage.replace(" ", "");
-    PrLessons.approve = approve
+    PrLessons.comments = comments;
+    PrLessons.comments[comments.length] = newComments.replace(" ", "");
+    PrLessons.approve = approve;
     PrLessons.viewed = view;
     $.ajax({
         type: 'PATCH',

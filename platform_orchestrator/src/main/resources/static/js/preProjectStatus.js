@@ -35,8 +35,8 @@ function drawLines(data) {
 
 function drawList(data) {
     let ol = document.getElementById("messages");
-    for (i = 0; i < data.messages.length; i++) {
-        ol.insertAdjacentHTML("beforeend", ` <li class="list-group-item">"${data.messages[i]}"</li>`)
+    for (i = 0; i < data.comments.length; i++) {
+        ol.insertAdjacentHTML("beforeend", ` <li class="list-group-item">"${data.comments[i]}"</li>`)
     }
 
     let approveBtn = document.createElement("button");
@@ -48,7 +48,7 @@ function drawList(data) {
     approveBtn.onclick = function () {
         let PrLessons = {}
         PrLessons.id = data.id;
-        PrLessons.messages = data.messages;
+        PrLessons.comments = data.comments;
         PrLessons.approve = data.approve
         PrLessons.viewed = data.view;
         $.ajax({

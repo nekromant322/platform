@@ -102,12 +102,11 @@ public class InitializationService {
 
     private void preProjectLessons() {
         for (int i = 0; i < preProjectLessonCount; i++) {
-            PlatformUser platformUser = getRandomUser();
-            preProjectLessonService.saveLink(PreProjectLesson.builder()
+            preProjectLessonService.save(PreProjectLesson.builder()
                     .link(faker.bothify("https://github.com/??????##/???##??#/####.com"))
-                    .user(platformUser)
-                    .build(), platformUser.getLogin());
-
+                    .comments(new ArrayList<>())
+                    .user(getRandomUser())
+                    .build());
         }
     }
 
