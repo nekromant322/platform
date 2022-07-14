@@ -102,7 +102,6 @@ public class InitializationService {
         reportsInit();
         reviewInit();
         interviewReportsInit();
-        feature/linksToPreProject
         paymentInit();
         preProjectLessons();
         defaultQuestionsInit();
