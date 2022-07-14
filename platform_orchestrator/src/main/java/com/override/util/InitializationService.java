@@ -4,10 +4,10 @@ import com.github.javafaker.Faker;
 import com.override.model.*;
 import com.override.model.enums.Role;
 import com.override.model.enums.Status;
-import enums.StudyStatus;
 import com.override.service.*;
 import dto.*;
 import enums.CodeExecutionStatus;
+import enums.StudyStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoField;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -86,6 +85,9 @@ public class InitializationService {
     private DefaultQuestionService defaultQuestionService;
 
     @Autowired
+    private PaymentService paymentService;
+
+    @Autowired
     private Faker faker;
 
     @PostConstruct
@@ -102,7 +104,6 @@ public class InitializationService {
         reportsInit();
         reviewInit();
         interviewReportsInit();
-        feature/linksToPreProject
         paymentInit();
         preProjectLessons();
         defaultQuestionsInit();
