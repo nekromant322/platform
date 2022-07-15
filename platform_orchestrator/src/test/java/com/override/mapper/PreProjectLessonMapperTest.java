@@ -7,7 +7,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 
 import static com.override.utils.TestFieldsUtil.generateTestPreProjectLesson;
 import static com.override.utils.TestFieldsUtil.generateTestPreProjectLessonDTO;
@@ -22,11 +21,12 @@ class PreProjectLessonMapperTest {
     @Test
     void dtoToEntity() {
         PreProjectLessonDTO preProjectLessonDTO = generateTestPreProjectLessonDTO();
-        preProjectLessonDTO.setComments(null);
-        PreProjectLesson preProjectLesson = generateTestPreProjectLesson();
-        preProjectLesson.setUser(null);
+        PreProjectLesson preProjectLesson = PreProjectLesson.builder()
+                .link(preProjectLessonDTO.getLink())
+                .taskIdentifier(preProjectLessonDTO.getTaskIdentifier())
+                .build();
 
-        assertEquals(preProjectLessonMapper.dtoToEntity(preProjectLessonDTO), preProjectLesson);
+        assertEquals(preProjectLessonMapper.dtoToEntity(preProjectLessonDTO),preProjectLesson);
     }
 
     @Test
@@ -37,14 +37,4 @@ class PreProjectLessonMapperTest {
         assertEquals(preProjectLessonMapper.entityToDto(preProjectLesson), preProjectLessonDTO);
     }
 
-    @Test
-    void listEntityToDto() {
-        ArrayList<PreProjectLesson> lessonArrayList = new ArrayList<>();
-        lessonArrayList.add(generateTestPreProjectLesson());
-
-        ArrayList<PreProjectLessonDTO> dtoArrayList = new ArrayList<>();
-        dtoArrayList.add(generateTestPreProjectLessonDTO());
-
-        assertEquals(preProjectLessonMapper.listEntityToDto(lessonArrayList), dtoArrayList);
-    }
 }

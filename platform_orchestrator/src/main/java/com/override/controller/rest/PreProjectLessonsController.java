@@ -3,6 +3,7 @@ package com.override.controller.rest;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.PreProjectLessonService;
 import dto.PreProjectLessonDTO;
+import dto.PreProjectLessonMentorReactionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +22,13 @@ public class PreProjectLessonsController {
 
     @Secured("ROLE_ADMIN")
     @GetMapping()
-    public List<PreProjectLessonDTO> getAll() {
+    public List<PreProjectLessonMentorReactionDTO> getAll() {
         return preProjectLessonService.getAll();
     }
 
 
     @PostMapping("/current")
-    public List<PreProjectLessonDTO> getCurrent(@RequestBody PreProjectLessonDTO preProjectLessonDTO, @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
+    public List<PreProjectLessonMentorReactionDTO> getCurrent(@RequestBody PreProjectLessonDTO preProjectLessonDTO, @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return preProjectLessonService.getAllByPathName(preProjectLessonDTO, user.getUsername());
     }
 
@@ -37,8 +38,8 @@ public class PreProjectLessonsController {
     }
 
     @PatchMapping()
-    public ResponseEntity<String> updatePreProjectLessonLink(@RequestBody PreProjectLessonDTO preProjectLessonDTO) {
-        preProjectLessonService.update(preProjectLessonDTO);
+    public ResponseEntity<String> updatePreProjectLessonLink(@RequestBody PreProjectLessonMentorReactionDTO preProjectLessonMentorReactionDTO) {
+        preProjectLessonService.update(preProjectLessonMentorReactionDTO);
         return new ResponseEntity<>("Комментарии сохранены!", HttpStatus.OK);
     }
 }

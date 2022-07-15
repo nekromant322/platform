@@ -16,20 +16,25 @@ import java.util.stream.Collectors;
 
 public class TestFieldsUtil {
 
+    public static PreProjectLessonMentorReactionDTO  generateTestPreProjectLessonMentorReactionDTO(){
+        return PreProjectLessonMentorReactionDTO.builder()
+                .link("https://github.com/nekromant/platform")
+                .login(generateTestUser().getLogin())
+                .comments(new ArrayList<>())
+                .viewed(false)
+                .approve(false)
+                .build();
+    }
+
     public static PreProjectLessonDTO generateTestPreProjectLessonDTO() {
         return PreProjectLessonDTO.builder()
-                .viewed(false)
                 .link("https://github.com/nekromant/platform")
-                .approve(false)
-                .comments(new ArrayList<>())
-                .login(generateTestUser().getLogin())
                 .taskIdentifier("1/1/1")
                 .build();
     }
 
     public static PreProjectLesson generateTestPreProjectLesson() {
         return PreProjectLesson.builder()
-                .viewed(false)
                 .link("https://github.com/nekromant/platform")
                 .approve(false)
                 .comments(new ArrayList<>())
