@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface RecipientRepository extends CrudRepository<Recipient, Long> {
 
     Optional<Recipient> findRecipientByLogin(String login);
+
+    Recipient getRecipientByLogin(String login);
 }
