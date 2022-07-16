@@ -1,6 +1,7 @@
 package com.override.util;
 
 import com.github.javafaker.Faker;
+import com.override.exception.UserAlreadyExistException;
 import com.override.model.*;
 import com.override.model.enums.Role;
 import com.override.model.enums.Status;
@@ -39,11 +40,17 @@ public class InitializationService {
     @Value("${testData.requestsCount}")
     private int requestsCount;
 
+    @Value("${testData.paymentsCount}")
+    private int paymentsCount;
+
     @Autowired
     private AuthorityService authorityService;
 
     @Autowired
     private PlatformUserService userService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     @Autowired
     private PersonalDataService personalDataService;
@@ -78,13 +85,9 @@ public class InitializationService {
     @Autowired
     private Faker faker;
 
-    @PostConstruct
-    private void initAdmin() {
+    public void initTestData() {
         authorityInit();
         adminInit();
-    }
-
-    public void initTestData() {
         userInit();
         codeTryInit();
         joinRequestsInit();
@@ -92,12 +95,39 @@ public class InitializationService {
         reportsInit();
         reviewInit();
         interviewReportsInit();
+        paymentInit();
         defaultQuestionsInit();
     }
 
+    private void paymentInit() {
+        List<PlatformUser> userList = userService.getAllStudents();
+        List<PlatformUser> graduateUserList = new ArrayList<>();
+
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getAuthorities().listIterator().next().getAuthority().equals("ROLE_GRADUATE")) {
+                graduateUserList.add(userList.get(i));
+            }
+        }
+
+        Random rand = new Random();
+
+        for (int i = 0; i < paymentsCount; i++) {
+            paymentService.save(
+                    Payment.builder()
+                            .studentName(graduateUserList.get(rand.nextInt(graduateUserList.size())).getLogin())
+                            .date(getRandomDate())
+                            .accountNumber((long) faker.number().numberBetween(100000000, 900000000))
+                            .sum((long) faker.number().numberBetween(10000, 100000))
+                            .message(faker.letterify("???????????????????????????????????????????"))
+                            .build()
+            );
+        }
+    }
     private void authorityInit() {
-        for (Role role : Role.values()) {
-            authorityService.save(role.getName());
+        if (authorityService.checkIfTableIsEmpty()) {
+            for (Role role : Role.values()) {
+                authorityService.save(role.getName());
+            }
         }
     }
 
@@ -125,9 +155,13 @@ public class InitializationService {
     private void saveUser(String login, String password, StudyStatus study, Role... userRoles) {
         List<Authority> roles = getAuthorityListFromRoles(userRoles);
         PlatformUser account = new PlatformUser(null, login, password, study, roles, new PersonalData(), new UserSettings());
+        try {
         userService.save(account);
         personalDataInit(account);
         userSettingsInit(account);
+        } catch (UserAlreadyExistException e) {
+            e.printStackTrace();
+        }
     }
 
     private List<Authority> getAuthorityListFromRoles(Role... roles) {
