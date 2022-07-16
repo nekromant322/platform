@@ -5,6 +5,7 @@ import com.override.model.Authority;
 import com.override.model.PersonalData;
 import com.override.model.PlatformUser;
 import com.override.model.UserSettings;
+import com.override.model.enums.CoursePart;
 import com.override.model.enums.Role;
 import enums.StudyStatus;
 import com.override.repository.PlatformUserRepository;
@@ -115,6 +116,7 @@ class PlatformUserServiceTest {
                 login,
                 password,
                 StudyStatus.ACTIVE,
+                CoursePart.CORE,
                 new ArrayList<>() {{
                     add(userAuthority);
                 }},

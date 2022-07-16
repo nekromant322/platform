@@ -1,6 +1,7 @@
 package com.override.utils;
 
 import com.override.model.*;
+import com.override.model.enums.CoursePart;
 import com.override.model.enums.Status;
 import dto.*;
 import enums.CodeExecutionStatus;
@@ -40,16 +41,16 @@ public class TestFieldsUtil {
     }
 
     public static PlatformUser generateTestUser() {
-        return new PlatformUser(null, "Andrey", "a", StudyStatus.ACTIVE,
+        return new PlatformUser(null, "Andrey", "a", StudyStatus.ACTIVE, CoursePart.CORE,
                 Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings());
     }
 
     public static List<PlatformUser> generateTestListOfThreeUsersWithoutReportsOnCurrentDay() {
-        PlatformUser firstUserWithoutReport = new PlatformUser(1L, "1", "1", StudyStatus.ACTIVE,
+        PlatformUser firstUserWithoutReport = new PlatformUser(1L, "1", "1", StudyStatus.ACTIVE,CoursePart.CORE,
                 Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new UserSettings());
-        PlatformUser secondUserWithoutReport = new PlatformUser(2L, "2", "2", StudyStatus.ACTIVE,
+        PlatformUser secondUserWithoutReport = new PlatformUser(2L, "2", "2", StudyStatus.ACTIVE,CoursePart.CORE,
                 Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new UserSettings());
-        PlatformUser thirdUserWithoutReport = new PlatformUser(3L, "3", "3", StudyStatus.ACTIVE,
+        PlatformUser thirdUserWithoutReport = new PlatformUser(3L, "3", "3", StudyStatus.ACTIVE,CoursePart.CORE,
                 Collections.singletonList(new Authority(1L, "ROLE_USER")), new PersonalData(), new UserSettings());
 
         return List.of(firstUserWithoutReport, secondUserWithoutReport, thirdUserWithoutReport);

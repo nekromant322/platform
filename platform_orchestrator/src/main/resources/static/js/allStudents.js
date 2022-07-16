@@ -40,6 +40,21 @@ function addColumn(data) {
     let tr = table.insertRow(table.rows.length);
     let td;
 
+    let color;
+    color = 'orange';
+    let legend;
+    legend = "CORE";
+
+    if (data.coursePart === "WEB") {
+        color = 'blue';
+        legend = "WEB";
+    }
+
+    if (data.coursePart === "SPRING") {
+        color = 'green';
+        legend = "SPRING";
+    }
+
     insertTd(data.id, tr);
     insertTd(data.login, tr);
 
@@ -47,6 +62,14 @@ function addColumn(data) {
     updateBtn.className = "btn btn-success";
     updateBtn.innerHTML = "Повысить";
     updateBtn.type = "submit";
+
+    let courseBtn = document.createElement("button");
+    courseBtn.className = "btn btn-success";
+    courseBtn.innerHTML = legend;
+    courseBtn.title = legend;
+    courseBtn.style.backgroundColor = color;
+    courseBtn.type = "submit";
+
     if (data.authorities[0].authority === "ROLE_GRADUATE") {
         document.getElementsByClassName("finish-education").disable = true;
     }
@@ -54,13 +77,23 @@ function addColumn(data) {
         updateBtn.disabled = true;
     }
     updateBtn.addEventListener("click", () => {
-        updateUserRole(data.id,"ADMIN");
+        updateUserRole(data.id, "ADMIN");
     });
     td = tr.insertCell(2);
-    td.insertAdjacentElement("beforeend", updateBtn);
+    td.insertAdjacentElement("beforeend", courseBtn);
     td = tr.insertCell(3);
+    td.insertAdjacentElement("beforeend", updateBtn);
+    td = tr.insertCell(4);
 
     if (data.studyStatus === "ACTIVE" && data.authorities[0].authority === "ROLE_USER") {
+
+        courseBtn.addEventListener("click", () => {
+            if (data.coursePart === "CORE") {
+                updateCurrentCoursePart(data.id, "WEB");
+            } else {
+                updateCurrentCoursePart(data.id, "SPRING");
+            }
+        });
 
         td.insertAdjacentHTML("beforeend",
             `
@@ -139,6 +172,25 @@ function updateUserRole(id, status) {
         data.id = id;
         $.ajax({
             url: '/promote-student/' + id + '/' + status,
+            type: 'POST',
+            contentType: 'application/json',
+            success: function () {
+                getStudents();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
+}
+
+function updateCurrentCoursePart(id, coursePart) {
+    let confirmation = confirm("Вы уверены, что хотите перевести пользователя на этап " + coursePart + " ?");
+    if (confirmation === true) {
+        let data = {};
+        data.id = id;
+        $.ajax({
+            url: '/promoteCoursePart/' + id + '/' + coursePart,
             type: 'POST',
             contentType: 'application/json',
             success: function () {

@@ -3,6 +3,7 @@ package com.override.util;
 import com.github.javafaker.Faker;
 import com.override.exception.UserAlreadyExistException;
 import com.override.model.*;
+import com.override.model.enums.CoursePart;
 import com.override.model.enums.Role;
 import com.override.model.enums.Status;
 import com.override.service.*;
@@ -133,23 +134,24 @@ public class InitializationService {
             usernameAndPassword = faker.name().firstName();
             saveUser(usernameAndPassword,
                     usernameAndPassword,
-                    StudyStatus.ACTIVE, Role.USER);
+                    StudyStatus.ACTIVE,CoursePart.CORE, Role.USER);
         }
         for (int i = 0; i < usersCount; i++) {
             usernameAndPassword = faker.name().firstName();
             saveUser(usernameAndPassword,
                     usernameAndPassword,
-                    StudyStatus.ACTIVE, Role.GRADUATE);
+                    StudyStatus.ACTIVE, CoursePart.SPRING, Role.GRADUATE);
         }
-    }
+        }
+
 
     private void adminInit() {
-        saveUser(adminLogin, adminPassword, StudyStatus.ACTIVE, Role.USER, Role.ADMIN);
+        saveUser(adminLogin, adminPassword, StudyStatus.ACTIVE, CoursePart.SPRING, Role.USER, Role.ADMIN);
     }
 
-    private void saveUser(String login, String password, StudyStatus study, Role... userRoles) {
+    private void saveUser(String login, String password, StudyStatus study,CoursePart coursePart, Role... userRoles) {
         List<Authority> roles = getAuthorityListFromRoles(userRoles);
-        PlatformUser account = new PlatformUser(null, login, password, study, roles, new PersonalData(), new UserSettings());
+        PlatformUser account = new PlatformUser(null, login, password, study,coursePart, roles, new PersonalData(), new UserSettings());
         try {
             userService.save(account);
             personalDataInit(account);
