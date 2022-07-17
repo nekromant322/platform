@@ -1,6 +1,7 @@
 package com.override.util;
 
 import com.github.javafaker.Faker;
+import com.override.exception.UserAlreadyExistException;
 import com.override.model.*;
 import com.override.model.enums.Role;
 import com.override.model.enums.Status;
@@ -44,7 +45,6 @@ public class InitializationService {
     @Value("${testData.preProjectLessonCount}")
     private int preProjectLessonCount;
 
-
     @Autowired
     private AuthorityService authorityService;
 
@@ -53,6 +53,9 @@ public class InitializationService {
 
     @Autowired
     private PlatformUserService userService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     @Autowired
     private PersonalDataService personalDataService;
@@ -90,13 +93,9 @@ public class InitializationService {
     @Autowired
     private Faker faker;
 
-    @PostConstruct
-    private void initAdmin() {
+    public void initTestData() {
         authorityInit();
         adminInit();
-    }
-
-    public void initTestData() {
         userInit();
         codeTryInit();
         joinRequestsInit();
@@ -148,12 +147,13 @@ public class InitializationService {
                             .build()
             );
         }
-
     }
-
+    
     private void authorityInit() {
-        for (Role role : Role.values()) {
-            authorityService.save(role.getName());
+        if (authorityService.checkIfTableIsEmpty()) {
+            for (Role role : Role.values()) {
+                authorityService.save(role.getName());
+            }
         }
     }
 
@@ -181,9 +181,13 @@ public class InitializationService {
     private void saveUser(String login, String password, StudyStatus study, Role... userRoles) {
         List<Authority> roles = getAuthorityListFromRoles(userRoles);
         PlatformUser account = new PlatformUser(null, login, password, study, roles, new PersonalData(), new UserSettings());
+        try {
         userService.save(account);
         personalDataInit(account);
         userSettingsInit(account);
+        } catch (UserAlreadyExistException e) {
+            e.printStackTrace();
+        }
     }
 
     private List<Authority> getAuthorityListFromRoles(Role... roles) {
