@@ -16,6 +16,33 @@ import java.util.stream.Collectors;
 
 public class TestFieldsUtil {
 
+    public static PreProjectLessonMentorReactionDTO  generateTestPreProjectLessonMentorReactionDTO(){
+        return PreProjectLessonMentorReactionDTO.builder()
+                .link("https://github.com/nekromant/platform")
+                .login(generateTestUser().getLogin())
+                .comments(new ArrayList<>())
+                .viewed(false)
+                .approve(false)
+                .build();
+    }
+
+    public static PreProjectLessonDTO generateTestPreProjectLessonDTO() {
+        return PreProjectLessonDTO.builder()
+                .link("https://github.com/nekromant/platform")
+                .taskIdentifier("1/1/1")
+                .build();
+    }
+
+    public static PreProjectLesson generateTestPreProjectLesson() {
+        return PreProjectLesson.builder()
+                .link("https://github.com/nekromant/platform")
+                .approve(false)
+                .comments(new ArrayList<>())
+                .taskIdentifier("1/1/1")
+                .user(generateTestUser())
+                .build();
+    }
+
     public static Payment generateTestPayment() {
         return Payment.builder()
                 .sum(200000L)
