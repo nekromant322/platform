@@ -22,7 +22,7 @@ spring:
         format_sql: true
         use_sql_comments: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     generate-ddl: true
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
@@ -56,6 +56,7 @@ testData:
   usersCount: 5
   requestsCount: 2
   paymentsCount: 6
+  preProjectLessonCount: 5
 
 logging:
   file:
@@ -106,6 +107,8 @@ navbar:
       /statistics
     - Ревью
       /reviewAdmin
+    - PreProject
+      /preProjectLinks
     - Собеседования
       /interviewReports
     - Платежи
@@ -162,16 +165,16 @@ management:
 info:
   application:
     parent:
-      groupId: @pom.parent.groupId@
-      artifactId: @pom.parent.artifactId@
+      groupId: '@pom.parent.groupId@'
+      artifactId: '@pom.parent.artifactId@'
       version: 0.0.1
     service:
-      artifactId: @pom.artifactId@
-      version: @pom.version@
-      name: @pom.name@
-      description: @pom.description@
+      artifactId: '@pom.artifactId@'
+      version: '@pom.version@'
+      name: '@pom.name@'
+      description: '@pom.description@'
   build:
-    time: @maven.build.timestamp@
+    time: '@maven.build.timestamp@'
   env:
     java:
       vendor: ${java.specification.vendor}

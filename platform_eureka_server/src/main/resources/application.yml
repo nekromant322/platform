@@ -36,16 +36,16 @@ management:
 info:
   application:
     parent:
-      groupId: @pom.parent.groupId@
-      artifactId: @pom.parent.artifactId@
+      groupId: '@pom.parent.groupId@'
+      artifactId: '@pom.parent.artifactId@'
       version: 0.0.1
     service:
-      artifactId: @pom.artifactId@
-      version: @pom.version@
-      name: @pom.name@
-      description: @pom.description@
+      artifactId: '@pom.artifactId@'
+      version: '@pom.version@'
+      name: '@pom.name@'
+      description: '@pom.description@'
   build:
-    time: @maven.build.timestamp@
+    time: '@maven.build.timestamp@'
   env:
     java:
       vendor: ${java.specification.vendor}

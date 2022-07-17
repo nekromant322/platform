@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 
 @Component
 public class StartCommand extends PlatformBotCommand {
+
     public StartCommand() {
         super("/start", "Начать работу с ботом");
     }
@@ -17,7 +18,7 @@ public class StartCommand extends PlatformBotCommand {
 
         SendMessage message = new SendMessage();
         message.setChatId(chat.getId().toString());
-        message.setText("Для регистрации в платформа нажмите /register");
+        message.setText("Для регистрации в платформе нажмите /register");
 
         execute(absSender, message, user);
     }

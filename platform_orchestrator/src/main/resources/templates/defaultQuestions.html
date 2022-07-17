@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Обязательные метатеги -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Default Questions</title>
+    <header th:replace="fragments/navbar.html :: header"></header>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10 p-3 mb-2 bg-light">
+            <h1>Стандартные вопросы</h1>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                       aria-controls="nav-home" aria-selected="true">Все вопросы</a>
+                    <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-new" role="tab"
+                       aria-controls="nav-profile" aria-selected="false">Добавить вопрос</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="tab-content">
+                        <div class="card">
+                            <div class="card-header">
+                                <b>Стандартные вопросы</b>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover" id="questions-table">
+                                    <thead class="table-light">
+                                    <tr role="row">
+                                        <th scope="col"> ID</th>
+                                        <th scope="col"> Question</th>
+                                        <th scope="col"> Chapter</th>
+                                        <th scope="col"> Section</th>
+                                        <th scope="col"> Edit</th>
+                                        <th scope="col"> Delete</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="table-light">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-new" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="tab-content">
+                        <div class="card">
+                            <div class="card-header">
+                                <b>Добавить новый вопрос</b>
+                            </div>
+                            <div class="card-body" align="center">
+                                <div class="newUser">
+                                    <form id="New_Question_Form">
+
+                                        <label for="question"><b>Вопрос</b></label>
+                                        <input type="text" class="form-control mb-1 col-4"
+                                               id="question">
+
+
+                                        <div>
+                                            <p>Раздел:</p>
+                                            <input type="radio" id="core"
+                                                   name="chapter" value="core">
+                                            <label for="core">Core</label>
+
+                                            <input type="radio" id="web"
+                                                   name="chapter" value="web">
+                                            <label for="web">Web</label>
+
+                                            <input type="radio" id="spring"
+                                                   name="chapter" value="spring">
+                                            <label for="spring">Spring</label>
+                                        </div>
+
+                                        <div>
+                                            <p>Глава раздела:</p>
+                                            <input type="radio" id="12"
+                                                   name="section" value="12">
+                                            <label for="12">1+2</label>
+
+                                            <input type="radio" id="1"
+                                                   name="section" value="1">
+                                            <label for="1">1</label>
+
+                                            <input type="radio" id="2"
+                                                   name="section" value="2">
+                                            <label for="2">2</label>
+
+                                            <input type="radio" id="3"
+                                                   name="section" value="3">
+                                            <label for="3">3</label>
+¬
+                                            <input type="radio" id="4"
+                                                   name="section" value="4">
+                                            <label for="4">4</label>
+
+                                            <input type="radio" id="5"
+                                                   name="section" value="5">
+                                            <label for="5">5</label>
+
+                                            <input type="radio" id="6"
+                                                   name="section" value="6">
+                                            <label for="6">6</label>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-success col-2 AddBtn">Добавить новый
+                                            вопрос
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="editQuestion" align="center">
+    <form method="PUT">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="IDedit"><b>ID</b></label>
+                        <input type="text" class="form-control mb-1 col-4"
+                               id="IDedit">
+
+                        <label for="question"><b>Вопрос</b></label>
+                        <input type="text" class="form-control mb-1 col-4"
+                               id="questionEdit">
+
+                        <div>
+                            <p>Раздел:</p>
+                            <input type="radio" id="coreEdit"
+                                   name="chapterEdit" value="core">
+                            <label for="core">Core</label>
+
+                            <input type="radio" id="webEdit"
+                                   name="chapterEdit" value="web">
+                            <label for="web">Web</label>
+
+                            <input type="radio" id="springEdit"
+                                   name="chapterEdit" value="spring">
+                            <label for="spring">Spring</label>
+                        </div>
+                        <p></p>
+                        <div>
+                            <p>Глава раздела:</p>
+                            <p><input type="radio" id="12Edit"
+                                      name="sectionEdit" value="12"> 1+2 </p>
+
+                            <p><input type="radio" id="1Edit"
+                                      name="sectionEdit" value="1"> 1 </p>
+
+                            <p><input type="radio" id="2Edit"
+                                      name="sectionEdit" value="2"> 2 </p>
+
+                            <p><input type="radio" id="3Edit"
+                                      name="sectionEdit" value="3"> 3 </p>
+
+                            <p><input type="radio" id="4Edit"
+                                      name="sectionEdit" value="4"> 4 </p>
+
+                            <p><input type="radio" id="5Edit"
+                                      name="sectionEdit" value="5"> 5 </p>
+
+                            <p><input type="radio" id="6Edit"
+                                      name="sectionEdit" value="6"> 6 </p>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary editButton" value="Edit">Редактировать</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="/js/defaultQuestions.js"></script>
+</body>
+</html>
+
+
+
