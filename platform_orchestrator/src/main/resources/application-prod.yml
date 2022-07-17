@@ -18,5 +18,17 @@ spring:
         format_sql: true
         use_sql_comments: true
     hibernate:
-      ddl-auto: update
-    generate-ddl: true
+      ddl-auto: none
+    generate-ddl: false
+
+eureka:
+  instance:
+    hostname: ${HOST}
+    leaseRenewalIntervalInSeconds: 15
+    leaseExpirationDurationInSeconds: 45
+  client:
+    registerWithEureka: true
+    fetch-registry: true
+    enabled: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${EUREKA_PORT}/eureka
