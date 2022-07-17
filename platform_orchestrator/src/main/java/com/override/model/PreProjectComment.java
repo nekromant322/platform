@@ -19,7 +19,6 @@ public class PreProjectComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JsonIgnore
     @ManyToOne
     private PreProjectLesson preProjectLesson;
 
