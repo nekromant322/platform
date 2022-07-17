@@ -25,7 +25,7 @@ class AuthorityServiceTest {
     AuthorityRepository authorityRepository;
 
     @Test
-    void testWhenGetAuthorityByRole() {
+    void testGetAuthorityByRole() {
         Authority authority = new Authority(null, "ADMIN");
 
         when(authorityRepository.findByAuthority(Role.ADMIN.getName())).thenReturn(Optional.of(authority));
@@ -36,7 +36,7 @@ class AuthorityServiceTest {
     }
 
     @Test
-    void testWhenSave() {
+    void testSave() {
         String roleName = "USER";
 
         authorityService.save(roleName);
@@ -45,7 +45,7 @@ class AuthorityServiceTest {
     }
 
     @Test
-    void testWhenCheckIfTableIsEmpty() {
+    void testCheckIfTableIsEmpty() {
         when(authorityRepository.countAll()).thenReturn(0);
 
         assertEquals(authorityService.checkIfTableIsEmpty(), true);

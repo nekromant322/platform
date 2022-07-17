@@ -32,7 +32,7 @@ public class DocumentServiceTest {
     private PlatformUserService platformUserService;
 
     @Test
-    public void testWhenUpload() {
+    public void testUploadFile() {
         PlatformUser platformUser = generateTestUser();
         MockMultipartFile file = new MockMultipartFile("data",
                 "filename.txt",
@@ -46,7 +46,7 @@ public class DocumentServiceTest {
     }
 
     @Test
-    public void testWhenGetAllDocs() {
+    public void testGetAllByUserLogin() {
         PlatformUser platformUser = generateTestUser();
         platformUser.setId(1L);
 
@@ -71,7 +71,7 @@ public class DocumentServiceTest {
     }
 
     @Test
-    public void testWhenDownload() {
+    public void testDownloadFile() {
         Document document = generateTestDocument();
 
         when(documentRepository.getById(1L)).thenReturn(document);
@@ -82,7 +82,7 @@ public class DocumentServiceTest {
     }
 
     @Test
-    public void testWhenDelete() {
+    public void testDelete() {
         Document document = generateTestDocument();
 
         documentService.delete(1L);

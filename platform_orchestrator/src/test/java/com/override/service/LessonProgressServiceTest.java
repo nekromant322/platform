@@ -26,7 +26,7 @@ public class LessonProgressServiceTest {
     private LessonProgressRepository lessonProgressRepository;
 
     @Test
-    public void testWhenSaveLessonProgress() {
+    public void testMarkLessonAsPassedWhenSaveLessonProgress() {
         PlatformUser platformUser = new PlatformUser();
 
         String lesson = "test-1-1-1";
@@ -37,7 +37,7 @@ public class LessonProgressServiceTest {
     }
 
     @Test
-    public void testWhenSaveSameLessonProgress() {
+    public void testMarkLessonAsPassedWhenSaveSameLessonProgress() {
         PlatformUser platformUser = new PlatformUser();
         platformUser.setId(1L);
         platformUser.setLogin("login");
@@ -51,7 +51,7 @@ public class LessonProgressServiceTest {
     }
 
     @Test
-    public void testWhenGettingLessonProgress() {
+    public void testGetPassedLessonsWhenGettingLessonProgress() {
         PlatformUser platformUser = new PlatformUser();
         platformUser.setId(1L);
         platformUser.setLogin("login");

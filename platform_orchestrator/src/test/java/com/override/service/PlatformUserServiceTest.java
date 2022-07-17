@@ -53,7 +53,7 @@ class PlatformUserServiceTest {
     private final Authority userAuthority = new Authority();
 
     @Test
-    public void testWhenUpdateUserToAdmin() {
+    public void testUpdateUserToAdmin() {
         PlatformUser student = new PlatformUser();
         student.setAuthorities(new ArrayList<>() {{
             add(userAuthority);
@@ -73,7 +73,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testWhenUpdateUserToAdminWhenUserNotExist() {
+    public void testUpdateUserToAdminWhenUserNotExist() {
         when(platformUserRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(UsernameNotFoundException.class, () -> platformUserService.updateToAdmin(1L));
@@ -81,7 +81,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testWhenGetAllStudents() {
+    public void testGetAllStudents() {
         List<PlatformUser> platformUsers = new ArrayList<>() {{
             add(new PlatformUser());
             add(new PlatformUser());
@@ -97,7 +97,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testWhenGetUserByLogin() {
+    public void testFindPlatformUserByLogin() {
         String login = "login";
         PlatformUser notNullUser = new PlatformUser();
 
@@ -110,7 +110,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testWhenGenerateUser() {
+    public void testGenerateAccount() {
         String login = "login";
         String password = "password";
         PlatformUser user = new PlatformUser(
@@ -137,7 +137,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testWhenGenerateUserWhenLoginExist() {
+    public void testGenerateAccountWhenLoginExist() {
         String login = "login";
         String chatId = "chatId";
         PlatformUser notNullUser = new PlatformUser();
@@ -150,20 +150,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testWhenGetUser() {
-        PlatformUser notNullUser = new PlatformUser();
-        String login = "login";
-
-        when(platformUserRepository.findFirstByLogin(login)).thenReturn(notNullUser);
-
-        PlatformUser accountByChatId = platformUserService.findPlatformUserByLogin(login);
-
-        assertEquals(accountByChatId, notNullUser);
-        verify(platformUserRepository, times(1)).findFirstByLogin(login);
-    }
-
-    @Test
-    public void testWhenSaveUser() {
+    public void testSave() {
         String login = "login";
         PlatformUser notNullUser = new PlatformUser();
         notNullUser.setLogin(login);
@@ -180,7 +167,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testWhenSaveUserWhenLoginExist() {
+    public void testSaveWhenLoginExist() {
         String login = "login";
         PlatformUser notNullUser = new PlatformUser();
         notNullUser.setLogin(login);
@@ -192,7 +179,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    void testWhenGetPlatformUserRoleAdmin() {
+    void testGetPlatformUserRoleWhenRoleAdmin() {
         when(request.isUserInRole("ROLE_ADMIN")).thenReturn(true);
 
         Role admin = platformUserService.getPlatformUserRole(request);
@@ -201,7 +188,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    void testWhenGetPlatformUserRoleUser() {
+    void testGetPlatformUserRoleWhenRoleUser() {
         when(request.isUserInRole("ROLE_ADMIN")).thenReturn(false);
 
         Role user = platformUserService.getPlatformUserRole(request);

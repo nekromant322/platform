@@ -14,11 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -44,7 +42,7 @@ public class JoinRequestServiceTest {
 
 
     @Test
-    public void testWhenAlreadyExistJoinRequest() {
+    public void testSaveRequestWhenAlreadyExistJoinRequest() {
         RegisterUserRequestDTO requestDTO = RegisterUserRequestDTO.builder()
                 .telegramUserName("Marandyuk_Anatolii")
                 .chatId("1234")
@@ -58,7 +56,7 @@ public class JoinRequestServiceTest {
 
 
     @Test
-    public void testWhenAlreadyExistUserInPlatform() {
+    public void testSaveRequestWhenAlreadyExistUserInPlatform() {
         RegisterUserRequestDTO requestDTO = RegisterUserRequestDTO.builder()
                 .telegramUserName("Marandyuk_Anatolii")
 
@@ -75,7 +73,7 @@ public class JoinRequestServiceTest {
     }
 
     @Test
-    public void testWhenNewUser() {
+    public void testSaveRequestWhenNewUser() {
         RegisterUserRequestDTO requestDTO = RegisterUserRequestDTO.builder()
                 .telegramUserName("Marandyuk_Anatolii")
                 .chatId("1234")

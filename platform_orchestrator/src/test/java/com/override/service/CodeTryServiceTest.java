@@ -31,13 +31,13 @@ public class CodeTryServiceTest {
     private CodeTryMapper codeTryMapper;
 
     @Test
-    void testWhenSaveCodeTry() {
+    void testSaveCodeTry() {
         codeTryService.saveCodeTry(generateTestCodeTryDTO(), generateTestTestResultDTO(), "login");
         verify(codeTryRepository, times(1)).save(Mockito.any(CodeTry.class));
     }
 
     @Test
-    void testWhenFindAllCodes() {
+    void testFindAllCodes() {
         when(codeTryRepository.findAllByUserLogin("Andrey"))
                 .thenReturn(new ArrayList<>(Collections.singletonList(generateTestCodeTry())));
 
@@ -48,7 +48,7 @@ public class CodeTryServiceTest {
     }
 
     @Test
-    void testWhenFindAllByLesson() {
+    void testFindAllByLesson() {
 
         when(codeTryRepository.findByUserLoginAndChapterAndStepAndLesson("Andrey", 1, 1, 1))
                 .thenReturn(new ArrayList<>(Collections.singletonList(generateTestCodeTry())));

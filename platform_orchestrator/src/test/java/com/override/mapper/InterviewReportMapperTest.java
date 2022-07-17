@@ -18,7 +18,7 @@ public class InterviewReportMapperTest {
     private InterviewReportMapper interviewReportMapper;
 
     @Test
-    public void testWhenDtoToEntity() {
+    public void testDtoToEntity() {
         InterviewReport testInterviewReport = generateTestInterviewReport();
         InterviewReportDTO testInterviewReportDTO = generateTestInterviewReportDTO();
 
@@ -39,7 +39,7 @@ public class InterviewReportMapperTest {
     }
 
     @Test
-    public void testWhenEntityToDto() {
+    public void testEntityToDto() {
         InterviewReport testInterviewReport = generateTestInterviewReport();
         InterviewReportDTO testInterviewReportDTO = generateTestInterviewReportDTO();
 

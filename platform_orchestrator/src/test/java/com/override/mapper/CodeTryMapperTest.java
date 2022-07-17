@@ -16,7 +16,7 @@ public class CodeTryMapperTest {
     private CodeTryMapper codeTryMapper;
 
     @Test
-    void testWhenDtoToEntity() {
+    void testDtoToEntity() {
         final CodeTry codeTry = codeTryMapper.dtoToEntity(generateTestCodeTryDTO(), generateTestTestResultDTO(), generateTestUser());
         final CodeTry testCodeTry = generateTestCodeTry();
 

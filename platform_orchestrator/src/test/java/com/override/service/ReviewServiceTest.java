@@ -44,7 +44,7 @@ public class ReviewServiceTest {
     private NotificatorFeign notificatorFeign;
 
     @Test
-    public void testWhenSaveOrUpdateConfirmReview() {
+    public void testSaveOrUpdateWhenConfirmReview() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         PlatformUser testUser = generateTestUser();
         testReviewDTO.setMentorLogin("");
@@ -63,7 +63,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testWhenSaveOrUpdateChangeReviewTime() {
+    public void testSaveOrUpdateWhenChangeReviewTime() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         PlatformUser testUser = generateTestUser();
 
@@ -82,7 +82,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testWhenSaveOrUpdateChangeReviewMentor() {
+    public void testSaveOrUpdateWhenChangeReviewMentor() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         PlatformUser testUser = generateTestUser();
         String testUserLogin = "Ivan";
@@ -102,7 +102,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testWhenSaveOrUpdateNewReviewMessageTelegram() {
+    public void testSaveOrUpdateWhenNewReview() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         PlatformUser testUser = generateTestUser();
 
@@ -131,7 +131,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testWhenDeleteReviewTelegramNotification() {
+    public void testDelete() {
         String DELETED_REVIEW_MESSAGE_TELEGRAM_TEST = "Ментор вынужден был отменить ревью. Попробуйте записаться на другое время";
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         PlatformUser testUser = generateTestUser();
@@ -147,7 +147,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testWhenFindReviewByMentorLogin() {
+    public void testFindWhenByMentorLogin() {
         List<ReviewDTO> testReviewDTOList = new ArrayList<>();
         testReviewDTOList.add(generateTestReviewDTO());
         ReviewDTO testReviewDTO = generateTestReviewDTO();
@@ -168,7 +168,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testWhenFindReviewByStudentLogin() {
+    public void testFindWhenByStudentLogin() {
         List<ReviewDTO> testReviewDTOList = new ArrayList<>();
         testReviewDTOList.add(generateTestReviewDTO());
         ReviewDTO testReviewDTO = generateTestReviewDTO();
@@ -189,7 +189,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testWhenFindReviewByBookedDate() {
+    public void testFindWhenByBookedDate() {
         List<ReviewDTO> testReviewDTOList = new ArrayList<>();
         testReviewDTOList.add(generateTestReviewDTO());
         ReviewDTO testReviewDTO = generateTestReviewDTO();
@@ -210,7 +210,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testWhenFindReviewByMentorIsNull() {
+    public void testFindWhenByMentorIsNull() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         testReviewDTO.setMentorLogin(null);
         List<ReviewDTO> testReviewList = new ArrayList<>();
@@ -232,7 +232,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void testWhenFendScheduledNotification() {
+    public void testSendScheduledNotification() {
         List<Review> reviewList = new ArrayList<>();
 
         Review review1 = generateTestReview();

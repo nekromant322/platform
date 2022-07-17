@@ -18,7 +18,7 @@ class PaymentMapperTest {
     private PaymentMapper paymentMapper;
 
     @Test
-    public void testWhenDtoToEntity() {
+    public void testDtoToEntity() {
         Payment payment = generateTestPayment();
         PaymentDTO paymentDTO = generateTestPaymentDTO();
 

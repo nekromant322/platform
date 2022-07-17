@@ -34,7 +34,7 @@ class ActGenerationServiceTest {
 
     /*need help
     @Test
-    void testWhenCreatePDF() throws DocumentException, IOException {
+    void testCreatePDF() throws DocumentException, IOException {
         PersonalData personalData = generatePersonalData();
 
         String processHTML = templateEngine.process("docs/actGenerationTemplate",
@@ -51,12 +51,12 @@ class ActGenerationServiceTest {
     }
 */
     @Test
-    void testWhenCreatePDFException() {
+    void testCreatePDFWhenException() {
         assertThrows(InvalidPersonalDataException.class, () -> actGenerationService.createPDF(null));
     }
 
     @Test
-    void testWhenContextCreation() {
+    void testContextCreation() {
 
         Context contextTest = generateContextByPersonalData();
 

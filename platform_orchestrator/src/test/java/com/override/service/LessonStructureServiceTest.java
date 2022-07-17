@@ -23,7 +23,7 @@ class LessonStructureServiceTest {
     private LessonStructureService lessonStructureService;
 
     @Test
-    void testWhenGetLessonStructure() {
+    void testGetLessonStructure() {
         lessonStructureService.getLessonStructure(any());
 
         verify(courseLessonStructure, times(1)).get(any());
@@ -31,7 +31,7 @@ class LessonStructureServiceTest {
 
 /*    need help
   @Test
-    void testWhenRefillCourseLessonStructure() throws IOException {
+    void testRefillCourseLessonStructure() throws IOException {
         LessonStructureService spy = spy(new LessonStructureService());
 
         HashMap<String, JsonObject> courseLessonStructureTest = new HashMap<>();

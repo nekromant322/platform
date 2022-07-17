@@ -20,17 +20,21 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class QuestionServiceTest {
+
     @InjectMocks
     private QuestionService questionService;
+
     @Mock
     private QuestionRepository questionRepository;
+
     @Mock
     private QuestionMapper questionMapper;
+
     @Mock
     private PlatformUserService platformUserService;
 
     @Test
-    void testWhenSave() {
+    void testSave() {
         final QuestionDTO questionDTO = generateTestQuestionDTO();
 
         questionService.save(questionDTO);
@@ -39,7 +43,7 @@ public class QuestionServiceTest {
     }
 
     @Test
-    void testWhenFindAllByUserAndChapter() {
+    void testFindAllByUserAndChapter() {
         PlatformUser user = generateTestUser();
         Question question = generateTestQuestion();
         QuestionDTO questionDTO = generateTestQuestionDTO();
@@ -53,13 +57,13 @@ public class QuestionServiceTest {
     }
 
     @Test
-    void testWhenDelete() {
+    void testDelete() {
         questionService.delete(1L);
         verify(questionRepository, times(1)).deleteById(1L);
     }
 
     @Test
-    void testWhenPatch() {
+    void testPatch() {
         QuestionDTO question = generateTestQuestionDTO();
 
         questionService.patch(question);

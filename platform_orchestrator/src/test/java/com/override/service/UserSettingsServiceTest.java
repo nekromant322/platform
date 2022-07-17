@@ -26,7 +26,7 @@ public class UserSettingsServiceTest {
     private PlatformUserService platformUserService;
 
     @Test
-    void testWhenSave() {
+    void testSave() {
         PlatformUser user = generateTestUser();
         UserSettings settings = new UserSettings(null, true, true);
 

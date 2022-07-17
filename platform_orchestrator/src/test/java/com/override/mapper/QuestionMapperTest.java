@@ -17,7 +17,7 @@ public class QuestionMapperTest {
     private QuestionMapper questionMapper;
 
     @Test
-    public void testWhenDtoToEntity() {
+    public void testDtoToEntity() {
         Question testQuestion = generateTestQuestion();
         PlatformUser user = generateTestUser();
         QuestionDTO questionDTO = generateTestQuestionDTO();

@@ -34,7 +34,7 @@ class AuthServiceTest {
     private PasswordEncoder passwordEncoder;
 
     @Test
-    public void testWhenLoginWhenUserExist() {
+    public void testLoginWhenUserExist() {
         String token = "token";
         PlatformUser user = generateTestUser();
         UserDetails userDetails = new CustomStudentDetailService.CustomStudentDetails(user);
@@ -52,7 +52,7 @@ class AuthServiceTest {
     }
 
     @Test
-    public void testWhenLoginWhenUserNotExist() {
+    public void testLoginWhenUserNotExist() {
         PlatformUser user = generateTestUser();
 
         when(studentDetailService.loadUserByUsername(user.getLogin())).thenThrow(UsernameNotFoundException.class);
@@ -62,7 +62,7 @@ class AuthServiceTest {
     }
 
     @Test
-    public void testWhenLoginWhenPasswordDifferent() {
+    public void testLoginWhenPasswordDifferent() {
         PlatformUser user = generateTestUser();
         UserDetails userDetails = new CustomStudentDetailService.CustomStudentDetails(user);
 

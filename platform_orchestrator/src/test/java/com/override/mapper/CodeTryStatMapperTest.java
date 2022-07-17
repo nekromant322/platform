@@ -19,7 +19,7 @@ class CodeTryStatMapperTest {
     CodeTryStatMapper codeTryStatMapper;
 
     @Test
-    void testWhenEntityToDto() {
+    void testEntityToDto() {
         final List<Integer[]> integers = generateListInteger();
         final List<Object[]> objects = generateListObjects();
         final List<Long[]> longs = generateListLong();
@@ -35,7 +35,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void testWhenListToMapHardTask() {
+    void testListToMapHardTask() {
         final List<Integer[]> integers = generateListInteger();
 
         final Map<String, Long> mapHardTask = codeTryStatMapper.listToMapHardTask(integers);
@@ -44,7 +44,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void testWhenListToMapStudentCodeTry() {
+    void testListToMapStudentCodeTry() {
         final List<Object[]> objects = generateListObjects();
 
         final Map<String, BigInteger> studentCodeTry = codeTryStatMapper.listToMapStudentCodeTry(objects);
@@ -53,7 +53,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void testWhenListToMapCodeTryStatus() {
+    void testListToMapCodeTryStatus() {
         final List<Object[]> objects = generateListObjects();
 
         final Map<String, BigInteger> codeTryStatus = codeTryStatMapper.listToMapCodeTryStatus(objects);
@@ -62,7 +62,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void testWhenListToMapAllTriesRatio() {
+    void testListToMapAllTriesRatio() {
         final List<Long[]> longs = generateListLong();
 
         final Map<String, Double> triesRatio = codeTryStatMapper.listToMapAllTriesRatio(longs);

@@ -25,7 +25,7 @@ class CustomStudentDetailServiceTest {
     PlatformUserRepository platformUserRepository;
 
     @Test
-    void testWhenLoadUserByUsername() {
+    void testLoadUserByUsername() {
         CustomStudentDetailService.CustomStudentDetails customStudentDetailsTest = new CustomStudentDetailService.CustomStudentDetails(generateTestUser());
 
         when(platformUserRepository.findFirstByLogin(generateTestUser().getLogin())).thenReturn(generateTestUser());
@@ -38,7 +38,7 @@ class CustomStudentDetailServiceTest {
     }
 
     @Test
-    void testWhenLoadUserByUsernameStatusBAN() {
+    void testLoadUserByUsernameWhenStatusBAN() {
         PlatformUser platformUserBan = generateTestUser();
         platformUserBan.setStudyStatus(StudyStatus.BAN);
 

@@ -12,7 +12,7 @@ class PasswordGeneratorServiceTest {
 
    /* need help
    @Test
-    void testWhenGenerateStrongPassword() {
+    void testGenerateStrongPassword() {
 
         final String CHAR_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
         final String CHAR_UPPERCASE = CHAR_LOWERCASE.toUpperCase();

@@ -36,7 +36,7 @@ public class ReviewMapperTest {
     }
 
     @Test
-    public void testWhenEntityToDto() {
+    public void testEntityToDto() {
         Review testReview = generateTestReview();
         ReviewDTO testReviewDTO = generateTestReviewDTO();
 

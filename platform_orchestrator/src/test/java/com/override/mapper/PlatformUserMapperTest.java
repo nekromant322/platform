@@ -18,7 +18,7 @@ class PlatformUserMapperTest {
     private PlatformUserMapper platformUserMapper;
 
     @Test
-    public void testWhenEntityToDto() {
+    public void testEntityToDto() {
         PlatformUser user = generateTestUser();
 
         PlatformUserDTO platformUserDTO = platformUserMapper.entityToDto(user);

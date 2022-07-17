@@ -2,10 +2,10 @@ package com.override.service;
 
 import com.override.feign.NotificatorFeign;
 import com.override.model.*;
-import enums.StudyStatus;
 import com.override.repository.StudentReportRepository;
 import com.override.utils.TestFieldsUtil;
 import enums.Communication;
+import enums.StudyStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,7 +38,7 @@ class ReportServiceTest {
     private NotificatorFeign notificatorFeign;
 
     @Test
-    public void testWhenNewReport() {
+    public void testSaveReport() {
         StudentReport report = new StudentReport();
 
         when(reportRepository.findFirstByDateAndStudentLogin(any(), any())).thenReturn(null);
@@ -51,7 +51,7 @@ class ReportServiceTest {
     }
 
     @Test
-    public void testWhenReportOnDateExist() {
+    public void testSaveReportOnDateExist() {
         when(reportRepository.findFirstByDateAndStudentLogin(any(), any())).thenReturn(new StudentReport());
 
         ResponseEntity<String> entity = reportService.saveReport(new StudentReport(), "kemenchik");
@@ -61,7 +61,7 @@ class ReportServiceTest {
     }
 
     @Test
-    public void testWhenSendDailyReminderOfReport() {
+    public void testSendDailyReminderOfReport() {
         List<PlatformUser> userList = List.of(new PlatformUser(null, "123", "123", StudyStatus.ACTIVE,
                 Collections.singletonList(new Authority(null, "ROLE_USER")), new PersonalData(), new UserSettings()));
 
@@ -76,7 +76,7 @@ class ReportServiceTest {
     }
 
     @Test
-    public void testWhenSeveralUsersDidNotWriteAReportOnTheCurrentDay() {
+    public void testSendDailyReminderOfReportWhenUsersDidNotWriteAReportOnTheCurrentDay() {
         List<PlatformUser> userList = TestFieldsUtil.generateTestListOfThreeUsersWithoutReportsOnCurrentDay();
 
         when(userService.findStudentsWithoutReportOfCurrentDay()).thenReturn(userList);
@@ -92,7 +92,7 @@ class ReportServiceTest {
     }
 
     @Test
-    public void testWhenNotFoundStudentsWithoutReportInCurrentDay() {
+    public void testSendDailyReminderOfReportWhenNotFoundStudentsWithoutReportInCurrentDay() {
         when(userService.findStudentsWithoutReportOfCurrentDay()).thenReturn(new ArrayList<>());
 
         reportService.sendDailyReminderOfReport();

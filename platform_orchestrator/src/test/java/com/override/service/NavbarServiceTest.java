@@ -33,7 +33,7 @@ public class NavbarServiceTest {
     private HttpServletRequest request;
 
     @Test
-    public void testWhenGetNavbarWhenRoleIsAdmin() {
+    public void testGetNavbarWhenRoleIsAdmin() {
 
         List<String> listForAdmin = new ArrayList<>();
 
@@ -75,7 +75,7 @@ public class NavbarServiceTest {
     }
 
     @Test
-    public void testWhenGetNavbarWhenRoleIsGraduate() {
+    public void testGetNavbarWhenRoleIsGraduate() {
 
         List<String> listForGraduate = new ArrayList<>();
 
@@ -110,7 +110,7 @@ public class NavbarServiceTest {
     }
 
     @Test
-    public void testWhenGetNavbarWhenRoleIsUser() {
+    public void testGetNavbarWhenRoleIsUser() {
 
         List<String> listForUser = new ArrayList<>();
 
