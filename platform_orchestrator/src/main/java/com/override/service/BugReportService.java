@@ -3,10 +3,8 @@ package com.override.service;
 import com.override.exception.BugReportException;
 import com.override.feign.NotificatorFeign;
 import com.override.mapper.BugReportMapper;
-import com.override.model.Authority;
 import com.override.model.Bug;
 import com.override.model.PlatformUser;
-import com.override.model.enums.Role;
 import com.override.repository.BugReportRepository;
 import com.override.repository.PlatformUserRepository;
 import dto.BugReportsDTO;
@@ -37,8 +35,6 @@ public class BugReportService {
     @Autowired
     private NotificatorFeign notificatorFeign;
 
-    @Autowired
-    private AuthorityService authorityService;
 
     public final String DEFAULT_BUG_REPORT_NAME = "-";
     public final String DEFAULT_BUG_REPORT_TYPE = "text";
@@ -46,9 +42,7 @@ public class BugReportService {
 
     public void uploadFile(MultipartFile file, String login, String text) {
 
-        Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
-
-        List<PlatformUser> platformUsers = platformUserRepository.findAllByAuthorities(adminAuthority);
+        List<PlatformUser> platformUsers = platformUserRepository.findAllByAuthorityName("ROLE_ADMIN");
 
         try {
             bugReportRepository.save(Bug.builder()

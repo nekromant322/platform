@@ -84,13 +84,12 @@ class PlatformUserServiceTest {
             add(new PlatformUser());
         }};
 
-        when(authorityService.getAuthorityByRole(Role.ADMIN)).thenReturn(adminAuthority);
-        when(platformUserRepository.findByAuthoritiesNotContaining(adminAuthority)).thenReturn(platformUsers);
+        when(platformUserRepository.findByAuthoritiesNamesNotContaining("ROLE_ADMIN")).thenReturn(platformUsers);
 
         List<PlatformUser> allStudents = platformUserService.getAllStudents();
 
         assertEquals(platformUsers, allStudents);
-        verify(platformUserRepository, times(1)).findByAuthoritiesNotContaining(adminAuthority);
+        verify(platformUserRepository, times(1)).findByAuthoritiesNamesNotContaining("ROLE_ADMIN");
     }
 
     @Test
