@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 public class PreProjectLessonMentorReactionMapper {
 
     @Autowired
-    PreProjectLessonRepository preProjectLessonRepository;
+    private PreProjectLessonRepository preProjectLessonRepository;
 
     @Autowired
-    PlatformUserService platformUserService;
+    private PlatformUserService platformUserService;
 
     public PreProjectLesson dtoToEntity(PreProjectLessonMentorReactionDTO preProjectLessonMentorReactionDTO) {
         return PreProjectLesson.builder()

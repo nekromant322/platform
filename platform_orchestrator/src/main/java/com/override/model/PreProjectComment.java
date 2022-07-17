@@ -1,5 +1,6 @@
 package com.override.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class PreProjectComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Transient
+    @JsonIgnore
     @ManyToOne
     private PreProjectLesson preProjectLesson;
 

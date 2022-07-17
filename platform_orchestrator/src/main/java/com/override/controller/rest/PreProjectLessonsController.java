@@ -21,7 +21,7 @@ public class PreProjectLessonsController {
     private PreProjectLessonService preProjectLessonService;
 
     @Secured("ROLE_ADMIN")
-    @GetMapping()
+    @GetMapping
     public List<PreProjectLessonMentorReactionDTO> getAll() {
         return preProjectLessonService.getAll();
     }
