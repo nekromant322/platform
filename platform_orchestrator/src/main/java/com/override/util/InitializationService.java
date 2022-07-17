@@ -4,24 +4,24 @@ import com.github.javafaker.Faker;
 import com.override.model.*;
 import com.override.model.enums.Role;
 import com.override.model.enums.Status;
-import enums.StudyStatus;
 import com.override.service.*;
 import dto.*;
 import enums.CodeExecutionStatus;
+import enums.StudyStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoField;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @ConditionalOnProperty(prefix = "testData", name = "enabled", havingValue = "true")
+@Profile("dev")
 public class InitializationService {
 
     @Value("${jwt.primeAdminLogin}")
