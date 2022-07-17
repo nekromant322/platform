@@ -88,9 +88,6 @@ public class InitializationService {
     private DefaultQuestionService defaultQuestionService;
 
     @Autowired
-    private PaymentService paymentService;
-
-    @Autowired
     private Faker faker;
 
     public void initTestData() {
