@@ -1,6 +1,6 @@
 window.onload = drawColumns()
 
-function openCode(code){
+function openCode(code) {
     let element = document.getElementById("modalCodeTryBody")
     element.innerText = code;
 }
@@ -23,10 +23,14 @@ function addColumn(data) {
     insertTd(data.codeExecutionStatus, tr)
 
     let updateBtn = document.createElement("button");
-    updateBtn.className = "btn btn-success";
+
+    if (data.codeExecutionStatus == "OK") {
+        updateBtn.className = "btn btn-success";
+    } else
+        updateBtn.className = "btn btn-warning";
     updateBtn.innerHTML = "Open";
     updateBtn.type = "button";
-    updateBtn.setAttribute("data-bs-toggle","modal");
+    updateBtn.setAttribute("data-bs-toggle", "modal");
     updateBtn.setAttribute("data-bs-target", "#myCodeTryModal");
     updateBtn.addEventListener("click", () => {
         openCode(data.studentsCode);
@@ -37,21 +41,38 @@ function addColumn(data) {
 
 function drawColumns() {
     let codeTryList;
-    let chapter = sessionStorage.getItem("chapter");
-    let step = sessionStorage.getItem("step");
-    let lesson = sessionStorage.getItem("lesson");
-    $.ajax({
-        method: 'GET',
-        url: "/codeTry?chapter=" + chapter + "&step=" + step + "&lesson=" + lesson,
-        contentType: "application/json; charset=utf-8",
-        async: false,
-        success: function (result) {
-            codeTryList = result
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
+
+    if (sessionStorage.getItem("admin")) {
+        let userID = sessionStorage.getItem("id");
+        $.ajax({
+            method: 'GET',
+            url: "/codeTry/" + userID,
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            success: function (result) {
+                codeTryList = result
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    } else {
+        let chapter = sessionStorage.getItem("chapter");
+        let step = sessionStorage.getItem("step");
+        let lesson = sessionStorage.getItem("lesson");
+        $.ajax({
+            method: 'GET',
+            url: "/codeTry?chapter=" + chapter + "&step=" + step + "&lesson=" + lesson,
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            success: function (result) {
+                codeTryList = result
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
     while (document.getElementById("codeTryTable").getElementsByTagName("tbody")[0].rows[0])
         document.getElementById("codeTryTable").getElementsByTagName("tbody")[0].deleteRow(0);
     for (let i = 0; i < codeTryList.length; i++) {
