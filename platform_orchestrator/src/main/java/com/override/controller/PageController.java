@@ -77,7 +77,7 @@ public class PageController {
         return "payment";
     }
 
-    @GetMapping("/PreProjectLinks")
+    @GetMapping("/preProjectLinks")
     public String allPreProjectLinksPage() {
         return "allPreProjectLinks";
     }

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PreProjectComments {
+public class PreProjectComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

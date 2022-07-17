@@ -1,9 +1,6 @@
 getAllProjectLinks();
 btnClickListener();
 
-//new Tablesort(document.getElementById('allPayments'));
-
-
 function getAllProjectLinks() {
     $.ajax({
         url: '/preProjectLink',

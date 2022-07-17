@@ -32,12 +32,12 @@ public class PreProjectLessonsController {
         return preProjectLessonService.getAllByPathName(preProjectLessonDTO, user.getUsername());
     }
 
-    @PostMapping()
+    @PostMapping
     public PreProjectLessonDTO savePreProjectLessonLink(@RequestBody PreProjectLessonDTO preProjectLessonDTO, @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return preProjectLessonService.save(preProjectLessonDTO, user.getUsername());
     }
 
-    @PatchMapping()
+    @PatchMapping
     public ResponseEntity<String> updatePreProjectLessonLink(@RequestBody PreProjectLessonMentorReactionDTO preProjectLessonMentorReactionDTO) {
         preProjectLessonService.update(preProjectLessonMentorReactionDTO);
         return new ResponseEntity<>("Комментарии сохранены!", HttpStatus.OK);

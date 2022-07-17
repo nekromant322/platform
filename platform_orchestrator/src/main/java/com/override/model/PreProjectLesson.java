@@ -35,7 +35,7 @@ public class PreProjectLesson {
 
     @JoinColumn(name = "pre_project_lesson_id")
     @OneToMany(cascade = CascadeType.ALL)
-    private List<PreProjectComments> comments = new ArrayList<>();
+    private List<PreProjectComment> comments = new ArrayList<>();
 
     @JoinColumn(name = "user_id")
     @ManyToOne

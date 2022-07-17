@@ -136,7 +136,7 @@
             <column name="user_id" type="bigint"/>
         </createTable>
 
-        <createTable tableName="pre_project_comments">
+        <createTable tableName="pre_project_comment">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -152,7 +152,7 @@
             <column name="approve" type="bool"/>
             <column name="viewed" type="bool"/>
             <column name="comments" type="bigint">
-                <constraints foreignKeyName="pre_project_comments_id" references="pre_project_comments(id)"/>
+                <constraints foreignKeyName="pre_project_comment_id" references="pre_project_comment(id)"/>
             </column>
             <column name="user_id" type="bigint">
                 <constraints foreignKeyName="platform_user_id" references="platform_user(id)"/>

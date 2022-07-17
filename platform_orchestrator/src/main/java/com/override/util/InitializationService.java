@@ -105,11 +105,11 @@ public class InitializationService {
         reviewInit();
         interviewReportsInit();
         paymentInit();
-        preProjectLessons();
+        preProjectLessonsInit();
         defaultQuestionsInit();
     }
 
-    private void preProjectLessons() {
+    private void preProjectLessonsInit() {
         for (int i = 0; i < preProjectLessonCount; i++) {
             preProjectLessonService.save(PreProjectLesson.builder()
                     .link(faker.bothify("https://github.com/??????##/???##??#/####.com"))

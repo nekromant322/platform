@@ -1,7 +1,6 @@
 package com.override.mapper;
 
-import com.override.model.PlatformUser;
-import com.override.model.PreProjectComments;
+import com.override.model.PreProjectComment;
 import com.override.model.PreProjectLesson;
 import com.override.repository.PreProjectLessonRepository;
 import com.override.service.PlatformUserService;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class PreProjectLessonMentorReactionMapper {
@@ -32,7 +32,7 @@ public class PreProjectLessonMentorReactionMapper {
                 .build();
     }
 
-    public PreProjectLessonMentorReactionDTO entityToDto(PreProjectLesson preProjectLesson) {
+    public static PreProjectLessonMentorReactionDTO entityToDto(PreProjectLesson preProjectLesson) {
         return PreProjectLessonMentorReactionDTO.builder()
                 .id(preProjectLesson.getId())
                 .login(preProjectLesson.getUser().getLogin())
@@ -43,15 +43,7 @@ public class PreProjectLessonMentorReactionMapper {
                 .build();
     }
 
-    public List<PreProjectLessonMentorReactionDTO> listEntityToDto(List<PreProjectLesson> preProjectLessonList) {
-        List<PreProjectLessonMentorReactionDTO> preProjectLessonDTOList = new ArrayList<>();
-        for (int i = 0; i < preProjectLessonList.size(); i++) {
-            preProjectLessonDTOList.add(entityToDto(preProjectLessonList.get(i)));
-        }
-        return preProjectLessonDTOList;
-    }
-
-    private List<String> toListStringComments(PreProjectLesson preProjectLesson) {
+    private static List<String> toListStringComments(PreProjectLesson preProjectLesson) {
         List<String> commentsList = new ArrayList<>();
         if (preProjectLesson.getComments() != null) {
             for (int i = 0; i < preProjectLesson.getComments().size(); i++) {
@@ -61,12 +53,16 @@ public class PreProjectLessonMentorReactionMapper {
         return commentsList;
     }
 
-    private List<PreProjectComments> listStringToComments(PreProjectLessonMentorReactionDTO preProjectLessonMentorReactionDTO) {
+    public List<PreProjectLessonMentorReactionDTO> listEntityToDto(List<PreProjectLesson> preProjectLessonList) {
+        return preProjectLessonList.stream().map(PreProjectLessonMentorReactionMapper::entityToDto).collect(Collectors.toList());
+    }
+
+    private List<PreProjectComment> listStringToComments(PreProjectLessonMentorReactionDTO preProjectLessonMentorReactionDTO) {
         List<String> stringList = preProjectLessonMentorReactionDTO.getComments();
-        List<PreProjectComments> CommentsList = new ArrayList<>();
+        List<PreProjectComment> CommentsList = new ArrayList<>();
 
         if (stringList != null) {
-            PreProjectComments preProjectComments = PreProjectComments.builder()
+            PreProjectComment preProjectComment = PreProjectComment.builder()
                     .comment(stringList.get(stringList.size() - 1))
                     .build();
 
@@ -74,9 +70,9 @@ public class PreProjectLessonMentorReactionMapper {
                     .getId()).get().getComments();
 
             if (CommentsList.isEmpty()) {
-                CommentsList.add(preProjectComments);
-            } else if (!CommentsList.get(CommentsList.size() - 1).getComment().equals(preProjectComments.getComment())) {
-                CommentsList.add(preProjectComments);
+                CommentsList.add(preProjectComment);
+            } else if (!CommentsList.get(CommentsList.size() - 1).getComment().equals(preProjectComment.getComment())) {
+                CommentsList.add(preProjectComment);
             }
         }
         return CommentsList;
