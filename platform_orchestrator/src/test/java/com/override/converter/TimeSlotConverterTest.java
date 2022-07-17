@@ -17,7 +17,7 @@ public class TimeSlotConverterTest {
     private TimeSlotsConverter timeSlotsConverter;
 
     @Test
-    void convertToDatabaseColumn() {
+    void testWhenConvertToDatabaseColumn() {
         Set<LocalTime> testTimeSlots = new HashSet<>();
         testTimeSlots.add(LocalTime.of(16, 30));
         testTimeSlots.add(LocalTime.of(17, 30));
@@ -30,7 +30,7 @@ public class TimeSlotConverterTest {
     }
 
     @Test
-    void convertToEntityAttribute() {
+    void testWhenConvertToEntityAttribute() {
         Set<LocalTime> testTimeSlots = new HashSet<>();
         testTimeSlots.add(LocalTime.of(21, 30));
         testTimeSlots.add(LocalTime.of(22, 0));

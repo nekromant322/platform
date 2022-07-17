@@ -22,7 +22,7 @@ public class DefaultQuestionServiceTest {
     private DefaultQuestionRepository defaultQuestionRepository;
 
     @Test
-    public void save() {
+    public void testWhenSave() {
         final DefaultQuestion defaultQuestion = generateTestDefaultQuestion();
 
         defaultquestionService.save(defaultQuestion);
@@ -30,19 +30,20 @@ public class DefaultQuestionServiceTest {
     }
 
     @Test
-    public void findAll() {
+    public void testWhenFindAll() {
         defaultquestionService.findAll();
-        verify(defaultQuestionRepository,times(1)).findAll();
-    }
-    @Test
-    public void findAllByChapterAndSection() {
-        defaultquestionService.findAllByChapterAndSection("core", 3);
-        verify(defaultQuestionRepository,times(1)).findDefaultQuestionsByChapterAndSection("core", 3);
+        verify(defaultQuestionRepository, times(1)).findAll();
     }
 
     @Test
-    public void delete() {
+    public void testWhenFindAllByChapterAndSection() {
+        defaultquestionService.findAllByChapterAndSection("core", 3);
+        verify(defaultQuestionRepository, times(1)).findDefaultQuestionsByChapterAndSection("core", 3);
+    }
+
+    @Test
+    public void testWhenDelete() {
         defaultquestionService.delete(1L);
-        verify(defaultQuestionRepository,times(1)).deleteById(1L);
+        verify(defaultQuestionRepository, times(1)).deleteById(1L);
     }
 }

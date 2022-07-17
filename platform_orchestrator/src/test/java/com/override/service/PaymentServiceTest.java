@@ -28,7 +28,7 @@ class PaymentServiceTest {
     private PaymentMapper paymentMapper;
 
     @Test
-    public void save() {
+    public void testWhenSave() {
         PaymentDTO paymentDTO = generateTestPaymentDTO();
         Payment payment = generateTestPayment();
 
@@ -39,7 +39,7 @@ class PaymentServiceTest {
     }
 
     @Test
-    public void getAll() {
+    public void testWhenGetAll() {
         paymentService.getAll();
 
         verify(paymentRepository, times(1)).findAll();

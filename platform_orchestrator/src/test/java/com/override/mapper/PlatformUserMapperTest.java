@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.override.utils.TestFieldsUtil.generateTestUser;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -18,7 +18,7 @@ class PlatformUserMapperTest {
     private PlatformUserMapper platformUserMapper;
 
     @Test
-    public void testEntityToDto() {
+    public void testWhenEntityToDto() {
         PlatformUser user = generateTestUser();
 
         PlatformUserDTO platformUserDTO = platformUserMapper.entityToDto(user);

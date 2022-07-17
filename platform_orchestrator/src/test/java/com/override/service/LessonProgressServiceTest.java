@@ -9,10 +9,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class LessonProgressServiceTest {
@@ -24,7 +26,7 @@ public class LessonProgressServiceTest {
     private LessonProgressRepository lessonProgressRepository;
 
     @Test
-    public void testSaveLessonProgress() {
+    public void testWhenSaveLessonProgress() {
         PlatformUser platformUser = new PlatformUser();
 
         String lesson = "test-1-1-1";
@@ -35,7 +37,7 @@ public class LessonProgressServiceTest {
     }
 
     @Test
-    public void testSaveSameLessonProgress() {
+    public void testWhenSaveSameLessonProgress() {
         PlatformUser platformUser = new PlatformUser();
         platformUser.setId(1L);
         platformUser.setLogin("login");
@@ -49,7 +51,7 @@ public class LessonProgressServiceTest {
     }
 
     @Test
-    public void testGettingLessonProgress() {
+    public void testWhenGettingLessonProgress() {
         PlatformUser platformUser = new PlatformUser();
         platformUser.setId(1L);
         platformUser.setLogin("login");
@@ -68,7 +70,5 @@ public class LessonProgressServiceTest {
         List<String> userProgress = lessonProgressService.getPassedLessons(platformUser);
 
         Assertions.assertEquals(progress, userProgress);
-
     }
-
 }

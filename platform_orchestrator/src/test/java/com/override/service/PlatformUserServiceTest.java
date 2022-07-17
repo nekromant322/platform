@@ -6,8 +6,8 @@ import com.override.model.PersonalData;
 import com.override.model.PlatformUser;
 import com.override.model.UserSettings;
 import com.override.model.enums.Role;
-import enums.StudyStatus;
 import com.override.repository.PlatformUserRepository;
+import enums.StudyStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,9 +19,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 
@@ -50,7 +53,7 @@ class PlatformUserServiceTest {
     private final Authority userAuthority = new Authority();
 
     @Test
-    public void testUpdateUserToAdmin() {
+    public void testWhenUpdateUserToAdmin() {
         PlatformUser student = new PlatformUser();
         student.setAuthorities(new ArrayList<>() {{
             add(userAuthority);
@@ -70,7 +73,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testUpdateUserToAdminWhenUserNotExist() {
+    public void testWhenUpdateUserToAdminWhenUserNotExist() {
         when(platformUserRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(UsernameNotFoundException.class, () -> platformUserService.updateToAdmin(1L));
@@ -78,7 +81,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testGetAllStudents() {
+    public void testWhenGetAllStudents() {
         List<PlatformUser> platformUsers = new ArrayList<>() {{
             add(new PlatformUser());
             add(new PlatformUser());
@@ -94,7 +97,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testGetUserByLogin() {
+    public void testWhenGetUserByLogin() {
         String login = "login";
         PlatformUser notNullUser = new PlatformUser();
 
@@ -107,7 +110,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testGenerateUser() {
+    public void testWhenGenerateUser() {
         String login = "login";
         String password = "password";
         PlatformUser user = new PlatformUser(
@@ -134,7 +137,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testGenerateUserWhenLoginExist() {
+    public void testWhenGenerateUserWhenLoginExist() {
         String login = "login";
         String chatId = "chatId";
         PlatformUser notNullUser = new PlatformUser();
@@ -147,7 +150,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testGetUser() {
+    public void testWhenGetUser() {
         PlatformUser notNullUser = new PlatformUser();
         String login = "login";
 
@@ -160,7 +163,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testSaveUser() {
+    public void testWhenSaveUser() {
         String login = "login";
         PlatformUser notNullUser = new PlatformUser();
         notNullUser.setLogin(login);
@@ -177,7 +180,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    public void testSaveUserWhenLoginExist() {
+    public void testWhenSaveUserWhenLoginExist() {
         String login = "login";
         PlatformUser notNullUser = new PlatformUser();
         notNullUser.setLogin(login);
@@ -189,7 +192,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    void getPlatformUserRoleAdmin() {
+    void testWhenGetPlatformUserRoleAdmin() {
         when(request.isUserInRole("ROLE_ADMIN")).thenReturn(true);
 
         Role admin = platformUserService.getPlatformUserRole(request);
@@ -198,7 +201,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    void getPlatformUserRoleUser() {
+    void testWhenGetPlatformUserRoleUser() {
         when(request.isUserInRole("ROLE_ADMIN")).thenReturn(false);
 
         Role user = platformUserService.getPlatformUserRole(request);

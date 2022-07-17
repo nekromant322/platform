@@ -16,7 +16,7 @@ class JoinRequestMapperTest {
     private JoinRequestMapper requestMapper;
 
     @Test
-    public void testDtoToEntity() {
+    public void testWhenDtoToEntity() {
         RegisterUserRequestDTO expectedDto = RegisterUserRequestDTO.builder()
                 .telegramUserName("name")
                 .build();

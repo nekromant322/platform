@@ -49,7 +49,7 @@ public class BugReportServiceTest {
     private NotificatorFeign notificatorFeign;
 
     @Test
-    public void uploadFileTest() {
+    public void testWhenUploadFileTest() {
         PlatformUser platformUser = generateTestUser();
         Authority authority = new Authority();
         List<PlatformUser> platformUsers = new ArrayList<>();
@@ -70,7 +70,7 @@ public class BugReportServiceTest {
     }
 
     @Test
-    public void getAllDocsTest() {
+    public void testWhenGetAllDocsTest() {
         List<BugReportsDTO> bugReportsDTOS = List.of(generateTestBugReportDTO());
         List<Bug> testList = List.of(generateTestBug());
 
@@ -82,7 +82,7 @@ public class BugReportServiceTest {
     }
 
     @Test
-    public void downloadFileTest() {
+    public void testWhenDownloadFileTest() {
         Bug bug = generateTestBug();
 
         when(bugReportRepository.getById(1L)).thenReturn(bug);

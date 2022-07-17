@@ -5,16 +5,60 @@ import com.override.model.enums.Status;
 import dto.*;
 import enums.CodeExecutionStatus;
 import enums.StudyStatus;
+import org.thymeleaf.context.Context;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
 public class TestFieldsUtil {
+
+    public static Context generateContextByPersonalData() {
+        PersonalData personalData = generatePersonalData();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+
+        Context context = new Context();
+
+        context.setVariable("actNumber", personalData.getActNumber());
+        context.setVariable("contractNumber", personalData.getContractNumber());
+        context.setVariable("date", formatter.format(personalData.getDate()));
+        context.setVariable("fullName", personalData.getFullName());
+        context.setVariable("passportSeries", personalData.getPassportSeries());
+        context.setVariable("passportNumber", personalData.getPassportNumber());
+        context.setVariable("passportIssued", personalData.getPassportIssued());
+        context.setVariable("issueDate", formatter.format(personalData.getIssueDate()));
+        context.setVariable("birthDate", formatter.format(personalData.getBirthDate()));
+        context.setVariable("registration", personalData.getRegistration());
+        context.setVariable("email", personalData.getEmail());
+        context.setVariable("phoneNumber", personalData.getPhoneNumber());
+        context.setVariable("actualDate", LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+
+        return context;
+    }
+
+    public static PersonalData generatePersonalData() {
+        return PersonalData.builder()
+                .id(5l)
+                .actNumber(950L)
+                .contractNumber("9/6/2022")
+                .date(new Date(1654819200000L)) // 2022-06-10 00:00:00.0 - in ms
+                .fullName("Erich Zieme DVM")
+                .passportSeries(5369L)
+                .passportNumber(642705L)
+                .passportIssued("Apt. 470 17253 Bradtke Extensions, South Betsey, NV 60678-6968")
+                .issueDate(new Date(1654819200000L)) // 2024-03-12 00:00:00.0 - in ms
+                .birthDate(new Date(686793600000L))   // 1991-10-07 00:00:00.0 - in ms
+                .registration("Apt. 403 1396 Little Ranch, Volkmanland, NC 35258-6649")
+                .email("arnette22@gmail.com")
+                .phoneNumber(82531250128L)
+                .build();
+    }
 
     public static Payment generateTestPayment() {
         return Payment.builder()
@@ -279,4 +323,6 @@ public class TestFieldsUtil {
                 .label(interviewReportList.get(0).getUserLogin())
                 .build();
     }
+
+
 }

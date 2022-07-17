@@ -26,17 +26,21 @@ class StatisticsServiceTest {
 
     @InjectMocks
     private StatisticsService statisticsService;
+
     @Mock
     private CodeTryRepository codeTryRepository;
+
     @Mock
     private CodeTryStatMapper codeTryStatMapper;
+
     @Mock
     private InterviewReportRepository interviewReportRepository;
+
     @Mock
     private InterviewReportMapper interviewReportMapper;
 
     @Test
-    void getStatistics() {
+    void testWhenGetStatistics() {
         statisticsService.getCodeTryStatistics(1);
 
         verify(codeTryStatMapper, times(1)).entityToDto(anyList(), anyList(), anyList(), anyList());
@@ -47,14 +51,14 @@ class StatisticsServiceTest {
     }
 
     @Test
-    void countStatsOfHardTasks() {
+    void testWhenCountStatsOfHardTasks() {
         statisticsService.getCodeTryStatistics(1);
 
         verify(codeTryRepository, times(1)).countStatsOfHardTasks(1);
     }
 
     @Test
-    void GetSalaryStat() {
+    void testWhenGetSalaryStat() {
         List<InterviewReport> interviewReportList = TestFieldsUtil.generateInterviewReportsList();
         SalaryStatDTO salaryStatDTO = TestFieldsUtil.generateSalaryStatDto(interviewReportList);
         SalaryDTO salaryDTO = TestFieldsUtil.generateTestSalaryDTO(interviewReportList, salaryStatDTO);
@@ -77,6 +81,5 @@ class StatisticsServiceTest {
         assertNotNull(resultSalary.getLabels());
         assertEquals(3, resultSalary.getLabels().size());
         assertEquals(1, resultSalary.getSalaryStats().size());
-
     }
 }

@@ -8,11 +8,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -31,7 +33,7 @@ public class NavbarServiceTest {
     private HttpServletRequest request;
 
     @Test
-    public void testGetNavbarWhenRoleIsAdmin() {
+    public void testWhenGetNavbarWhenRoleIsAdmin() {
 
         List<String> listForAdmin = new ArrayList<>();
 
@@ -73,7 +75,7 @@ public class NavbarServiceTest {
     }
 
     @Test
-    public void testGetNavbarWhenRoleIsGraduate() {
+    public void testWhenGetNavbarWhenRoleIsGraduate() {
 
         List<String> listForGraduate = new ArrayList<>();
 
@@ -108,7 +110,7 @@ public class NavbarServiceTest {
     }
 
     @Test
-    public void testGetNavbarWhenRoleIsUser() {
+    public void testWhenGetNavbarWhenRoleIsUser() {
 
         List<String> listForUser = new ArrayList<>();
 

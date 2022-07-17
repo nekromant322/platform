@@ -10,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.override.utils.TestFieldsUtil.*;
-import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 public class QuestionMapperTest {
@@ -18,7 +17,7 @@ public class QuestionMapperTest {
     private QuestionMapper questionMapper;
 
     @Test
-    public void testDtoToEntity(){
+    public void testWhenDtoToEntity() {
         Question testQuestion = generateTestQuestion();
         PlatformUser user = generateTestUser();
         QuestionDTO questionDTO = generateTestQuestionDTO();

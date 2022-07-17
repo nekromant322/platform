@@ -15,11 +15,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static com.override.utils.TestFieldsUtil.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CodeTryServiceTest {
@@ -33,13 +31,13 @@ public class CodeTryServiceTest {
     private CodeTryMapper codeTryMapper;
 
     @Test
-    void testSaveCodeTry() {
+    void testWhenSaveCodeTry() {
         codeTryService.saveCodeTry(generateTestCodeTryDTO(), generateTestTestResultDTO(), "login");
         verify(codeTryRepository, times(1)).save(Mockito.any(CodeTry.class));
     }
 
     @Test
-    void testFindAllCodes() {
+    void testWhenFindAllCodes() {
         when(codeTryRepository.findAllByUserLogin("Andrey"))
                 .thenReturn(new ArrayList<>(Collections.singletonList(generateTestCodeTry())));
 
@@ -50,9 +48,9 @@ public class CodeTryServiceTest {
     }
 
     @Test
-    void testFindAllByLesson() {
+    void testWhenFindAllByLesson() {
 
-        when(codeTryRepository.findByUserLoginAndChapterAndStepAndLesson("Andrey", 1 , 1, 1))
+        when(codeTryRepository.findByUserLoginAndChapterAndStepAndLesson("Andrey", 1, 1, 1))
                 .thenReturn(new ArrayList<>(Collections.singletonList(generateTestCodeTry())));
 
         final List<CodeTry> codeTryList = codeTryService.findAllByLesson("Andrey", generateTestTaskIdentifierDTO());

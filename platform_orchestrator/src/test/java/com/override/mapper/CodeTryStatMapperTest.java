@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.override.utils.TestFieldsUtil.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class CodeTryStatMapperTest {
@@ -19,7 +19,7 @@ class CodeTryStatMapperTest {
     CodeTryStatMapper codeTryStatMapper;
 
     @Test
-    void entityToDto() {
+    void testWhenEntityToDto() {
         final List<Integer[]> integers = generateListInteger();
         final List<Object[]> objects = generateListObjects();
         final List<Long[]> longs = generateListLong();
@@ -35,7 +35,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void listToMapHardTask() {
+    void testWhenListToMapHardTask() {
         final List<Integer[]> integers = generateListInteger();
 
         final Map<String, Long> mapHardTask = codeTryStatMapper.listToMapHardTask(integers);
@@ -44,7 +44,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void listToMapStudentCodeTry() {
+    void testWhenListToMapStudentCodeTry() {
         final List<Object[]> objects = generateListObjects();
 
         final Map<String, BigInteger> studentCodeTry = codeTryStatMapper.listToMapStudentCodeTry(objects);
@@ -53,7 +53,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void listToMapCodeTryStatus() {
+    void testWhenListToMapCodeTryStatus() {
         final List<Object[]> objects = generateListObjects();
 
         final Map<String, BigInteger> codeTryStatus = codeTryStatMapper.listToMapCodeTryStatus(objects);
@@ -62,11 +62,11 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void listToMapAllTriesRatio() {
+    void testWhenListToMapAllTriesRatio() {
         final List<Long[]> longs = generateListLong();
 
         final Map<String, Double> triesRatio = codeTryStatMapper.listToMapAllTriesRatio(longs);
 
-        assertEquals(triesRatio.get("1.2"), Double.valueOf(longs.get(0)[2])/ Double.valueOf(longs.get(0)[3]));
+        assertEquals(triesRatio.get("1.2"), Double.valueOf(longs.get(0)[2]) / Double.valueOf(longs.get(0)[3]));
     }
 }

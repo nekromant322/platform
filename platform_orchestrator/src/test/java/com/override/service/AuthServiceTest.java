@@ -13,7 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static com.override.utils.TestFieldsUtil.generateTestUser;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 
@@ -25,13 +26,15 @@ class AuthServiceTest {
 
     @Mock
     private JwtProvider jwtProvider;
+
     @Mock
     private CustomStudentDetailService studentDetailService;
+
     @Mock
     private PasswordEncoder passwordEncoder;
 
     @Test
-    public void testLoginWhenUserExist() {
+    public void testWhenLoginWhenUserExist() {
         String token = "token";
         PlatformUser user = generateTestUser();
         UserDetails userDetails = new CustomStudentDetailService.CustomStudentDetails(user);
@@ -49,7 +52,7 @@ class AuthServiceTest {
     }
 
     @Test
-    public void testLoginWhenUserNotExist() {
+    public void testWhenLoginWhenUserNotExist() {
         PlatformUser user = generateTestUser();
 
         when(studentDetailService.loadUserByUsername(user.getLogin())).thenThrow(UsernameNotFoundException.class);
@@ -59,7 +62,7 @@ class AuthServiceTest {
     }
 
     @Test
-    public void testLoginWhenPasswordDifferent() {
+    public void testWhenLoginWhenPasswordDifferent() {
         PlatformUser user = generateTestUser();
         UserDetails userDetails = new CustomStudentDetailService.CustomStudentDetails(user);
 

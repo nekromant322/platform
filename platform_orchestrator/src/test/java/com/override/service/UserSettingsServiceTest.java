@@ -12,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static com.override.utils.TestFieldsUtil.generateTestUser;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserSettingsServiceTest {
@@ -27,7 +26,7 @@ public class UserSettingsServiceTest {
     private PlatformUserService platformUserService;
 
     @Test
-    void save() {
+    void testWhenSave() {
         PlatformUser user = generateTestUser();
         UserSettings settings = new UserSettings(null, true, true);
 

@@ -16,7 +16,7 @@ public class NavbarElementConverterTest {
     private NavbarElementConverter converter;
 
     @Test
-    public void testConvertListOfStringToListOfNavbarElement() {
+    public void testWhenConvertListOfStringToListOfNavbarElement() {
         List<String> source = List.of("Ревью /review", "Написать отчет /report");
 
         List<NavbarElement> result = converter.convertListOfStringToListOfNavbarElement(source);

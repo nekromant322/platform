@@ -25,7 +25,7 @@ public class PersonalDataServiceTest {
     private PersonalDataRepository personalDataRepository;
 
     @Test
-    public void saveTest() {
+    public void testWhenSave() {
         PersonalData personalData = new PersonalData();
 
         PlatformUser platformUser = new PlatformUser();
