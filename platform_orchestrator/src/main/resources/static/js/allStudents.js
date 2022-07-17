@@ -129,6 +129,18 @@ function addColumn(data) {
         td.insertAdjacentElement("beforeend", status);
     }
     ;
+    td = tr.insertCell(4);
+    let codeTries = document.createElement("button");
+    codeTries.className = "btn btn-success";
+    codeTries.innerHTML = "Посмотреть решения";
+
+    td.insertAdjacentElement("beforeend", codeTries);
+
+    codeTries.addEventListener("click", () => {
+        sessionStorage.setItem("admin", true)
+        sessionStorage.setItem("id", data.id)
+        window.location.href = "/codeTryList";
+    });
 
 
 }

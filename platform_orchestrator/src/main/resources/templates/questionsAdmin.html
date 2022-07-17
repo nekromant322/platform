@@ -6,30 +6,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Questions</title>
-
+    <link rel="stylesheet" type="text/css" href="/css/questionsAdmin.css">
     <header th:replace="fragments/navbar.html :: header"></header>
+
 </head>
 <body>
+
+
 <div class="container-fluid bg-dark">
     <div class="row">
-        <div class="col-2">
+        <div class="col">
             <br>
-            <div class="nav flex-column nav-pills bg-dark" id="allUserList" role="tablist" aria-orientation="vertical"></div>
+            <div class="nav flex-column nav-pills bg-dark" id="allUserList" role="tablist"
+                 aria-orientation="vertical"></div>
         </div>
-        <div class="tab-content col-10 bg-dark"  id="tabContent"></div>
+        <div class="col-8">
+            <div class="tab-content bg-dark" id="tabContent"></div>
+        </div>
+
+
+        <div class="col">
+            <a class="button" href="/defQuestions">Редактировать вопросы</a>
+            <br>
+            <h6>Нажми на вопрос, чтобы скопировать</h6>
+            <br>
+            <div class="flex-column bg-dark prokrutka"
+                 aria-orientation="vertical">
+                <div class="top-panel">
+                    <div class="message">
+                        <table class="table table-hover" id="core-table">
+                            <thead class="table-light">
+                            <tr role="row">
+                                <th scope="col">CORE</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-light">
+                            </tbody>
+                        </table>
+
+                        <table class="table table-hover" id="web-table">
+                            <thead class="table-light">
+                            <tr role="row">
+                                <th scope="col">WEB</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-light">
+                            </tbody>
+                        </table>
+                        <table class="table table-hover" id="spring-table">
+                            <thead class="table-light">
+                            <tr role="row">
+                                <th scope="col">SPRING</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-light">
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 
-<!-- Вариант 1: Bootstrap в связке с Popper -->
+<script crossorigin="anonymous"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 <script src="/js/utils.js"></script>
 <script src="/js/questionsAdmin.js"></script>

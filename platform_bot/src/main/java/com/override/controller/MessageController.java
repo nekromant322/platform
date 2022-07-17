@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/messages")
 public class MessageController {
+
     @Autowired
     private MessageService messageService;
 

@@ -124,6 +124,15 @@ public class TestFieldsUtil {
                 .build();
     }
 
+    public static DefaultQuestion generateTestDefaultQuestion() {
+        return DefaultQuestion.builder()
+                .id(1L)
+                .question("Самый стандартный вопрос на ревью")
+                .chapter("core")
+                .section(3)
+                .build();
+    }
+
     public static Review generateTestReview() {
         Set<LocalTime> testTimeSlots = new HashSet<>();
         testTimeSlots.add(LocalTime.of(16, 30));
@@ -187,7 +196,7 @@ public class TestFieldsUtil {
     public static InterviewReport generateTestInterviewReport() {
         return InterviewReport.builder()
                 .id(1L)
-                .date(LocalDate.of(2022, 02, 22))
+                .date(LocalDate.of(2022, 2, 22))
                 .userLogin("testUser")
                 .company("Test Company")
                 .project("Test Project")
@@ -233,7 +242,7 @@ public class TestFieldsUtil {
 
         interviewReportList.add(InterviewReport.builder()
                 .id(2L)
-                .date(LocalDate.of(2022, 01, 19))
+                .date(LocalDate.of(2022, 1, 19))
                 .userLogin("Kraken")
                 .company("CompanyOfHeroes")
                 .project("ProjectUmbrella")
@@ -248,7 +257,7 @@ public class TestFieldsUtil {
 
         interviewReportList.add(InterviewReport.builder()
                 .id(3L)
-                .date(LocalDate.of(2022, 03, 17))
+                .date(LocalDate.of(2022, 3, 17))
                 .userLogin("Joshua")
                 .company("GoodCompany")
                 .project("GoodProject")
