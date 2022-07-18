@@ -55,9 +55,4 @@ public class CodeTryRestController {
                 .build();
         return codeTryService.findAllByLesson(user.getUsername(), taskIdentifierDTO);
     }
-
-    @GetMapping("/{id}")
-    public List<CodeTry> getStudentTries(@PathVariable Long id) {
-        return codeTryService.findAllByUserId(id);
-    }
 }

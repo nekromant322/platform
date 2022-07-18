@@ -25,10 +25,6 @@ public class CodeTryService {
                 platformUserService.findPlatformUserByLogin(login)));
     }
 
-    public List<CodeTry> findAllByUserId(Long id) {
-        return codeTryRepository.findAllByUserIdOrderByDateDesc(id);
-    }
-
     public List<CodeTry> findAllCodes(String login) {
         return codeTryRepository.findAllByUserLogin(login);
     }

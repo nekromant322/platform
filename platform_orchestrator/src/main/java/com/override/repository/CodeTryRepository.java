@@ -9,9 +9,6 @@ import java.util.List;
 
 public interface CodeTryRepository extends JpaRepository<CodeTry, Long> {
     List<CodeTry> findAllByUserLogin(String login);
-
-    List<CodeTry> findAllByUserIdOrderByDateDesc(Long userId);
-
     List<CodeTry> findByUserLoginAndChapterAndStepAndLesson(String login, Integer chapter, Integer step, Integer lesson);
 
     @Query(value = "SELECT chapter, step, count(*) as count, count(distinct lesson) as counLessons from code_try group by chapter, step", nativeQuery = true)

@@ -73,19 +73,10 @@ public class PageController {
     }
 
     @GetMapping("/payments")
-    public String payPage() {
-        return "payment";
-    }
-
-    @GetMapping("/preProjectLinks")
-    public String allPreProjectLinksPage() {
-        return "allPreProjectLinks";
-    }
+    public String payPage(){return "payment";}
 
     @GetMapping("/allPayments")
-    public String allPaymentsPage() {
-        return "allPayments";
-    }
+    public String allPaymentsPage(){return "allPayments";}
 
     @GetMapping("/userReviews")
     public String showUsersReviews() {

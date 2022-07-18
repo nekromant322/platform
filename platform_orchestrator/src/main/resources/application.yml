@@ -56,7 +56,6 @@ testData:
   usersCount: 5
   requestsCount: 2
   paymentsCount: 6
-  preProjectLessonCount: 5
 
 logging:
   file:
@@ -107,8 +106,6 @@ navbar:
       /statistics
     - Ревью
       /reviewAdmin
-    - PreProject
-      /preProjectLinks
     - Собеседования
       /interviewReports
     - Платежи
