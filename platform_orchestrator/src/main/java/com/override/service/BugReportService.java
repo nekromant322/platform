@@ -5,6 +5,7 @@ import com.override.feign.NotificatorFeign;
 import com.override.mapper.BugReportMapper;
 import com.override.model.Bug;
 import com.override.model.PlatformUser;
+import com.override.model.enums.Role;
 import com.override.repository.BugReportRepository;
 import com.override.repository.PlatformUserRepository;
 import dto.BugReportsDTO;
@@ -42,7 +43,7 @@ public class BugReportService {
 
     public void uploadFile(MultipartFile file, String login, String text) {
 
-        List<PlatformUser> platformUsers = platformUserRepository.findAllByAuthorityName("ROLE_ADMIN");
+        List<PlatformUser> platformUsers = platformUserRepository.findAllByAuthorityName(Role.ADMIN.getName());
 
         try {
             bugReportRepository.save(Bug.builder()

@@ -2,9 +2,9 @@ package com.override.service;
 
 import com.override.feign.NotificatorFeign;
 import com.override.mapper.BugReportMapper;
-import com.override.model.Authority;
 import com.override.model.Bug;
 import com.override.model.PlatformUser;
+import com.override.model.enums.Role;
 import com.override.repository.BugReportRepository;
 import com.override.repository.PlatformUserRepository;
 import dto.BugReportsDTO;
@@ -55,7 +55,7 @@ public class BugReportServiceTest {
 
         when(platformUserService.findPlatformUserByLogin("Andrey")).thenReturn(platformUser);
 
-        when(platformUserRepository.findAllByAuthorityName("ROLE_ADMIN")).thenReturn(platformUsers);
+        when(platformUserRepository.findAllByAuthorityName(Role.ADMIN.getName())).thenReturn(platformUsers);
 
         bugReportService.uploadFile(file, platformUser.getLogin(), "some text");
 
