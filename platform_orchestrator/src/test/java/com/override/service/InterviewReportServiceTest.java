@@ -32,7 +32,7 @@ public class InterviewReportServiceTest {
     private InterviewReportMapper interviewReportMapper;
 
     @Test
-    void save() {
+    public void testSave() {
         InterviewReportDTO testInterviewReportDTO = generateTestInterviewReportDTO();
 
         interviewReportService.save(testInterviewReportDTO);
@@ -41,7 +41,7 @@ public class InterviewReportServiceTest {
     }
 
     @Test
-    void update() {
+    public void testUpdate() {
         InterviewReport testInterviewReport = generateTestInterviewReport();
         InterviewReportUpdateDTO interviewReportUpdateDTO =
                 InterviewReportUpdateDTO.builder()
@@ -56,13 +56,13 @@ public class InterviewReportServiceTest {
     }
 
     @Test
-    void delete() {
+    public void testDelete() {
         interviewReportService.delete(1L);
-        verify(interviewReportRepository,times(1)).deleteById(1L);
+        verify(interviewReportRepository, times(1)).deleteById(1L);
     }
 
     @Test
-    void findAll() {
+    public void testFindAll() {
         List<InterviewReportDTO> testDTOList = List.of(generateTestInterviewReportDTO());
         List<InterviewReport> testList = List.of(generateTestInterviewReport());
 
