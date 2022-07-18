@@ -28,6 +28,7 @@ public class TestFieldsUtil {
                 .login("admin")
                 .telegramId("123")
                 .email("123@mail.ru")
+                .phoneNumber("79998887766")
                 .build();
     }
 
@@ -36,6 +37,7 @@ public class TestFieldsUtil {
                 .login("admin")
                 .telegramId("123")
                 .email("123@mail.ru")
+                .phoneNumber("79998887766")
                 .build();
     }
 }

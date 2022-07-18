@@ -26,9 +26,13 @@ public class RecipientService {
 
     public void save(RecipientDTO recipientDTO) {
         if (repository.findRecipientByLogin(recipientDTO.getLogin()).isPresent()) {
-            Recipient recipient = repository.getRecipientByLogin(recipientDTO.getLogin());
-            recipient.setEmail(recipientDTO.getEmail());
-            recipient.setPhoneNumber(recipientDTO.getPhoneNumber());
+            Recipient recipient = repository.findRecipientByLogin(recipientDTO.getLogin()).get();
+            if(!recipientDTO.getEmail().equals("")) {
+                recipient.setEmail(recipientDTO.getEmail());
+            }
+            if(!recipientDTO.getPhoneNumber().equals("")) {
+                recipient.setPhoneNumber(recipientDTO.getPhoneNumber());
+            }
             repository.save(recipient);
         } else {
             repository.save(recipientMapper.dtoToEntity(recipientDTO));
