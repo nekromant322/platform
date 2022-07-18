@@ -59,7 +59,6 @@ public class ReviewServiceTest {
         verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(),
                 String.format(ReviewService.CONFIRMED_REVIEW_MESSAGE_TELEGRAM, testUser.getLogin(), testReviewDTO.getBookedDate(),
                         testReviewDTO.getBookedTime()), Communication.TELEGRAM);
-
     }
 
     @Test
@@ -143,7 +142,6 @@ public class ReviewServiceTest {
 
         verify(reviewRepository, times(1)).deleteById(1L);
         verify(notificatorFeign, times(1)).sendMessage(testUser.getLogin(), DELETED_REVIEW_MESSAGE_TELEGRAM_TEST, Communication.TELEGRAM);
-
     }
 
     @Test

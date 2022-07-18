@@ -31,32 +31,13 @@ class ActGenerationServiceTest {
     @Mock
     private PersonalData personalData;
 
-
-    /*need help
     @Test
-    void testCreatePDF() throws DocumentException, IOException {
-        PersonalData personalData = generatePersonalData();
-
-        String processHTML = templateEngine.process("docs/actGenerationTemplate",
-                contextCreation(personalData));
-        when(templateEngine.process(eq("docs/actGenerationTemplate"), any())).thenReturn("qwe");
-        when(LocalDate.now()).thenReturn(LocalDate.parse(LocalDate.of(2022,06,10).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
-
-        actGenerationService.createPDF(personalData);
-
-        verify(iTextRenderer, times(1)).setDocumentFromString(any());
-        verify(iTextRenderer, times(1)).layout();
-        verify(iTextRenderer, times(1)).createPDF(any(), false);
-        verify(iTextRenderer, times(1)).finishPDF();
-    }
-*/
-    @Test
-    void testCreatePDFWhenException() {
+    public void testCreatePDFWhenException() {
         assertThrows(InvalidPersonalDataException.class, () -> actGenerationService.createPDF(null));
     }
 
     @Test
-    void testContextCreation() {
+    public void testContextCreation() {
 
         Context contextTest = generateContextByPersonalData();
 

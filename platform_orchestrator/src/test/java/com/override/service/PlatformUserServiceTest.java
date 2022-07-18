@@ -179,7 +179,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    void testGetPlatformUserRoleWhenRoleAdmin() {
+    public void testGetPlatformUserRoleWhenRoleAdmin() {
         when(request.isUserInRole("ROLE_ADMIN")).thenReturn(true);
 
         Role admin = platformUserService.getPlatformUserRole(request);
@@ -188,7 +188,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    void testGetPlatformUserRoleWhenRoleUser() {
+    public void testGetPlatformUserRoleWhenRoleUser() {
         when(request.isUserInRole("ROLE_ADMIN")).thenReturn(false);
 
         Role user = platformUserService.getPlatformUserRole(request);

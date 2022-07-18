@@ -21,23 +21,27 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CodeTryServiceTest {
+
     @InjectMocks
     private CodeTryService codeTryService;
+
     @Mock
     private CodeTryRepository codeTryRepository;
+
     @Mock
     private PlatformUserService platformUserService;
+
     @Mock(answer = Answers.CALLS_REAL_METHODS)
     private CodeTryMapper codeTryMapper;
 
     @Test
-    void testSaveCodeTry() {
+    public void testSaveCodeTry() {
         codeTryService.saveCodeTry(generateTestCodeTryDTO(), generateTestTestResultDTO(), "login");
         verify(codeTryRepository, times(1)).save(Mockito.any(CodeTry.class));
     }
 
     @Test
-    void testFindAllCodes() {
+    public void testFindAllCodes() {
         when(codeTryRepository.findAllByUserLogin("Andrey"))
                 .thenReturn(new ArrayList<>(Collections.singletonList(generateTestCodeTry())));
 
@@ -48,7 +52,7 @@ public class CodeTryServiceTest {
     }
 
     @Test
-    void testFindAllByLesson() {
+    public void testFindAllByLesson() {
 
         when(codeTryRepository.findByUserLoginAndChapterAndStepAndLesson("Andrey", 1, 1, 1))
                 .thenReturn(new ArrayList<>(Collections.singletonList(generateTestCodeTry())));

@@ -12,11 +12,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
 public class CodeTryMapperTest {
+
     @InjectMocks
     private CodeTryMapper codeTryMapper;
 
     @Test
-    void testDtoToEntity() {
+    public void testDtoToEntity() {
         final CodeTry codeTry = codeTryMapper.dtoToEntity(generateTestCodeTryDTO(), generateTestTestResultDTO(), generateTestUser());
         final CodeTry testCodeTry = generateTestCodeTry();
 

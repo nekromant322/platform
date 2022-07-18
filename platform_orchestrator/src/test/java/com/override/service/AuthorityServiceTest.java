@@ -19,13 +19,13 @@ import static org.mockito.Mockito.*;
 class AuthorityServiceTest {
 
     @InjectMocks
-    AuthorityService authorityService;
+    private AuthorityService authorityService;
 
     @Mock
-    AuthorityRepository authorityRepository;
+    private AuthorityRepository authorityRepository;
 
     @Test
-    void testGetAuthorityByRole() {
+    public void testGetAuthorityByRole() {
         Authority authority = new Authority(null, "ADMIN");
 
         when(authorityRepository.findByAuthority(Role.ADMIN.getName())).thenReturn(Optional.of(authority));
@@ -36,7 +36,7 @@ class AuthorityServiceTest {
     }
 
     @Test
-    void testSave() {
+    public void testSave() {
         String roleName = "USER";
 
         authorityService.save(roleName);
@@ -45,7 +45,7 @@ class AuthorityServiceTest {
     }
 
     @Test
-    void testCheckIfTableIsEmpty() {
+    public void testCheckIfTableIsEmpty() {
         when(authorityRepository.countAll()).thenReturn(0);
 
         assertEquals(authorityService.checkIfTableIsEmpty(), true);

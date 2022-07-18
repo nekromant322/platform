@@ -17,6 +17,6 @@ class PreProjectLessonServiceTest {
     private PlatformUserService platformUserService;
 
     @Test
-    void testSaveLink() {
+    public void testSaveLink() {
     }
 }

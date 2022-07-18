@@ -19,13 +19,13 @@ import static org.mockito.Mockito.when;
 class CustomStudentDetailServiceTest {
 
     @InjectMocks
-    CustomStudentDetailService customStudentDetailService;
+    private CustomStudentDetailService customStudentDetailService;
 
     @Mock
-    PlatformUserRepository platformUserRepository;
+    private PlatformUserRepository platformUserRepository;
 
     @Test
-    void testLoadUserByUsername() {
+    public void testLoadUserByUsername() {
         CustomStudentDetailService.CustomStudentDetails customStudentDetailsTest = new CustomStudentDetailService.CustomStudentDetails(generateTestUser());
 
         when(platformUserRepository.findFirstByLogin(generateTestUser().getLogin())).thenReturn(generateTestUser());
@@ -38,7 +38,7 @@ class CustomStudentDetailServiceTest {
     }
 
     @Test
-    void testLoadUserByUsernameWhenStatusBAN() {
+    public void testLoadUserByUsernameWhenStatusBAN() {
         PlatformUser platformUserBan = generateTestUser();
         platformUserBan.setStudyStatus(StudyStatus.BAN);
 

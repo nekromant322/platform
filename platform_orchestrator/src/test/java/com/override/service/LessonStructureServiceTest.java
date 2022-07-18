@@ -1,6 +1,7 @@
 package com.override.service;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -9,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -23,26 +25,13 @@ class LessonStructureServiceTest {
     private LessonStructureService lessonStructureService;
 
     @Test
-    void testGetLessonStructure() {
-        lessonStructureService.getLessonStructure(any());
+    public void testGetLessonStructure() {
+        JsonObject jsonObject = JsonParser.parseString("{\"1\":{\"1\":[\"1.html\",\"2.html\",\"3.html\",\"4.html\"]},\"2\":{\"1\":[\"1.html\",\"2.html\",\"3.html\",\"4.html\"],\"2\":[\"1.html\",\"2.html\"],\"3\":[\"1.html\"],\"4\":[\"1.html\",\"2.html\"]},\"3\":{\"1\":[\"1.html\",\"2.html\",\"3.html\"]}}").getAsJsonObject();
+        courseLessonStructure.put("spring", jsonObject);
+
+        lessonStructureService.getLessonStructure("spring");
 
         verify(courseLessonStructure, times(1)).get(any());
+        assertEquals(lessonStructureService.getLessonStructure("spring"), courseLessonStructure.get("spring"));
     }
-
-/*    need help
-  @Test
-    void testRefillCourseLessonStructure() throws IOException {
-        LessonStructureService spy = spy(new LessonStructureService());
-
-        HashMap<String, JsonObject> courseLessonStructureTest = new HashMap<>();
-        courseLessonStructureTest.put("qwe",new JsonObject());
-        Stream<Path> fileStream = Stream.of(Path.of("qwe"));//добавить значений
-
-        when(Files.list(any())).thenReturn(fileStream);
-        doReturn(new JsonObject()).when(spy,"scanLessonStructure", ArgumentMatchers.anyString());
-
-        lessonStructureService.refillCourseLessonStructure();
-
-        assertEquals(courseLessonStructure,courseLessonStructureTest);
-    }*/
 }

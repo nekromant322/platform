@@ -34,7 +34,7 @@ public class QuestionServiceTest {
     private PlatformUserService platformUserService;
 
     @Test
-    void testSave() {
+    public void testSave() {
         final QuestionDTO questionDTO = generateTestQuestionDTO();
 
         questionService.save(questionDTO);
@@ -43,7 +43,7 @@ public class QuestionServiceTest {
     }
 
     @Test
-    void testFindAllByUserAndChapter() {
+    public void testFindAllByUserAndChapter() {
         PlatformUser user = generateTestUser();
         Question question = generateTestQuestion();
         QuestionDTO questionDTO = generateTestQuestionDTO();
@@ -57,13 +57,13 @@ public class QuestionServiceTest {
     }
 
     @Test
-    void testDelete() {
+    public void testDelete() {
         questionService.delete(1L);
         verify(questionRepository, times(1)).deleteById(1L);
     }
 
     @Test
-    void testPatch() {
+    public void testPatch() {
         QuestionDTO question = generateTestQuestionDTO();
 
         questionService.patch(question);

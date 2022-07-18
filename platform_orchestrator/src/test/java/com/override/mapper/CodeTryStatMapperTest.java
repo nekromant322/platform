@@ -15,11 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class CodeTryStatMapperTest {
+
     @InjectMocks
-    CodeTryStatMapper codeTryStatMapper;
+    private CodeTryStatMapper codeTryStatMapper;
 
     @Test
-    void testEntityToDto() {
+    public void testEntityToDto() {
         final List<Integer[]> integers = generateListInteger();
         final List<Object[]> objects = generateListObjects();
         final List<Long[]> longs = generateListLong();
@@ -35,7 +36,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void testListToMapHardTask() {
+    public void testListToMapHardTask() {
         final List<Integer[]> integers = generateListInteger();
 
         final Map<String, Long> mapHardTask = codeTryStatMapper.listToMapHardTask(integers);
@@ -44,7 +45,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void testListToMapStudentCodeTry() {
+    public void testListToMapStudentCodeTry() {
         final List<Object[]> objects = generateListObjects();
 
         final Map<String, BigInteger> studentCodeTry = codeTryStatMapper.listToMapStudentCodeTry(objects);
@@ -53,7 +54,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void testListToMapCodeTryStatus() {
+    public void testListToMapCodeTryStatus() {
         final List<Object[]> objects = generateListObjects();
 
         final Map<String, BigInteger> codeTryStatus = codeTryStatMapper.listToMapCodeTryStatus(objects);
@@ -62,7 +63,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void testListToMapAllTriesRatio() {
+    public void testListToMapAllTriesRatio() {
         final List<Long[]> longs = generateListLong();
 
         final Map<String, Double> triesRatio = codeTryStatMapper.listToMapAllTriesRatio(longs);
