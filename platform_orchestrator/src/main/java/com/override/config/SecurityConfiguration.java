@@ -26,7 +26,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private LessonFilter lessonFilter;
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.headers().frameOptions().disable();
@@ -39,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/join/request/**", "/init").permitAll()
                 .antMatchers("/js/**", "/css/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/**").hasAnyRole("USER", "ADMIN","GRADUATE")
+                .antMatchers("/**").hasAnyRole("USER", "ADMIN", "GRADUATE")
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler)

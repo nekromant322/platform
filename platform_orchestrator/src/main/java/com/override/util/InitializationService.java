@@ -148,7 +148,6 @@ public class InitializationService {
         }
     }
 
-
     private void authorityInit() {
         if (authorityService.checkIfTableIsEmpty()) {
             for (Role role : Role.values()) {
