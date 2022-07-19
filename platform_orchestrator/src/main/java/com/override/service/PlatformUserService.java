@@ -84,9 +84,7 @@ public class PlatformUserService {
     }
 
     public List<PlatformUser> getAllStudents() {
-        Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
-
-        return platformUserRepository.findByAuthoritiesNotContaining(adminAuthority);
+        return platformUserRepository.findByAuthoritiesNamesNotContaining(Role.ADMIN.getName());
     }
 
 
@@ -99,7 +97,7 @@ public class PlatformUserService {
     }
 
     public Role getPlatformUserRole(HttpServletRequest request) {
-        if (request.isUserInRole("ROLE_ADMIN")) {
+        if (request.isUserInRole(Role.ADMIN.getName())) {
             return Role.ADMIN;
         } else {
             return Role.USER;

@@ -85,13 +85,12 @@ class PlatformUserServiceTest {
             add(new PlatformUser());
         }};
 
-        when(authorityService.getAuthorityByRole(Role.ADMIN)).thenReturn(adminAuthority);
-        when(platformUserRepository.findByAuthoritiesNotContaining(adminAuthority)).thenReturn(platformUsers);
+        when(platformUserRepository.findByAuthoritiesNamesNotContaining(Role.ADMIN.getName())).thenReturn(platformUsers);
 
         List<PlatformUser> allStudents = platformUserService.getAllStudents();
 
         assertEquals(platformUsers, allStudents);
-        verify(platformUserRepository, times(1)).findByAuthoritiesNotContaining(adminAuthority);
+        verify(platformUserRepository, times(1)).findByAuthoritiesNamesNotContaining(Role.ADMIN.getName());
     }
 
     @Test
@@ -192,7 +191,7 @@ class PlatformUserServiceTest {
 
     @Test
     void getPlatformUserRoleAdmin() {
-        when(request.isUserInRole("ROLE_ADMIN")).thenReturn(true);
+        when(request.isUserInRole(Role.ADMIN.getName())).thenReturn(true);
 
         Role admin = platformUserService.getPlatformUserRole(request);
 
@@ -201,7 +200,7 @@ class PlatformUserServiceTest {
 
     @Test
     void getPlatformUserRoleUser() {
-        when(request.isUserInRole("ROLE_ADMIN")).thenReturn(false);
+        when(request.isUserInRole(Role.ADMIN.getName())).thenReturn(false);
 
         Role user = platformUserService.getPlatformUserRole(request);
 

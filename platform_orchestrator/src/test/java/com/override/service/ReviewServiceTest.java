@@ -119,7 +119,7 @@ public class ReviewServiceTest {
         when(platformUserRepository.findFirstByLogin(testReviewDTO.getMentorLogin()))
                 .thenReturn(testUser);
 
-        when(platformUserRepository.findByAuthoritiesContains(any()))
+        when(platformUserRepository.findAllByAuthorityName(any()))
                 .thenReturn(testList);
 
         reviewService.saveOrUpdate(testReviewDTO, testUser.getLogin());
