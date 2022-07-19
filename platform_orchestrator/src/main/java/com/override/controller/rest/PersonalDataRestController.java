@@ -22,18 +22,10 @@ public class PersonalDataRestController {
                       @PathVariable String userLogin) {
         personalDataService.save(personalData, userLogin);
 
-        String phoneNumber;
-
-        if (personalData.getPhoneNumber() == null) {
-            phoneNumber = "";
-        } else {
-            phoneNumber = Long.toString(personalData.getPhoneNumber());
-        }
-
         RecipientDTO recipientDTO = RecipientDTO.builder()
                 .login(userLogin)
                 .email(personalData.getEmail())
-                .phoneNumber(phoneNumber)
+                .phoneNumber(personalData.getPhoneNumber() != null ? Long.toString(personalData.getPhoneNumber()) : null)
                 .build();
 
         notificatorFeign.saveRecipient(recipientDTO);

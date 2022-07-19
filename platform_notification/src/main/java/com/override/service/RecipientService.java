@@ -30,7 +30,7 @@ public class RecipientService {
             if(!recipientDTO.getEmail().equals("")) {
                 recipient.setEmail(recipientDTO.getEmail());
             }
-            if(!recipientDTO.getPhoneNumber().equals("")) {
+            if(recipientDTO.getPhoneNumber() != null) {
                 recipient.setPhoneNumber(recipientDTO.getPhoneNumber());
             }
             repository.save(recipient);
