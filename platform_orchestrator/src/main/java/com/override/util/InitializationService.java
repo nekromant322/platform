@@ -5,24 +5,24 @@ import com.override.exception.UserAlreadyExistException;
 import com.override.model.*;
 import com.override.model.enums.Role;
 import com.override.model.enums.Status;
-import enums.StudyStatus;
 import com.override.service.*;
 import dto.*;
 import enums.CodeExecutionStatus;
+import enums.StudyStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoField;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @ConditionalOnProperty(prefix = "testData", name = "enabled", havingValue = "true")
+@Profile("dev")
 public class InitializationService {
 
     @Value("${jwt.primeAdminLogin}")
@@ -43,8 +43,14 @@ public class InitializationService {
     @Value("${testData.paymentsCount}")
     private int paymentsCount;
 
+    @Value("${testData.preProjectLessonCount}")
+    private int preProjectLessonCount;
+
     @Autowired
     private AuthorityService authorityService;
+
+    @Autowired
+    private PreProjectLessonService preProjectLessonService;
 
     @Autowired
     private PlatformUserService userService;
@@ -96,7 +102,24 @@ public class InitializationService {
         reviewInit();
         interviewReportsInit();
         paymentInit();
+        preProjectLessonsInit();
         defaultQuestionsInit();
+    }
+
+    private void preProjectLessonsInit() {
+        for (int i = 0; i < preProjectLessonCount; i++) {
+            preProjectLessonService.save(PreProjectLesson.builder()
+                    .link(faker.bothify("https://github.com/??????##/???##??#/####.com"))
+                    .comments(new ArrayList<>())
+                    .user(getRandomUser())
+                    .build());
+        }
+    }
+
+    private PlatformUser getRandomUser() {
+        List<PlatformUser> userList = userService.getAllStudents();
+        Random rand = new Random();
+        return userList.get(rand.nextInt(userList.size()));
     }
 
     private void paymentInit() {
@@ -123,6 +146,7 @@ public class InitializationService {
             );
         }
     }
+    
     private void authorityInit() {
         if (authorityService.checkIfTableIsEmpty()) {
             for (Role role : Role.values()) {

@@ -1,21 +1,15 @@
 package com.override.repository;
 
-import com.override.model.Authority;
 import com.override.model.PlatformUser;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface PlatformUserRepository extends CrudRepository<PlatformUser, Long> {
 
     PlatformUser findFirstByLogin(String login);
-
-    List<PlatformUser> findByAuthoritiesNotContaining(Authority authority);
-
-    List<PlatformUser> findByAuthoritiesContains(Authority authority);
-
-    List<PlatformUser> findAllByAuthorities(Authority authority);
 
     @Query(value = "select p_user.id, p_user.login, p_user.password, p_user.telegram_chat_id " +
             "from platform_user p_user" +
@@ -30,4 +24,17 @@ public interface PlatformUserRepository extends CrudRepository<PlatformUser, Lon
             "group by p_user.id, p_user.login, p_user.password, p_user.telegram_chat_id",
             nativeQuery = true)
     List<PlatformUser> findStudentsWithoutReportOfCurrentDay();
+
+    @Query("select p_user " +
+            "from PlatformUser p_user " +
+            "where exists ( " +
+            "select authority from p_user.authorities authority where authority.authority = :roleName)")
+    List<PlatformUser> findAllByAuthorityName(@Param("roleName") String roleName);
+
+
+    @Query("select p_user " +
+            "from PlatformUser p_user " +
+            "where not exists ( " +
+            "select authority from p_user.authorities authority where authority.authority = :roleName)")
+    List<PlatformUser> findByAuthoritiesNamesNotContaining(@Param("roleName") String roleName);
 }
