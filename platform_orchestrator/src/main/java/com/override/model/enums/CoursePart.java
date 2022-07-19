@@ -1,13 +1,16 @@
 package com.override.model.enums;
 
+
 public enum CoursePart {
     CORE("Core"),
     WEB("Web"),
-    SPRING("Spring");
+    PREPROJECT("PreProject"),
+    PROJECT("Project"),
+    INTERVIEW("Interview");
 
     private final String name;
 
-    CoursePart(String coursePartName){
+    CoursePart(String coursePartName) {
         name = coursePartName;
     }
 

@@ -50,9 +50,9 @@ function addColumn(data) {
         legend = "WEB";
     }
 
-    if (data.coursePart === "SPRING") {
+    if (data.coursePart === "PREPROJECT") {
         color = 'green';
-        legend = "SPRING";
+        legend = "PREPROJECT";
     }
 
     insertTd(data.id, tr);

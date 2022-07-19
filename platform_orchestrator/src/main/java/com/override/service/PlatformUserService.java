@@ -7,10 +7,9 @@ import com.override.model.PlatformUser;
 import com.override.model.UserSettings;
 import com.override.model.enums.CoursePart;
 import com.override.model.enums.Role;
-import enums.StudyStatus;
 import com.override.repository.PlatformUserRepository;
+import enums.StudyStatus;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -148,5 +147,9 @@ public class PlatformUserService {
         platformUserRepository.save(student);
 
         return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    public CoursePart getCurrentCoursePart(String login) {
+        return platformUserRepository.findFirstByLogin(login).getCoursePart();
     }
 }

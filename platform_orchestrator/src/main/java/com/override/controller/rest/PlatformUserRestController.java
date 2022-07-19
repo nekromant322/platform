@@ -1,12 +1,16 @@
 package com.override.controller.rest;
 
 import com.override.model.PlatformUser;
+import com.override.model.enums.CoursePart;
 import com.override.model.enums.Role;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.PlatformUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,4 +36,8 @@ public class PlatformUserRestController {
         return platformUserService.findPlatformUserByLogin(login);
     }
 
+    @GetMapping("/getCoursePart")
+    public CoursePart getCoursePart(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
+        return platformUserService.getCurrentCoursePart(user.getUsername());
+    }
 }

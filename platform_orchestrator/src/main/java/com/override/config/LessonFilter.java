@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
-import javax.servlet.*;
-import javax.servlet.http.Cookie;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
 
 @Component
@@ -23,37 +24,27 @@ public class LessonFilter extends GenericFilterBean {
     private JwtProvider jwtProvider;
     @Autowired
     private PlatformUserService platformUserService;
+    @Autowired
+    private JwtFilter jwtFilter;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        String token = getTokenFromRequest((HttpServletRequest) servletRequest);
+        String token = jwtFilter.getTokenFromRequest((HttpServletRequest) servletRequest);
 
         if (token != null && jwtProvider.validateToken(token)) {
             String userLogin = jwtProvider.getLoginFromToken(token);
             PlatformUser platformUser = platformUserService.findPlatformUserByLogin(userLogin);
 
-            if ((((HttpServletRequest) servletRequest).getRequestURI().contains("/web") && platformUser.getCoursePart() != CoursePart.WEB)) {
+            if ((((HttpServletRequest) servletRequest).getRequestURI().contains("/web") && platformUser.getCoursePart().ordinal() < CoursePart.WEB.ordinal())) {
                 ((HttpServletResponse) servletResponse).sendError(404);
                 return;
             }
 
-            if (((HttpServletRequest) servletRequest).getRequestURI().contains("/lessons/spring") && platformUser.getCoursePart() != CoursePart.SPRING) {
+            if (((HttpServletRequest) servletRequest).getRequestURI().contains("/lessons/spring") && platformUser.getCoursePart().ordinal() < CoursePart.PREPROJECT.ordinal()) {
                 ((HttpServletResponse) servletResponse).sendError(404);
                 return;
             }
         }
         filterChain.doFilter(servletRequest, servletResponse);
-    }
-
-    private String getTokenFromRequest(HttpServletRequest request) {
-
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            Cookie token = Arrays.stream(cookies).filter(el -> el.getName().equals("token")).findFirst().orElse(null);
-            if (token != null) {
-                return token.getValue();
-            }
-        }
-        return null;
     }
 }
