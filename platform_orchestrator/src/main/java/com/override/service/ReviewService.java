@@ -1,9 +1,10 @@
 package com.override.service;
 
+
 import com.override.feign.NotificatorFeign;
 import com.override.mapper.ReviewMapper;
-import com.override.model.Authority;
 import com.override.model.PlatformUser;
+import com.override.model.enums.Role;
 import com.override.repository.PlatformUserRepository;
 import com.override.repository.ReviewRepository;
 import dto.ReviewDTO;
@@ -66,8 +67,7 @@ public class ReviewService {
      */
     public void saveOrUpdate(ReviewDTO reviewDTO, String userLogin) {
         if (reviewDTO.getId() == null && reviewDTO.getStudentLogin() == null) {
-            List<PlatformUser> mentorList = platformUserRepository.findByAuthoritiesContains(
-                    new Authority(2L, "ROLE_ADMIN"));
+            List<PlatformUser> mentorList = platformUserRepository.findAllByAuthorityName(Role.ADMIN.getName());
             for (PlatformUser mentor : mentorList) {
                 sendMessage(mentor.getLogin(), String.format(NEW_REVIEW_MESSAGE_TELEGRAM,
                         userLogin), Communication.TELEGRAM);
@@ -119,7 +119,7 @@ public class ReviewService {
                     .map(reviewMapper::entityToDto).collect(Collectors.toList());
         }
         if (reviewFilterDTO.getStudentLogin() != null && reviewFilterDTO.getBookedDate() != null) {
-            return (reviewRepository.findReviewByStudentLoginAndBookedDate(reviewFilterDTO.getStudentLogin(),reviewFilterDTO.getBookedDate())).stream()
+            return (reviewRepository.findReviewByStudentLoginAndBookedDate(reviewFilterDTO.getStudentLogin(), reviewFilterDTO.getBookedDate())).stream()
                     .map(reviewMapper::entityToDto).collect(Collectors.toList());
         }
         if (reviewFilterDTO.getStudentLogin() != null) {

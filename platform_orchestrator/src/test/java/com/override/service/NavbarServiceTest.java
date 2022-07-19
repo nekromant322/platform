@@ -2,6 +2,7 @@ package com.override.service;
 
 import com.override.converter.NavbarElementConverter;
 import com.override.model.domain.NavbarElement;
+import com.override.model.enums.Role;
 import com.override.properties.NavbarProperties;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,7 +62,7 @@ public class NavbarServiceTest {
         listNavbarElementsForAdmin.add(new NavbarElement("Настройки", "/userSettings"));
         listNavbarElementsForAdmin.add(new NavbarElement("Баги", "/allBugs"));
 
-        when(request.isUserInRole("ROLE_ADMIN")).thenReturn(true);
+        when(request.isUserInRole(Role.ADMIN.getName())).thenReturn(true);
 
         when(navbarProperties.getAdmin()).thenReturn(listForAdmin);
 
@@ -95,8 +96,8 @@ public class NavbarServiceTest {
         listNavbarElementsForGraduate.add(new NavbarElement("Собеседования", "/interviewReports"));
         listNavbarElementsForGraduate.add(new NavbarElement("Настройки", "/userSettings"));
 
-        when(request.isUserInRole("ROLE_ADMIN")).thenReturn(false);
-        when(request.isUserInRole("ROLE_GRADUATE")).thenReturn(true);
+        when(request.isUserInRole(Role.ADMIN.getName())).thenReturn(false);
+        when(request.isUserInRole(Role.GRADUATE.getName())).thenReturn(true);
 
         when(navbarProperties.getGraduate()).thenReturn(listForGraduate);
 
@@ -126,8 +127,8 @@ public class NavbarServiceTest {
         listNavbarElementsForUser.add(new NavbarElement("Персональные данные", "/personalData"));
         listNavbarElementsForUser.add(new NavbarElement("Настройки", "/userSettings"));
 
-        when(request.isUserInRole("ROLE_ADMIN")).thenReturn(false);
-        when(request.isUserInRole("ROLE_GRADUATE")).thenReturn(false);
+        when(request.isUserInRole(Role.ADMIN.getName())).thenReturn(false);
+        when(request.isUserInRole(Role.GRADUATE.getName())).thenReturn(false);
 
         when(navbarProperties.getUser()).thenReturn(listForUser);
 

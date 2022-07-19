@@ -9,7 +9,6 @@ import com.override.model.enums.Role;
 import enums.StudyStatus;
 import com.override.repository.PlatformUserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,9 +82,7 @@ public class PlatformUserService {
     }
 
     public List<PlatformUser> getAllStudents() {
-        Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
-
-        return platformUserRepository.findByAuthoritiesNotContaining(adminAuthority);
+        return platformUserRepository.findByAuthoritiesNamesNotContaining(Role.ADMIN.getName());
     }
 
 
@@ -98,7 +95,7 @@ public class PlatformUserService {
     }
 
     public Role getPlatformUserRole(HttpServletRequest request) {
-        if (request.isUserInRole("ROLE_ADMIN")) {
+        if (request.isUserInRole(Role.ADMIN.getName())) {
             return Role.ADMIN;
         } else {
             return Role.USER;
@@ -120,12 +117,12 @@ public class PlatformUserService {
         PlatformUser student = platformUserRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + id + " не найден"));
 
-        if(role.equals(Role.ADMIN)) {
+        if (role.equals(Role.ADMIN)) {
             Authority adminAuthority = authorityService.getAuthorityByRole(Role.ADMIN);
             List<Authority> studentAuthorities = student.getAuthorities();
             studentAuthorities.add(adminAuthority);
         }
-        if(role.equals(Role.GRADUATE)){
+        if (role.equals(Role.GRADUATE)) {
             Authority graduateAuthority = authorityService.getAuthorityByRole(Role.GRADUATE);
             List<Authority> studentAuthorities = student.getAuthorities();
             studentAuthorities.clear();
