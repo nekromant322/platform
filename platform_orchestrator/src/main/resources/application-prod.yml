@@ -23,7 +23,7 @@ spring:
 
 eureka:
   instance:
-    hostname: ${HOST}
+    hostname: ${HOSTNAME}
     leaseRenewalIntervalInSeconds: 15
     leaseExpirationDurationInSeconds: 45
   client:
@@ -31,4 +31,4 @@ eureka:
     fetch-registry: true
     enabled: true
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${EUREKA_PORT}/eureka
+      defaultZone: https://${eureka.instance.hostname}/eureka
