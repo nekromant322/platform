@@ -91,7 +91,7 @@ function addColumn(data) {
             if (data.coursePart === "CORE") {
                 updateCurrentCoursePart(data.id, "WEB");
             } else {
-                updateCurrentCoursePart(data.id, "SPRING");
+                updateCurrentCoursePart(data.id, "PREPROJECT");
             }
         });
 
