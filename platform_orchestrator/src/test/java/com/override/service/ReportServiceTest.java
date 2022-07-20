@@ -2,6 +2,7 @@ package com.override.service;
 
 import com.override.feign.NotificatorFeign;
 import com.override.model.*;
+import com.override.model.enums.CoursePart;
 import com.override.model.enums.Role;
 import enums.StudyStatus;
 import com.override.repository.StudentReportRepository;
@@ -63,7 +64,7 @@ class ReportServiceTest {
 
     @Test
     public void testWhenSendDailyReminderOfReport() {
-        List<PlatformUser> userList = List.of(new PlatformUser(null, "123", "123", StudyStatus.ACTIVE,
+        List<PlatformUser> userList = List.of(new PlatformUser(null, "123", "123", StudyStatus.ACTIVE, CoursePart.CORE,
                 Collections.singletonList(new Authority(null, Role.USER.getName())), new PersonalData(), new UserSettings()));
 
         when(userService.findStudentsWithoutReportOfCurrentDay()).thenReturn(userList);

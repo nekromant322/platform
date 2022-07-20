@@ -45,6 +45,7 @@
             <column name="login" type="varchar(255)"/>
             <column name="password" type="varchar(255)"/>
             <column name="study_status" type="int"/>
+            <column name="course_part" type="int"/>
             <column name="personal_data_id" type="bigint">
                 <constraints foreignKeyName="personal_data_id" references="personal_data(id)"/>
             </column>

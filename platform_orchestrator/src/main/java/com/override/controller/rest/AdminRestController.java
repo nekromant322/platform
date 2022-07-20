@@ -1,8 +1,8 @@
 package com.override.controller.rest;
 
 import com.override.model.PlatformUser;
+import com.override.model.enums.CoursePart;
 import com.override.model.enums.Role;
-import enums.StudyStatus;
 import com.override.service.PlatformUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,5 +30,11 @@ public class AdminRestController {
     @GetMapping("/getAllStudents")
     public List<PlatformUser> getAllStudents() {
         return userService.getAllStudents();
+    }
+
+    @Secured("ROLE_ADMIN")
+    @PostMapping("/promoteCoursePart/{id}/{coursePart}")
+    public ResponseEntity<String> updateCoursePart(@PathVariable Long id, @PathVariable CoursePart coursePart) {
+        return userService.updateCurrentCoursePart(id, coursePart);
     }
 }

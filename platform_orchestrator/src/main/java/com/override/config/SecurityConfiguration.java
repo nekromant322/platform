@@ -23,7 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private AccessDeniedHandler accessDeniedHandler;
     @Autowired
     private AuthenticationEntryPoint unauthorizedHandler;
-
+    @Autowired
+    private LessonFilter lessonFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,13 +38,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/join/request/**", "/init").permitAll()
                 .antMatchers("/js/**", "/css/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/**").hasAnyRole("USER", "ADMIN","GRADUATE")
+                .antMatchers("/**").hasAnyRole("USER", "ADMIN", "GRADUATE")
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler)
                 .authenticationEntryPoint(unauthorizedHandler)
                 .and()
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(lessonFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
