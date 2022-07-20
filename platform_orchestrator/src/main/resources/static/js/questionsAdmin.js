@@ -9,7 +9,7 @@ function listAllUsers() {
     var navLinkId;
     var vPillId;
     $.ajax({
-        url: '/getAllStudents',
+        url: '/platformUsers',
         type: 'GET',
         contentType: 'application/json',
         success: function (users) {

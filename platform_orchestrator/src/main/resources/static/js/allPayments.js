@@ -52,7 +52,7 @@ function getFullName(login) {
     let fullName;
 
     $.ajax({
-        url: '/platformUser/' + login,
+        url: '/platformUsers/' + login,
         type: 'GET',
         contentType: 'application/json',
         async: false,

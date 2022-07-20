@@ -4,7 +4,7 @@ window.onload = function () {
 
 function getStudents() {
     $.ajax({
-        url: 'platformUser/getCoursePart',
+        url: 'platformUsers/coursePart',
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
