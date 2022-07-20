@@ -42,7 +42,7 @@ function addColumn(data) {
 function drawColumns() {
     let codeTryList;
 
-    if (sessionStorage.getItem("admin")) {
+    if (sessionStorage.getItem("admin") == true) {
         let userID = sessionStorage.getItem("id");
         $.ajax({
             method: 'GET',

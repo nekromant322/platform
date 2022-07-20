@@ -11,14 +11,22 @@
 
     <title>Override платформа</title>
     <link rel="stylesheet" type="text/css" href="/css/common.css">
+
+    <style type="text/css">
+        body {
+            background-color: #c9c9cb;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-    <textarea class="input start" style="height: 45px" id="login" th:required="required"></textarea>
-    <textarea class="input start" style="height: 45px" id="password" th:required="required"></textarea>
+    <p align="center"><img src="/images/loginPic.png" alt="добро пожаловать" width=232></p>
 
-    <button class="button__request" onclick="sendLogin()">Войти</button>
+    <input type="text" placeholder="логин" class="input start" style="height: 45px" id="login" th:required="required">
+    <input type="password" placeholder="пароль" class="input start" style="height: 45px" id="password"
+           th:required="required">
 
+    <button class="button__request" style="background-color: #928AAE" onclick="sendLogin()">Войти</button>
 </div>
 
 </body>
