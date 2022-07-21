@@ -36,7 +36,7 @@ class StatisticsServiceTest {
     private InterviewReportMapper interviewReportMapper;
 
     @Test
-    void getStatistics() {
+    public void testGetCodeTryStatistics() {
         statisticsService.getCodeTryStatistics(1);
 
         verify(codeTryStatMapper, times(1)).entityToDto(anyList(), anyList(), anyList(), anyList());
@@ -47,14 +47,14 @@ class StatisticsServiceTest {
     }
 
     @Test
-    void countStatsOfHardTasks() {
+    public void testCountStatsOfHardTasks() {
         statisticsService.getCodeTryStatistics(1);
 
         verify(codeTryRepository, times(1)).countStatsOfHardTasks(1);
     }
 
     @Test
-    void GetSalaryStat() {
+    public void testGetSalaryStatistics() {
         List<InterviewReport> interviewReportList = TestFieldsUtil.generateInterviewReportsList();
         SalaryStatDTO salaryStatDTO = TestFieldsUtil.generateSalaryStatDto(interviewReportList);
         SalaryDTO salaryDTO = TestFieldsUtil.generateTestSalaryDTO(interviewReportList, salaryStatDTO);

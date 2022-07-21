@@ -11,15 +11,16 @@ import java.util.List;
 import java.util.Map;
 
 import static com.override.utils.TestFieldsUtil.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class CodeTryStatMapperTest {
+
     @InjectMocks
-    CodeTryStatMapper codeTryStatMapper;
+    private CodeTryStatMapper codeTryStatMapper;
 
     @Test
-    void entityToDto() {
+    public void testEntityToDto() {
         final List<Integer[]> integers = generateListInteger();
         final List<Object[]> objects = generateListObjects();
         final List<Long[]> longs = generateListLong();
@@ -35,7 +36,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void listToMapHardTask() {
+    public void testListToMapHardTask() {
         final List<Integer[]> integers = generateListInteger();
 
         final Map<String, Long> mapHardTask = codeTryStatMapper.listToMapHardTask(integers);
@@ -44,7 +45,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void listToMapStudentCodeTry() {
+    public void testListToMapStudentCodeTry() {
         final List<Object[]> objects = generateListObjects();
 
         final Map<String, BigInteger> studentCodeTry = codeTryStatMapper.listToMapStudentCodeTry(objects);
@@ -53,7 +54,7 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void listToMapCodeTryStatus() {
+    public void testListToMapCodeTryStatus() {
         final List<Object[]> objects = generateListObjects();
 
         final Map<String, BigInteger> codeTryStatus = codeTryStatMapper.listToMapCodeTryStatus(objects);
@@ -62,11 +63,11 @@ class CodeTryStatMapperTest {
     }
 
     @Test
-    void listToMapAllTriesRatio() {
+    public void testListToMapAllTriesRatio() {
         final List<Long[]> longs = generateListLong();
 
         final Map<String, Double> triesRatio = codeTryStatMapper.listToMapAllTriesRatio(longs);
 
-        assertEquals(triesRatio.get("1.2"), Double.valueOf(longs.get(0)[2])/ Double.valueOf(longs.get(0)[3]));
+        assertEquals(triesRatio.get("1.2"), Double.valueOf(longs.get(0)[2]) / Double.valueOf(longs.get(0)[3]));
     }
 }

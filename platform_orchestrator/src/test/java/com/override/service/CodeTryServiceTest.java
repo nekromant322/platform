@@ -15,31 +15,33 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static com.override.utils.TestFieldsUtil.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CodeTryServiceTest {
+
     @InjectMocks
     private CodeTryService codeTryService;
+
     @Mock
     private CodeTryRepository codeTryRepository;
+
     @Mock
     private PlatformUserService platformUserService;
+
     @Mock(answer = Answers.CALLS_REAL_METHODS)
     private CodeTryMapper codeTryMapper;
 
     @Test
-    void testSaveCodeTry() {
+    public void testSaveCodeTry() {
         codeTryService.saveCodeTry(generateTestCodeTryDTO(), generateTestTestResultDTO(), "login");
         verify(codeTryRepository, times(1)).save(Mockito.any(CodeTry.class));
     }
 
     @Test
-    void testFindAllCodes() {
+    public void testFindAllCodes() {
         when(codeTryRepository.findAllByUserLogin("Andrey"))
                 .thenReturn(new ArrayList<>(Collections.singletonList(generateTestCodeTry())));
 
@@ -50,9 +52,9 @@ public class CodeTryServiceTest {
     }
 
     @Test
-    void testFindAllByLesson() {
+    public void testFindAllByLesson() {
 
-        when(codeTryRepository.findByUserLoginAndChapterAndStepAndLesson("Andrey", 1 , 1, 1))
+        when(codeTryRepository.findByUserLoginAndChapterAndStepAndLesson("Andrey", 1, 1, 1))
                 .thenReturn(new ArrayList<>(Collections.singletonList(generateTestCodeTry())));
 
         final List<CodeTry> codeTryList = codeTryService.findAllByLesson("Andrey", generateTestTaskIdentifierDTO());

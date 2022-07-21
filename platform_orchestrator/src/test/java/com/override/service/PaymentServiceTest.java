@@ -18,6 +18,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class PaymentServiceTest {
+
     @InjectMocks
     private PaymentService paymentService;
 

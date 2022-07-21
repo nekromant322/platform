@@ -7,18 +7,20 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.override.utils.TestFieldsUtil.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
 public class CodeTryMapperTest {
+
     @InjectMocks
     private CodeTryMapper codeTryMapper;
 
     @Test
-    void testDtoToEntity() {
+    public void testDtoToEntity() {
         final CodeTry codeTry = codeTryMapper.dtoToEntity(generateTestCodeTryDTO(), generateTestTestResultDTO(), generateTestUser());
         final CodeTry testCodeTry = generateTestCodeTry();
-      
+
         assertEquals(codeTry.getUser(), generateTestUser());
         assertEquals(codeTry.getChapter(), testCodeTry.getChapter());
         assertEquals(codeTry.getStep(), testCodeTry.getStep());
