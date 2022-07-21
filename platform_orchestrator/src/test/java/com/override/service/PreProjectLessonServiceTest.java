@@ -20,28 +20,28 @@ import static org.mockito.Mockito.*;
 class PreProjectLessonServiceTest {
 
     @InjectMocks
-    PreProjectLessonService preProjectLessonService;
+    private PreProjectLessonService preProjectLessonService;
 
     @Mock
-    PreProjectLessonRepository preProjectLessonRepository;
+    private PreProjectLessonRepository preProjectLessonRepository;
 
     @Mock
-    PlatformUserService platformUserService;
+    private PlatformUserService platformUserService;
 
     @Mock
-    PreProjectLessonMapper preProjectLessonMapper;
+    private PreProjectLessonMapper preProjectLessonMapper;
 
     @Mock
-    PreProjectLessonMentorReactionMapper preProjectLessonMentorReactionMapper;
+    private PreProjectLessonMentorReactionMapper preProjectLessonMentorReactionMapper;
 
     @Test
-    void testGetAll() {
+    public void testGetAll() {
         preProjectLessonService.getAll();
         verify(preProjectLessonRepository, times(1)).findAll();
     }
 
     @Test
-    void testSaveLink() {
+    public void testSaveLink() {
         PreProjectLesson preProjectLesson = generateTestPreProjectLesson();
         preProjectLesson.setComments(null);
 
@@ -54,7 +54,7 @@ class PreProjectLessonServiceTest {
     }
 
     @Test
-    void testUpdate() {
+    public void testUpdate() {
         PreProjectLessonMentorReactionDTO preProjectLessonMentorReactionDTO = generateTestPreProjectLessonMentorReactionDTO();
         preProjectLessonMentorReactionDTO.setApprove(true);
         preProjectLessonMentorReactionDTO.setViewed(true);
@@ -68,7 +68,7 @@ class PreProjectLessonServiceTest {
     }
 
     @Test
-    void testGetAllByPathName() {
+    public void testGetAllByPathName() {
         when(platformUserService.findPlatformUserByLogin(any())).thenReturn(generateTestUser());
 
         preProjectLessonService.getAllByPathName(generateTestPreProjectLessonDTO(), generateTestUser().getLogin());
