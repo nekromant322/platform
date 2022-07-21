@@ -3,7 +3,7 @@ btnClickListener();
 
 function getStudents() {
     $.ajax({
-        url: '/getAllStudents',
+        url: '/platformUsers',
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
@@ -137,7 +137,7 @@ function addColumn(data) {
     td.insertAdjacentElement("beforeend", codeTries);
 
     codeTries.addEventListener("click", () => {
-        sessionStorage.setItem("admin", true)
+        sessionStorage.setItem("admin", "yes")
         sessionStorage.setItem("id", data.id)
         window.location.href = "/codeTryList";
     });
@@ -149,7 +149,7 @@ function setWorkStatus(id, status) {
     let data = {};
     data.id = id;
     $.ajax({
-        url: '/work-student/' + id + '/' + status,
+        url: '/platformUsers/' + id + '/' + status,
         type: 'PUT',
         contentType: 'application/json',
         success: function () {
@@ -183,7 +183,7 @@ function updateUserRole(id, status) {
         let data = {};
         data.id = id;
         $.ajax({
-            url: '/promote-student/' + id + '/' + status,
+            url: '/platformUsers/' + id + '/' + status,
             type: 'POST',
             contentType: 'application/json',
             success: function () {
@@ -202,7 +202,7 @@ function updateCurrentCoursePart(id, coursePart) {
         let data = {};
         data.id = id;
         $.ajax({
-            url: '/promoteCoursePart/' + id + '/' + coursePart,
+            url: '/platformUsers/promoteCoursePart/' + id + '/' + coursePart,
             type: 'POST',
             contentType: 'application/json',
             success: function () {

@@ -24,7 +24,7 @@ function checkAlert(itemId, alertId, errorMessage, extraErrorCondition) {
 function getCurrentUser() {
     let curUser;
     $.ajax({
-        url: '/platformUser/current',
+        url: '/platformUsers/current',
         type: 'GET',
         contentType: 'application/json',
         async: false,
