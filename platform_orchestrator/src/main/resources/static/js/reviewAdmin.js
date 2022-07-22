@@ -74,10 +74,29 @@ function sortDataByTime(data) {
     } else return data;
 }
 
+function separatePastReviews(data) {
+    if (data[0].bookedTime !== null) {
+        let i = 0;
+        let futureDateArray = [];
+        let pastDateArray = [];
+
+        while (i < data.length) {
+            if (new Date(data[i].bookedDate + " " + data[i].bookedTime) < Date.now()) {
+                pastDateArray.push(data[i]);
+            } else {
+                futureDateArray.push(data[i]);
+            }
+            i++;
+        }
+        return [...futureDateArray, ...pastDateArray];
+    } else return data;
+}
+
 function drawColumns(data) {
     while (document.getElementById("review-table").getElementsByTagName("tbody")[0].rows[0])
         document.getElementById("review-table").getElementsByTagName("tbody")[0].deleteRow(0);
     data = sortDataByTime(data);
+    data = separatePastReviews(data);
 
     for (let i = 0; i < data.length; i++) {
         addColumn(data[i]);
@@ -134,8 +153,11 @@ function addColumn(data) {
     if (btnCase === 2) {
         let deleteBtn = document.createElement("button");
         deleteBtn.className = "btn btn-danger";
-        deleteBtn.innerHTML = "Cancel";
+        deleteBtn.innerHTML = "Отменить";
         deleteBtn.type = "submit";
+        if (new Date(data.bookedDate + " " + data.bookedTime) < Date.now()) {
+            deleteBtn.disabled = true;
+        }
         deleteBtn.addEventListener("click", () => {
             deleteReview(data.id);
         });
