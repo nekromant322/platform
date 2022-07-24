@@ -3,6 +3,7 @@ package com.override.util;
 import com.github.javafaker.Faker;
 import com.override.exception.UserAlreadyExistException;
 import com.override.model.*;
+import com.override.model.enums.CoursePart;
 import com.override.model.enums.Role;
 import com.override.model.enums.Status;
 import com.override.service.*;
@@ -14,7 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import javax.annotation.PostConstruct;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -146,7 +147,7 @@ public class InitializationService {
             );
         }
     }
-    
+
     private void authorityInit() {
         if (authorityService.checkIfTableIsEmpty()) {
             for (Role role : Role.values()) {
@@ -162,27 +163,27 @@ public class InitializationService {
             usernameAndPassword = faker.name().firstName();
             saveUser(usernameAndPassword,
                     usernameAndPassword,
-                    StudyStatus.ACTIVE, Role.USER);
+                    StudyStatus.ACTIVE, CoursePart.CORE, Role.USER);
         }
         for (int i = 0; i < usersCount; i++) {
             usernameAndPassword = faker.name().firstName();
             saveUser(usernameAndPassword,
                     usernameAndPassword,
-                    StudyStatus.ACTIVE, Role.GRADUATE);
+                    StudyStatus.ACTIVE, CoursePart.PREPROJECT, Role.GRADUATE);
         }
     }
 
     private void adminInit() {
-        saveUser(adminLogin, adminPassword, StudyStatus.ACTIVE, Role.USER, Role.ADMIN);
+        saveUser(adminLogin, adminPassword, StudyStatus.ACTIVE, CoursePart.PREPROJECT, Role.USER, Role.ADMIN);
     }
 
-    private void saveUser(String login, String password, StudyStatus study, Role... userRoles) {
+    private void saveUser(String login, String password, StudyStatus study, CoursePart coursePart, Role... userRoles) {
         List<Authority> roles = getAuthorityListFromRoles(userRoles);
-        PlatformUser account = new PlatformUser(null, login, password, study, roles, new PersonalData(), new UserSettings());
+        PlatformUser account = new PlatformUser(null, login, password, study, coursePart, roles, new PersonalData(), new UserSettings());
         try {
-        userService.save(account);
-        personalDataInit(account);
-        userSettingsInit(account);
+            userService.save(account);
+            personalDataInit(account);
+            userSettingsInit(account);
         } catch (UserAlreadyExistException e) {
             e.printStackTrace();
         }

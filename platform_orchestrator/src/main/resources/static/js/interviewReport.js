@@ -95,7 +95,7 @@ autocomplete(document.getElementById("interviewReport-company"), arrayOfCompanie
 
 function getCurrentUser() {
     $.ajax({
-        url: '/platformUser/current',
+        url: '/platformUsers/current',
         type: 'GET',
         contentType: 'application/json',
         success: function (user) {
@@ -106,7 +106,7 @@ function getCurrentUser() {
 
 function getCurrentUserRole() {
     $.ajax({
-        url: '/platformUser/role',
+        url: '/platformUsers/role',
         type: 'GET',
         contentType: 'application/json',
         success: function (role) {

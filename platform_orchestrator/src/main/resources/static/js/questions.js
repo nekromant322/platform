@@ -4,7 +4,7 @@ window.onload = function () {
 
 function getCurrentUser() {
     $.ajax({
-        url: '/platformUser/current',
+        url: '/platformUsers/current',
         type: 'GET',
         contentType: 'application/json',
         success: function (currentUser) {

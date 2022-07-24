@@ -110,6 +110,6 @@ function getMyCodeTry() {
     sessionStorage.setItem("lesson", lesson)
     sessionStorage.setItem("step", step)
     sessionStorage.setItem("chapter", chapter)
-    sessionStorage.setItem("admin", false)
+    sessionStorage.setItem("admin", "no")
     window.location.href = "/codeTryList";
 }

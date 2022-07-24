@@ -5,9 +5,10 @@ import com.override.model.Authority;
 import com.override.model.PersonalData;
 import com.override.model.PlatformUser;
 import com.override.model.UserSettings;
+import com.override.model.enums.CoursePart;
 import com.override.model.enums.Role;
-import enums.StudyStatus;
 import com.override.repository.PlatformUserRepository;
+import enums.StudyStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,9 +20,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 
@@ -114,6 +118,7 @@ class PlatformUserServiceTest {
                 login,
                 password,
                 StudyStatus.ACTIVE,
+                CoursePart.CORE,
                 new ArrayList<>() {{
                     add(userAuthority);
                 }},
@@ -188,7 +193,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    void getPlatformUserRoleAdmin() {
+    public void testGetPlatformUserRoleAdmin() {
         when(request.isUserInRole(Role.ADMIN.getName())).thenReturn(true);
 
         Role admin = platformUserService.getPlatformUserRole(request);
@@ -197,7 +202,7 @@ class PlatformUserServiceTest {
     }
 
     @Test
-    void getPlatformUserRoleUser() {
+    public void testGetPlatformUserRoleUser() {
         when(request.isUserInRole(Role.ADMIN.getName())).thenReturn(false);
 
         Role user = platformUserService.getPlatformUserRole(request);

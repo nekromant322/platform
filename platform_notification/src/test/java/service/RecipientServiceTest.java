@@ -13,12 +13,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.persistence.EntityExistsException;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static utils.TestFieldsUtil.*;
 
@@ -80,9 +77,26 @@ public class RecipientServiceTest {
         Recipient recipient = getRecipient();
         RecipientDTO recipientDTO = getRecipientDto();
 
-        when(recipientRepository.findRecipientByLogin(recipientDTO.getLogin())).thenReturn(Optional.ofNullable(recipient));
+        when(recipientRepository.findRecipientByLogin(recipientDTO.getLogin())).thenReturn(Optional.empty());
+        when(recipientMapper.dtoToEntity(recipientDTO)).thenReturn(recipient);
+        when(recipientRepository.save(recipient)).thenReturn(recipient);
 
-        assertThrows(EntityExistsException.class, () -> recipientService.save(recipientDTO));
+        recipientService.save(recipientDTO);
+
+        verify(recipientRepository, times(1)).save(recipient);
+    }
+
+    @Test
+    public void testWhenUserNotExistByRecipientDto() {
+        Recipient recipient = getRecipient();
+        RecipientDTO recipientDTO = getRecipientDto();
+
+        when(recipientRepository.findRecipientByLogin(recipientDTO.getLogin())).thenReturn(Optional.empty());
+        when(recipientRepository.save(recipientMapper.dtoToEntity(recipientDTO))).thenReturn(recipient);
+
+        recipientService.save(recipientDTO);
+
+        verify(recipientRepository, times(1)).save(recipientMapper.dtoToEntity(recipientDTO));
     }
 
     @Test
