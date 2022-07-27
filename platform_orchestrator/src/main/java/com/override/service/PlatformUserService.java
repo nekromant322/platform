@@ -1,6 +1,7 @@
 package com.override.service;
 
 import com.override.exception.UserAlreadyExistException;
+import com.override.feign.NotificatorFeign;
 import com.override.model.Authority;
 import com.override.model.PersonalData;
 import com.override.model.PlatformUser;
@@ -87,6 +88,13 @@ public class PlatformUserService {
         return platformUserRepository.findByAuthoritiesNamesNotContaining(Role.ADMIN.getName());
     }
 
+    public List<PlatformUser> getStudentsByCoursePart(int coursePart) {
+        return platformUserRepository.findStudentsByCoursePart(coursePart);
+    }
+
+    public List<PlatformUser> getAllAdmins() {
+        return platformUserRepository.findAllByAuthorityName(Role.ADMIN.getName());
+    }
 
     public PlatformUser findPlatformUserByLogin(String login) {
         return platformUserRepository.findFirstByLogin(login);

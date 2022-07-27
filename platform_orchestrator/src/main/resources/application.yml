@@ -58,6 +58,9 @@ testData:
   paymentsCount: 6
   preProjectLessonCount: 5
 
+alert:
+  checkDaysWithoutNewSolutions: 3
+
 logging:
   file:
     name: logs/app.log
