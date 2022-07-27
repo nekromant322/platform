@@ -1,8 +1,6 @@
 window.onload = function () {
     listAllUsers()
     drawDefaultQuestions()
-
-
 };
 
 function listAllUsers() {
@@ -221,7 +219,7 @@ function getQuestionsByChapter(studentLogin, chapter, table, tabPane) {
 
 function deleteQuestion(id) {
     $.ajax({
-        url: 'questionsAdmin?id=' + id,
+        url: 'questions?id=' + id,
         method: 'DELETE',
         success: function () {
             console.log('deleted')
@@ -231,7 +229,7 @@ function deleteQuestion(id) {
 
 function saveQuestion(id, question, chapter, answered, login, tabPane) {
     $.ajax({
-        url: 'questionsAdmin',
+        url: 'questions',
         dataType: 'json',
         method: 'PATCH',
         cache: false,
