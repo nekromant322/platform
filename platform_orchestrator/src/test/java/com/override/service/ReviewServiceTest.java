@@ -16,7 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -253,7 +252,7 @@ public class ReviewServiceTest {
         review4.setBookedTime(LocalTime.now().plusMinutes(5));
         reviewList.add(review4);
 
-        when(reviewRepository.findReviewByBookedDate(LocalDateTime.now().plusMinutes(10).toLocalDate()))
+        when(reviewRepository.findReviewByBookedDate(any()))
                 .thenReturn(reviewList);
 
         String messageText = "Скоро ревью у @" + review4.getStudent().getLogin() +
