@@ -289,7 +289,7 @@ public class InitializationService {
     }
 
     private LocalDate getRandomDate() {
-        long minDay = LocalDate.now().minusDays(12).toEpochDay();
+        long minDay = LocalDate.now().minusDays(100).toEpochDay();
         long maxDay = LocalDate.now().minusDays(2).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         return LocalDate.ofEpochDay(randomDay);

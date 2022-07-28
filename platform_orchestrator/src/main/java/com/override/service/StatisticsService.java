@@ -1,6 +1,8 @@
 package com.override.service;
 
 import com.override.mapper.CodeTryStatMapper;
+import com.override.mapper.GeneralIncomeMapper;
+import com.override.mapper.IncomeFromUsersMapper;
 import com.override.mapper.InterviewReportMapper;
 import com.override.model.InterviewReport;
 import com.override.model.Payment;
@@ -34,6 +36,10 @@ public class StatisticsService {
     private InterviewReportMapper interviewReportMapper;
     @Autowired
     private PaymentRepository paymentRepository;
+    @Autowired
+    private IncomeFromUsersMapper incomeFromUsersMapper;
+    @Autowired
+    private GeneralIncomeMapper generalIncomeMapper;
 
     public CodeTryStatDTO getCodeTryStatistics(int size) {
         return codeTryStatMapper.entityToDto(codeTryRepository.countStatsOfHardTasks(size),
@@ -82,46 +88,40 @@ public class StatisticsService {
     }
 
     public IncomeFromUsersDTO getAllPayment() {
-        List<Payment> allPayment = paymentRepository.findAll();
-        List<String> studentName = new ArrayList<>();
+        List<String> studentName = paymentRepository.findDistinctStudentNameValues();
         List<Long> sum = new ArrayList<>();
-        for (Payment payment : allPayment) {
-            if(!studentName.contains(payment.getStudentName())) {
-                studentName.add(payment.getStudentName());
-                sum.add(payment.getSum());
-            } else {
-                sum.set(studentName.indexOf(payment.getStudentName()),
-                        sum.get(studentName.indexOf(payment.getStudentName())) + payment.getSum());
-            }
+
+        for(String name : studentName){
+            Long sumPaymentByName = paymentRepository.findAllByStudentName(name)
+                    .stream()
+                    .map(Payment::getSum)
+                    .mapToLong(Long::longValue)
+                    .sum();
+            sum.add(sumPaymentByName);
         }
-        return IncomeFromUsersDTO.builder()
-                .studentName(studentName)
-                .income(sum)
-                .build();
+
+        return incomeFromUsersMapper.entityToDto(studentName, sum);
     }
 
     public GeneralIncomeDTO getGeneralPayment() {
-        LocalDate firstSalaryDate = paymentRepository.findAll().stream().min(Comparator.comparing(Payment::getDate)).get().getDate();
+        LocalDate firstPaymentDate = paymentRepository.findFirstDate();
+        LocalDate firstMonthPayment = LocalDate.of(firstPaymentDate.getYear(), firstPaymentDate.getMonth(), 1);
 
-        List<LocalDate> labels = Stream.iterate(firstSalaryDate, date -> date.plus(1, MONTHS))
-                .limit(MONTHS.between(firstSalaryDate, LocalDate.now()) + 1)
+        List<LocalDate> labels = Stream.iterate(firstMonthPayment, date -> date.plus(1, MONTHS))
+                .limit(MONTHS.between(firstMonthPayment, LocalDate.now()) + 1)
                 .collect(Collectors.toList());
 
-        List<Payment> payments = paymentRepository.findAll();
         List<Long> income = new ArrayList<>();
 
         for (LocalDate label : labels) {
-            income.add(0L);
-            for (Payment payment : payments) {
-                if(label.getMonthValue() == payment.getDate().getMonthValue()) {
-                    income.set(labels.indexOf(label), income.get(labels.indexOf(label)) + payment.getSum());
-                }
-            }
+            Long sumPaymentByDate = paymentRepository.getAllBetweenDates(label, label.plusMonths(1).minusDays(1))
+                    .stream()
+                    .map(Payment::getSum)
+                    .mapToLong(Long::longValue)
+                    .sum();
+            income.add(sumPaymentByDate);
         }
 
-        return GeneralIncomeDTO.builder()
-                .dataMonth(labels)
-                .income(income)
-                .build();
+        return generalIncomeMapper.entityToDto(labels, income);
     }
 }
