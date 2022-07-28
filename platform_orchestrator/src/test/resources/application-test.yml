@@ -1,0 +1,47 @@
+server:
+  port: 8000
+  address: localhost
+---
+spring:
+  datasource:
+    password: postgres
+    username: postgres
+    url: jdbc:postgresql://localhost:8123/postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL81Dialect
+        show_sql: false
+        format_sql: true
+        use_sql_comments: true
+    hibernate:
+      ddl-auto: validate
+    generate-ddl: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  cloud:
+    loadbalancer:
+      ribbon:
+        enable: false
+  application:
+    name: orchestrator
+  servlet:
+    multipart:
+      enabled: true
+      location: ${java.io.tmpdir}
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+
+eureka:
+  instance:
+    hostname: localhost
+    leaseRenewalIntervalInSeconds: 15
+    leaseExpirationDurationInSeconds: 45
+  client:
+    registerWithEureka: false
+    fetch-registry: false
+    enabled: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
