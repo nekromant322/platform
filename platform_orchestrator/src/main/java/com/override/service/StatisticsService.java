@@ -88,40 +88,29 @@ public class StatisticsService {
     }
 
     public IncomeFromUsersDTO getAllPayment() {
-        List<String> studentName = paymentRepository.findDistinctStudentNameValues();
         List<Long> sum = new ArrayList<>();
-
-        for(String name : studentName){
-            Long sumPaymentByName = paymentRepository.findAllByStudentName(name)
-                    .stream()
-                    .map(Payment::getSum)
-                    .mapToLong(Long::longValue)
-                    .sum();
-            sum.add(sumPaymentByName);
-        }
-
-        return incomeFromUsersMapper.entityToDto(studentName, sum);
+        List<String> studentsName = paymentRepository.findDistinctStudentNameValues();
+        studentsName.forEach(name -> sum.add(paymentRepository.findAllByStudentName(name)
+                .stream()
+                .map(Payment::getSum)
+                .mapToLong(Long::longValue)
+                .sum()));
+        return incomeFromUsersMapper.entityToDto(studentsName, sum);
     }
 
     public GeneralIncomeDTO getGeneralPayment() {
+        List<Long> income = new ArrayList<>();
         LocalDate firstPaymentDate = paymentRepository.findFirstDate();
         LocalDate firstMonthPayment = LocalDate.of(firstPaymentDate.getYear(), firstPaymentDate.getMonth(), 1);
 
         List<LocalDate> labels = Stream.iterate(firstMonthPayment, date -> date.plus(1, MONTHS))
                 .limit(MONTHS.between(firstMonthPayment, LocalDate.now()) + 1)
                 .collect(Collectors.toList());
-
-        List<Long> income = new ArrayList<>();
-
-        for (LocalDate label : labels) {
-            Long sumPaymentByDate = paymentRepository.getAllBetweenDates(label, label.plusMonths(1).minusDays(1))
+        labels.forEach(label -> income.add(paymentRepository.getAllBetweenDates(label, label.plusMonths(1).minusDays(1))
                     .stream()
                     .map(Payment::getSum)
                     .mapToLong(Long::longValue)
-                    .sum();
-            income.add(sumPaymentByDate);
-        }
-
+                    .sum()));
         return generalIncomeMapper.entityToDto(labels, income);
     }
 }
