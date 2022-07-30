@@ -59,7 +59,7 @@ public class PersonalData {
     private Date birthDate;
 
     @Unupdatable
-    @Column(name = "registration")
+@Column(name = "registration")
     private String registration;
 
     @Column(name = "email")
