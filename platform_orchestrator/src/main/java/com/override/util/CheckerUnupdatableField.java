@@ -2,6 +2,7 @@ package com.override.util;
 
 import com.override.annotation.Unupdatable;
 import com.override.exception.UnupdatableDataException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
@@ -9,7 +10,7 @@ import java.lang.reflect.Field;
 @Component
 public class CheckerUnupdatableField<T> {
 
-    public void executeCheck(T currentValue, T newValue) {
+    public void executeCheck(@NotNull T currentValue, T newValue) {
 
         try {
             for(Field field : currentValue.getClass().getDeclaredFields()) {
