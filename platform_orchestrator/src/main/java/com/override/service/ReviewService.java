@@ -7,6 +7,7 @@ import com.override.model.PlatformUser;
 import com.override.model.enums.Role;
 import com.override.repository.PlatformUserRepository;
 import com.override.repository.ReviewRepository;
+import com.override.util.CurrentTimeService;
 import dto.ReviewDTO;
 import dto.ReviewFilterDTO;
 import enums.Communication;
@@ -16,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +35,9 @@ public class ReviewService {
 
     @Autowired
     private NotificatorFeign notificatorFeign;
+
+    @Autowired
+    private CurrentTimeService currentTimeService;
 
     public static String CONFIRMED_REVIEW_MESSAGE_TELEGRAM = "Ментор %s подтвердил ревью %s в %s";
     public static String DELETED_REVIEW_MESSAGE_TELEGRAM = "Ментор вынужден был отменить ревью. " +
@@ -136,12 +139,12 @@ public class ReviewService {
     }
 
     public void sendScheduledNotification() {
-        reviewRepository.findReviewByBookedDate(LocalDateTime.now().plusMinutes(10).toLocalDate())
+        reviewRepository.findReviewByBookedDate(currentTimeService.getCurrentDateTime().plusMinutes(10).toLocalDate())
                 .stream()
                 .filter(review -> review.getBookedTime() != null)
                 .filter(review -> LocalDateTime.of(review.getBookedDate(),
-                        review.getBookedTime()).isAfter(LocalDateTime.now()))
-                .filter(review -> review.getBookedTime().isBefore(LocalTime.now().plusMinutes(10)))
+                        review.getBookedTime()).isAfter(currentTimeService.getCurrentDateTime()))
+                .filter(review -> LocalDateTime.of(review.getBookedDate(), review.getBookedTime()).isBefore(currentTimeService.getCurrentDateTime().plusMinutes(10)))
                 .forEach(review -> {
                     String messageText = "Скоро ревью у @" + review.getStudent().getLogin() +
                             " с @" + review.getMentor().getLogin() + "\n" +
@@ -151,7 +154,5 @@ public class ReviewService {
                     notificatorFeign.sendMessage(review.getMentor().getLogin(), messageText, Communication.TELEGRAM);
                 });
     }
-
-
 }
 
