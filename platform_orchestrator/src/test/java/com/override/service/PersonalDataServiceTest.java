@@ -3,6 +3,7 @@ package com.override.service;
 import com.override.model.PersonalData;
 import com.override.model.PlatformUser;
 import com.override.repository.PersonalDataRepository;
+import com.override.util.CheckerUnupdatableField;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,6 +24,9 @@ public class PersonalDataServiceTest {
 
     @Mock
     private PersonalDataRepository personalDataRepository;
+
+    @Mock
+    private CheckerUnupdatableField<PersonalData> checker;
 
     @Test
     public void saveTest() {
