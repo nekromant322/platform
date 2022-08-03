@@ -1,5 +1,8 @@
 const statisticsData = getStatistics(20)
 const salaryData = getStatForSalary();
+const incomeFromUsers = getIncomeFromUsers();
+const generalIncome = getGeneralIncome();
+
 const dataOfHardTasks = {
     datasets: [{
         label: 'Самые сложные задачи',
@@ -44,6 +47,26 @@ const dataOfSalary = {
     datasets: salaryData.salaryStats
 };
 
+const dataOfIncomeFromUsers = {
+    labels: incomeFromUsers.studentName,
+    datasets: [{
+        label: 'Доходы от каждого студента',
+        backgroundColor: 'rgb(67,0,255)',
+        borderColor: 'rgb(100, 100, 130)',
+        data: incomeFromUsers.income,
+    }]
+};
+
+const dataOfGeneralIncome = {
+    labels: generalIncome.dataMonth,
+    datasets: [{
+        label: 'Доходы от менторинга по месяцам',
+        backgroundColor: 'rgb(100,200,0)',
+        borderColor: 'rgb(100, 100, 130)',
+        data: generalIncome.income,
+    }]
+};
+
 const configOfHardTasks = {
     type: 'bar',
     data: dataOfHardTasks,
@@ -75,6 +98,18 @@ const configOfSalary = {
     options: {}
 };
 
+const configOfIncomeFromUsers = {
+    type: 'bar',
+    data: dataOfIncomeFromUsers,
+    options: {}
+};
+
+const configOfGeneralIncome = {
+    type: 'line',
+    data: dataOfGeneralIncome,
+    options: {}
+};
+
 var hardTaskChart = new Chart(
     document.getElementById('statsHardTaskChart'),
     configOfHardTasks
@@ -98,6 +133,16 @@ const statusChart = new Chart(
 const salaryChart = new Chart(
     document.getElementById('salaryChart'),
     configOfSalary
+);
+
+const incomeFromUsersChart = new Chart(
+    document.getElementById('incomeFromUsersChart'),
+    configOfIncomeFromUsers
+);
+
+const generalIncomeChart = new Chart(
+    document.getElementById('generalIncomeChart'),
+    configOfGeneralIncome
 );
 
 
@@ -170,5 +215,39 @@ function getStatForSalary() {
         }
     }
     console.log(data);
+    return data;
+}
+
+function getIncomeFromUsers() {
+    let data;
+    $.ajax({
+        method: 'GET',
+        url: "/statistics/allPayment",
+        async: false,
+        success: function (response) {
+            console.log(response)
+            data = response;
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+    return data;
+}
+
+function getGeneralIncome() {
+    let data;
+    $.ajax({
+        method: 'GET',
+        url: "/statistics/generalIncome",
+        async: false,
+        success: function (response) {
+            console.log(response)
+            data = response;
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
     return data;
 }

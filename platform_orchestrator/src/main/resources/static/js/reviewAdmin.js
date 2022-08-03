@@ -135,7 +135,7 @@ function addColumn(data) {
 
     if (btnCase === 1) {
         for (let i = 0; i < times.length; i++) {
-            let sumId = "#lastColumn" + i;
+            let sumId = "#lastColumn";
             $(sumId).append("<th scope=\"col\" id=\"lastColumn" + i + "\">  </th>");
             let acceptBtn = document.createElement("button");
             acceptBtn.className = "btn btn-success";
@@ -145,7 +145,7 @@ function addColumn(data) {
                 review.bookedTime = times[i];
                 editReview(review);
             });
-            td = tr.insertCell(6 + i);
+            td = tr.insertCell(6);
             td.insertAdjacentElement("beforeend", acceptBtn);
         }
     }

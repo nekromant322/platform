@@ -139,7 +139,7 @@ public class InitializationService {
             paymentService.save(
                     Payment.builder()
                             .studentName(graduateUserList.get(rand.nextInt(graduateUserList.size())).getLogin())
-                            .date(getRandomDate())
+                            .date(getRandomDateForTestPayment())
                             .accountNumber((long) faker.number().numberBetween(100000000, 900000000))
                             .sum((long) faker.number().numberBetween(10000, 100000))
                             .message(faker.letterify("???????????????????????????????????????????"))
@@ -290,6 +290,13 @@ public class InitializationService {
 
     private LocalDate getRandomDate() {
         long minDay = LocalDate.now().minusDays(12).toEpochDay();
+        long maxDay = LocalDate.now().minusDays(2).toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        return LocalDate.ofEpochDay(randomDay);
+    }
+
+    private LocalDate getRandomDateForTestPayment() {
+        long minDay = LocalDate.now().minusDays(150).toEpochDay();
         long maxDay = LocalDate.now().minusDays(2).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         return LocalDate.ofEpochDay(randomDay);

@@ -95,6 +95,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.opentable.components</groupId>
+            <artifactId>otj-pg-embedded</artifactId>
+            <version>0.13.4</version>
+            <scope>test</scope>
+        </dependency>
+
         <!--  ============ Actuator ============     -->
 
         <dependency>
