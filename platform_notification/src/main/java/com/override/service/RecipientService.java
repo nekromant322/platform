@@ -10,8 +10,6 @@ import enums.Communication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.Map;
 
@@ -28,9 +26,17 @@ public class RecipientService {
 
     public void save(RecipientDTO recipientDTO) {
         if (repository.findRecipientByLogin(recipientDTO.getLogin()).isPresent()) {
-            throw new EntityExistsException("Recipient with login " + recipientDTO.getLogin() + " exist already");
+            Recipient recipient = repository.findRecipientByLogin(recipientDTO.getLogin()).get();
+            if(!recipientDTO.getEmail().equals("")) {
+                recipient.setEmail(recipientDTO.getEmail());
+            }
+            if(recipientDTO.getPhoneNumber() != null) {
+                recipient.setPhoneNumber(recipientDTO.getPhoneNumber());
+            }
+            repository.save(recipient);
+        } else {
+            repository.save(recipientMapper.dtoToEntity(recipientDTO));
         }
-        repository.save(recipientMapper.dtoToEntity(recipientDTO));
     }
 
     public void updateCommunication(String login, String value, Communication type) {

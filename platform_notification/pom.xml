@@ -14,6 +14,10 @@
     <name>platform notification</name>
     <description>Notifications for platform application</description>
 
+    <properties>
+        <java.version>11</java.version>
+    </properties>
+
     <dependencies>
         <!--  =====================  Spring  =====================  -->
         <dependency>

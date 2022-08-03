@@ -6,6 +6,7 @@ import com.override.model.PlatformUser;
 import com.override.model.Review;
 import com.override.repository.PlatformUserRepository;
 import com.override.repository.ReviewRepository;
+import com.override.util.CurrentTimeService;
 import dto.ReviewDTO;
 import dto.ReviewFilterDTO;
 import enums.Communication;
@@ -16,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -43,6 +45,9 @@ public class ReviewServiceTest {
     @Mock
     private NotificatorFeign notificatorFeign;
 
+    @Mock
+    private CurrentTimeService currentTimeService;
+
     @Test
     public void saveOrUpdateConfirmReview() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
@@ -59,7 +64,6 @@ public class ReviewServiceTest {
         verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(),
                 String.format(ReviewService.CONFIRMED_REVIEW_MESSAGE_TELEGRAM, testUser.getLogin(), testReviewDTO.getBookedDate(),
                         testReviewDTO.getBookedTime()), Communication.TELEGRAM);
-
     }
 
     @Test
@@ -143,7 +147,6 @@ public class ReviewServiceTest {
 
         verify(reviewRepository, times(1)).deleteById(1L);
         verify(notificatorFeign, times(1)).sendMessage(testUser.getLogin(), DELETED_REVIEW_MESSAGE_TELEGRAM_TEST, Communication.TELEGRAM);
-
     }
 
     @Test
@@ -232,31 +235,43 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void sendScheduledNotification() {
-        List<Review> reviewList = new ArrayList<>();
+    public void sendScheduledNotificationVar3() {
+        List<Review> testReviewList = new ArrayList<>();
+        LocalDate testLocalDate = LocalDate.of(2022, 7, 28);
+        LocalTime testLocalTime = LocalTime.of(23, 55);
+        LocalDateTime testLocalDateTime = LocalDateTime.of(testLocalDate, testLocalTime);
 
         Review review1 = generateTestReview();
         review1.setId(10L);
         review1.setBookedTime(null);
-        reviewList.add(review1);
+        review1.setBookedDate(null);
+        testReviewList.add(review1);
 
         Review review2 = generateTestReview();
         review2.setId(20L);
-        review2.setBookedTime(LocalTime.now().plusMinutes(45));
-        reviewList.add(review2);
+        LocalDateTime localDateTimeReview2 = testLocalDateTime.plusMinutes(45);
+        review2.setBookedTime(localDateTimeReview2.toLocalTime());
+        review2.setBookedDate(localDateTimeReview2.toLocalDate());
+        testReviewList.add(review2);
 
         Review review3 = generateTestReview();
         review3.setId(30L);
-        review3.setBookedTime(LocalTime.now().minusMinutes(45));
-        reviewList.add(review3);
+        LocalDateTime localDateTimeReview3 = testLocalDateTime.minusMinutes(45);
+        review3.setBookedTime(localDateTimeReview3.toLocalTime());
+        review3.setBookedDate(localDateTimeReview3.toLocalDate());
+        testReviewList.add(review3);
 
         Review review4 = generateTestReview();
         review4.setId(40L);
-        review4.setBookedTime(LocalTime.now().plusMinutes(5));
-        reviewList.add(review4);
+        LocalDateTime localDateTimeReview4 = testLocalDateTime.plusMinutes(5);
+        review4.setBookedTime(localDateTimeReview4.toLocalTime());
+        review4.setBookedDate(localDateTimeReview4.toLocalDate());
+        testReviewList.add(review4);
 
-        when(reviewRepository.findReviewByBookedDate(LocalDateTime.now().plusMinutes(10).toLocalDate()))
-                .thenReturn(reviewList);
+
+        when(currentTimeService.getCurrentDateTime()).thenReturn(testLocalDateTime);
+        when(reviewRepository.findReviewByBookedDate(currentTimeService.getCurrentDateTime().plusMinutes(10).toLocalDate()))
+                .thenReturn(testReviewList);
 
         String messageText = "Скоро ревью у @" + review4.getStudent().getLogin() +
                 " с @" + review4.getMentor().getLogin() + "\n" +

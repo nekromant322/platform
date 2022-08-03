@@ -8,6 +8,10 @@
     <version>0.0.1</version>
     <packaging>jar</packaging>
 
+    <properties>
+        <java.version>11</java.version>
+    </properties>
+
     <parent>
         <groupId>com.override</groupId>
         <artifactId>platform</artifactId>

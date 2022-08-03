@@ -36,7 +36,10 @@ public class ReviewService {
     @Autowired
     private NotificatorFeign notificatorFeign;
 
-    public static String CONFIRMED_REVIEW_MESSAGE_TELEGRAM = "Ментор %s подтвердил ревью %s в %s, ссылка на звонок: %s";
+    @Autowired
+    private CurrentTimeService currentTimeService;
+
+    public static String CONFIRMED_REVIEW_MESSAGE_TELEGRAM = "Ментор %s подтвердил ревью %s в %s";
     public static String DELETED_REVIEW_MESSAGE_TELEGRAM = "Ментор вынужден был отменить ревью. " +
             "Попробуйте записаться на другое время";
     public static String CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM = "Ментор изменил время ревью. Ревью пройдет %s в %s, ссылка на звонок: %s";
@@ -139,12 +142,12 @@ public class ReviewService {
     }
 
     public void sendScheduledNotification() {
-        reviewRepository.findReviewByBookedDate(LocalDateTime.now().plusMinutes(10).toLocalDate())
+        reviewRepository.findReviewByBookedDate(currentTimeService.getCurrentDateTime().plusMinutes(10).toLocalDate())
                 .stream()
                 .filter(review -> review.getBookedTime() != null)
                 .filter(review -> LocalDateTime.of(review.getBookedDate(),
-                        review.getBookedTime()).isAfter(LocalDateTime.now()))
-                .filter(review -> review.getBookedTime().isBefore(LocalTime.now().plusMinutes(10)))
+                        review.getBookedTime()).isAfter(currentTimeService.getCurrentDateTime()))
+                .filter(review -> LocalDateTime.of(review.getBookedDate(), review.getBookedTime()).isBefore(currentTimeService.getCurrentDateTime().plusMinutes(10)))
                 .forEach(review -> {
                     String messageText = "Скоро ревью у @" + review.getStudent().getLogin() +
                             " с @" + review.getMentor().getLogin() + "\n" +

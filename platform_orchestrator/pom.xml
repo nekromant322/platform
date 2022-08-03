@@ -16,6 +16,7 @@
 
     <properties>
         <jacoco.min.coverage>0.59</jacoco.min.coverage>
+        <java.version>11</java.version>
     </properties>
 
     <dependencies>
@@ -92,6 +93,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.opentable.components</groupId>
+            <artifactId>otj-pg-embedded</artifactId>
+            <version>0.13.4</version>
+            <scope>test</scope>
         </dependency>
 
         <!--  ============ Actuator ============     -->

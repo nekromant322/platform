@@ -95,7 +95,7 @@ autocomplete(document.getElementById("interviewReport-company"), arrayOfCompanie
 
 function getCurrentUser() {
     $.ajax({
-        url: '/platformUser/current',
+        url: '/platformUsers/current',
         type: 'GET',
         contentType: 'application/json',
         success: function (user) {
@@ -106,7 +106,7 @@ function getCurrentUser() {
 
 function getCurrentUserRole() {
     $.ajax({
-        url: '/platformUser/role',
+        url: '/platformUsers/role',
         type: 'GET',
         contentType: 'application/json',
         success: function (role) {
@@ -189,7 +189,7 @@ function addColumn(data) {
         offerBtn.innerHTML = "Получил(а) оффер";
         offerBtn.type = "submit";
         offerBtn.addEventListener("click", () => {
-            changeStatus(interviewReportUpdateDTO, "offer");
+            changeStatus(interviewReportUpdateDTO, data, "offer");
         });
         td = tr.insertCell(10);
         td.style.backgroundColor = 'white';
@@ -202,7 +202,7 @@ function addColumn(data) {
         acceptedBtn.innerHTML = "Принял(а) оффер";
         acceptedBtn.type = "submit";
         acceptedBtn.addEventListener("click", () => {
-            changeStatus(interviewReportUpdateDTO, "accepted");
+            changeStatus(interviewReportUpdateDTO, data, "accepted");
         });
         td = tr.insertCell(10);
         td.style.backgroundColor = 'white';
@@ -219,8 +219,9 @@ function insertTd(value, parent, color, legend) {
     parent.insertAdjacentElement("beforeend", element);
 }
 
-function changeStatus(interviewReportUpdateDTO, status) {
-    let confirmation = confirm("Вы уверены, что хотите изменить статус на " + status + "?");
+function changeStatus(interviewReportUpdateDTO, data, status) {
+    let confirmation =  (status === "offer") ? confirm("Вы уверены, что хотите изменить статус на " + status + "?") :
+                        (status === "accepted") ? confirm("Вы уверены, что принимаете данный оффер и выходите на работу в " + data.company + "?") : false;
 
     if (confirmation === true) {
         interviewReportUpdateDTO.salary = prompt("Уточните зарплату на руки", interviewReportUpdateDTO.salary);

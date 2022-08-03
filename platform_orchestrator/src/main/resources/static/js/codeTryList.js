@@ -41,8 +41,8 @@ function addColumn(data) {
 
 function drawColumns() {
     let codeTryList;
-
-    if (sessionStorage.getItem("admin") == true) {
+    alert(sessionStorage.getItem("admin"))
+    if (sessionStorage.getItem("admin") == "yes") {
         let userID = sessionStorage.getItem("id");
         $.ajax({
             method: 'GET',
@@ -60,12 +60,17 @@ function drawColumns() {
         let chapter = sessionStorage.getItem("chapter");
         let step = sessionStorage.getItem("step");
         let lesson = sessionStorage.getItem("lesson");
+
+        alert (chapter)
+        alert(step)
+        alert(lesson)
         $.ajax({
             method: 'GET',
             url: "/codeTry?chapter=" + chapter + "&step=" + step + "&lesson=" + lesson,
             contentType: "application/json; charset=utf-8",
             async: false,
             success: function (result) {
+                console.log(result);
                 codeTryList = result
             },
             error: function (error) {
