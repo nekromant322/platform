@@ -7,6 +7,7 @@ import com.override.model.PlatformUser;
 import com.override.model.enums.Role;
 import com.override.repository.PlatformUserRepository;
 import com.override.repository.ReviewRepository;
+import com.override.util.CurrentTimeService;
 import dto.ReviewDTO;
 import dto.ReviewFilterDTO;
 import enums.Communication;
@@ -16,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +39,7 @@ public class ReviewService {
     @Autowired
     private CurrentTimeService currentTimeService;
 
-    public static String CONFIRMED_REVIEW_MESSAGE_TELEGRAM = "Ментор %s подтвердил ревью %s в %s";
+    public static String CONFIRMED_REVIEW_MESSAGE_TELEGRAM = "Ментор %s подтвердил ревью %s в %s, ссылка на звонок: %s";
     public static String DELETED_REVIEW_MESSAGE_TELEGRAM = "Ментор вынужден был отменить ревью. " +
             "Попробуйте записаться на другое время";
     public static String CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM = "Ментор изменил время ревью. Ревью пройдет %s в %s, ссылка на звонок: %s";
