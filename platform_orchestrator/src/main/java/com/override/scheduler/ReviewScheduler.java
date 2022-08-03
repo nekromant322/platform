@@ -13,8 +13,8 @@ public class ReviewScheduler {
     private ReviewService reviewService;
 
     /**
-     * The review can be scheduled at hh:00 or at hh:30.
-     * The task of the scheduler is to warn all participants 5 minutes before the review.
+     * Ревью можно назначить на чч:00 или на чч:30.
+     * Оповещает участников ревью за 5 минут до начала.
      */
     @Schedules({@Scheduled(cron = "0 25 * * * *"), @Scheduled(cron = "0 55 * * * *")})
     public void checkBookedReviewEveryHalfHour() {
