@@ -6,6 +6,7 @@ import com.override.model.*;
 import com.override.model.enums.CoursePart;
 import com.override.model.enums.Role;
 import com.override.model.enums.Status;
+import com.override.model.enums.StatusFile;
 import com.override.service.*;
 import dto.*;
 import enums.CodeExecutionStatus;
@@ -400,6 +401,8 @@ public class InitializationService {
     public void saveOrUpdateInterviewReport(PlatformUser user) {
         List<String> statusList = new ArrayList<>(List.of(Status.PASSED.name(), Status.OFFER.name(), Status.ACCEPTED.name(),
                 Status.PASSED.name(), Status.OFFER.name(), Status.ACCEPTED.name()));
+        List<String> statusFileList = new ArrayList<>(List.of(StatusFile.MISSING.name(), StatusFile.UPLOADED.name(), StatusFile.MISSING.name(),
+                StatusFile.UPLOADED.name(), StatusFile.MISSING.name(), StatusFile.UPLOADED.name()));
         List<String> levelList = new ArrayList<>(List.of("Junior", "Middle", "Senior", "Middle", "Senior", "Middle"));
         int salary = (faker.number().numberBetween(150, 350)) * 1000;
         long minDay = LocalDate.now().minusDays(365).toEpochDay();
@@ -416,6 +419,7 @@ public class InitializationService {
                 .maxSalary(salary + 26000)
                 .currency('₽')
                 .status(statusList.get(new Random().nextInt(statusList.size())))
+                .statusFile("Missing")
                 .level(levelList.get(new Random().nextInt(levelList.size())))
                 .build());
     }

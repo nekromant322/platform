@@ -208,6 +208,7 @@ function addColumn(data) {
         td.style.backgroundColor = 'white';
         td.insertAdjacentElement("beforeend", acceptedBtn);
     }
+
 }
 
 function insertTd(value, parent, color, legend) {
@@ -270,6 +271,7 @@ function sendInterviewReport() {
     interviewReportDTO.maxSalary = $("#interviewReport-max").val();
     interviewReportDTO.currency = $("#interviewReport-currency").val();
     interviewReportDTO.status = "Passed";
+    interviewReportDTO.statusFile = "Missing";
     interviewReportDTO.level = $("#interviewReport-level").val();
 
     function emptyField(field) {
