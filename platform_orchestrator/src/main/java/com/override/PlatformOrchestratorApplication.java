@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableDiscoveryClient
 @EnableScheduling
 @EnableConfigurationProperties(NavbarProperties.class)
+//@ComponentScan( basePackageClasses = FeignConfiguration.class)
 public class PlatformOrchestratorApplication {
     public static void main(String[] args) {
         SpringApplication.run(PlatformOrchestratorApplication.class, args);

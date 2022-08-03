@@ -44,6 +44,8 @@ spring:
     port: 465
     username: ${MAIL_USER_NAME}
     password: ${MAIL_PASSWORD}
+token:
+  X-MS-AUTH: ${MICROSERVICES_SECRET_TOKEN:0LDRhdGD0LXRgtGMINC90LUg0LLRgdGC0LDRgtGMXl4=}
 
 eureka:
   instance:
