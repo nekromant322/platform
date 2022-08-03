@@ -19,6 +19,7 @@ public class ReviewMapper {
                 .bookedDate(reviewDTO.getBookedDate())
                 .bookedTime(reviewDTO.getBookedTime())
                 .timeSlots(reviewDTO.getTimeSlots())
+                .callLink(reviewDTO.getCallLink())
                 .build();
     }
 
@@ -31,6 +32,7 @@ public class ReviewMapper {
                 .bookedDate(review.getBookedDate())
                 .bookedTime(review.getBookedTime())
                 .timeSlots(review.getTimeSlots())
+                .callLink(review.getCallLink())
                 .build();
         if (review.getMentor() != null) {
             reviewDTO.setMentorLogin(review.getMentor().getLogin());
