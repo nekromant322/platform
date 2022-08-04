@@ -30,15 +30,17 @@ public class PersonalDataServiceTest {
 
     @Test
     public void saveTest() {
-        PersonalData personalData = new PersonalData();
+        PersonalData newPersonalData = new PersonalData();
 
+        PersonalData existingPersonalData = new PersonalData();
         PlatformUser platformUser = new PlatformUser();
-        platformUser.setPersonalData(personalData);
+        platformUser.setPersonalData(existingPersonalData);
 
         when(platformUserService.findPlatformUserByLogin("login")).thenReturn(platformUser);
 
-        personalDataService.save(personalData, "login");
+        personalDataService.save(newPersonalData, "login");
 
-        verify(personalDataRepository, times(1)).save(personalData);
+        verify(checker, times(1)).executeCheck(platformUser.getPersonalData(), newPersonalData);
+        verify(personalDataRepository, times(1)).save(newPersonalData);
     }
 }

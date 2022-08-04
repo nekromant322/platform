@@ -9,27 +9,23 @@ import java.lang.reflect.Field;
 @Component
 public class CheckerUnupdatableField<T> {
 
-    public void executeCheck(T currentValue, T newValue) {
+    public void executeCheck(T currentValue, T newValue) throws UnupdatableDataException {
 
-        if ((currentValue != null) && (newValue != null)) {
+        try {
+            for(Field field : currentValue.getClass().getDeclaredFields()) {
 
-            try {
-                for(Field field : currentValue.getClass().getDeclaredFields()) {
+                if (field.isAnnotationPresent(Unupdatable.class)) {
 
-                    if (field.isAnnotationPresent(Unupdatable.class)) {
+                    field.setAccessible(true);
 
-                        field.setAccessible(true);
-
-                        if( (field.get(currentValue) != null) &&
-                                (field.get(currentValue) != field.get(newValue))) {
-                            throw new UnupdatableDataException("Attempt to change data in the locked field");
-                        }
+                    if((field.get(currentValue) != null) &&
+                            (field.get(currentValue) != field.get(newValue))) {
+                        throw new UnupdatableDataException("Attempt to change data in the locked field");
                     }
                 }
-            } catch (IllegalAccessException ex) {
-                ex.printStackTrace();
             }
+        } catch (IllegalAccessException ex) {
+            ex.printStackTrace();
         }
     }
-
 }
