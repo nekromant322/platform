@@ -4,6 +4,8 @@ import com.override.service.CustomStudentDetailService;
 import com.override.service.LessonProgressService;
 import com.override.service.PlatformUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +22,14 @@ public class LessonProgressRestController {
     @Autowired
     private PlatformUserService platformUserService;
 
+    @CachePut(value = "lesson_progress", key = "#id")
     @PostMapping("/{lesson}")
     public void checkLesson(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
                             @PathVariable String lesson) {
         lessonProgressService.markLessonAsPassed(platformUserService.findPlatformUserByLogin(user.getUsername()), lesson);
     }
 
+    @Cacheable(value = "lesson_progress", key = "#id")
     @Secured("ROLE_ADMIN")
     @GetMapping("/allStat/{login}")
     public List<String> getPassedLessons(@PathVariable String login) {
