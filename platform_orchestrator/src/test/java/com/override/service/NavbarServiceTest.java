@@ -45,7 +45,6 @@ public class NavbarServiceTest {
         listForAdmin.add("Вопросы к ревью /questionsAdmin");
         listForAdmin.add("Статистика /statistics");
         listForAdmin.add("Ревью /reviewAdmin");
-        listForAdmin.add("PreProjectLinks /preProjectLinks");
         listForAdmin.add("Собеседования /interviewReports");
         listForAdmin.add("Платежи /allPayments");
         listForAdmin.add("Настройки /userSettings");
@@ -60,7 +59,6 @@ public class NavbarServiceTest {
         listNavbarElementsForAdmin.add(new NavbarElement("Вопросы к ревью", "/questionsAdmin"));
         listNavbarElementsForAdmin.add(new NavbarElement("Статистика", "/statistics"));
         listNavbarElementsForAdmin.add(new NavbarElement("Ревью", "/reviewAdmin"));
-        listNavbarElementsForAdmin.add(new NavbarElement("PreProjectLinks", "/preProjectLinks"));
         listNavbarElementsForAdmin.add(new NavbarElement("Собеседования", "/interviewReports"));
         listNavbarElementsForAdmin.add(new NavbarElement("Платежи", "/allPayments"));
         listNavbarElementsForAdmin.add(new NavbarElement("Настройки", "/userSettings"));
@@ -83,17 +81,22 @@ public class NavbarServiceTest {
         List<String> listForGraduate = new ArrayList<>();
 
         listForGraduate.add("Курсы /courses");
+        listForGraduate.add("Написать отчет /report");
+        listForGraduate.add("Вопросы к ревью /questions");
+        listForGraduate.add("Мои ревью /userReviews");
+        listForGraduate.add("Персональные данные /personalData");
         listForGraduate.add("Собеседования /interviewReports");
-        listForGraduate.add("Оплата /payments");
-        listForGraduate.add("Личный кабинет /personalData");
+        listForGraduate.add("Настройки /userSettings");
 
         List<NavbarElement> listNavbarElementsForGraduate = new ArrayList<>();
 
         listNavbarElementsForGraduate.add(new NavbarElement("Курсы", "/courses"));
-        listNavbarElementsForGraduate.add(new NavbarElement("Собеседования", "/interviewReports"));
+        listNavbarElementsForGraduate.add(new NavbarElement("Написать отчет", "/report"));
+        listNavbarElementsForGraduate.add(new NavbarElement("Вопросы к ревью", "/questions"));
         listNavbarElementsForGraduate.add(new NavbarElement("Мои ревью", "/userReviews"));
-        listNavbarElementsForGraduate.add(new NavbarElement("Личный кабинет", "/personalData"));
-
+        listNavbarElementsForGraduate.add(new NavbarElement("Персональные данные", "/personalData"));
+        listNavbarElementsForGraduate.add(new NavbarElement("Собеседования", "/interviewReports"));
+        listNavbarElementsForGraduate.add(new NavbarElement("Настройки", "/userSettings"));
 
         when(request.isUserInRole(Role.ADMIN.getName())).thenReturn(false);
         when(request.isUserInRole(Role.GRADUATE.getName())).thenReturn(true);
@@ -113,22 +116,18 @@ public class NavbarServiceTest {
         List<String> listForUser = new ArrayList<>();
 
         listForUser.add("Курсы /courses");
-        listForUser.add("Написать отчет /report");
-        listForUser.add("Вопросы к ревью /questions");
-        listForUser.add("Мои ревью /userReviews");
-        listForUser.add("Личный кабинет /personalData");
         listForUser.add("Собеседования /interviewReports");
         listForUser.add("Оплата /payments");
-
+        listForUser.add("Персональные данные /personalData");
+        listForUser.add("Настройки /userSettings");
 
         List<NavbarElement> listNavbarElementsForUser = new ArrayList<>();
 
         listNavbarElementsForUser.add(new NavbarElement("Курсы", "/courses"));
-        listNavbarElementsForUser.add(new NavbarElement("Написать отчет", "/report"));
-        listNavbarElementsForUser.add(new NavbarElement("Вопросы к ревью", "/questions"));
-        listNavbarElementsForUser.add(new NavbarElement("Мои ревью", "/userReviews"));
-        listNavbarElementsForUser.add(new NavbarElement("Личный кабинет", "/personalData"));
         listNavbarElementsForUser.add(new NavbarElement("Собеседования", "/interviewReports"));
+        listNavbarElementsForUser.add(new NavbarElement("Оплата", "/payments"));
+        listNavbarElementsForUser.add(new NavbarElement("Персональные данные", "/personalData"));
+        listNavbarElementsForUser.add(new NavbarElement("Настройки", "/userSettings"));
 
         when(request.isUserInRole(Role.ADMIN.getName())).thenReturn(false);
         when(request.isUserInRole(Role.GRADUATE.getName())).thenReturn(false);
