@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Field;
 
 @Component
-public class CheckerUnupdatableField<T> {
+public class UnupdatableFieldChecker<T> {
 
     public void executeCheck(T currentValue, T newValue) throws UnupdatableDataException {
 

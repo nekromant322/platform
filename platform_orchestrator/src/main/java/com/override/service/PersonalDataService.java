@@ -4,7 +4,7 @@ package com.override.service;
 import com.override.model.PersonalData;
 import com.override.model.PlatformUser;
 import com.override.repository.PersonalDataRepository;
-import com.override.util.CheckerUnupdatableField;
+import com.override.util.UnupdatableFieldChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class PersonalDataService {
 
     @Autowired
-    private CheckerUnupdatableField<PersonalData> checkerUnupdatableField;
+    private UnupdatableFieldChecker<PersonalData> unupdatableFieldChecker;
 
     @Autowired
     private PersonalDataRepository personalDataRepository;
@@ -24,7 +24,7 @@ public class PersonalDataService {
         PlatformUser user = platformUserService.findPlatformUserByLogin(login);
         PersonalData currentPersonalData = user.getPersonalData();
 
-        checkerUnupdatableField.executeCheck(currentPersonalData, newPersonalData);
+        unupdatableFieldChecker.executeCheck(currentPersonalData, newPersonalData);
 
         newPersonalData.setId(currentPersonalData.getId());
         personalDataRepository.save(newPersonalData);
