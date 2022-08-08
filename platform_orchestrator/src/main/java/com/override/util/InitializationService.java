@@ -341,6 +341,7 @@ public class InitializationService {
                 .bookedDate(randomDate)
                 .bookedTime(null)
                 .timeSlots(selectedTimeSlots)
+                .callLink(null)
                 .build(), student.getLogin());
 
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
@@ -353,6 +354,7 @@ public class InitializationService {
                 .bookedDate(LocalDate.now())
                 .bookedTime(selectedTimeSlots.iterator().next())
                 .timeSlots(selectedTimeSlots)
+                .callLink(null)
                 .build(), student.getLogin());
     }
 
