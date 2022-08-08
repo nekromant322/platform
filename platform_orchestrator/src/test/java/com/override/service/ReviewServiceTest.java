@@ -63,7 +63,7 @@ public class ReviewServiceTest {
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
         verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(),
                 String.format(ReviewService.CONFIRMED_REVIEW_MESSAGE_TELEGRAM, testUser.getLogin(), testReviewDTO.getBookedDate(),
-                        testReviewDTO.getBookedTime()), Communication.TELEGRAM);
+                        testReviewDTO.getBookedTime(), testReviewDTO.getCallLink()), Communication.TELEGRAM);
     }
 
     @Test
@@ -79,8 +79,8 @@ public class ReviewServiceTest {
         reviewService.saveOrUpdate(testReviewDTO, testReviewDTO.getMentorLogin());
 
         verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(), String.format(
-                ReviewService.CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM, testReviewDTO.getBookedTime(),
-                testReviewDTO.getBookedDate()), Communication.TELEGRAM);
+                ReviewService.CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM, testReviewDTO.getBookedDate(),
+                testReviewDTO.getBookedTime(), testReviewDTO.getCallLink()), Communication.TELEGRAM);
         verify(reviewRepository, times(1)).save(any());
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
     }
@@ -100,7 +100,7 @@ public class ReviewServiceTest {
 
         verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(),
                 String.format(ReviewService.CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM, testUserLogin,
-                        testReviewDTO.getBookedTime(), testReviewDTO.getBookedDate()), Communication.TELEGRAM);
+                        testReviewDTO.getBookedDate(), testReviewDTO.getBookedTime(), testReviewDTO.getCallLink()), Communication.TELEGRAM);
         verify(reviewRepository, times(1)).save(any());
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
     }
@@ -276,7 +276,8 @@ public class ReviewServiceTest {
         String messageText = "Скоро ревью у @" + review4.getStudent().getLogin() +
                 " с @" + review4.getMentor().getLogin() + "\n" +
                 review4.getBookedDate() + " " + review4.getBookedTime() +
-                "\nТема: " + review4.getTopic();
+                "\nТема: " + review4.getTopic() + "\n" +
+                "Ссылка на звонок: " + review4.getCallLink();
 
         reviewService.sendScheduledNotification();
         verify(notificatorFeign, times(2)).sendMessage(review4.getStudent().getLogin(), messageText, Communication.TELEGRAM);

@@ -187,6 +187,7 @@
             </column>
             <column name="time_slots" type="varchar(255)"/>
             <column name="topic" type="varchar(255)"/>
+            <column name="call_link" type="varchar(255)"/>
         </createTable>
 
         <createTable tableName="student_report">
