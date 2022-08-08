@@ -104,6 +104,16 @@
             </column>
         </createTable>
 
+        <createTable tableName="offer-document">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="content" type="bytea"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="type" type="varchar(255)"/>
+            <column name="userLogin" type="varchar(255)"/>
+        </createTable>
+
         <createTable tableName="interview_report">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

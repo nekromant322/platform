@@ -183,6 +183,42 @@ function addColumn(data) {
     insertTd(data.currency, tr, color, legend);
     insertTd(data.level, tr, color, legend);
 
+    if ((currentUserRole === "ADMIN" || data.userLogin === currentUserLogin) && data.status != "Passed") {
+        let uploadForm = document.createElement("form");
+        uploadForm.method = "POST";
+        uploadForm.action = "/offer-document/upload";
+        uploadForm.enctype = "multipart/form-data";
+
+        let uploadFormInput = document.createElement("input");
+        uploadFormInput.accept = ".pdf";
+        uploadFormInput.type = "file";
+        uploadFormInput.name = "file";
+        uploadFormInput.multiple = true;
+        uploadForm.appendChild(uploadFormInput);
+
+        let uploadFormBtn = document.createElement("input");
+        uploadFormBtn.type = "submit";
+        uploadFormBtn.name = "Загрузить файл";
+        uploadForm.appendChild(uploadFormBtn);
+
+        td = tr.insertCell(10);
+        td.style.backgroundColor = 'white';
+        td.insertAdjacentElement("beforeend", uploadForm);
+    }
+
+    if ((currentUserRole === "ADMIN" || data.userLogin === currentUserLogin) && data.status != "Passed") {
+        let downloadBtn = document.createElement("button");
+        downloadBtn.className = "download btn-success";
+        downloadBtn.innerHTML = "Скачать файл";
+        downloadBtn.type = "submit";
+        // uploadBtn.addEventListener("click", () => {
+        //     downloadOfferFile(interviewReportUpdateDTO, data, "accepted");
+        // });
+        td = tr.insertCell(10);
+        td.style.backgroundColor = 'white';
+        td.insertAdjacentElement("beforeend", downloadBtn);
+    }
+
     if ((currentUserRole === "ADMIN" || data.userLogin === currentUserLogin) && data.status === "Passed") {
         let offerBtn = document.createElement("button");
         offerBtn.className = "btn btn-warning";
