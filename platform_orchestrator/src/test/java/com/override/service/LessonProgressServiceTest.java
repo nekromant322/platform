@@ -9,10 +9,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class LessonProgressServiceTest {
@@ -68,7 +70,5 @@ public class LessonProgressServiceTest {
         List<String> userProgress = lessonProgressService.getPassedLessons(platformUser);
 
         Assertions.assertEquals(progress, userProgress);
-
     }
-
 }

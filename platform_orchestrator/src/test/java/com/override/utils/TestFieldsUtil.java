@@ -217,6 +217,7 @@ public class TestFieldsUtil {
                 .bookedDate(LocalDate.now())
                 .bookedTime(LocalTime.of(16, 30))
                 .timeSlots(testTimeSlots)
+                .callLink("https://vk.com/call/join/4WaALCm7XxBMugVAKkafGQ8O6RDi8pDpqHNJs8eW5eyQydvAF49IuShz0oqK5uzdAVuT1dBQcbzZ6ThMUUCjT7dSRQ15oV2ycQTUgZPk3Io")
                 .build();
     }
 
@@ -230,6 +231,7 @@ public class TestFieldsUtil {
                 .bookedDate(testReview.getBookedDate())
                 .bookedTime(testReview.getBookedTime())
                 .timeSlots(testReview.getTimeSlots())
+                .callLink(testReview.getCallLink())
                 .build();
     }
 

@@ -4,6 +4,8 @@ import com.override.model.LessonProgress;
 import com.override.model.PlatformUser;
 import com.override.repository.LessonProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class LessonProgressService {
      * @param lesson - идентификатор урока в формате "core-1-1"
      * указанный lesson вносится в коллекцию с пройдеными уроками, тем самым "помечает" его как пройденный.
      */
+    @CacheEvict(cacheNames = "lessonProgress", key = "#student.id")
     public void markLessonAsPassed(PlatformUser student, String lesson) {
         List<LessonProgress> lessonProgress = lessonProgressRepository.findAllByUserId(student.getId());
         boolean exists = false;
@@ -40,6 +43,7 @@ public class LessonProgressService {
         }
     }
 
+    @Cacheable(cacheNames = "lessonProgress", key = "#platformUser.id")
     public List<String> getPassedLessons(PlatformUser platformUser) {
         List<String> progress = new ArrayList<>();
         lessonProgressRepository.findAllByUserId(platformUser.getId())
