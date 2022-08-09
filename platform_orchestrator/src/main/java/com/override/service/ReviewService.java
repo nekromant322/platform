@@ -159,6 +159,7 @@ public class ReviewService {
                 });
     }
 
+    //TODO BQFI-19 доделать интеграциюс VK API
     public String startCall(){
         return  "https://vk.com/call/join/4WaALCm7XxBMugVAKkafGQ8O6RDi8pDpqHNJs8eW5eyQydvAF49IuShz0oqK5uzdAVuT1dBQcbzZ6ThMUUCjT7dSRQ15oV2ycQTUgZPk3Io";
     }

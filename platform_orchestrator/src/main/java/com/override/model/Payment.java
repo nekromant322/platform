@@ -1,5 +1,6 @@
 package com.override.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class Payment {
 
     private Long sum;
 
+    @ApiModelProperty(value = "Номер рассчетного счета, куда делается платеж (номер карты получателя платежа)")
     @Column(name = "account_number")
     private Long accountNumber;
 

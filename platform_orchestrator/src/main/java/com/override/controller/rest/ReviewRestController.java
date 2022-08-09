@@ -4,6 +4,7 @@ import com.override.service.CustomStudentDetailService;
 import com.override.service.ReviewService;
 import dto.ReviewDTO;
 import dto.ReviewFilterDTO;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,8 @@ public class ReviewRestController {
     private ReviewService reviewService;
 
     @PatchMapping
+    @ApiOperation(value = "Сохраняет новое или изменяет существующее ревью в reviewRepository, зависит от значения полей reviewDTO. " +
+            "Возвращает ResponseEntity<>(body:\"Ревью сохранено!\", HttpStatus.OK)")
     public ResponseEntity<String> saveOrUpdateReview(@RequestBody ReviewDTO reviewDTO,
                                                      @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         reviewService.saveOrUpdate(reviewDTO, user.getUsername());
@@ -28,12 +31,14 @@ public class ReviewRestController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Возвращает List<ReviewDTO>, в зависимости от значения полей reviewFilterDTO")
     public List<ReviewDTO> findReview(@RequestBody ReviewFilterDTO reviewFilterDTO) {
         return reviewService.find(reviewFilterDTO);
     }
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping
+    @ApiOperation(value = "Удаляет ревью по id, возвращает ResponseEntity<>(body:\"Ревью удалено!\", HttpStatus.OK)")
     public ResponseEntity<String> deleteReview(@RequestParam Long id) {
         reviewService.delete(id);
         return new ResponseEntity<>("Ревью удалено!", HttpStatus.OK);

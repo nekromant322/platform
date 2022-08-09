@@ -4,6 +4,7 @@ import com.override.model.JoinRequest;
 import com.override.service.JoinRequestService;
 import dto.JoinRequestStatusDTO;
 import dto.RegisterUserRequestDTO;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -17,23 +18,31 @@ public class JoinRequestRestController {
     private JoinRequestService requestService;
 
     @PostMapping("/join/request")
+    @ApiOperation(value = "Сохраняет запрос на регистрацию в requestRepository, если пользователь еще не " +
+            "зарегистрирован, или не отправлял запрос ранее")
     public JoinRequestStatusDTO saveJoinRequest(@RequestBody RegisterUserRequestDTO requestDTO) {
         return requestService.saveRequest(requestDTO);
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/join/request")
+    @ApiOperation(value = "Возвращает List<JoinRequest> (все запросы на регистрацию из requestRepository)")
     public List<JoinRequest> getAllJoinRequests() {
         return requestService.getAllRequests();
     }
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/join/request/accept/{id}")
+    @ApiOperation(value = "Админ принимает запрос на регистрацию. В телеграм пользователю отправляется " +
+            "сообщение о принятии запроса, а так же логин и пароль для входа на платформу. Запрос удаляется из " +
+            "requestRepository")
     public void acceptJoinRequest(@PathVariable Long id) {
         requestService.responseForJoinRequest(true, id);
     }
 
     @Secured("ROLE_ADMIN")
+    @ApiOperation(value = "Админ не принимает запрос на регистрацию. В телеграм пользователю отправляется " +
+            "сообщение об отклонении запроса. Запрос удаляется из requestRepository")
     @PostMapping("/join/request/decline/{id}")
     public void declineJoinRequest(@PathVariable Long id) {
         requestService.responseForJoinRequest(false, id);
