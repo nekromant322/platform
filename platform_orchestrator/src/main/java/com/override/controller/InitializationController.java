@@ -17,7 +17,6 @@ public class InitializationController {
     private InitializationService initializationService;
 
     @GetMapping
-    @ApiOperation(value = "Создает тестовые данные для платформы")
     public String init(){
         initializationService.initTestData();
         return "redirect:/";
