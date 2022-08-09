@@ -20,7 +20,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableDiscoveryClient
 @EnableScheduling
 @EnableSwagger2
-@EnableSwagger2
 @EnableCaching
 @EnableConfigurationProperties(NavbarProperties.class)
 public class PlatformOrchestratorApplication {
