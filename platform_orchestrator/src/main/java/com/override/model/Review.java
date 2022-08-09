@@ -42,4 +42,7 @@ public class Review {
     @Convert(converter = TimeSlotsConverter.class)
     @Column(name = "time_slots")
     private Set<LocalTime> timeSlots;
+
+    @Column
+    private String callLink;
 }
