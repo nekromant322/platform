@@ -18,18 +18,21 @@
             <h5 id="lk">Личный кабинет пользователя : </h5>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab"
+                    <a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab"
                        aria-controls="info" aria-selected="true">Персональные данные</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" id="documents-tab" data-toggle="tab" href="#documents" role="tab"
+                    <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab"
                        aria-controls="documents" aria-selected="false">Документы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="notifications-tab" data-toggle="tab" href="#notifications" role="tab"
+                       aria-controls="notifications" aria-selected="false">Уведомления</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
                     <div class="card card-body" id="cardBody">
-
                     </div>
                 </div>
                 <div class="tab-pane fade show active" id="documents" role="tabpanel" aria-labelledby="documents-tab">
@@ -61,15 +64,27 @@
                         <table class="table table-hover" id="userDoc">
                             <thead class="table-light">
                             <tr role="row">
-                                <th scope="col"> Name </th>
-                                <th scope="col"> Type </th>
-                                <th scope="col" id="downloadDocBtn">  </th>
+                                <th scope="col"> Name</th>
+                                <th scope="col"> Type</th>
+                                <th scope="col" id="downloadDocBtn"></th>
                             </tr>
                             </thead>
                             <tbody class="table-light">
                             </tbody>
                         </table>
 
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+                    <div class="card card-body" id="settingsBox">
+                        <h5>Уведомления:</h5>
+                        <h7 id="telegram">Telegram:</h7>
+                        <input class="form-check-input" id="telegramCheck" type="checkbox">
+                        <h7 id="vk">VK:</h7>
+                        <input class="form-check-input" id="vkCheck" type="checkbox">
+                        <br>
+                        <button type="button" class="btn btn-primary" id="editButton">Изменить</button>
+                        <br>
                     </div>
                 </div>
             </div>
@@ -88,5 +103,6 @@
         crossorigin="anonymous"></script>
 <script src="/js/utils.js"></script>
 <script src="/js/personalData.js"></script>
+<script src="/js/userSettings.js"></script>
 </body>
 </html>

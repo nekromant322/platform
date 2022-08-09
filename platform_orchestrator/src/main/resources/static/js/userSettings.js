@@ -33,7 +33,7 @@ function getCurrentUser() {
             }
 
             var telegram = document.querySelector('#telegramCheck');
-            telegram.onclick = function() {
+            telegram.onclick = function () {
                 if (telegram.checked) {
                     telegramCheck = true;
                 } else {
@@ -41,7 +41,7 @@ function getCurrentUser() {
                 }
             }
             var vk = document.querySelector('#vkCheck');
-            vk.onclick = function() {
+            vk.onclick = function () {
                 if (vk.checked) {
                     vkCheck = true;
                 } else {
@@ -51,7 +51,6 @@ function getCurrentUser() {
 
             $('#editButton').click(function () {
                 saveChanges(null, telegramCheck, vkCheck, currentUserLogin);
-                location.reload();
             })
         }
     })
@@ -71,6 +70,41 @@ function saveChanges(id, telegramCheck, vkCheck, currentUserLogin) {
         data: JSON.stringify(settings),
         success: function (data) {
             console.log(data)
+            getUserChanges();
+        },
+        error: function (data) {
+            console.log(data)
+            getUserChanges();
+        }
+    })
+}
+
+function getUserChanges() {
+    $.ajax({
+        url: '/platformUsers/current',
+        type: 'GET',
+        contentType: 'application/json',
+        cache: false,
+        success: function (currentUser) {
+            telegramNotification = currentUser.userSettings.telegramNotification;
+            vkNotification = currentUser.userSettings.vkNotification;
+            telegramCheck = telegramNotification;
+            vkCheck = vkNotification;
+            $('#telegram').empty();
+            $('#vk').empty();
+            $('#telegram').append((telegramNotification === false ? 'Telegram: No' : 'Telegram: Yes') + ' ');
+            $('#vk').append((vkNotification === false ? 'VK: No' : 'VK: Yes') + ' ');
+
+            if (telegramNotification === false) {
+                $('#telegramCheck').prop('checked', false);
+            } else {
+                $('#telegramCheck').prop('checked', true);
+            }
+            if (vkNotification === false) {
+                $('#vkCheck').prop('checked', false);
+            } else {
+                $('#vkCheck').prop('checked', true);
+            }
         }
     })
 }
