@@ -19,19 +19,6 @@ public class CheckerUnupdatableFieldTest {
     @InjectMocks
     private UnupdatableFieldChecker<PersonalData> unupdatableFieldChecker;
 
-//    PersonalData existingPersonalData;
-//
-//    @BeforeTestMethod
-//    public void initPersonalData() {
-//
-//        existingPersonalData = PersonalData.builder()
-//            .actNumber(null)                //@Unupdatable empty field
-//            .contractNumber("some number")  //@Unupdatable non-empty field
-//            .phoneNumber(111L)              // filed without annotation
-//            .build();
-//
-//    }
-
     @Test
     public void changingUnupdatableFieldTest() {
 
@@ -52,7 +39,7 @@ public class CheckerUnupdatableFieldTest {
     public void changingUpdatableFieldTest() {
 
         PersonalData existingPersonalData = PersonalData.builder()
-                .phoneNumber(111L) // filed without annotation
+                .phoneNumber(111L) // field without annotation
                 .build();
 
         PersonalData newPersonalData = PersonalData.builder()
