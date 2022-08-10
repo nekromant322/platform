@@ -18,7 +18,7 @@ public class JoinRequestRestController {
     private JoinRequestService requestService;
 
     @PostMapping("/join/request")
-    @ApiOperation(value = "Сохраняет запрос на регистрацию в requestRepository, если пользователь еще не " +
+    @ApiOperation(value = "Сохраняет запрос на регистрацию в БД, если пользователь еще не " +
             "зарегистрирован, или не отправлял запрос ранее")
     public JoinRequestStatusDTO saveJoinRequest(@RequestBody RegisterUserRequestDTO requestDTO) {
         return requestService.saveRequest(requestDTO);
@@ -26,7 +26,7 @@ public class JoinRequestRestController {
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/join/request")
-    @ApiOperation(value = "Возвращает List<JoinRequest> (все запросы на регистрацию из requestRepository)")
+    @ApiOperation(value = "Возвращает весь список запросов на регистрацию из БД")
     public List<JoinRequest> getAllJoinRequests() {
         return requestService.getAllRequests();
     }
@@ -34,15 +34,14 @@ public class JoinRequestRestController {
     @Secured("ROLE_ADMIN")
     @PostMapping("/join/request/accept/{id}")
     @ApiOperation(value = "Админ принимает запрос на регистрацию. В телеграм пользователю отправляется " +
-            "сообщение о принятии запроса, а так же логин и пароль для входа на платформу. Запрос удаляется из " +
-            "requestRepository")
+            "сообщение о принятии запроса, а так же логин и пароль для входа на платформу. Запрос удаляется из БД")
     public void acceptJoinRequest(@PathVariable Long id) {
         requestService.responseForJoinRequest(true, id);
     }
 
     @Secured("ROLE_ADMIN")
     @ApiOperation(value = "Админ не принимает запрос на регистрацию. В телеграм пользователю отправляется " +
-            "сообщение об отклонении запроса. Запрос удаляется из requestRepository")
+            "сообщение об отклонении запроса. Запрос удаляется из БД")
     @PostMapping("/join/request/decline/{id}")
     public void declineJoinRequest(@PathVariable Long id) {
         requestService.responseForJoinRequest(false, id);

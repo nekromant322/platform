@@ -14,8 +14,8 @@ public class UserSettingsRestController {
     private UserSettingsService userSettingsService;
 
     @PatchMapping("/{userLogin}")
-    @ApiOperation(value = "Сохраняет UserSettings в userSettingsRepository " +
-            "(разрешает или запрещает отправлять уведомления пользователю в Телеграм и ВК)")
+    @ApiOperation(value = "Сохраняет \"пользовательские настройки\" в БД, по сути разрешает или запрещает " +
+            "отправлять уведомления пользователю в Телеграм и ВК)")
     public void patch(@RequestBody UserSettings userSettings,
                       @PathVariable String userLogin) {
         userSettingsService.save(userSettings, userLogin);

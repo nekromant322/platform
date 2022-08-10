@@ -17,32 +17,32 @@ public class DefaultQuestionRestController {
     @Autowired
     private DefaultQuestionService defaultQuestionService;
 
-    @ApiOperation(value = "Возвращает List<DefaultQuestion> из defaultQuestionRepository")
+    @ApiOperation(value = "Возвращает все дефолтные вопросы из БД")
     @GetMapping
     public List<DefaultQuestion> findDefaultQuestions() {
         return defaultQuestionService.findAll();
     }
 
-    @ApiOperation(value = "Возвращает List<DefaultQuestion> из defaultQuestionRepository по главе и секции")
+    @ApiOperation(value = "Возвращает дефолтные вопросы по главе и секции")
     @PostMapping
     public List<DefaultQuestion> findDefaultQuestionsByChapterAndSection(@RequestBody DefaultQuestionDTO defaultQuestionDTO) {
         return defaultQuestionService.findAllByChapterAndSection(defaultQuestionDTO.getChapter(), defaultQuestionDTO.getSection());
     }
 
     @PatchMapping
-    @ApiOperation(value = "Сохраняет DefaultQuestion в defaultQuestionRepository")
+    @ApiOperation(value = "Сохраняет дефолтный вопрос в БД")
     public void patchDefaultQuestion(@RequestBody DefaultQuestion defaultQuestion) {
         defaultQuestionService.save(defaultQuestion);
     }
 
     @PutMapping
-    @ApiOperation(value = "Обновляет DefaultQuestion в defaultQuestionRepository")
+    @ApiOperation(value = "Обновляет дефолтный вопрос в БД")
     public void editDefaultQuestion(@RequestBody DefaultQuestion defaultQuestion) {
         defaultQuestionService.update(defaultQuestion);
     }
 
     @DeleteMapping
-    @ApiOperation(value = "Удаляет DefaultQuestion из defaultQuestionRepository")
+    @ApiOperation(value = "Удаляет дефолтный вопрос по его id из БД")
     public void delete(@RequestBody int id) {
         defaultQuestionService.delete(id);
     }

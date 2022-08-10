@@ -8,6 +8,8 @@ import dto.TaskIdentifierDTO;
 import dto.TestResultDTO;
 import enums.CodeExecutionStatus;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,11 +34,11 @@ public class CodeTryRestController {
     private CodeTryService codeTryService;
 
     @PostMapping
-    @ApiOperation(value = "Если в коде есть синтаксические ошибки или он не проходит по длине, " +
-            "возвращает ResponseEntity<>(body:\"Введенный код некорректен (не прошел по длине)\", " +
-            "HttpStatus.BAD_REQUEST), иначе сохраняет объект CodeTry в codeTryRepository. " +
-            "Далее, если пройдены все тесты, то возвращает ResponseEntity<>(body:\"Все тесты пройдены\", HttpStatus.OK), " +
-            "иначе возвращает ResponseEntity<>(Ошибка компиляции кода(будет именно сообщение, в чем ошибка), HttpStatus.BAD_REQUEST)")
+    @ApiOperation(value = "Если в коде нет синтаксических ошибок и он проходит по длине, то сохраняет \"код трай\" в БД")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Все тесты пройдены"),
+            @ApiResponse(code = 400, message = "Введенный код некорректен (не прошел по длине), либо сообщение будет по типу - не пройден такой-то тест, и такая-то ошибка"),
+    })
     public ResponseEntity<String> getCodeTryResult(@RequestBody @Valid CodeTryDTO codeTryDTO, BindingResult result,
                                                    @AuthenticationPrincipal CustomStudentDetails user) {
         if (result.hasErrors()) {
@@ -52,7 +54,7 @@ public class CodeTryRestController {
     }
 
     @GetMapping
-    @ApiOperation(value = "Возвращает List<CodeTry> для текущего юзера по главе, шагу и уроку")
+    @ApiOperation(value = "Возвращает все \"код трай\" для текущего юзера по главе, шагу и уроку")
     public List<CodeTry> studentCodesLesson(@AuthenticationPrincipal CustomStudentDetails user,
                                             @RequestParam int chapter, @RequestParam int step, @RequestParam int lesson) {
         TaskIdentifierDTO taskIdentifierDTO = TaskIdentifierDTO.builder()
@@ -64,7 +66,7 @@ public class CodeTryRestController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Возвращает List<CodeTry> по id студента")
+    @ApiOperation(value = "Возвращает все \"код трай\" студента по его id")
     public List<CodeTry> getStudentTries(@PathVariable Long id) {
         return codeTryService.findAllByUserId(id);
     }

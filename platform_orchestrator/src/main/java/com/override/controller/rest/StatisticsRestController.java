@@ -30,25 +30,25 @@ public class StatisticsRestController {
     }
 
     @GetMapping("/data")
-    @ApiOperation(value = "Возвращает CodeTryStatDTO")
+    @ApiOperation(value = "Возвращает CodeTryStatDTO, подробно описно в модели ДТОшки")
     public CodeTryStatDTO countStatsByStatus(@RequestParam int size){
         return statisticsService.getCodeTryStatistics(size);
     }
 
     @GetMapping("/salary")
-    @ApiOperation(value = "Возвращает SalaryDTO")
+    @ApiOperation(value = "Возвращает SalaryDTO, подробно описно в модели ДТОшки")
     public SalaryDTO getSalaryStat(){
         return statisticsService.getSalaryStatistics();
     }
 
     @GetMapping("/allPayment")
-    @ApiOperation(value = "Возвращает IncomeFromUsersDTO")
+    @ApiOperation(value = "Возвращает IncomeFromUsersDTO, подробно описно в модели ДТОшки")
     public IncomeFromUsersDTO getAllPayment(){
         return statisticsService.getAllPayment();
     }
 
     @GetMapping("/generalIncome")
-    @ApiOperation(value = "Возвращает GeneralIncomeDTO")
+    @ApiOperation(value = "Возвращает GeneralIncomeDTO, подробно описно в модели ДТОшки")
     public GeneralIncomeDTO getGeneralPayment(){
         return statisticsService.getGeneralPayment();
     }

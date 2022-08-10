@@ -18,7 +18,7 @@ public class PersonalDataRestController {
     private RequestInNotificationService requestInNotificationService;
 
     @PatchMapping("{userLogin}")
-    @ApiOperation(value = "Сохраняет персональные данные в personalDataRepository, а так же сохраняет в данные в RecipientRepository в Нотификатор")
+    @ApiOperation(value = "Сохраняет персональные данные в БД, а так же сохраняет данные в таблицу получателей в Нотификатор")
     public void patch(@RequestBody PersonalData personalData,
                       @PathVariable String userLogin) {
         personalDataService.save(personalData, userLogin);

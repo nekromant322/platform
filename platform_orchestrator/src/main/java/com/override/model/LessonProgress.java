@@ -21,7 +21,7 @@ public class LessonProgress {
     @JsonIgnore
     private Long id;
 
-    @ApiModelProperty(value = "Идентификатор урока в формате \"core-1-1\"")
+    @ApiModelProperty(value = "Идентификатор урока", example = "core-1-1")
     private String lesson;
 
     @JoinColumn(name = "user_id")

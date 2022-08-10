@@ -5,7 +5,6 @@ import com.override.model.Document;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.DocumentService;
 import dto.DocumentDTO;
-import io.swagger.annotations.ApiOperation;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;

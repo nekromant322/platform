@@ -15,9 +15,7 @@ public class AuthRestController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    @ApiOperation(value = "Если логина нет в базе, то UsernameNotFoundException(\"Пользователь с логином \" + " +
-            "login + \" не найден!\", если логин есть, но не верный пароль, то AuthException" +
-            "(\"Данные пользователя неверны\"), если логин и пароль верны, то возвращается токен пользователя.")
+    @ApiOperation(value = "Если логин и пароль верны, то возвращается токен пользователя.")
     public String auth(@RequestBody AuthRequest request) {
         return authService.login(request.getLogin(), request.getPassword());
     }

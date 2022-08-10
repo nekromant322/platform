@@ -22,8 +22,8 @@ public class LessonProgressRestController {
     private PlatformUserService platformUserService;
 
     @PostMapping("/{lesson}")
-    @ApiOperation(value = "Создается объект LessonProgress (по имени текущего юзера и уроку) и сохраняется в lessonProgressRepository, " +
-            "если его там еще нет. Другими словами указанный lesson вносится в коллекцию с пройдеными уроками, " +
+    @ApiOperation(value = "Создается объект \"прогресс урока\" (по имени текущего юзера и уроку) и сохраняется в БД, " +
+            "если его там еще нет. Другими словами указанный урок вносится в коллекцию с пройдеными уроками, " +
             "тем самым \"помечает\" его как пройденный")
     public void checkLesson(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
                             @PathVariable String lesson) {

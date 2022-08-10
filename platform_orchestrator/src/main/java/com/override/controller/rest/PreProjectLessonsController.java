@@ -5,6 +5,8 @@ import com.override.service.PreProjectLessonService;
 import dto.PreProjectLessonDTO;
 import dto.PreProjectLessonMentorReactionDTO;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,27 +25,30 @@ public class PreProjectLessonsController {
 
     @Secured("ROLE_ADMIN")
     @GetMapping
-    @ApiOperation(value = "Возвращает List<PreProjectLessonMentorReactionDTO> (весь список из preProjectLessonRepository)")
+    @ApiOperation(value = "Возвращает весь список \"предпроектных уроков\" из БД")
     public List<PreProjectLessonMentorReactionDTO> getAll() {
         return preProjectLessonService.getAll();
     }
 
 
     @PostMapping("/current")
-    @ApiOperation(value = "Возвращает List<PreProjectLessonMentorReactionDTO> (возвращается список для текущего юзера по идентификатору задачи, который берется из preProjectLessonDTO)")
+    @ApiOperation(value = "Возвращает список \"предпроектных уроков\" для текущего юзера по идентификатору задачи, который берется из ДТОшки")
     public List<PreProjectLessonMentorReactionDTO> getCurrent(@RequestBody PreProjectLessonDTO preProjectLessonDTO, @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return preProjectLessonService.getAllByPathName(preProjectLessonDTO, user.getUsername());
     }
 
     @PostMapping
-    @ApiOperation(value = "Сохраняет объект в preProjectLessonRepository, ссылку и идентификатор задачи берется из preProjectLessonDTO")
+    @ApiOperation(value = "Сохраняет \"предпроектный урок\" в БД, ссылку и идентификатор задачи берется из ДТОшки")
     public PreProjectLessonDTO savePreProjectLessonLink(@RequestBody PreProjectLessonDTO preProjectLessonDTO, @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return preProjectLessonService.save(preProjectLessonDTO, user.getUsername());
     }
 
     @PatchMapping
-    @ApiOperation(value = "Сохраняет объект в preProjectLessonRepository, при этом обновляя поля Comments, Approve, Viewed у PreProjectLesson, который мы получаем из preProjectLessonMentorReactionDTO. " +
-            "Возвращает ResponseEntity<>(body:\"Комментарии сохранены!\", HttpStatus.OK)")
+    @ApiOperation(value = "Сохраняет \"предпроектный урок\" в БД, при этом обновляя поля Comments, Approve, " +
+            "Viewed у \"предпроектного урока\", который мы получаем из ДТОшки.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Комментарии сохранены!")
+    })
     public ResponseEntity<String> updatePreProjectLessonLink(@RequestBody PreProjectLessonMentorReactionDTO preProjectLessonMentorReactionDTO) {
         preProjectLessonService.update(preProjectLessonMentorReactionDTO);
         return new ResponseEntity<>("Комментарии сохранены!", HttpStatus.OK);

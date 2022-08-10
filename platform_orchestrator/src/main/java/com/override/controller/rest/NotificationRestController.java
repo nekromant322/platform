@@ -24,8 +24,7 @@ public class NotificationRestController {
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/balance")
-    @ApiOperation(value = "Возвращает BalanceResponseFromNotificationControllerDTO, по сути возвращает значение " +
-            "баланса для админа и ссылку на пополнение https://sms.ru/pay.php")
+    @ApiOperation(value = "Возвращает значение баланса для админа и ссылку на пополнение https://sms.ru/pay.php")
     public BalanceResponseFromNotificationControllerDTO getBalanceDTO() {
         return new BalanceResponseFromNotificationControllerDTO(notificatorFeign.getBalance(), urlToReplenishBalance);
     }

@@ -21,7 +21,7 @@ public class ReportRestController {
     private ReportService reportService;
 
     @PostMapping
-    @ApiOperation(value = "Сохраняет отчет текущего пользователя в reportRepository, если на эту дату еще нет отчета")
+    @ApiOperation(value = "Сохраняет отчет текущего пользователя в БД, если на эту дату еще нет отчета")
     public ResponseEntity<String> postReport(@RequestBody StudentReport report, @AuthenticationPrincipal CustomStudentDetails user) {
         return reportService.saveReport(report, user.getUsername());
     }

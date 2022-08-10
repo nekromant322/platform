@@ -17,7 +17,7 @@ public class NavbarRestController {
     private NavbarService navbarService;
 
     @GetMapping("/navbar")
-    @ApiOperation(value = "Возвращает List<NavbarElement>. Либо для админа, либо для юзера, либо для выпусника, " +
+    @ApiOperation(value = "Возвращает список \"навбар элементов\". Либо для админа, либо для юзера, либо для выпусника, " +
             "смотря кто заходит на платформу.")
     public List<NavbarElement> getNavbar(HttpServletRequest request) {
         return navbarService.getNavbar(request);

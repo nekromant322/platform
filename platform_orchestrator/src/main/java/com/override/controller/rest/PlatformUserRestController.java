@@ -31,40 +31,40 @@ public class PlatformUserRestController {
     }
 
     @GetMapping("/current")
-    @ApiOperation(value = "Возвращает PlatformUser из platformUserRepository текущего пользователя")
+    @ApiOperation(value = "Возвращает \"платформ юзера\" из БД для текущего пользователя")
     public PlatformUser findPlatformUser(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return platformUserService.findPlatformUserByLogin(user.getUsername());
     }
 
 
     @GetMapping("/{login}")
-    @ApiOperation(value = "Возвращает PlatformUser из platformUserRepository по логину")
+    @ApiOperation(value = "Возвращает \"платформ юзера\" из БД по логину")
     public PlatformUser findPlatformUserByLogin(@PathVariable String login) {
         return platformUserService.findPlatformUserByLogin(login);
     }
 
     @GetMapping("/coursePart")
-    @ApiOperation(value = "Возвращает CoursePart из platformUserRepository текущего пользователя")
+    @ApiOperation(value = "Возвращает \"часть курса\" из БД текущего пользователя")
     public CoursePart getCoursePart(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return platformUserService.getCurrentCoursePart(user.getUsername());
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping
-    @ApiOperation(value = "Возвращает List<PlatformUser> (список всех PlatformUser, кроме админов)")
+    @ApiOperation(value = "Возвращает список всех \"платформ юзеров\", кроме админов)")
     public List<PlatformUser> getAllStudents() {
         return platformUserService.getAllStudents();
     }
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/{id}/{role}")
-    @ApiOperation(value = "Обновляет List<Authority> юзера (PlatformUser) и сохраняет в platformUserRepository")
+    @ApiOperation(value = "Обновляет роль \"платформ юзера\" и сохраняет в БД")
     public ResponseEntity<String> updateUserRole(@PathVariable Long id, @PathVariable Role role) {
         return platformUserService.updateUserRole(id, role);
     }
 
     @Secured("ROLE_ADMIN")
-    @ApiOperation(value = "Обновляет CoursePart юзера (PlatformUser) и сохраняет в platformUserRepository")
+    @ApiOperation(value = "Обновляет \"часть курса\" \"платформ юзера\" и сохраняет в БД")
     @PostMapping("/promoteCoursePart/{id}/{coursePart}")
     public ResponseEntity<String> updateCoursePart(@PathVariable Long id, @PathVariable CoursePart coursePart) {
         return platformUserService.updateCurrentCoursePart(id, coursePart);
@@ -72,7 +72,7 @@ public class PlatformUserRestController {
 
     @Secured("ROLE_ADMIN")
     @PutMapping("/{id}/{status}")
-    @ApiOperation(value = "Обновляет StudyStatus юзера (PlatformUser) и сохраняет в platformUserRepository")
+    @ApiOperation(value = "Обновляет \"статус обучения\" \"платформ юзера\" и сохраняет в БД")
     public ResponseEntity<String> updateWorkStatus(@PathVariable Long id, @PathVariable String status) {
         return platformUserService.updateStatus(id, StudyStatus.valueOf(status));
     }
