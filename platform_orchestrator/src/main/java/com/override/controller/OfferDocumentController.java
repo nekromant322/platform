@@ -27,11 +27,6 @@ public class OfferDocumentController {
     public String uploadFile(@PathVariable("reportId") Long reportId,
                              @RequestParam("file") MultipartFile multipartFile) throws IOException {
 
-        System.out.println("Report id : " + reportId);
-        System.out.println("multipartFile.getOriginalFilename() : " + multipartFile.getOriginalFilename());
-        System.out.println("file.getBytes() : " + multipartFile.getBytes());
-        System.out.println("multipartFile.getContentType() : " + multipartFile.getContentType());
-
         offerDocumentService.upload(multipartFile, reportId);
 
         return "redirect:/interviewReports";
@@ -42,16 +37,7 @@ public class OfferDocumentController {
     @Transactional
     public ResponseEntity<Resource> downloadFile(@PathVariable("id") Long id) {
 
-        System.out.println("\nGET REQUEST\n");
-        System.out.println("reportId : " + id);
-
-
         OfferDocument offerDocument = offerDocumentService.download(id);
-
-        System.out.println("offerDocument.getContent() : " + offerDocument.getContent());
-        System.out.println("offerDocument.getType() : " + offerDocument.getType());
-        System.out.println("offerDocument.getName() : " + offerDocument.getName());
-        System.out.println("offerDocument.getInterviewReport() : " + offerDocument.getInterviewReport());
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(offerDocument.getType()))

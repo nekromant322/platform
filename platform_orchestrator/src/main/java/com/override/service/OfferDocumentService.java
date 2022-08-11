@@ -21,19 +21,11 @@ public class OfferDocumentService {
 
     public void upload(MultipartFile file, Long id) throws IOException {
 
-        System.out.println("\nUPLOAD METHOD\n");
-
         OfferDocument offerDocument = new OfferDocument();
         offerDocument.setContent(file.getBytes());
         offerDocument.setType(file.getContentType());
         offerDocument.setName(file.getOriginalFilename());
         offerDocument.setInterviewReport(interviewReportService.findReportById(id));
-
-        System.out.println("offerDocument.setContent(file.getBytes()) : " + offerDocument.getContent());
-        System.out.println("offerDocument.setType(file.getContentType()) : " + offerDocument.getType());
-        System.out.println("offerDocument.setName(file.getOriginalFilename()) : " + offerDocument.getName());
-        System.out.println("offerDocument.setInterviewReport(interviewReportService.findReportById(id)) : "
-                + offerDocument.getInterviewReport());
 
         offerDocumentRepository.save(offerDocument);
 
