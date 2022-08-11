@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 
 @Controller
@@ -38,6 +39,7 @@ public class OfferDocumentController {
 
     @GetMapping("/download/{id}")
     @ResponseBody
+    @Transactional
     public ResponseEntity<Resource> downloadFile(@PathVariable("id") Long id) {
 
         System.out.println("\nGET REQUEST\n");

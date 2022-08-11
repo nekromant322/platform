@@ -275,10 +275,10 @@ function drawDownloadBtn(data, tr) {
 
 }
 
-function downloadOfferFile(Id, fileName) {
+function downloadOfferFile(id, fileName) {
 
     $.ajax({
-        url: '/offer-document/download/' + Id,
+        url: '/offer-document/download/' + id,
         dataType: 'binary',
         xhrFields: {
             'responseType': 'blob'

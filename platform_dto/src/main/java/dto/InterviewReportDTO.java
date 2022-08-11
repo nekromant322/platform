@@ -19,6 +19,5 @@ public class InterviewReportDTO {
     private Integer maxSalary;
     private Character currency;
     private String status;
-    private String statusFile;
     private String level;
 }
