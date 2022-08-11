@@ -1,7 +1,6 @@
 package com.override.model;
 
 import com.override.model.enums.Status;
-import com.override.model.enums.StatusFile;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,9 +43,6 @@ public class InterviewReport {
 
     @Enumerated(EnumType.ORDINAL)
     private Status status;
-
-    @Enumerated(EnumType.ORDINAL)
-    private StatusFile statusFile;
 
     private String level;
 }

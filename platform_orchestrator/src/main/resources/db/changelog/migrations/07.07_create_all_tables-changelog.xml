@@ -104,16 +104,6 @@
             </column>
         </createTable>
 
-        <createTable tableName="offer-document">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="content" type="bytea"/>
-            <column name="name" type="varchar(255)"/>
-            <column name="type" type="varchar(255)"/>
-            <column name="userLogin" type="varchar(255)"/>
-        </createTable>
-
         <createTable tableName="interview_report">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -129,6 +119,18 @@
             <column name="questions" type="varchar(255)"/>
             <column name="status" type="integer"/>
             <column name="user_login" type="varchar"/>
+        </createTable>
+
+        <createTable tableName="offer_document">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="content" type="blob"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="type" type="varchar(255)"/>
+            <column name="report_id" type="bigint">
+                <constraints foreignKeyName="report_id" references="interview_report(id)"/>
+            </column>
         </createTable>
 
         <createTable tableName="join_request">

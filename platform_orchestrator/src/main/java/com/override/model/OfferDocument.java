@@ -18,11 +18,14 @@ public class OfferDocument {
 
     private String type;
 
-    private String userLogin;
-
     @JsonIgnore
     @Lob
     @Type(type = "org.hibernate.type.MaterializedBlobType")
     private byte[] content;
+
+    @JsonIgnore
+    @JoinColumn(name = "report_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private InterviewReport interviewReport;
 
 }

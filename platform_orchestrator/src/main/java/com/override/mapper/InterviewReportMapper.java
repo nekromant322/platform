@@ -2,7 +2,6 @@ package com.override.mapper;
 
 import com.override.model.InterviewReport;
 import com.override.model.enums.Status;
-import com.override.model.enums.StatusFile;
 import dto.InterviewReportDTO;
 import dto.SalaryDTO;
 import dto.SalaryStatDTO;
@@ -28,7 +27,6 @@ public class InterviewReportMapper {
                 .maxSalary(interviewReportDTO.getMaxSalary())
                 .currency(interviewReportDTO.getCurrency())
                 .status(Status.fromString(interviewReportDTO.getStatus()))
-                .statusFile(StatusFile.fromString(interviewReportDTO.getStatusFile()))
                 .level(interviewReportDTO.getLevel())
                 .build();
     }
@@ -46,7 +44,6 @@ public class InterviewReportMapper {
                 .maxSalary(interviewReport.getMaxSalary())
                 .currency(interviewReport.getCurrency())
                 .status(interviewReport.getStatus().getName())
-                .statusFile(interviewReport.getStatusFile().getName())
                 .level(interviewReport.getLevel())
                 .build();
     }

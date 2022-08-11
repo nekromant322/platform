@@ -184,39 +184,7 @@ function addColumn(data) {
     insertTd(data.level, tr, color, legend);
 
     if ((currentUserRole === "ADMIN" || data.userLogin === currentUserLogin) && data.status != "Passed") {
-        let uploadForm = document.createElement("form");
-        uploadForm.method = "POST";
-        uploadForm.action = "/offer-document/upload";
-        uploadForm.enctype = "multipart/form-data";
-
-        let uploadFormInput = document.createElement("input");
-        uploadFormInput.accept = ".pdf";
-        uploadFormInput.type = "file";
-        uploadFormInput.name = "file";
-        uploadFormInput.multiple = true;
-        uploadForm.appendChild(uploadFormInput);
-
-        let uploadFormBtn = document.createElement("input");
-        uploadFormBtn.type = "submit";
-        uploadFormBtn.name = "Загрузить файл";
-        uploadForm.appendChild(uploadFormBtn);
-
-        td = tr.insertCell(10);
-        td.style.backgroundColor = 'white';
-        td.insertAdjacentElement("beforeend", uploadForm);
-    }
-
-    if ((currentUserRole === "ADMIN" || data.userLogin === currentUserLogin) && data.status != "Passed") {
-        let downloadBtn = document.createElement("button");
-        downloadBtn.className = "download btn-success";
-        downloadBtn.innerHTML = "Скачать файл";
-        downloadBtn.type = "submit";
-        // uploadBtn.addEventListener("click", () => {
-        //     downloadOfferFile(interviewReportUpdateDTO, data, "accepted");
-        // });
-        td = tr.insertCell(10);
-        td.style.backgroundColor = 'white';
-        td.insertAdjacentElement("beforeend", downloadBtn);
+        getOfferDocument(data.id, tr);
     }
 
     if ((currentUserRole === "ADMIN" || data.userLogin === currentUserLogin) && data.status === "Passed") {
@@ -244,6 +212,88 @@ function addColumn(data) {
         td.style.backgroundColor = 'white';
         td.insertAdjacentElement("beforeend", acceptedBtn);
     }
+
+}
+
+function getOfferDocument(reportId, tr) {
+
+    $.ajax({
+        method: 'GET',
+        async: false,
+        url: '/offer-document/' + reportId,
+        contentType: 'application/json',
+        success: function (response) {
+            if (response.id === null) {
+                createUploadForm(reportId, tr);
+            } else {
+                console.log(response);
+                drawDownloadBtn(response, tr);
+            }
+        }
+    });
+
+}
+
+function createUploadForm(id, tr) {
+
+    let uploadForm = document.createElement("form");
+    uploadForm.method = "POST";
+    uploadForm.action = "/offer-document/upload/" + id;
+    uploadForm.enctype = "multipart/form-data";
+
+    let uploadFormInput = document.createElement("input");
+    uploadFormInput.accept = ".pdf";
+    uploadFormInput.type = "file";
+    uploadFormInput.name = "file";
+    uploadFormInput.multiple = true;
+    uploadForm.appendChild(uploadFormInput);
+
+    let uploadFormBtn = document.createElement("input");
+    uploadFormBtn.type = "submit";
+    uploadFormBtn.name = "Загрузить файл";
+    uploadForm.appendChild(uploadFormBtn);
+
+    let td = tr.insertCell(10);
+    td.style.backgroundColor = 'white';
+    td.insertAdjacentElement("beforeend", uploadForm);
+
+}
+
+function drawDownloadBtn(data, tr) {
+
+    let downloadBtn = document.createElement("button");
+    downloadBtn.className = "download btn-success";
+    downloadBtn.innerHTML = "Скачать файл";
+    downloadBtn.type = "submit";
+    downloadBtn.addEventListener("click", () => {
+        downloadOfferFile(data.id, data.name);
+    });
+
+    let td = tr.insertCell(10);
+    td.style.backgroundColor = 'white';
+    td.insertAdjacentElement("beforeend", downloadBtn);
+
+}
+
+function downloadOfferFile(Id, fileName) {
+
+    $.ajax({
+        url: '/offer-document/download/' + Id,
+        dataType: 'binary',
+        xhrFields: {
+            'responseType': 'blob'
+        },
+        success: function (data) {
+            var blob = new Blob([data], {type: 'application/pdf'});
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'Offer' + fileName;
+            link.click();
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
 
 }
 
@@ -307,7 +357,6 @@ function sendInterviewReport() {
     interviewReportDTO.maxSalary = $("#interviewReport-max").val();
     interviewReportDTO.currency = $("#interviewReport-currency").val();
     interviewReportDTO.status = "Passed";
-    interviewReportDTO.statusFile = "Missing";
     interviewReportDTO.level = $("#interviewReport-level").val();
 
     function emptyField(field) {
