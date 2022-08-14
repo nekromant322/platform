@@ -7,6 +7,7 @@
         <groupId>com.override</groupId>
         <artifactId>platform</artifactId>
         <version>0.0.1</version>
+        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
 
     <artifactId>platform-eureka</artifactId>
@@ -19,7 +20,6 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

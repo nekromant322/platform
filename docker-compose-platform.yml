@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+
+  eureka_server:
+    build: ./platform_eureka_server
+    ports:
+      - 8761:8761
+
+  orchestrator-db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: orchestrator-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5430:5432'
+
+  notification-db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: notification-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5431:5432'
