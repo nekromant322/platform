@@ -23,7 +23,6 @@ let telegramCheck;
 let vkCheck;
 
 function getUserPersonalData() {
-
     var empty = '';
     $.ajax({
         url: '/platformUsers/current',
