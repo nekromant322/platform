@@ -1,10 +1,58 @@
 version: '3.8'
+
 services:
 
   eureka_server:
     build: ./platform_eureka_server
     ports:
-      - 8761:8761
+      - "8761:8761"
+    networks:
+      - test-network
+
+  orchestrator:
+    build: ./platform_orchestrator
+    ports:
+      - "8000:8000"
+    depends_on:
+      - eureka_server
+    networks:
+      - test-network
+
+  notification:
+    build: ./platform_notification
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://platform_eureka_server:8761/eureka
+    ports:
+      - "8001:8001"
+    depends_on:
+      - eureka_server
+    image: platform/notification
+    networks:
+      - test-network
+
+  code_executor:
+    build: ./platform_code_executor
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://platform_eureka_server:8761/eureka
+    ports:
+      - "8002:8002"
+    depends_on:
+      - eureka_server
+    image: platform/code_executor
+    networks:
+      - test-network
+
+  bot:
+    build: ./platform_bot
+    ports:
+      - "8003:8003"
+    depends_on:
+      - eureka_server
+    image: platform/bot
+    networks:
+      - test-network
 
   orchestrator-db:
     image: postgres:14.1-alpine
@@ -15,6 +63,8 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - '5430:5432'
+    networks:
+      - test-network
 
   notification-db:
     image: postgres:14.1-alpine
@@ -25,3 +75,9 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - '5431:5432'
+    networks:
+      - test-network
+
+networks:
+  test-network:
+
