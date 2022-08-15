@@ -31,7 +31,7 @@ public class PersonalData {
     @Unupdatable
     @Column(name = "date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
-    private Date date;
+    private Date contractDate;
 
     @Unupdatable
     @Column(name = "full_name")
