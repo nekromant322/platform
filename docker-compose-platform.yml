@@ -15,6 +15,19 @@ services:
       - "8000:8000"
     depends_on:
       - eureka_server
+      - orchestrator-db
+    networks:
+      - test-network
+
+  orchestrator-db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: orchestrator-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5430:5432'
     networks:
       - test-network
 
@@ -28,6 +41,18 @@ services:
     depends_on:
       - eureka_server
     image: platform/notification
+    networks:
+      - test-network
+
+  notification-db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: notification-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5431:5432'
     networks:
       - test-network
 
@@ -51,30 +76,6 @@ services:
     depends_on:
       - eureka_server
     image: platform/bot
-    networks:
-      - test-network
-
-  orchestrator-db:
-    image: postgres:14.1-alpine
-    restart: always
-    environment:
-      POSTGRES_DB: orchestrator-db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - '5430:5432'
-    networks:
-      - test-network
-
-  notification-db:
-    image: postgres:14.1-alpine
-    restart: always
-    environment:
-      POSTGRES_DB: notification-db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - '5431:5432'
     networks:
       - test-network
 
