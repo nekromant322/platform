@@ -28,7 +28,7 @@ public class TestFieldsUtil {
 
         context.setVariable("actNumber", personalData.getActNumber());
         context.setVariable("contractNumber", personalData.getContractNumber());
-        context.setVariable("date", formatter.format(personalData.getDate()));
+        context.setVariable("date", formatter.format(personalData.getContractDate()));
         context.setVariable("fullName", personalData.getFullName());
         context.setVariable("passportSeries", personalData.getPassportSeries());
         context.setVariable("passportNumber", personalData.getPassportNumber());
@@ -48,7 +48,7 @@ public class TestFieldsUtil {
                 .id(5l)
                 .actNumber(950L)
                 .contractNumber("9/6/2022")
-                .date(new Date(1654819200000L)) // 2022-06-10 00:00:00.0 - in ms
+                .contractDate(new Date(1654819200000L)) // 2022-06-10 00:00:00.0 - in ms
                 .fullName("Erich Zieme DVM")
                 .passportSeries(5369L)
                 .passportNumber(642705L)

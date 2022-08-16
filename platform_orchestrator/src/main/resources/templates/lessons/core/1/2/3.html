@@ -20,15 +20,20 @@
             <div th:replace="fragments/lessonSidebar.html"/>
         </div>
         <div class="col-11">
-            <video  id="player" playsinline controls data-poster="/path/to/poster.jpg">
-                <source src="https://ucarecdn.com/4d92273d-b82c-4d75-8eda-9a638f3760e9/29056_1080_17b1dec3c8ffcf2b9d6b5360771b5b88.mp4" data-vjs-res="1080" type="video/mp4">
+        <span>
+            <p>
+            В следующем степе потребуется скачать и установить Java Development Kit — набор инструментов для разработки программ на Java.<br>
 
-                <!-- Captions are optional -->
-                <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default />
-            </video>
+                Вам пригодится следующая страница:  <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">www.oracle.com/technetwork/java</a>. Можете сразу открыть ее в новой вкладке.
+
+При установке JDK отметьте пункт Source Code, чтобы были установлены исходники классов стандартной библиотеки. Удобно иметь их под рукой, чтобы заглядывать при необходимости.
+            </p>
+
+        </span>
         </div>
+
     </div>
-    <a href="/lessons/core/1/2/2" class="btn btn-success btn-lg" role="button" id="nextLesson">Следующий урок</a>
+    <a class="btn btn-success btn-lg" href="/lessons/core/1/2/4" id="nextLesson" role="button">Следующий урок</a>
 </div>
 
 <!-- Вариант 1: Bootstrap в связке с Popper -->

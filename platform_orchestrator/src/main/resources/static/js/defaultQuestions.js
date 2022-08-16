@@ -68,8 +68,20 @@ function addColumns(data) {
         let radio = document.getElementById(data.chapter + "Edit");
         radio.checked = true;
 
+        checkRadioButtons("Edit", data.chapter)
+
         radio = document.getElementById(data.section + "Edit");
         radio.checked = true;
+
+        document.getElementById("coreEdit").addEventListener("click", () => {
+            checkRadioButtons("Edit", 'core')
+        });
+        document.getElementById("webEdit").addEventListener("click", () => {
+            checkRadioButtons("Edit", 'web')
+        });
+        document.getElementById("springEdit").addEventListener("click", () => {
+            checkRadioButtons("Edit", 'spring')
+        });
     });
     let delBtn = document.createElement("button");
     delBtn.className = "btn btn-success";
@@ -161,4 +173,35 @@ function editModalButton(question) {
 
 function openTabById(tab) {
     $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+}
+
+document.getElementById("core").addEventListener("click", () => {
+    checkRadioButtons("", 'core')
+});
+document.getElementById("web").addEventListener("click", () => {
+    checkRadioButtons("", 'web')
+});
+document.getElementById("spring").addEventListener("click", () => {
+    checkRadioButtons("", 'spring')
+});
+
+function checkRadioButtons(id, chapter) {
+        if (chapter === "core") {
+            document.getElementById('12'+id).disabled = false;
+            document.getElementById('1'+id).disabled = true;
+            document.getElementById('2'+id).disabled = true;
+            document.getElementById('3'+id).disabled = false;
+            document.getElementById('4'+id).disabled = false;
+            document.getElementById('5'+id).disabled = false;
+            document.getElementById('6'+id).disabled = false;
+        } else {
+            document.getElementById('12'+id).disabled = true;
+            document.getElementById('1'+id).disabled = false;
+            document.getElementById('2'+id).disabled = false;
+            document.getElementById('3'+id).disabled = false;
+            document.getElementById('4'+id).disabled = true;
+            document.getElementById('5'+id).disabled = true;
+            document.getElementById('6'+id).disabled = true;
+
+        }
 }
