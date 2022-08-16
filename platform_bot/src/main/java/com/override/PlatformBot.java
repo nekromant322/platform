@@ -5,8 +5,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -24,7 +22,6 @@ public class PlatformBot extends TelegramLongPollingCommandBot {
 
     @Value("${bot.token}")
     private String botToken;
-
 
     @Autowired
     public PlatformBot(List<PlatformBotCommand> allCommands) {
@@ -51,7 +48,6 @@ public class PlatformBot extends TelegramLongPollingCommandBot {
     public String getBotToken() {
         return botToken;
     }
-
 
     @SneakyThrows
     public void sendMessage(String chatId, String text) {

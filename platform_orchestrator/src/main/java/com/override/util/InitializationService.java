@@ -327,7 +327,6 @@ public class InitializationService {
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
         selectedTimeSlots.add(timeSlots.get(faker.number().numberBetween(0, 47)));
 
-
         long minDay = LocalDate.now().minusDays(1).toEpochDay();
         long maxDay = LocalDate.now().plusDays(2).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
@@ -442,7 +441,6 @@ public class InitializationService {
         defaultQuestionService.save(new DefaultQuestion("StringBuilder, когда стоит использовать, почему и когда стоит использовать .append() вместо конкатенации строк", "core", 12));
         defaultQuestionService.save(new DefaultQuestion("Что такое пул строк? Зачем он нужен?", "core", 12));
 
-
         //4
         defaultQuestionService.save(new DefaultQuestion("Зачем нужны исключения?", "core", 4));
         defaultQuestionService.save(new DefaultQuestion("Иерархия исключений", "core", 4));
@@ -504,8 +502,7 @@ public class InitializationService {
         defaultQuestionService.save(new DefaultQuestion("HTTP, структура запросов и ответов, методы, коды состояний", "web", 1));
         defaultQuestionService.save(new DefaultQuestion("Что такое сервлет?", "web", 1));
 
-
-//spring 1
+        //spring 1
         defaultQuestionService.save(new DefaultQuestion("Что такое Maven? Для чего он нужен? Как добавлять в проект библиотеки без него?", "spring", 1));
         defaultQuestionService.save(new DefaultQuestion("Как добавить dependency в Maven? Для чего они нужны? Откуда они скачиваются?", "spring", 1));
         defaultQuestionService.save(new DefaultQuestion("Основные фазы проекта под управлением Maven?", "spring", 1));

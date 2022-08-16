@@ -12,7 +12,6 @@ public class PersonalDataService {
     @Autowired
     private PersonalDataRepository personalDataRepository;
 
-
     @Autowired
     private PlatformUserService platformUserService;
 

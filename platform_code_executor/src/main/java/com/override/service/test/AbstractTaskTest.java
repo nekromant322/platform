@@ -71,7 +71,6 @@ public abstract class AbstractTaskTest {
                         .build());
     }
 
-
     public abstract TaskIdentifierDTO getTaskIdentifier();
 
     protected Integer getTimeout() {
@@ -79,7 +78,6 @@ public abstract class AbstractTaskTest {
     }
 
     protected abstract Callable[] getTestCases(Class mainClass);
-
 
     protected void assertEquals(String message, Object expected, Object actual) {
         if (!equalsRegardingNull(expected, actual)) {
