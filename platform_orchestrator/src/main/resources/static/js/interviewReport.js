@@ -262,7 +262,7 @@ function createUploadForm(id, tr) {
 function drawDownloadBtn(data, tr) {
 
     let downloadBtn = document.createElement("button");
-    downloadBtn.className = "download btn-success";
+    downloadBtn.className = "btn btn-success";
     downloadBtn.innerHTML = "Скачать файл";
     downloadBtn.type = "submit";
     downloadBtn.addEventListener("click", () => {

@@ -39,7 +39,7 @@ public class OfferDocumentService {
 
         OfferDocument offerDocument = offerDocumentRepository.getOfferDocumentByInterviewReport_Id(reportId);
 
-        if(offerDocument == null) { return OfferDocumentDTO.builder().build(); }
+        if (offerDocument == null) { return OfferDocumentDTO.builder().build(); }
 
         return OfferDocumentDTO.builder()
                 .id(offerDocument.getId())
