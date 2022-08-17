@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
+@Secured("ROLE_ADMIN")
 public class JoinRequestRestController {
 
     @Autowired
@@ -21,19 +22,16 @@ public class JoinRequestRestController {
         return requestService.saveRequest(requestDTO);
     }
 
-    @Secured("ROLE_ADMIN")
     @GetMapping("/join/request")
     public List<JoinRequest> getAllJoinRequests() {
         return requestService.getAllRequests();
     }
 
-    @Secured("ROLE_ADMIN")
     @PostMapping("/join/request/accept/{id}")
     public void acceptJoinRequest(@PathVariable Long id) {
         requestService.responseForJoinRequest(true, id);
     }
 
-    @Secured("ROLE_ADMIN")
     @PostMapping("/join/request/decline/{id}")
     public void declineJoinRequest(@PathVariable Long id) {
         requestService.responseForJoinRequest(false, id);
