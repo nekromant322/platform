@@ -26,7 +26,6 @@ public class PreProjectLessonsController {
         return preProjectLessonService.getAll();
     }
 
-
     @PostMapping("/current")
     public List<PreProjectLessonMentorReactionDTO> getCurrent(@RequestBody PreProjectLessonDTO preProjectLessonDTO, @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return preProjectLessonService.getAllByPathName(preProjectLessonDTO, user.getUsername());

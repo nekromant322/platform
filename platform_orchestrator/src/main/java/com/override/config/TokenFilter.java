@@ -51,7 +51,6 @@ public class TokenFilter extends GenericFilterBean {
             UserDetails customUserDetails = studentDetailService.loadUserByUsername("microservice");
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
-
         } else {
             log.error("WRONG X-MS-AUTH TOKEN");
             ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_FORBIDDEN);
@@ -59,5 +58,4 @@ public class TokenFilter extends GenericFilterBean {
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
-
 }

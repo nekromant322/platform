@@ -12,7 +12,6 @@ public class SmsRuController {
     @Autowired
     private SmsRuService smsRuService;
 
-
     @GetMapping("/code")
     public CodeCallSecurityCodeDTO callToClient(@RequestBody String clientPhoneNumber) {
         String securityCode = smsRuService.verifyNumber(clientPhoneNumber);

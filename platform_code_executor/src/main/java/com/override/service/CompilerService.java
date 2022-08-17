@@ -38,7 +38,6 @@ public class CompilerService {
             throw new CompilingCodeException(e);
         }
 
-
         File fileDir = new File(CUSTOM_CLASSES_DIR_NAME);
         try {
             //convert the file to URL format
@@ -69,5 +68,4 @@ public class CompilerService {
             e.printStackTrace();
         }
     }
-
 }

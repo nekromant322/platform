@@ -1,6 +1,5 @@
 package com.override.service;
 
-
 import com.override.model.PersonalData;
 import com.override.model.PlatformUser;
 import com.override.repository.PersonalDataRepository;
@@ -29,5 +28,4 @@ public class PersonalDataService {
         newPersonalData.setId(currentPersonalData.getId());
         personalDataRepository.save(newPersonalData);
     }
-
 }

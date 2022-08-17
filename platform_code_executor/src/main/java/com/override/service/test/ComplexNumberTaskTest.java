@@ -14,7 +14,6 @@ import java.util.concurrent.Callable;
 
 import static org.junit.Assert.assertNotEquals;
 
-
 @Component
 @RequiredArgsConstructor
 public class ComplexNumberTaskTest extends AbstractTaskTest {
@@ -108,7 +107,6 @@ public class ComplexNumberTaskTest extends AbstractTaskTest {
         message = String.format(MESSAGE_TEMPLATE_EQUALS, 1.0, 1.0, 42.0, 1.0);
         assertNotEquals(message, a, b);
 
-
         return TestResultDTO.builder().codeExecutionStatus(CodeExecutionStatus.OK).output("").build();
     }
 
@@ -126,14 +124,11 @@ public class ComplexNumberTaskTest extends AbstractTaskTest {
         Object a = TestUtils.newInstance(constructor, mainInstance, 10.25, 1.69);
         Object b = TestUtils.newInstance(constructor, mainInstance, 10.25, 1.69);
 
-
         String message = String.format(MESSAGE_TEMPLATE_HASHCODE, 10.25, 1.69, 10.25, 1.69);
         assertEquals(message, a.hashCode(), b.hashCode());
         message = String.format(MESSAGE_TEMPLATE_EQUALS, 10.25, 1.69, 10.25, 1.69);
         assertEquals(message, a, b);
 
-
         return TestResultDTO.builder().codeExecutionStatus(CodeExecutionStatus.OK).output("").build();
     }
-
 }

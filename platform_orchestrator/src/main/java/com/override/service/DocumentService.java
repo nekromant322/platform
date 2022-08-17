@@ -29,7 +29,6 @@ public class DocumentService {
             document.setName(file.getOriginalFilename());
             document.setUser(platformUserService.findPlatformUserByLogin(login));
             documentRepository.save(document);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

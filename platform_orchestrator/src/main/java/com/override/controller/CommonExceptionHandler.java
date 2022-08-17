@@ -37,6 +37,5 @@ public class CommonExceptionHandler {
                 .timestamp(Instant.now())
                 .build();
     }
-
 }
 

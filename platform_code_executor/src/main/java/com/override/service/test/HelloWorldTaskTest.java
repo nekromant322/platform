@@ -50,7 +50,6 @@ public class HelloWorldTaskTest extends AbstractTaskTest {
             TestUtils.invokeMethod(mainClass, main, (Object) new String[0]);
             String strOutput = out.toString().replaceAll("[\n\r]", "");
             assertEquals(String.format(ERROR_MESSAGE, strOutput), EXPECTED_OUTPUT, strOutput);
-
         } catch (Throwable throwable) {
             log.error("Error executing testcase");
             throw new ExecutingCodeException(throwable);
@@ -59,7 +58,6 @@ public class HelloWorldTaskTest extends AbstractTaskTest {
                 codeExecutionStatus(CodeExecutionStatus.OK).
                 output("").
                 build();
-
     }
 
     @Override

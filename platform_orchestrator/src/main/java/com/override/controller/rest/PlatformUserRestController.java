@@ -3,7 +3,6 @@ package com.override.controller.rest;
 import com.override.model.PlatformUser;
 import com.override.model.enums.CoursePart;
 import com.override.model.enums.Role;
-import com.override.service.AlertService;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.PlatformUserService;
 import enums.StudyStatus;
@@ -66,6 +65,4 @@ public class PlatformUserRestController {
     public ResponseEntity<String> updateWorkStatus(@PathVariable Long id, @PathVariable String status) {
         return platformUserService.updateStatus(id, StudyStatus.valueOf(status));
     }
-
-
 }

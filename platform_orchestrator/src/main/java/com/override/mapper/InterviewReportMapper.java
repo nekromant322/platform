@@ -48,7 +48,7 @@ public class InterviewReportMapper {
                 .build();
     }
 
-    public SalaryStatDTO LoginAndSalariesToDto(String userLogin, List<Integer> salaries) {
+    public SalaryStatDTO loginAndSalariesToDto(String userLogin, List<Integer> salaries) {
         return SalaryStatDTO.builder()
                 .label(userLogin)
                 .data(salaries)

@@ -24,7 +24,6 @@ public class ExecuteCodeService {
         this.compilerService = compilerService;
     }
 
-
     public TestResultDTO runCode(TaskIdentifierDTO taskIdentifierDTO, String studentsCode) {
         try {
             AbstractTaskTest taskTest = testsMap.get(taskIdentifierDTO);

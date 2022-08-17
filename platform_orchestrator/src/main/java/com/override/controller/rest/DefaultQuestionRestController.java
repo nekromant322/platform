@@ -4,8 +4,6 @@ import com.override.model.DefaultQuestion;
 import com.override.service.DefaultQuestionService;
 import dto.DefaultQuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

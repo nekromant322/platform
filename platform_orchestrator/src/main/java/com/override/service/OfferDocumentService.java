@@ -28,7 +28,6 @@ public class OfferDocumentService {
         offerDocument.setInterviewReport(interviewReportService.findReportById(id));
 
         offerDocumentRepository.save(offerDocument);
-
     }
 
     @Transactional

@@ -36,7 +36,6 @@ public class BugReportService {
     @Autowired
     private NotificatorFeign notificatorFeign;
 
-
     public final String DEFAULT_BUG_REPORT_NAME = "-";
     public final String DEFAULT_BUG_REPORT_TYPE = "text";
     public final String NEW_BUG_MESSAGE = "пользователь c логином: %s прислал баг \n с сообщением: %s";
