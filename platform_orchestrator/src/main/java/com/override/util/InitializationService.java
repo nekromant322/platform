@@ -32,6 +32,12 @@ public class InitializationService {
     @Value("${jwt.primeAdminPassword}")
     private String adminPassword;
 
+    @Value("${jwt.primeMicroserviceLogin}")
+    private String microserviceLogin;
+
+    @Value("${jwt.primeMicroservicePassword}")
+    private String microservicePassword;
+
     @Value("${jwt.primeAdminChatId}")
     private String adminTelegramChatId;
 
@@ -95,6 +101,7 @@ public class InitializationService {
     public void initTestData() {
         authorityInit();
         adminInit();
+        microserviceInit();
         userInit();
         codeTryInit();
         joinRequestsInit();
@@ -175,6 +182,10 @@ public class InitializationService {
 
     private void adminInit() {
         saveUser(adminLogin, adminPassword, StudyStatus.ACTIVE, CoursePart.PREPROJECT, Role.USER, Role.ADMIN);
+    }
+
+    private void microserviceInit() {
+        saveUser(microserviceLogin, microservicePassword, StudyStatus.ACTIVE, CoursePart.PREPROJECT, Role.USER, Role.ADMIN);
     }
 
     private void saveUser(String login, String password, StudyStatus study, CoursePart coursePart, Role... userRoles) {

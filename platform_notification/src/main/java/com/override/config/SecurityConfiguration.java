@@ -18,17 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private JwtFilter jwtFilter;
-    @Autowired
-    private PermitAllURLs permitAllUrls;
-    @Autowired
     private TokenFilter tokenFilter;
-    @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
-    @Autowired
-    private AuthenticationEntryPoint unauthorizedHandler;
-    @Autowired
-    private LessonFilter lessonFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -39,17 +29,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(permitAllUrls.getPermitAllUrls()).permitAll()
-               // .antMatchers("/admin/**", "/join/request/**").hasRole("ADMIN")
-                .antMatchers("/**").hasAnyRole("USER", "ADMIN", "GRADUATE")
+                .antMatchers("/**").permitAll()
                 .and()
-                .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler)
-                .authenticationEntryPoint(unauthorizedHandler)
-                .and()
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(lessonFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(tokenFilter, JwtFilter.class);
+                .addFilterAfter(tokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

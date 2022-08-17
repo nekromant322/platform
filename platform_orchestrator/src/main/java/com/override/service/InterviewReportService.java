@@ -41,4 +41,8 @@ public class InterviewReportService {
         return (interviewReportRepository.findAll()).stream()
                 .map(interviewReportMapper::entityToDto).collect(Collectors.toList());
     }
+
+    public InterviewReport findReportById(Long id) {
+        return interviewReportRepository.getById(id);
+    }
 }
