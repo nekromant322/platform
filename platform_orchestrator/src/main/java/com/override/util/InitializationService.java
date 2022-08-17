@@ -394,7 +394,6 @@ public class InitializationService {
         personalData.setPhoneNumber(Long.valueOf("8" + faker.bothify("##########")));
 
         personalDataService.save(personalData, user.getLogin());
-
     }
 
     public void userSettingsInit(PlatformUser user) {

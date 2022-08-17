@@ -27,5 +27,4 @@ public class OfferDocument {
     @JoinColumn(name = "report_id")
     @ManyToOne(fetch = FetchType.EAGER)
     private InterviewReport interviewReport;
-
 }

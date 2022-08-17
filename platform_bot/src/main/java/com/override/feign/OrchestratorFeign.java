@@ -10,5 +10,4 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface OrchestratorFeign {
     @PostMapping("/join/request")
     JoinRequestStatusDTO saveJoinRequest(@RequestBody RegisterUserRequestDTO requestDTO);
-
 }

@@ -22,5 +22,4 @@ public class PreProjectComment {
     private PreProjectLesson preProjectLesson;
 
     private String comment;
-
 }

@@ -131,5 +131,4 @@ public class ComplexNumberTaskTest extends AbstractTaskTest {
 
         return TestResultDTO.builder().codeExecutionStatus(CodeExecutionStatus.OK).output("").build();
     }
-
 }

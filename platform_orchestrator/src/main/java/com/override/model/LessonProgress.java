@@ -26,5 +26,4 @@ public class LessonProgress {
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     private PlatformUser user;
-
 }

@@ -20,5 +20,4 @@ public class PlatformOrchestratorApplication {
     public static void main(String[] args) {
         SpringApplication.run(PlatformOrchestratorApplication.class, args);
     }
-
 }

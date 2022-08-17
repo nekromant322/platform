@@ -9,5 +9,4 @@ public class AssertionError extends RuntimeException {
         this.fExpected = expected;
         this.fActual = actual;
     }
-
 }

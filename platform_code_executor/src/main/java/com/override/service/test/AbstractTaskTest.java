@@ -59,7 +59,6 @@ public abstract class AbstractTaskTest {
                                 "Техническая ошибка, обратись к ментору:\n\n" + e.getMessage()))
                         .build());
             }
-
         }
 
         return testResults.stream()

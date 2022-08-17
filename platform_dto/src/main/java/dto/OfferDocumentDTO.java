@@ -10,5 +10,4 @@ public class OfferDocumentDTO {
     private Long id;
     private String name;
     private String type;
-
 }

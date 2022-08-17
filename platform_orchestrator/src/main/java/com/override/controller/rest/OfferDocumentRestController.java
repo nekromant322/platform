@@ -29,7 +29,6 @@ public class OfferDocumentRestController {
 
         offerDocumentService.upload(multipartFile, reportId);
         response.sendRedirect("/interviewReports");
-
     }
 
     @GetMapping("/download/{id}")
@@ -49,5 +48,4 @@ public class OfferDocumentRestController {
     public OfferDocumentDTO getFileDTO(@PathVariable("reportId") Long reportId) {
         return offerDocumentService.getByReportId(reportId);
     }
-
 }
