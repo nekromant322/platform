@@ -10,6 +10,7 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <title>Default Questions</title>
+    <link rel="stylesheet" type="text/css" href="/css/defaultQuestions.css">
     <header th:replace="fragments/navbar.html :: header"></header>
 </head>
 <body>
@@ -66,56 +67,60 @@
                                         <input type="text" class="form-control mb-1 col-4"
                                                id="question">
 
+                                        <div class="form_radio_btn">
+                                            <div>
+                                                <p>Раздел:</p>
+                                                <input type="radio" id="core"
+                                                       name="chapter" value="core">
+                                                <label for="core">Core</label>
 
-                                        <div>
-                                            <p>Раздел:</p>
-                                            <input type="radio" id="core"
-                                                   name="chapter" value="core">
-                                            <label for="core">Core</label>
+                                                <input type="radio" id="web"
+                                                       name="chapter" value="web">
+                                                <label for="web">Web</label>
 
-                                            <input type="radio" id="web"
-                                                   name="chapter" value="web">
-                                            <label for="web">Web</label>
+                                                <input type="radio" id="spring"
+                                                       name="chapter" value="spring">
+                                                <label for="spring">Spring</label>
+                                            </div>
+                                            <br>
+                                            <br>
+                                            <div>
+                                                <p>Глава раздела:</p>
+                                                <input type="radio" id="12"
+                                                       name="section" value="12">
+                                                <label for="12">1+2</label>
 
-                                            <input type="radio" id="spring"
-                                                   name="chapter" value="spring">
-                                            <label for="spring">Spring</label>
+                                                <input type="radio" id="1"
+                                                       name="section" value="1">
+                                                <label for="1">1</label>
+
+                                                <input type="radio" id="2"
+                                                       name="section" value="2">
+                                                <label for="2">2</label>
+
+                                                <input type="radio" id="3"
+                                                       name="section" value="3">
+                                                <label for="3">3</label>
+
+                                                <input type="radio" id="4"
+                                                       name="section" value="4">
+                                                <label for="4">4</label>
+
+                                                <input type="radio" id="5"
+                                                       name="section" value="5">
+                                                <label for="5">5</label>
+
+                                                <input type="radio" id="6"
+                                                       name="section" value="6">
+                                                <label for="6">6</label>
+                                            </div>
                                         </div>
-
-                                        <div>
-                                            <p>Глава раздела:</p>
-                                            <input type="radio" id="12"
-                                                   name="section" value="12">
-                                            <label for="12">1+2</label>
-
-                                            <input type="radio" id="1"
-                                                   name="section" value="1">
-                                            <label for="1">1</label>
-
-                                            <input type="radio" id="2"
-                                                   name="section" value="2">
-                                            <label for="2">2</label>
-
-                                            <input type="radio" id="3"
-                                                   name="section" value="3">
-                                            <label for="3">3</label>
-¬
-                                            <input type="radio" id="4"
-                                                   name="section" value="4">
-                                            <label for="4">4</label>
-
-                                            <input type="radio" id="5"
-                                                   name="section" value="5">
-                                            <label for="5">5</label>
-
-                                            <input type="radio" id="6"
-                                                   name="section" value="6">
-                                            <label for="6">6</label>
-                                        </div>
-
+                                        <br>
+                                        <br>
                                         <button type="submit" class="btn btn-success col-2 AddBtn">Добавить новый
                                             вопрос
                                         </button>
+
                                     </form>
                                 </div>
                             </div>
@@ -142,49 +147,57 @@
                     <div class="modal-body">
                         <label for="IDedit"><b>ID</b></label>
                         <input type="text" class="form-control mb-1 col-4"
-                               id="IDedit">
+                               id="IDedit" disabled>
 
                         <label for="question"><b>Вопрос</b></label>
                         <input type="text" class="form-control mb-1 col-4"
                                id="questionEdit">
+                        <div class="form_radio_btn">
+                            <div>
+                                <p>Раздел:</p>
+                                <input type="radio" id="coreEdit"
+                                       name="chapterEdit" value="core">
+                                <label for="coreEdit">Core</label>
 
-                        <div>
-                            <p>Раздел:</p>
-                            <input type="radio" id="coreEdit"
-                                   name="chapterEdit" value="core">
-                            <label for="core">Core</label>
+                                <input type="radio" id="webEdit"
+                                       name="chapterEdit" value="web">
+                                <label for="webEdit">Web</label>
 
-                            <input type="radio" id="webEdit"
-                                   name="chapterEdit" value="web">
-                            <label for="web">Web</label>
+                                <input type="radio" id="springEdit"
+                                       name="chapterEdit" value="spring">
+                                <label for="springEdit">Spring</label>
+                            </div>
+                            <p></p>
+                            <div>
+                                <p>Глава раздела:</p>
+                                <input type="radio" id="12Edit"
+                                          name="sectionEdit" value="12">
+                                <label for="12Edit">1+2</label>
 
-                            <input type="radio" id="springEdit"
-                                   name="chapterEdit" value="spring">
-                            <label for="spring">Spring</label>
-                        </div>
-                        <p></p>
-                        <div>
-                            <p>Глава раздела:</p>
-                            <p><input type="radio" id="12Edit"
-                                      name="sectionEdit" value="12"> 1+2 </p>
+                                <input type="radio" id="1Edit"
+                                       name="sectionEdit" value="1">
+                                <label for="1Edit">1</label>
 
-                            <p><input type="radio" id="1Edit"
-                                      name="sectionEdit" value="1"> 1 </p>
+                                <input type="radio" id="2Edit"
+                                       name="sectionEdit" value="2">
+                                <label for="2Edit">2</label>
 
-                            <p><input type="radio" id="2Edit"
-                                      name="sectionEdit" value="2"> 2 </p>
+                                <input type="radio" id="3Edit"
+                                       name="sectionEdit" value="3">
+                                <label for="3Edit">3</label>
 
-                            <p><input type="radio" id="3Edit"
-                                      name="sectionEdit" value="3"> 3 </p>
+                                <input type="radio" id="4Edit"
+                                       name="sectionEdit" value="4">
+                                <label for="4Edit">4</label>
 
-                            <p><input type="radio" id="4Edit"
-                                      name="sectionEdit" value="4"> 4 </p>
+                                <input type="radio" id="5Edit"
+                                       name="sectionEdit" value="5">
+                                <label for="5Edit">5</label>
 
-                            <p><input type="radio" id="5Edit"
-                                      name="sectionEdit" value="5"> 5 </p>
-
-                            <p><input type="radio" id="6Edit"
-                                      name="sectionEdit" value="6"> 6 </p>
+                                <input type="radio" id="6Edit"
+                                       name="sectionEdit" value="6">
+                                <label for="6Edit">6</label>
+                            </div>
                         </div>
 
                     </div>
