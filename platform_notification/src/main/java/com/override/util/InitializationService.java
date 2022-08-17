@@ -30,5 +30,4 @@ public class InitializationService {
                 .build();
         recipientService.save(recipientDTO);
     }
-
 }

@@ -27,6 +27,4 @@ public class Document {
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.EAGER)
     private PlatformUser user;
-
-
 }

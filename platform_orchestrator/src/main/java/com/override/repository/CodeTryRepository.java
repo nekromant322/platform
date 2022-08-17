@@ -30,5 +30,4 @@ public interface CodeTryRepository extends JpaRepository<CodeTry, Long> {
             "from code_try where code_execution_status!='OK' group by chapter, step, lesson " +
             "order by count desc limit :size", nativeQuery = true)
     List<Integer[]> countStatsOfHardTasks(@Param("size") int size);
-
 }

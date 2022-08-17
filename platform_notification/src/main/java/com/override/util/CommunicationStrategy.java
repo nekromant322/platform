@@ -5,6 +5,8 @@ import enums.Communication;
 
 public interface CommunicationStrategy {
     void sendMessage(Recipient recipient, String message);
+
     Recipient setCommunication(Recipient recipient, String value);
+
     Communication getType();
 }

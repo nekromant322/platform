@@ -39,6 +39,7 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
 
+---
 documentSizeLimit:
   forPersonalData: 5 # 5 МБ
   forBugReports: 5 # 5 МБ
@@ -46,6 +47,11 @@ documentSizeLimit:
 cache:
   timeout: 5 #minutes
   size: 100
+---
+
+---
+token:
+  X-MS-AUTH: ${MICROSERVICES_SECRET_TOKEN:0LDRhdGD0LXRgtGMINC90LUg0LLRgdGC0LDRgtGMXl4=}
 
 sms:
   url:
@@ -68,6 +74,11 @@ logging:
   pattern:
     console: "%d %-5level %logger : %msg%n"
     file: "%d %-5level [%thread] %logger : %msg%n"
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: FULL
 
 eureka:
   instance:
@@ -81,9 +92,12 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
 
+
 jwt:
   primeAdminLogin: admin
   primeAdminPassword: admin
+  primeMicroserviceLogin: microservice
+  primeMicroservicePassword: microservice
   primeAdminChatId: 010101
   secret:
     path: keys/keystore.jks

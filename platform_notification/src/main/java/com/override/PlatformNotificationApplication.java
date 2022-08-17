@@ -13,5 +13,4 @@ public class PlatformNotificationApplication {
     public static void main(String[] args) {
         SpringApplication.run(PlatformNotificationApplication.class, args);
     }
-
 }

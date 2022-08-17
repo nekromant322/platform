@@ -20,6 +20,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtFilter jwtFilter;
     @Autowired
+    private PermitAllURLs permitAllUrls;
+    @Autowired
+    private TokenFilter tokenFilter;
+    @Autowired
     private AccessDeniedHandler accessDeniedHandler;
     @Autowired
     private AuthenticationEntryPoint unauthorizedHandler;
@@ -35,9 +39,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login", "/join/request/**", "/init").permitAll()
-                .antMatchers("/js/**", "/css/**", "/images/**").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers(permitAllUrls.getPermitAllUrls()).permitAll()
+               // .antMatchers("/admin/**", "/join/request/**").hasRole("ADMIN")
                 .antMatchers("/**").hasAnyRole("USER", "ADMIN", "GRADUATE")
                 .and()
                 .exceptionHandling()
@@ -45,7 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(unauthorizedHandler)
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(lessonFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterAfter(lessonFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(tokenFilter, JwtFilter.class);
     }
 
     @Bean

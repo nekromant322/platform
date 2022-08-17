@@ -82,7 +82,7 @@ public class StatisticsService {
 
                 salaries.add(salaryForLabel);
             }
-            userSalaries.add(interviewReportMapper.LoginAndSalariesToDto(userLogin, salaries));
+            userSalaries.add(interviewReportMapper.loginAndSalariesToDto(userLogin, salaries));
         }
         return interviewReportMapper.salaryStatDtoToSalaryDto(labels, userSalaries);
     }

@@ -18,7 +18,6 @@ public class CommonErrorDTO {
      */
     private String message;
 
-
     /**
      * время возникновения ошибки
      */

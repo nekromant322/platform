@@ -30,5 +30,4 @@ public class DefaultQuestion {
         this.chapter = chapter;
         this.section = section;
     }
-
 }

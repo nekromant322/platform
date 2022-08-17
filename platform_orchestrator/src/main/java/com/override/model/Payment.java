@@ -31,5 +31,4 @@ public class Payment {
     private Long accountNumber;
 
     private String message;
-
 }

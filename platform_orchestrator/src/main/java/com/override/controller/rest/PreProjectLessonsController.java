@@ -30,7 +30,6 @@ public class PreProjectLessonsController {
         return preProjectLessonService.getAll();
     }
 
-
     @PostMapping("/current")
     @ApiOperation(value = "Возвращает список \"предпроектных уроков\" для текущего юзера по идентификатору задачи, который берется из ДТОшки")
     public List<PreProjectLessonMentorReactionDTO> getCurrent(@RequestBody PreProjectLessonDTO preProjectLessonDTO, @AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {

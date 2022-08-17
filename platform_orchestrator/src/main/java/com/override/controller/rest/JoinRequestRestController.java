@@ -24,14 +24,12 @@ public class JoinRequestRestController {
         return requestService.saveRequest(requestDTO);
     }
 
-    @Secured("ROLE_ADMIN")
     @GetMapping("/join/request")
     @ApiOperation(value = "Возвращает весь список запросов на регистрацию из БД")
     public List<JoinRequest> getAllJoinRequests() {
         return requestService.getAllRequests();
     }
 
-    @Secured("ROLE_ADMIN")
     @PostMapping("/join/request/accept/{id}")
     @ApiOperation(value = "Админ принимает запрос на регистрацию. В телеграм пользователю отправляется " +
             "сообщение о принятии запроса, а так же логин и пароль для входа на платформу. Запрос удаляется из БД")
