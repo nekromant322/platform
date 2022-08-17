@@ -2,6 +2,8 @@ package com.override.controller.rest;
 
 import com.override.service.StatisticsService;
 import dto.CodeTryStatDTO;
+import dto.GeneralIncomeDTO;
+import dto.IncomeFromUsersDTO;
 import dto.SalaryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,5 +33,15 @@ public class StatisticsRestController {
     @GetMapping("/salary")
     public SalaryDTO getSalaryStat(){
         return statisticsService.getSalaryStatistics();
+    }
+
+    @GetMapping("/allPayment")
+    public IncomeFromUsersDTO getAllPayment(){
+        return statisticsService.getAllPayment();
+    }
+
+    @GetMapping("/generalIncome")
+    public GeneralIncomeDTO getGeneralPayment(){
+        return statisticsService.getGeneralPayment();
     }
 }

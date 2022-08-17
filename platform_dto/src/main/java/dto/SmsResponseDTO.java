@@ -11,5 +11,4 @@ public class SmsResponseDTO {
     private int code;
     private SmsDTO sms;
     private double balance;
-
 }

@@ -20,5 +20,4 @@ public class PreProjectLessonMapper {
                 .link(preProjectLesson.getLink())
                 .build();
     }
-
 }

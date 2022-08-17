@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class Document {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -27,6 +27,4 @@ public class Document {
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.EAGER)
     private PlatformUser user;
-
-
 }

@@ -183,13 +183,17 @@ function addColumn(data) {
     insertTd(data.currency, tr, color, legend);
     insertTd(data.level, tr, color, legend);
 
+    if ((currentUserRole === "ADMIN" || data.userLogin === currentUserLogin) && data.status != "Passed") {
+        getOfferDocument(data.id, tr);
+    }
+
     if ((currentUserRole === "ADMIN" || data.userLogin === currentUserLogin) && data.status === "Passed") {
         let offerBtn = document.createElement("button");
         offerBtn.className = "btn btn-warning";
         offerBtn.innerHTML = "Получил(а) оффер";
         offerBtn.type = "submit";
         offerBtn.addEventListener("click", () => {
-            changeStatus(interviewReportUpdateDTO, "offer");
+            changeStatus(interviewReportUpdateDTO, data, "offer");
         });
         td = tr.insertCell(10);
         td.style.backgroundColor = 'white';
@@ -202,12 +206,95 @@ function addColumn(data) {
         acceptedBtn.innerHTML = "Принял(а) оффер";
         acceptedBtn.type = "submit";
         acceptedBtn.addEventListener("click", () => {
-            changeStatus(interviewReportUpdateDTO, "accepted");
+            changeStatus(interviewReportUpdateDTO, data, "accepted");
         });
         td = tr.insertCell(10);
         td.style.backgroundColor = 'white';
         td.insertAdjacentElement("beforeend", acceptedBtn);
     }
+
+}
+
+function getOfferDocument(reportId, tr) {
+
+    $.ajax({
+        method: 'GET',
+        async: false,
+        url: '/offer-document/' + reportId,
+        contentType: 'application/json',
+        success: function (response) {
+            if (response.id === null) {
+                createUploadForm(reportId, tr);
+            } else {
+                console.log(response);
+                drawDownloadBtn(response, tr);
+            }
+        }
+    });
+
+}
+
+function createUploadForm(id, tr) {
+
+    let uploadForm = document.createElement("form");
+    uploadForm.method = "POST";
+    uploadForm.action = "/offer-document/upload/" + id;
+    uploadForm.enctype = "multipart/form-data";
+
+    let uploadFormInput = document.createElement("input");
+    uploadFormInput.accept = ".pdf";
+    uploadFormInput.type = "file";
+    uploadFormInput.name = "file";
+    uploadFormInput.multiple = true;
+    uploadForm.appendChild(uploadFormInput);
+
+    let uploadFormBtn = document.createElement("input");
+    uploadFormBtn.type = "submit";
+    uploadFormBtn.name = "Загрузить файл";
+    uploadForm.appendChild(uploadFormBtn);
+
+    let td = tr.insertCell(10);
+    td.style.backgroundColor = 'white';
+    td.insertAdjacentElement("beforeend", uploadForm);
+
+}
+
+function drawDownloadBtn(data, tr) {
+
+    let downloadBtn = document.createElement("button");
+    downloadBtn.className = "btn btn-success";
+    downloadBtn.innerHTML = "Скачать файл";
+    downloadBtn.type = "submit";
+    downloadBtn.addEventListener("click", () => {
+        downloadOfferFile(data.id, data.name);
+    });
+
+    let td = tr.insertCell(10);
+    td.style.backgroundColor = 'white';
+    td.insertAdjacentElement("beforeend", downloadBtn);
+
+}
+
+function downloadOfferFile(id, fileName) {
+
+    $.ajax({
+        url: '/offer-document/download/' + id,
+        dataType: 'binary',
+        xhrFields: {
+            'responseType': 'blob'
+        },
+        success: function (data) {
+            var blob = new Blob([data], {type: 'application/pdf'});
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'Offer' + fileName;
+            link.click();
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
 }
 
 function insertTd(value, parent, color, legend) {
@@ -219,8 +306,9 @@ function insertTd(value, parent, color, legend) {
     parent.insertAdjacentElement("beforeend", element);
 }
 
-function changeStatus(interviewReportUpdateDTO, status) {
-    let confirmation = confirm("Вы уверены, что хотите изменить статус на " + status + "?");
+function changeStatus(interviewReportUpdateDTO, data, status) {
+    let confirmation =  (status === "offer") ? confirm("Вы уверены, что хотите изменить статус на " + status + "?") :
+                        (status === "accepted") ? confirm("Вы уверены, что принимаете данный оффер и выходите на работу в " + data.company + "?") : false;
 
     if (confirmation === true) {
         interviewReportUpdateDTO.salary = prompt("Уточните зарплату на руки", interviewReportUpdateDTO.salary);

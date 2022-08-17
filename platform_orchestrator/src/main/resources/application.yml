@@ -64,6 +64,10 @@ testData:
   paymentsCount: 6
   preProjectLessonCount: 5
 
+alert:
+  daysWithoutNewSolutionsAlertThreshold: 3
+  cronNotificationPeriodForStudentsWithNoNewSolutions: 0 00 10 * * ?
+
 logging:
   file:
     name: logs/app.log
@@ -140,12 +144,10 @@ navbar:
       /questions
     - Мои ревью
       /userReviews
-    - Персональные данные
+    - Личный кабинет
       /personalData
     - Собеседования
       /interviewReports
-    - Настройки
-      /userSettings
   graduate:
     - Курсы
       /courses
@@ -153,10 +155,8 @@ navbar:
       /interviewReports
     - Оплата
       /payments
-    - Персональные данные
+    - Личный кабинет
       /personalData
-    - Настройки
-      /userSettings
 
 management:
   info:

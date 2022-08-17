@@ -17,4 +17,5 @@ public class ReviewDTO {
     private LocalDate bookedDate;
     private LocalTime bookedTime;
     private Set<LocalTime> timeSlots;
+    private String callLink;
 }

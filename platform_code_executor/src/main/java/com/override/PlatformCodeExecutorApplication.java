@@ -11,5 +11,4 @@ public class PlatformCodeExecutorApplication {
     public static void main(String[] args) {
         SpringApplication.run(PlatformCodeExecutorApplication.class, args);
     }
-
 }

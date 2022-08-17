@@ -1,4 +1,5 @@
 window.onload = function () {
+    getCurrentUser();
     getUserPersonalData();
     getUserDoc();
 };
@@ -15,9 +16,13 @@ var birthDate;
 var registration;
 var email;
 var phoneNumber;
+let telegramNotification;
+let vkNotification;
+let currentUserLogin;
+let telegramCheck;
+let vkCheck;
 
 function getUserPersonalData() {
-
     var empty = '';
     $.ajax({
         url: '/platformUsers/current',
@@ -73,52 +78,62 @@ function getUserPersonalData() {
                 '<h5>Номер акта</h5>' +
                 '<input class="form-control input-number" id="actNumber" ' +
                 'placeholder="actNumber" maxlength="255" ' +
-                'value="' + (actNumber == null ? empty : actNumber) + '">' +
+                'value="' + (actNumber == null ? empty : actNumber) + '" ' + 
+                (actNumber != null ? 'disabled' : '') + '>' +
                 '<br>' +
                 '<h5>Номер контракта</h5>' +
                 '<input class="form-control" id="contractNumber" type="text" ' +
                 'placeholder="contractNumber" maxlength="255" ' +
-                'value="' + (contractNumber == null ? empty : contractNumber) + '">' +
+                'value="' + (contractNumber == null ? empty : contractNumber) + '" ' +
+                (contractNumber != null ? 'disabled' : '') + '>' +
                 '<br>' +
                 '<h5>Дата</h5>' +
                 '<input class="form-control" id="date" type="text" ' +
                 'placeholder="date" ' +
-                'value="' + (date == null ? empty : date) + '">' +
+                'value="' + (date == null ? empty : date) + '" ' +
+                (date != null ? 'disabled' : '') + '>' +
                 '<br>' +
                 '<h5>ФИО</h5>' +
                 '<input class="form-control" id="fullName" ' +
                 'placeholder="fullName" maxlength="255" ' +
-                'value="' + (fullName == null ? empty : fullName) + '">' +
+                'value="' + (fullName == null ? empty : fullName) + '" ' +
+                (fullName != null ? 'disabled' : '') + '>' +
                 '<br>' +
                 '<h5>Серия паспорта</h5>' +
                 '<input class="form-control input-number" id="passportSeries" ' +
                 'placeholder="passportSeries" maxlength="4" ' +
-                'value="' + (passportSeries == null ? empty : passportSeries) + '">' +
+                'value="' + (passportSeries == null ? empty : passportSeries) + '" ' +
+                (passportSeries != null ? 'disabled' : '') + '>' +
                 '<br>' +
                 '<h5>Номер паспорта</h5>' +
                 '<input class="form-control input-number" id="passportNumber" ' +
                 'placeholder="passportNumber" maxlength="6" ' +
-                'value="' + (passportNumber == null ? empty : passportNumber) + '">' +
+                'value="' + (passportSeries == null ? empty : passportNumber) + '" ' +
+                (passportSeries != null ? 'disabled' : '') + '>' +
                 '<br>' +
                 '<h5>Выдан</h5>' +
                 '<input class="form-control" id="passportIssued" ' +
                 'placeholder="passportIssued" maxlength="255" ' +
-                'value="' + (passportIssued == null ? empty : passportIssued) + '">' +
+                'value="' + (passportIssued == null ? empty : passportIssued) + '" ' +
+                (passportIssued != null ? 'disabled' : '') + '>' +
                 '<br>' +
                 '<h5>Годен</h5>' +
                 '<input class="form-control" id="issueDate" type="text" ' +
                 'placeholder="issueDate" ' +
-                'value="' + (issueDate == null ? empty : issueDate) + '">' +
+                'value="' + (issueDate == null ? empty : issueDate) + '" ' +
+                (issueDate != null ? 'disabled' : '') + '>' +
                 '<br>' +
                 '<h5>Дата рождения</h5>' +
                 '<input class="form-control" id="birthDate" type="text" ' +
                 'placeholder="birthDate" ' +
-                'value="' + (birthDate == null ? empty : birthDate) + '">' +
+                'value="' + (birthDate == null ? empty : birthDate) + '" ' +
+                (birthDate != null ? 'disabled' : '') + '>' +
                 '<br>' +
                 '<h5>Регистрация</h5>' +
                 '<input class="form-control" id="registration" ' +
                 'placeholder="registration" maxlength="255" ' +
-                'value="' + (registration == null ? empty : registration) + '">' +
+                'value="' + (registration == null ? empty : registration) + '" ' +
+                (registration != null ? 'disabled' : '') + '>' +
                 '<br>' +
                 '<h5>Email</h5>' +
                 '<input class="form-control" id="email" type="email" ' +
@@ -325,4 +340,105 @@ function downloadFile(id, name) {
             link.click();
         }
     });
+}
+
+
+function getCurrentUser() {
+    $.ajax({
+        url: '/platformUsers/current',
+        type: 'GET',
+        contentType: 'application/json',
+        cache: false,
+        success: function (currentUser) {
+            telegramNotification = currentUser.userSettings.telegramNotification;
+            vkNotification = currentUser.userSettings.vkNotification;
+            currentUserLogin = currentUser.login;
+            telegramCheck = telegramNotification;
+            vkCheck = vkNotification;
+
+            $('#telegram').append((telegramNotification === false ? 'No' : 'Yes') + ' ');
+            $('#vk').append((vkNotification === false ? 'No' : 'Yes') + ' ');
+
+            if (telegramNotification === true) {
+                $('#telegramCheck').prop('checked', true);
+            }
+            if (vkNotification === true) {
+                $('#vkCheck').prop('checked', true);
+            }
+
+            var telegram = document.querySelector('#telegramCheck');
+            telegram.onclick = function () {
+                if (telegram.checked) {
+                    telegramCheck = true;
+                } else {
+                    telegramCheck = false;
+                }
+            }
+            var vk = document.querySelector('#vkCheck');
+            vk.onclick = function () {
+                if (vk.checked) {
+                    vkCheck = true;
+                } else {
+                    vkCheck = false;
+                }
+            }
+
+            $('#editButton').click(function () {
+                saveChanges(null, telegramCheck, vkCheck, currentUserLogin);
+            })
+        }
+    })
+}
+
+function saveChanges(id, telegramCheck, vkCheck, currentUserLogin) {
+    let settings = {};
+    settings.id = id;
+    settings.telegramNotification = telegramCheck;
+    settings.vkNotification = vkCheck;
+    $.ajax({
+        url: '/userSettings/' + currentUserLogin,
+        dataType: 'json',
+        method: 'PATCH',
+        cache: false,
+        contentType: 'application/json',
+        data: JSON.stringify(settings),
+        success: function (data) {
+            console.log(data)
+            getUserChanges();
+        },
+        error: function (data) {
+            console.log(data)
+            getUserChanges();
+        }
+    })
+}
+
+function getUserChanges() {
+    $.ajax({
+        url: '/platformUsers/current',
+        type: 'GET',
+        contentType: 'application/json',
+        cache: false,
+        success: function (currentUser) {
+            telegramNotification = currentUser.userSettings.telegramNotification;
+            vkNotification = currentUser.userSettings.vkNotification;
+            telegramCheck = telegramNotification;
+            vkCheck = vkNotification;
+            $('#telegram').empty();
+            $('#vk').empty();
+            $('#telegram').append((telegramNotification === false ? 'Telegram: No' : 'Telegram: Yes') + ' ');
+            $('#vk').append((vkNotification === false ? 'VK: No' : 'VK: Yes') + ' ');
+
+            if (telegramNotification === false) {
+                $('#telegramCheck').prop('checked', false);
+            } else {
+                $('#telegramCheck').prop('checked', true);
+            }
+            if (vkNotification === false) {
+                $('#vkCheck').prop('checked', false);
+            } else {
+                $('#vkCheck').prop('checked', true);
+            }
+        }
+    })
 }

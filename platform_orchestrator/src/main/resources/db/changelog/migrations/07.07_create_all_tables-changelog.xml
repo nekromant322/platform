@@ -10,12 +10,12 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="act_number" type="bigint"/>
-            <column name="birth_date" type="date"/>
+            <column name="birth_date" type="timestamp"/>
             <column name="contract_number" type="varchar(255)"/>
-            <column name="date" type="date"/>
+            <column name="date" type="timestamp"/>
             <column name="email" type="varchar(255)"/>
             <column name="full_name" type="varchar(255)"/>
-            <column name="issue_date" type="date"/>
+            <column name="issue_date" type="timestamp"/>
             <column name="passport_issued" type="varchar(255)"/>
             <column name="passport_number" type="bigint"/>
             <column name="passport_series" type="bigint"/>
@@ -68,7 +68,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="type" type="varchar(255)"/>
-            <column name="content" type="blob"/>
+            <column name="content" type="bytea"/>
             <column name="name" type="varchar(255)"/>
             <column name="text" type="varchar(255)"/>
             <column name="user_id" type="bigint">
@@ -80,7 +80,7 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="date" type="date"/>
+            <column name="date" type="timestamp"/>
             <column name="chapter" type="integer"/>
             <column name="code_execution_status" type="varchar(255)">
             </column>
@@ -96,7 +96,7 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="content" type="blob"/>
+            <column name="content" type="bytea"/>
             <column name="name" type="varchar(255)"/>
             <column name="type" type="varchar(255)"/>
             <column name="user_id" type="bigint">
@@ -121,6 +121,18 @@
             <column name="user_login" type="varchar"/>
         </createTable>
 
+        <createTable tableName="offer_document">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="content" type="blob"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="type" type="varchar(255)"/>
+            <column name="report_id" type="bigint">
+                <constraints foreignKeyName="report_id" references="interview_report(id)"/>
+            </column>
+        </createTable>
+
         <createTable tableName="join_request">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
@@ -137,12 +149,6 @@
             <column name="user_id" type="bigint"/>
         </createTable>
 
-        <createTable tableName="pre_project_comment">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="comment" type="varchar"/>
-        </createTable>
 
         <createTable tableName="pre_project_lesson">
             <column name="id" type="bigint" autoIncrement="true">
@@ -152,11 +158,18 @@
             <column name="task_identifier" type="varchar"/>
             <column name="approve" type="bool"/>
             <column name="viewed" type="bool"/>
-            <column name="comments" type="bigint">
-                <constraints foreignKeyName="pre_project_comment_id" references="pre_project_comment(id)"/>
-            </column>
             <column name="user_id" type="bigint">
                 <constraints foreignKeyName="platform_user_id" references="platform_user(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="pre_project_comment">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="comment" type="varchar"/>
+            <column name="pre_project_lesson_id" type="bigint">
+                <constraints foreignKeyName="pre_project_lesson_id" references="pre_project_lesson(id)"/>
             </column>
         </createTable>
 
@@ -186,6 +199,7 @@
             </column>
             <column name="time_slots" type="varchar(255)"/>
             <column name="topic" type="varchar(255)"/>
+            <column name="call_link" type="varchar(255)"/>
         </createTable>
 
         <createTable tableName="student_report">
@@ -217,6 +231,7 @@
             </column>
             <column name="chapter" type="varchar(255)"/>
             <column name="question" type="varchar(255)"/>
+            <column name="section" type="integer"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

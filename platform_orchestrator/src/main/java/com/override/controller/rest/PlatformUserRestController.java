@@ -65,6 +65,4 @@ public class PlatformUserRestController {
     public ResponseEntity<String> updateWorkStatus(@PathVariable Long id, @PathVariable String status) {
         return platformUserService.updateStatus(id, StudyStatus.valueOf(status));
     }
-
-
 }

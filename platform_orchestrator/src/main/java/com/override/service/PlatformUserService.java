@@ -87,6 +87,13 @@ public class PlatformUserService {
         return platformUserRepository.findByAuthoritiesNamesNotContaining(Role.ADMIN.getName());
     }
 
+    public List<PlatformUser> getStudentsByCoursePart(int coursePart) {
+        return platformUserRepository.findStudentsByCoursePart(coursePart);
+    }
+
+    public List<PlatformUser> getAllAdmins() {
+        return platformUserRepository.findAllByAuthorityName(Role.ADMIN.getName());
+    }
 
     public PlatformUser findPlatformUserByLogin(String login) {
         return platformUserRepository.findFirstByLogin(login);

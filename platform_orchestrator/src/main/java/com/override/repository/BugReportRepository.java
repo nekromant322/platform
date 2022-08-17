@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface BugReportRepository extends JpaRepository<Bug,Long> {
     List<Bug> findAllByUserId(Long id);
-
 }

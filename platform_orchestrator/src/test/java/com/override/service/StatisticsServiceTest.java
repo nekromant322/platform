@@ -62,7 +62,7 @@ class StatisticsServiceTest {
         when(interviewReportRepository.findAll()).thenReturn(interviewReportList);
         when(interviewReportRepository.findAllByStatus(Status.ACCEPTED)).thenReturn(interviewReportList);
         when(interviewReportRepository.findAllByUserLoginAndStatus(anyString(), any(Status.class))).thenReturn(interviewReportList);
-        when(interviewReportMapper.LoginAndSalariesToDto(anyString(), anyList())).thenReturn(salaryStatDTO);
+        when(interviewReportMapper.loginAndSalariesToDto(anyString(), anyList())).thenReturn(salaryStatDTO);
         when(interviewReportMapper.salaryStatDtoToSalaryDto(any(), anyList())).thenReturn(salaryDTO);
 
         SalaryDTO resultSalary = statisticsService.getSalaryStatistics();
@@ -70,7 +70,7 @@ class StatisticsServiceTest {
         verify(interviewReportRepository, times(1)).findAll();
         verify(interviewReportRepository, times(1)).findAllByStatus(Status.ACCEPTED);
         verify(interviewReportRepository, times(3)).findAllByUserLoginAndStatus(anyString(), any(Status.class));
-        verify(interviewReportMapper, times(3)).LoginAndSalariesToDto(anyString(), anyList());
+        verify(interviewReportMapper, times(3)).loginAndSalariesToDto(anyString(), anyList());
         verify(interviewReportMapper, times(1)).salaryStatDtoToSalaryDto(any(), anyList());
 
         assertNotNull(resultSalary.getSalaryStats());

@@ -31,10 +31,16 @@ public interface PlatformUserRepository extends CrudRepository<PlatformUser, Lon
             "select authority from p_user.authorities authority where authority.authority = :roleName)")
     List<PlatformUser> findAllByAuthorityName(@Param("roleName") String roleName);
 
-
     @Query("select p_user " +
             "from PlatformUser p_user " +
             "where not exists ( " +
             "select authority from p_user.authorities authority where authority.authority = :roleName)")
     List<PlatformUser> findByAuthoritiesNamesNotContaining(@Param("roleName") String roleName);
+
+    @Query("select p_user " +
+            "from PlatformUser p_user " +
+            "where p_user.coursePart = :coursePart " +
+            "and not exists ( " +
+            "select authority from p_user.authorities authority where authority.authority = 'ROLE_ADMIN')")
+    List<PlatformUser> findStudentsByCoursePart(@Param("coursePart") int courcePart);
 }

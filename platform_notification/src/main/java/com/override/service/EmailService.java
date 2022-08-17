@@ -5,5 +5,4 @@ import dto.MailDTO;
 public interface EmailService {
 
     void sendSimpleMail(MailDTO mailDTO);
-
 }
