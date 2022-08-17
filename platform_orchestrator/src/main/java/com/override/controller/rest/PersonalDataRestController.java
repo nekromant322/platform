@@ -13,7 +13,6 @@ public class PersonalDataRestController {
     @Autowired
     private PersonalDataService personalDataService;
 
-
     @Autowired
     private RequestInNotificationService requestInNotificationService;
 
