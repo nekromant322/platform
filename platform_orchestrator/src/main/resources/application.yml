@@ -130,12 +130,10 @@ navbar:
       /questions
     - Мои ревью
       /userReviews
-    - Персональные данные
+    - Личный кабинет
       /personalData
     - Собеседования
       /interviewReports
-    - Настройки
-      /userSettings
   graduate:
     - Курсы
       /courses
@@ -143,10 +141,8 @@ navbar:
       /interviewReports
     - Оплата
       /payments
-    - Персональные данные
+    - Личный кабинет
       /personalData
-    - Настройки
-      /userSettings
 
 management:
   info:
