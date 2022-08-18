@@ -5,6 +5,7 @@ import com.override.model.Bug;
 import com.override.service.BugReportService;
 import com.override.service.CustomStudentDetailService;
 import dto.BugReportsDTO;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -27,17 +28,21 @@ public class BugReportRestController {
 
     @PostMapping
     @MaxFileSize("${documentSizeLimit.forBugReports}")
+    @ApiOperation(value = "Если формат файла верный, то сохраняет баг в таблицу с \"баг репортами\" в БД. " +
+            "Плюс всем админам на почту приходит сообщение о том, что пользователь прислал баг")
     public void uploadBug(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
                           @RequestPart("file") MultipartFile multipartFile, @RequestPart("bugDescription") String text) throws FileUploadException {
         bugReportService.uploadFile(multipartFile, user.getUsername(), text);
     }
 
     @GetMapping
+    @ApiOperation(value = "Возвращает все \"баг репорты\" из БД")
     public List<BugReportsDTO> getAllBugs() {
         return bugReportService.getAll();
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Возвращает файл, прикрепленный к \"баг репорту\"")
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id) {
         Bug bug = bugReportService.downloadFile(id);
         return ResponseEntity.ok()
