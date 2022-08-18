@@ -35,7 +35,6 @@ public class PlatformUserRestController {
         return platformUserService.findPlatformUserByLogin(user.getUsername());
     }
 
-
     @GetMapping("/{login}")
     @ApiOperation(value = "Возвращает \"платформ юзера\" из БД по логину")
     public PlatformUser findPlatformUserByLogin(@PathVariable String login) {

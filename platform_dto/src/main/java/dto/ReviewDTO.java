@@ -1,6 +1,5 @@
 package dto;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
