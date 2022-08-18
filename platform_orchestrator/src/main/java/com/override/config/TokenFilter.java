@@ -44,18 +44,19 @@ public class TokenFilter extends GenericFilterBean {
             }
         }
 
-        if (requestToken != null && requestToken.equals(token)) {
+        if (requestToken != null) {
+            if (requestToken.equals(token)) {
 
-            log.info("Авторизован запрос от другого микросервиса");
+                log.info("Авторизован запрос от другого микросервиса");
 
-            UserDetails customUserDetails = studentDetailService.loadUserByUsername("microservice");
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(auth);
-        } else {
-            log.error("WRONG X-MS-AUTH TOKEN");
-            ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_FORBIDDEN);
+                UserDetails customUserDetails = studentDetailService.loadUserByUsername("microservice");
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            } else {
+                log.error("WRONG X-MS-AUTH TOKEN");
+                ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_FORBIDDEN);
+            }
         }
-
         filterChain.doFilter(servletRequest, servletResponse);
     }
 }
