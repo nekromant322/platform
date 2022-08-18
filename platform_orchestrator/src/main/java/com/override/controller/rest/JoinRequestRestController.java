@@ -38,9 +38,9 @@ public class JoinRequestRestController {
     }
 
     @Secured("ROLE_ADMIN")
+    @PostMapping("/join/request/decline/{id}")
     @ApiOperation(value = "Админ не принимает запрос на регистрацию. В телеграм пользователю отправляется " +
             "сообщение об отклонении запроса. Запрос удаляется из БД")
-    @PostMapping("/join/request/decline/{id}")
     public void declineJoinRequest(@PathVariable Long id) {
         requestService.responseForJoinRequest(false, id);
     }
