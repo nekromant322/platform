@@ -22,7 +22,7 @@ public class InterviewReportRestController {
     private InterviewReportService interviewReportService;
 
     @PatchMapping
-    @ApiOperation(value = "Сохраняет интервью репорт в БД")
+    @ApiOperation(value = "Сохраняет интервью репорт в ")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Отчёт о собеседовании сохранён!")
     })
