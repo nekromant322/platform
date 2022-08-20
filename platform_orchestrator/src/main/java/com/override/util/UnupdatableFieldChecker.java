@@ -28,4 +28,28 @@ public class UnupdatableFieldChecker<T> {
             ex.printStackTrace();
         }
     }
+
+    //The method checks that data is written to fields that were previously empty
+    public boolean executeCheckOfFillingInField(T currentValue, T newValue) {
+
+        try {
+
+            for(Field field: currentValue.getClass().getDeclaredFields()) {
+
+                field.setAccessible(true);
+
+                if (field.isAnnotationPresent(Unupdatable.class) &&
+                        field.get(currentValue) == null && field.get(newValue) != null) {
+                    return true;
+                }
+
+            }
+
+        } catch (IllegalAccessException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+
+    }
 }

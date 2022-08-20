@@ -1,6 +1,20 @@
 getStudents();
 btnClickListener();
 
+var dataId
+var actNumber;
+var contractNumber;
+var date;
+var fullName;
+var passportSeries;
+var passportNumber;
+var passportIssued;
+var issueDate;
+var birthDate;
+var registration;
+var email;
+var phoneNumber;
+
 function getStudents() {
     $.ajax({
         url: '/platformUsers',
@@ -142,7 +156,184 @@ function addColumn(data) {
         window.location.href = "/codeTryList";
     });
 
+    getRequestCheckingPersonalData(data.login, tr);
 
+}
+
+function getRequestCheckingPersonalData(userLogin, tr) {
+
+    $.ajax({
+        url: '/personalData/requestToCheck/' + userLogin,
+        method: 'GET',
+        contentType: 'application/json',
+        async: false,
+        cache: false,
+        success: function(personalData) {
+
+            let empty = '';
+
+            dataId = personalData.id;
+            actNumber = personalData.actNumber;
+            contractNumber = personalData.contractNumber;
+            date = personalData.date;
+            fullName = personalData.fullName;
+            passportSeries = personalData.passportSeries;
+            passportNumber = personalData.passportNumber;
+            passportIssued = personalData.passportIssued;
+            issueDate = personalData.issueDate;
+            birthDate = personalData.birthDate;
+            registration = personalData.registration;
+            email = personalData.email;
+            phoneNumber = personalData.phoneNumber;
+
+            let requestBtn = document.createElement("button");
+            requestBtn.id = "requestBtn-" + dataId;
+            requestBtn.className = "btn btn-warning";
+            requestBtn.innerHTML = "Запрос на измененние данных";
+            requestBtn.type = "button";
+
+            let td = tr.insertCell(6);
+            td.insertAdjacentElement("beforeend", requestBtn);
+
+            $('#forms-review').append(
+                '<div id="form-div-' + dataId + '">' +
+                '<form id="editForm-' + dataId + '">' +
+                '<div class="form-group">' +
+                '<h5>Номер акта</h5>' +
+                '<input class="form-control input-number" id="actNumber-' + dataId + '" ' +
+                'placeholder="actNumber" maxlength="255" ' +
+                'value="' + (actNumber == null ? empty : actNumber) + '" >' + //+ '" ' +
+                //(actNumber != null ? 'disabled' : empty) + '>' +
+                '<br>' +
+
+                '<h5>Номер контракта</h5>' +
+                '<input class="form-control" id="contractNumber-' + dataId + '" type="text" ' +
+                'placeholder="contractNumber" maxlength="255" ' +
+                'value="' + (contractNumber == null ? empty : contractNumber) + '" >' + //+ '" ' +
+                //(contractNumber != null ? 'disabled' : empty) + '>' +
+                '<br>' +
+
+                '<h5>Дата</h5>' +
+                '<input class="form-control" id="date-' + dataId + '" type="text" ' +
+                'placeholder="date" ' +
+                'value="' + (date == null ? empty : date) + '" >' + //+ '" ' +
+                //(date != null ? 'disabled' : empty) + '>' +
+                '<br>' +
+
+                '<h5>ФИО</h5>' +
+                '<input class="form-control" id="fullName-' + dataId + '" ' +
+                'placeholder="fullName" maxlength="255" ' +
+                'value="' + (fullName == null ? empty : fullName) + '" >' + //+ '" ' +
+                //(fullName != null ? 'disabled' : empty) + '>' +
+                '<br>' +
+
+                '<h5>Серия паспорта</h5>' +
+                '<input class="form-control input-number" id="passportSeries-' + dataId + '" ' +
+                'placeholder="passportSeries" maxlength="4" ' +
+                'value="' + (passportSeries == null ? empty : passportSeries) + '" >' + //+ '" ' +
+                //(passportSeries != null ? 'disabled' : empty) + '>' +
+                '<br>' +
+
+                '<h5>Номер паспорта</h5>' +
+                '<input class="form-control input-number" id="passportNumber-' + dataId + '" ' +
+                'placeholder="passportNumber" maxlength="6" ' +
+                'value="' + (passportSeries == null ? empty : passportNumber) + '" >' + //+ '" ' +
+                //(passportSeries != null ? 'disabled' : empty) + '>' +
+                '<br>' +
+
+                '<h5>Выдан</h5>' +
+                '<input class="form-control" id="passportIssued-' + dataId + '" ' +
+                'placeholder="passportIssued" maxlength="255" ' +
+                'value="' + (passportIssued == null ? empty : passportIssued) + '" >' + //+ '" ' +
+                //(passportIssued != null ? 'disabled' : empty) + '>' +
+                '<br>' +
+
+                '<h5>Годен</h5>' +
+                '<input class="form-control" id="issueDate-' + dataId + '" type="text" ' +
+                'placeholder="issueDate" ' +
+                'value="' + (issueDate == null ? empty : issueDate) + '" >' + //+ '" ' +
+                //(issueDate != null ? 'disabled' : empty) + '>' +
+                '<br>' +
+
+                '<h5>Дата рождения</h5>' +
+                '<input class="form-control" id="birthDate-' + dataId + '" type="text" ' +
+                'placeholder="birthDate" ' +
+                'value="' + (birthDate == null ? empty : birthDate) + '" >' + //+ '" ' +
+                //(birthDate != null ? 'disabled' : empty) + '>' +
+                '<br>' +
+
+                '<h5>Регистрация</h5>' +
+                '<input class="form-control" id="registration-' + dataId + '" ' +
+                'placeholder="registration" maxlength="255" ' +
+                'value="' + (registration == null ? empty : registration) + '" >' + //+ '" ' +
+                //(registration != null ? 'disabled' : empty) + '>' +
+                '<br>' +
+
+                '<button type="submit" id="addButton-' + dataId + '" ' +
+                'class="btn btn-success">Сохранить' +
+                '</button>' +
+
+                '</div>' +
+                '</form>' +
+                '</div>'
+            );
+
+            $('#form-div-'+ dataId).hide();
+
+            $('#requestBtn-'+ dataId).click(function () {
+                $('#requests-table').hide();
+                $('#form-div-'+ dataId).show();
+            });
+
+            $('#editForm-'+ dataId).submit(function () {
+                save(dataId,
+                    $('#actNumber-'+ dataId).val(),
+                    $('#contractNumber-'+ dataId).val(),
+                    $('#date-'+ dataId).val(),
+                    $('#fullName-'+ dataId).val(),
+                    $('#passportSeries-'+ dataId).val(),
+                    $('#passportNumber-'+ dataId).val(),
+                    $('#passportIssued-'+ dataId).val(),
+                    $('#issueDate-'+ dataId).val(),
+                    $('#birthDate-'+ dataId).val(),
+                    $('#registration-'+ dataId).val(),
+                    email,
+                    phoneNumber,
+                    userLogin);
+            });
+
+        }
+    });
+
+}
+
+function save(id, actNumber, contractNumber, date, fullName, passportSeries, passportNumber, passportIssued,
+              issueDate, birthDate, registration, email, phoneNumber, login) {
+    $.ajax({
+        url: '/personalData/requestToCheck/' + login,
+        dataType: 'json',
+        method: 'PATCH',
+        cache: false,
+        contentType: 'application/json',
+        data: JSON.stringify({
+            id: id,
+            actNumber: actNumber,
+            contractNumber: contractNumber,
+            date: date,
+            fullName: fullName,
+            passportSeries: passportSeries,
+            passportNumber: passportNumber,
+            passportIssued: passportIssued,
+            issueDate: issueDate,
+            birthDate: birthDate,
+            registration: registration,
+            email: email,
+            phoneNumber: phoneNumber,
+        }),
+        success: function (data) {
+            console.log(data);
+        }
+    });
 }
 
 function setWorkStatus(id, status) {

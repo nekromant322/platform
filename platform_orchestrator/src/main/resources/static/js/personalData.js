@@ -78,62 +78,62 @@ function getUserPersonalData() {
                 '<h5>Номер акта</h5>' +
                 '<input class="form-control input-number" id="actNumber" ' +
                 'placeholder="actNumber" maxlength="255" ' +
-                'value="' + (actNumber == null ? empty : actNumber) + '" ' + 
-                (actNumber != null ? 'disabled' : '') + '>' +
+                'value="' + (actNumber == null ? empty : actNumber) + '" >' + //+ '" ' +
+                //(actNumber != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Номер контракта</h5>' +
                 '<input class="form-control" id="contractNumber" type="text" ' +
                 'placeholder="contractNumber" maxlength="255" ' +
                 'value="' + (contractNumber == null ? empty : contractNumber) + '" ' +
-                (contractNumber != null ? 'disabled' : '') + '>' +
+                (contractNumber != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Дата</h5>' +
                 '<input class="form-control" id="date" type="text" ' +
                 'placeholder="date" ' +
                 'value="' + (date == null ? empty : date) + '" ' +
-                (date != null ? 'disabled' : '') + '>' +
+                (date != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>ФИО</h5>' +
                 '<input class="form-control" id="fullName" ' +
                 'placeholder="fullName" maxlength="255" ' +
                 'value="' + (fullName == null ? empty : fullName) + '" ' +
-                (fullName != null ? 'disabled' : '') + '>' +
+                (fullName != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Серия паспорта</h5>' +
                 '<input class="form-control input-number" id="passportSeries" ' +
                 'placeholder="passportSeries" maxlength="4" ' +
                 'value="' + (passportSeries == null ? empty : passportSeries) + '" ' +
-                (passportSeries != null ? 'disabled' : '') + '>' +
+                (passportSeries != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Номер паспорта</h5>' +
                 '<input class="form-control input-number" id="passportNumber" ' +
                 'placeholder="passportNumber" maxlength="6" ' +
                 'value="' + (passportSeries == null ? empty : passportNumber) + '" ' +
-                (passportSeries != null ? 'disabled' : '') + '>' +
+                (passportSeries != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Выдан</h5>' +
                 '<input class="form-control" id="passportIssued" ' +
                 'placeholder="passportIssued" maxlength="255" ' +
                 'value="' + (passportIssued == null ? empty : passportIssued) + '" ' +
-                (passportIssued != null ? 'disabled' : '') + '>' +
+                (passportIssued != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Годен</h5>' +
                 '<input class="form-control" id="issueDate" type="text" ' +
                 'placeholder="issueDate" ' +
                 'value="' + (issueDate == null ? empty : issueDate) + '" ' +
-                (issueDate != null ? 'disabled' : '') + '>' +
+                (issueDate != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Дата рождения</h5>' +
                 '<input class="form-control" id="birthDate" type="text" ' +
                 'placeholder="birthDate" ' +
                 'value="' + (birthDate == null ? empty : birthDate) + '" ' +
-                (birthDate != null ? 'disabled' : '') + '>' +
+                (birthDate != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Регистрация</h5>' +
                 '<input class="form-control" id="registration" ' +
                 'placeholder="registration" maxlength="255" ' +
                 'value="' + (registration == null ? empty : registration) + '" ' +
-                (registration != null ? 'disabled' : '') + '>' +
+                (registration != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Email</h5>' +
                 '<input class="form-control" id="email" type="email" ' +
@@ -237,7 +237,6 @@ function getUserPersonalData() {
                     $('#birthDate').val(), $('#registration').val(),
                     $('#email').val(), $('#phoneNumber').val(),
                     currentUser.login);
-                // getCurrentUser()
             });
         }
     });
