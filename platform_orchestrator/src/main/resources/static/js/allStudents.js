@@ -1,19 +1,19 @@
 getStudents();
 btnClickListener();
 
-var dataId
-var actNumber;
-var contractNumber;
-var date;
-var fullName;
-var passportSeries;
-var passportNumber;
-var passportIssued;
-var issueDate;
-var birthDate;
-var registration;
-var email;
-var phoneNumber;
+// var dataId
+// var actNumber;
+// var contractNumber;
+// var date;
+// var fullName;
+// var passportSeries;
+// var passportNumber;
+// var passportIssued;
+// var issueDate;
+// var birthDate;
+// var registration;
+// var email;
+// var phoneNumber;
 
 function getStudents() {
     $.ajax({
@@ -170,21 +170,23 @@ function getRequestCheckingPersonalData(userLogin, tr) {
         cache: false,
         success: function(personalData) {
 
+            let dataId = personalData.id;
+            if(dataId === null) { return; }
+
             let empty = '';
 
-            dataId = personalData.id;
-            actNumber = personalData.actNumber;
-            contractNumber = personalData.contractNumber;
-            date = personalData.date;
-            fullName = personalData.fullName;
-            passportSeries = personalData.passportSeries;
-            passportNumber = personalData.passportNumber;
-            passportIssued = personalData.passportIssued;
-            issueDate = personalData.issueDate;
-            birthDate = personalData.birthDate;
-            registration = personalData.registration;
-            email = personalData.email;
-            phoneNumber = personalData.phoneNumber;
+            let actNumber = personalData.actNumber;
+            let contractNumber = personalData.contractNumber;
+            let date = personalData.date;
+            let fullName = personalData.fullName;
+            let passportSeries = personalData.passportSeries;
+            let passportNumber = personalData.passportNumber;
+            let passportIssued = personalData.passportIssued;
+            let issueDate = personalData.issueDate;
+            let birthDate = personalData.birthDate;
+            let registration = personalData.registration;
+            let email = personalData.email;
+            let phoneNumber = personalData.phoneNumber;
 
             let requestBtn = document.createElement("button");
             requestBtn.id = "requestBtn-" + dataId;
@@ -202,71 +204,61 @@ function getRequestCheckingPersonalData(userLogin, tr) {
                 '<h5>Номер акта</h5>' +
                 '<input class="form-control input-number" id="actNumber-' + dataId + '" ' +
                 'placeholder="actNumber" maxlength="255" ' +
-                'value="' + (actNumber == null ? empty : actNumber) + '" >' + //+ '" ' +
-                //(actNumber != null ? 'disabled' : empty) + '>' +
+                'value="' + (actNumber == null ? empty : actNumber) + '" >' +
                 '<br>' +
 
                 '<h5>Номер контракта</h5>' +
                 '<input class="form-control" id="contractNumber-' + dataId + '" type="text" ' +
                 'placeholder="contractNumber" maxlength="255" ' +
-                'value="' + (contractNumber == null ? empty : contractNumber) + '" >' + //+ '" ' +
-                //(contractNumber != null ? 'disabled' : empty) + '>' +
+                'value="' + (contractNumber == null ? empty : contractNumber) + '" >' +
                 '<br>' +
 
                 '<h5>Дата</h5>' +
                 '<input class="form-control" id="date-' + dataId + '" type="text" ' +
                 'placeholder="date" ' +
-                'value="' + (date == null ? empty : date) + '" >' + //+ '" ' +
-                //(date != null ? 'disabled' : empty) + '>' +
+                'value="' + (date == null ? empty : date) + '" >' +
                 '<br>' +
 
                 '<h5>ФИО</h5>' +
                 '<input class="form-control" id="fullName-' + dataId + '" ' +
                 'placeholder="fullName" maxlength="255" ' +
-                'value="' + (fullName == null ? empty : fullName) + '" >' + //+ '" ' +
-                //(fullName != null ? 'disabled' : empty) + '>' +
+                'value="' + (fullName == null ? empty : fullName) + '" >' +
                 '<br>' +
 
                 '<h5>Серия паспорта</h5>' +
                 '<input class="form-control input-number" id="passportSeries-' + dataId + '" ' +
                 'placeholder="passportSeries" maxlength="4" ' +
-                'value="' + (passportSeries == null ? empty : passportSeries) + '" >' + //+ '" ' +
-                //(passportSeries != null ? 'disabled' : empty) + '>' +
+                'value="' + (passportSeries == null ? empty : passportSeries) + '" >' +
                 '<br>' +
 
                 '<h5>Номер паспорта</h5>' +
                 '<input class="form-control input-number" id="passportNumber-' + dataId + '" ' +
                 'placeholder="passportNumber" maxlength="6" ' +
-                'value="' + (passportSeries == null ? empty : passportNumber) + '" >' + //+ '" ' +
-                //(passportSeries != null ? 'disabled' : empty) + '>' +
+                'value="' + (passportSeries == null ? empty : passportNumber) + '" >' +
                 '<br>' +
 
                 '<h5>Выдан</h5>' +
                 '<input class="form-control" id="passportIssued-' + dataId + '" ' +
                 'placeholder="passportIssued" maxlength="255" ' +
-                'value="' + (passportIssued == null ? empty : passportIssued) + '" >' + //+ '" ' +
-                //(passportIssued != null ? 'disabled' : empty) + '>' +
+                'value="' + (passportIssued == null ? empty : passportIssued) + '" >' +
                 '<br>' +
 
                 '<h5>Годен</h5>' +
                 '<input class="form-control" id="issueDate-' + dataId + '" type="text" ' +
                 'placeholder="issueDate" ' +
-                'value="' + (issueDate == null ? empty : issueDate) + '" >' + //+ '" ' +
-                //(issueDate != null ? 'disabled' : empty) + '>' +
+                'value="' + (issueDate == null ? empty : issueDate) + '" >' +
                 '<br>' +
 
                 '<h5>Дата рождения</h5>' +
                 '<input class="form-control" id="birthDate-' + dataId + '" type="text" ' +
                 'placeholder="birthDate" ' +
-                'value="' + (birthDate == null ? empty : birthDate) + '" >' + //+ '" ' +
-                //(birthDate != null ? 'disabled' : empty) + '>' +
+                'value="' + (birthDate == null ? empty : birthDate) + '" >' +
                 '<br>' +
 
                 '<h5>Регистрация</h5>' +
                 '<input class="form-control" id="registration-' + dataId + '" ' +
                 'placeholder="registration" maxlength="255" ' +
-                'value="' + (registration == null ? empty : registration) + '" >' + //+ '" ' +
-                //(registration != null ? 'disabled' : empty) + '>' +
+                'value="' + (registration == null ? empty : registration) + '" >' +
                 '<br>' +
 
                 '<button type="submit" id="addButton-' + dataId + '" ' +
@@ -302,6 +294,9 @@ function getRequestCheckingPersonalData(userLogin, tr) {
                     userLogin);
             });
 
+        },
+        error: function() {
+            console.log(error);
         }
     });
 

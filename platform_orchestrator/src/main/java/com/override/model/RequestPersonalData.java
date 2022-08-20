@@ -2,7 +2,6 @@ package com.override.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.override.annotation.Unupdatable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,49 +16,39 @@ import java.util.Date;
 public class RequestPersonalData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Unupdatable
     @Column(name = "actNumber")
     private Long actNumber;
 
-    @Unupdatable
     @Column(name = "contractNumber")
     private String contractNumber;
 
-    @Unupdatable
     @Column(name = "date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private Date contractDate;
 
-    @Unupdatable
     @Column(name = "full_name")
     private String fullName;
 
     @Column(name = "passport_series")
     private Long passportSeries;
 
-    @Unupdatable
     @Column(name = "passport_number")
     private Long passportNumber;
 
-    @Unupdatable
     @Column(name = "passport_issued")
     private String passportIssued;
 
-    @Unupdatable
     @Column(name = "issue_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private Date issueDate;
 
-    @Unupdatable
     @Column(name = "birth_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private Date birthDate;
 
-    @Unupdatable
     @Column(name = "registration")
     private String registration;
 

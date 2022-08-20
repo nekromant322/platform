@@ -68,7 +68,8 @@ public class PersonalDataService {
         PlatformUser user = platformUserService.findPlatformUserByLogin(userLogin);
         PersonalData currentPersonalData = user.getPersonalData();
 
-        return requestPersonalDataRepository.findById(currentPersonalData.getId()).get();
+        return requestPersonalDataRepository.findById(currentPersonalData.getId())
+                .orElse(new RequestPersonalData());
 
     }
 

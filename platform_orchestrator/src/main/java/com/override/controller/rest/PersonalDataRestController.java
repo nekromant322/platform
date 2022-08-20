@@ -27,7 +27,6 @@ public class PersonalDataRestController {
         requestInNotificationService.saveRecipient(personalData, userLogin);
     }
 
-    @Secured("ROLE_ADMIN")
     @GetMapping("/requestToCheck/{userLogin}")
     public RequestPersonalData request(@PathVariable("userLogin") String userLogin) {
         return personalDataService.findRequestPersonalDataByLogin(userLogin);

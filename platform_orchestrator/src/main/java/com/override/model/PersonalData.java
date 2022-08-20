@@ -37,6 +37,7 @@ public class PersonalData {
     @Column(name = "full_name")
     private String fullName;
 
+    @Unupdatable
     @Column(name = "passport_series")
     private Long passportSeries;
 

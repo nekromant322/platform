@@ -30,6 +30,7 @@ function getUserPersonalData() {
         contentType: 'application/json',
         cache: false,
         success: function (currentUser) {
+
             actNumber = currentUser.personalData.actNumber;
             contractNumber = currentUser.personalData.contractNumber;
             date = currentUser.personalData.date;
@@ -42,6 +43,8 @@ function getUserPersonalData() {
             registration = currentUser.personalData.registration;
             email = currentUser.personalData.email;
             phoneNumber = currentUser.personalData.phoneNumber;
+
+            let requestToCheck = findRequestToCheck(currentUser.login);
 
             $('#lk').append(currentUser.login);
 
@@ -71,6 +74,7 @@ function getUserPersonalData() {
                 '</h5><br>' +
                 '<h5>Номер телефона : ' + (phoneNumber == null ? empty : phoneNumber) +
                 '</h5><br>' +
+                (requestToCheck == null ? empty : '<h2 style="color:green">Ваши данные находятся на согласовании</h2>') +
                 '<button type="button" id="editButton" ' +
                 'class="btn btn-primary">Изменить</button></div>' +
                 '<form id="editForm">' +
@@ -240,6 +244,25 @@ function getUserPersonalData() {
             });
         }
     });
+}
+
+function findRequestToCheck(userLogin) {
+
+    let dataId;
+
+    $.ajax({
+        url: '/personalData/requestToCheck/' + userLogin,
+        method: 'GET',
+        contentType: 'application/json',
+        async: false,
+        cache: false,
+        success: function(personalData) {
+            dataId = personalData.id;
+        }
+    });
+
+    return dataId;
+
 }
 
 function save(id, actNumber, contractNumber, date, fullName, passportSeries, passportNumber, passportIssued,
