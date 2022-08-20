@@ -19,6 +19,8 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
 
+token:
+  X-MS-AUTH: ${MICROSERVICES_SECRET_TOKEN:0LDRhdGD0LXRgtGMINC90LUg0LLRgdGC0LDRgtGMXl4=}
 
 task-test:
   defaultTimeout: 8000

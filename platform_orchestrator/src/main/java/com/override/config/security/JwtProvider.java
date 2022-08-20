@@ -36,7 +36,6 @@ public class JwtProvider {
     @Value("${jwt.secret.alias}")
     private String keyAlias;
 
-
     @SneakyThrows
     public String generateToken(String login, Collection<? extends GrantedAuthority> authorityList) {
         String authorities = authorityList.stream()

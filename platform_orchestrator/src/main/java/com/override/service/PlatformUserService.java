@@ -1,7 +1,6 @@
 package com.override.service;
 
 import com.override.exception.UserAlreadyExistException;
-import com.override.feign.NotificatorFeign;
 import com.override.model.Authority;
 import com.override.model.PersonalData;
 import com.override.model.PlatformUser;

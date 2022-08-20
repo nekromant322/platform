@@ -4,6 +4,7 @@ import com.override.model.PersonalData;
 import com.override.model.RequestPersonalData;
 import com.override.service.PersonalDataService;
 import com.override.service.RequestInNotificationService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ public class PersonalDataRestController {
     private RequestInNotificationService requestInNotificationService;
 
     @PatchMapping("{userLogin}")
+    @ApiOperation(value = "Сохраняет персональные данные в БД, а так же сохраняет данные в таблицу получателей в Нотификатор")
     public void patch(@RequestBody PersonalData personalData,
                       @PathVariable String userLogin) {
         personalDataService.saveOrSendToReview(personalData, userLogin);

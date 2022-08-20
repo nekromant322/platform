@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "orchestrator")
 public interface OrchestratorFeign {
-
     @PostMapping("/join/request")
     JoinRequestStatusDTO saveJoinRequest(@RequestBody RegisterUserRequestDTO requestDTO);
 }

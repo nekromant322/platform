@@ -86,7 +86,6 @@ public class TestUtils {
         return Modifier.toString(modifiers);
     }
 
-
     public static Constructor<?> getConstructor(@NotNull Class<?> clazz, int[] modifiers, Class<?>... parameterTypes) {
         Constructor<?> constructor = null;
         try {

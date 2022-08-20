@@ -59,22 +59,22 @@ public class PreProjectLessonMentorReactionMapper {
 
     private List<PreProjectComment> listStringToComments(PreProjectLessonMentorReactionDTO preProjectLessonMentorReactionDTO) {
         List<String> stringList = preProjectLessonMentorReactionDTO.getComments();
-        List<PreProjectComment> CommentsList = new ArrayList<>();
+        List<PreProjectComment> commentsList = new ArrayList<>();
 
         if (stringList != null) {
             PreProjectComment preProjectComment = PreProjectComment.builder()
                     .comment(stringList.get(stringList.size() - 1))
                     .build();
 
-            CommentsList = preProjectLessonRepository.findById(preProjectLessonMentorReactionDTO
+            commentsList = preProjectLessonRepository.findById(preProjectLessonMentorReactionDTO
                     .getId()).get().getComments();
 
-            if (CommentsList.isEmpty()) {
-                CommentsList.add(preProjectComment);
-            } else if (!CommentsList.get(CommentsList.size() - 1).getComment().equals(preProjectComment.getComment())) {
-                CommentsList.add(preProjectComment);
+            if (commentsList.isEmpty()) {
+                commentsList.add(preProjectComment);
+            } else if (!commentsList.get(commentsList.size() - 1).getComment().equals(preProjectComment.getComment())) {
+                commentsList.add(preProjectComment);
             }
         }
-        return CommentsList;
+        return commentsList;
     }
 }

@@ -1,6 +1,5 @@
 package com.override.model.enums;
 
-
 public enum CoursePart {
     CORE("Core"),
     WEB("Web"),

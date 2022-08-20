@@ -72,6 +72,5 @@ public class PasswordGeneratorService {
         Collections.shuffle(result);
         return String.join("", result);
     }
-
 }
 

@@ -1,6 +1,7 @@
 package com.override.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,11 +21,11 @@ public class LessonProgress {
     @JsonIgnore
     private Long id;
 
+    @ApiModelProperty(value = "Идентификатор урока", example = "core-1-1")
     private String lesson;
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     private PlatformUser user;
-
 }

@@ -30,7 +30,7 @@ public class MessagesController {
     }
 
     @GetMapping("/types")
-    public List<Communication> CheckNotificationMethods(@RequestParam("login")String login){
+    public List<Communication> checkNotificationMethods(@RequestParam("login")String login){
         return messageService.checkNotificationMethods(login);
     }
 }

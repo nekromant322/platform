@@ -1,6 +1,5 @@
 package com.override.service;
 
-
 import com.override.model.PersonalData;
 import com.override.model.PlatformUser;
 import com.override.model.RequestPersonalData;
@@ -76,5 +75,4 @@ public class PersonalDataService {
     public void deleteRequestToCheck(PersonalData personalData) {
         requestPersonalDataRepository.deleteById(personalData.getId());
     }
-
 }

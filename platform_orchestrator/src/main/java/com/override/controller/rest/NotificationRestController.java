@@ -2,6 +2,7 @@ package com.override.controller.rest;
 
 import com.override.feign.NotificatorFeign;
 import dto.BalanceResponseFromNotificationControllerDTO;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +24,7 @@ public class NotificationRestController {
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/balance")
+    @ApiOperation(value = "Возвращает значение баланса для админа и ссылку на пополнение https://sms.ru/pay.php")
     public BalanceResponseFromNotificationControllerDTO getBalanceDTO() {
         return new BalanceResponseFromNotificationControllerDTO(notificatorFeign.getBalance(), urlToReplenishBalance);
     }
