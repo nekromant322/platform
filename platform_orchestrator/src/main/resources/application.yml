@@ -157,7 +157,8 @@ navbar:
       /payments
     - Личный кабинет
       /personalData
-
+    - Вакансии
+      /interviewTable
 management:
   info:
     build:

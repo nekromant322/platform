@@ -72,6 +72,11 @@ public class PageController {
         return "interviewReport";
     }
 
+    @GetMapping("/interviewTable")
+    public String interviewTablePage() {
+        return "interviewTable";
+    }
+
     @GetMapping("/payments")
     public String payPage() {
         return "payment";
