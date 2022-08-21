@@ -23,7 +23,7 @@ public class PersonalDataRestController {
     @ApiOperation(value = "Сохраняет персональные данные в БД, а так же сохраняет данные в таблицу получателей в Нотификатор")
     public void patch(@RequestBody PersonalData personalData,
                       @PathVariable String userLogin) {
-        personalDataService.saveOrSendToReview(personalData, userLogin);
+        personalDataService.saveOrSendToCheck(personalData, userLogin);
         requestInNotificationService.saveRecipient(personalData, userLogin);
     }
 

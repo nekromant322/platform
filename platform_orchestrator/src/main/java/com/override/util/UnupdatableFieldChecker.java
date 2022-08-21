@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 @Component
 public class UnupdatableFieldChecker<T> {
 
-    public void executeCheck(T currentValue, T newValue) throws UnupdatableDataException {
+    public void executeCheckOfFieldChanges(T currentValue, T newValue) throws UnupdatableDataException {
 
         try {
             for(Field field : currentValue.getClass().getDeclaredFields()) {

@@ -29,14 +29,13 @@ public class PersonalDataService {
         PlatformUser user = platformUserService.findPlatformUserByLogin(login);
         PersonalData currentPersonalData = user.getPersonalData();
 
-        //checker.executeCheck(currentPersonalData, newPersonalData);
-
         newPersonalData.setId(currentPersonalData.getId());
+
         personalDataRepository.save(newPersonalData);
 
     }
 
-    public void saveOrSendToReview(PersonalData newPersonalData, String login) {
+    public void saveOrSendToCheck(PersonalData newPersonalData, String login) {
 
         PlatformUser user = platformUserService.findPlatformUserByLogin(login);
         PersonalData currentPersonalData = user.getPersonalData();
@@ -47,17 +46,11 @@ public class PersonalDataService {
 
             RequestPersonalData requestPersonalData = new RequestPersonalData(newPersonalData);
             requestPersonalDataRepository.save(requestPersonalData);
-            /*======================================================*/
-            System.out.println("Create new request to check personal data changes");
-            /*======================================================*/
 
         } else {
 
-            //checker.executeCheck(currentPersonalData, newPersonalData);
+            checker.executeCheckOfFieldChanges(currentPersonalData, newPersonalData);
             personalDataRepository.save(newPersonalData);
-            /*======================================================*/
-            System.out.println("Save new personal data");
-            /*======================================================*/
 
         }
 
@@ -70,7 +63,6 @@ public class PersonalDataService {
 
         return requestPersonalDataRepository.findById(currentPersonalData.getId())
                 .orElse(new RequestPersonalData());
-
     }
 
     public void deleteRequestToCheck(PersonalData personalData) {
