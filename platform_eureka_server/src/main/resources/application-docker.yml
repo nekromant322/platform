@@ -1,10 +1,8 @@
 ---
 spring:
-  profiles:
-    default: dev
-    #  active: dev
-    active: docker
-#    active: prod
+  config:
+    activate:
+      on-profile: docker
 ---
 spring:
   cloud:
@@ -19,7 +17,7 @@ server:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: eureka-server
   client:
     enabled: true
     registerWithEureka: false

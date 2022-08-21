@@ -4,6 +4,7 @@ services:
 
   eureka_server:
     build: ./platform_eureka_server
+    hostname: eureka-server
     ports:
       - "8761:8761"
     networks:

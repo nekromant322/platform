@@ -3,17 +3,15 @@ server:
   address: localhost
 ---
 spring:
-  profiles:
-    default: dev
-    #    active: dev
-    active: docker
-#    active: prod
+  config:
+    activate:
+      on-profile: docker
 ---
 spring:
   datasource:
     password: postgres
     username: postgres
-    url: jdbc:postgresql://localhost:5430/orchestrator-db
+    url: jdbc:postgresql://orchestrator-db:5432/orchestrator-db
     driver-class-name: org.postgresql.Driver
   jpa:
     properties:
@@ -72,7 +70,7 @@ logging:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: eureka-server
     leaseRenewalIntervalInSeconds: 15
     leaseExpirationDurationInSeconds: 45
   client:
