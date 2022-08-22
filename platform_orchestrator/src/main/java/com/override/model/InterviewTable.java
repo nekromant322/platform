@@ -35,7 +35,7 @@ public class InterviewTable {
 
     private String stack;
 
-    private int fork;
+    private Integer fork;
 
     @Column(name = "meeting_link")
     private String meetingLink;

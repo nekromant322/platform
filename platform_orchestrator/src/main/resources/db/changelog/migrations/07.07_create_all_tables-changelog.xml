@@ -243,7 +243,7 @@
             <column name="contacts" type="varchar(255)"/>
             <column name="date" type="date"/>
             <column name="time" type="time"/>
-            <column name="meting_link" type="varchar(255)"/>
+            <column name="meeting_link" type="varchar(255)"/>
             <column name="fork" type="integer"/>
             <column name="stack" type="varchar(255)"/>
             <column name="distance_work" type="varchar(255)"/>
