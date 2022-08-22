@@ -27,7 +27,7 @@ public class InterviewTableDTO {
 
     private String stack;
 
-    private Integer fork;
+    private int fork;
 
     private String meetingLink;
 
