@@ -36,7 +36,7 @@ public class InterviewTableRestController {
 
     @GetMapping("/getData")
     public ResponseEntity<InterviewTable> getDataInterview(@RequestParam Long id) {
-        InterviewTable interviewTable = interviewTableService.findInterviewDataById(id);
+        InterviewTable interviewTable = interviewTableService.findById(id);
         return new ResponseEntity<>(interviewTable, HttpStatus.OK);
     }
 }

@@ -33,7 +33,7 @@ public class InterviewTableService {
         interviewTableRepository.save(interviewTable);
     }
 
-    public InterviewTable findInterviewDataById(Long id) {
+    public InterviewTable findById(Long id) {
         Optional<InterviewTable> interviewTable = interviewTableRepository.findById(id);
         return interviewTable.get();
     }
