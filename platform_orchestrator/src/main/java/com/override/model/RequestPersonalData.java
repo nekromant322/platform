@@ -2,7 +2,6 @@ package com.override.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.override.annotation.Unupdatable;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +26,6 @@ public class RequestPersonalData {
             example = "222L")
     private Long id;
 
-
     @Column(name = "actNumber")
     @ApiModelProperty(
             value = "Номер акта",
@@ -36,7 +34,6 @@ public class RequestPersonalData {
             example = "222L")
     private Long actNumber;
 
-
     @Column(name = "contractNumber")
     @ApiModelProperty(
             value = "Номер контракта",
@@ -44,7 +41,6 @@ public class RequestPersonalData {
             dataType = "String",
             example = "22/22/2222")
     private String contractNumber;
-
 
     @Column(name = "date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
@@ -55,7 +51,6 @@ public class RequestPersonalData {
             example = "22.22.2222")
     private Date contractDate;
 
-
     @Column(name = "full_name")
     @ApiModelProperty(
             value = "Полное имя (ФИО)",
@@ -63,7 +58,6 @@ public class RequestPersonalData {
             dataType = "String",
             example = "Ernesto Denesik DDS")
     private String fullName;
-
 
     @Column(name = "passport_series")
     @ApiModelProperty(
@@ -73,7 +67,6 @@ public class RequestPersonalData {
             example = "1673")
     private Long passportSeries;
 
-
     @Column(name = "passport_number")
     @ApiModelProperty(
             value = "Номер паспорта",
@@ -82,7 +75,6 @@ public class RequestPersonalData {
             example = "568174")
     private Long passportNumber;
 
-
     @Column(name = "passport_issued")
     @ApiModelProperty(
             value = "Кем паспорт выдан",
@@ -90,7 +82,6 @@ public class RequestPersonalData {
             dataType = "String",
             example = "3261 Annette Coves, Port Sumiko, IN 66449")
     private String passportIssued;
-
 
     @Column(name = "issue_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
@@ -101,7 +92,6 @@ public class RequestPersonalData {
             example = "22.22.2222")
     private Date issueDate;
 
-
     @Column(name = "birth_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     @ApiModelProperty(
@@ -111,7 +101,6 @@ public class RequestPersonalData {
             example = "22.22.2222")
     private Date birthDate;
 
- 
     @Column(name = "registration")
     @ApiModelProperty(
             value = "Регистрация",
