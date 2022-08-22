@@ -1,20 +1,6 @@
 getStudents();
 btnClickListener();
 
-// var dataId
-// var actNumber;
-// var contractNumber;
-// var date;
-// var fullName;
-// var passportSeries;
-// var passportNumber;
-// var passportIssued;
-// var issueDate;
-// var birthDate;
-// var registration;
-// var email;
-// var phoneNumber;
-
 function getStudents() {
     $.ajax({
         url: '/platformUsers',

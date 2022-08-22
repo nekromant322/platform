@@ -32,7 +32,6 @@ public class PersonalDataService {
         newPersonalData.setId(currentPersonalData.getId());
 
         personalDataRepository.save(newPersonalData);
-
     }
 
     public void saveOrSendToCheck(PersonalData newPersonalData, String login) {
@@ -46,14 +45,11 @@ public class PersonalDataService {
 
             RequestPersonalData requestPersonalData = new RequestPersonalData(newPersonalData);
             requestPersonalDataRepository.save(requestPersonalData);
-
         } else {
 
             checker.executeCheckOfFieldChanges(currentPersonalData, newPersonalData);
             personalDataRepository.save(newPersonalData);
-
         }
-
     }
 
     public RequestPersonalData findRequestPersonalDataByLogin(String userLogin) {

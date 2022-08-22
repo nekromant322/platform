@@ -42,14 +42,11 @@ public class UnupdatableFieldChecker<T> {
                         field.get(currentValue) == null && field.get(newValue) != null) {
                     return true;
                 }
-
             }
-
         } catch (IllegalAccessException ex) {
             ex.printStackTrace();
         }
 
         return false;
-
     }
 }

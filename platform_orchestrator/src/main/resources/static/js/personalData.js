@@ -82,8 +82,8 @@ function getUserPersonalData() {
                 '<h5>Номер акта</h5>' +
                 '<input class="form-control input-number" id="actNumber" ' +
                 'placeholder="actNumber" maxlength="255" ' +
-                'value="' + (actNumber == null ? empty : actNumber) + '" >' + //+ '" ' +
-                //(actNumber != null ? 'disabled' : empty) + '>' +
+                'value="' + (actNumber == null ? empty : actNumber) + '" ' +
+                (actNumber != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Номер контракта</h5>' +
                 '<input class="form-control" id="contractNumber" type="text" ' +
