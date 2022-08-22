@@ -12,7 +12,7 @@
             <column name="act_number" type="bigint"/>
             <column name="birth_date" type="timestamp"/>
             <column name="contract_number" type="varchar(255)"/>
-            <column name="date" type="timestamp"/>
+            <column name="contract_date" type="timestamp"/>
             <column name="email" type="varchar(255)"/>
             <column name="full_name" type="varchar(255)"/>
             <column name="issue_date" type="timestamp"/>
