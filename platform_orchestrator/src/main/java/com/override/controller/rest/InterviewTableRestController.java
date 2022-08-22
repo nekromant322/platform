@@ -39,5 +39,4 @@ public class InterviewTableRestController {
         InterviewTable interviewTable = interviewTableService.findInterviewDataById(id);
         return new ResponseEntity<>(interviewTable, HttpStatus.OK);
     }
-
 }

@@ -5,7 +5,6 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
 @Data
 @Builder
 public class InterviewTableDTO {
@@ -27,7 +26,7 @@ public class InterviewTableDTO {
 
     private String stack;
 
-    private Integer fork;
+    private int fork;
 
     private String meetingLink;
 

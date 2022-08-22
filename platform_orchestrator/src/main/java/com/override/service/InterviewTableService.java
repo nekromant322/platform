@@ -37,5 +37,4 @@ public class InterviewTableService {
         Optional<InterviewTable> interviewTable = interviewTableRepository.findById(id);
         return interviewTable.get();
     }
-
 }
