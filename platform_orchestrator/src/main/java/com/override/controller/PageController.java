@@ -72,7 +72,7 @@ public class PageController {
         return "interviewReport";
     }
 
-    @GetMapping("/interviewTable")
+    @GetMapping("/interviews")
     public String interviewDataPage() {
         return "interviewData";
     }

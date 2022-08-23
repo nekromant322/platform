@@ -158,7 +158,7 @@ navbar:
     - Личный кабинет
       /personalData
     - Вакансии
-      /interviewTable
+      /interviews
 management:
   info:
     build:
