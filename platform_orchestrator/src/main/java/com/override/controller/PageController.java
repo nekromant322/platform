@@ -73,8 +73,8 @@ public class PageController {
     }
 
     @GetMapping("/interviewTable")
-    public String interviewTablePage() {
-        return "interviewTable";
+    public String interviewDataPage() {
+        return "interviewData";
     }
 
     @GetMapping("/payments")

@@ -234,7 +234,7 @@
             <column name="section" type="integer"/>
         </createTable>
 
-        <createTable tableName="interview_table">
+        <createTable tableName="interview_data">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
