@@ -21,15 +21,15 @@ public class PersonalData {
     private Long id;
 
     @Unupdatable
-    @Column(name = "actNumber")
+    @Column(name = "act_number")
     private Long actNumber;
 
     @Unupdatable
-    @Column(name = "contractNumber")
+    @Column(name = "contract_number")
     private String contractNumber;
 
     @Unupdatable
-    @Column(name = "date")
+    @Column(name = "contract_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private Date contractDate;
 
