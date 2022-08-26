@@ -18,7 +18,7 @@ public class InterviewDataMapper {
                 .time(interviewTable.getTime())
                 .comment(interviewTable.getComment())
                 .stack(interviewTable.getStack())
-                .fork(interviewTable.getFork())
+                .salary(interviewTable.getSalary())
                 .meetingLink(interviewTable.getMeetingLink())
                 .distanceWork(interviewTable.getDistanceWork())
                 .build();

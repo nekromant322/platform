@@ -3,15 +3,15 @@ getCurrentUser();
 
 $('.buttonAdd').on('click', function () {
     addInterview($("#company").val(), $("#description").val(), $("#contacts").val(), $("#date").val(), $("#time").val(),
-        $("#meetingLink").val(), $("#fork").val(), $("#stack").val(), $("#distanceWork").val(), $("#comment").val(), currentUserLogin);
+        $("#meetingLink").val(), $("#salary").val(), $("#stack").val(), $("#distanceWork").val(), $("#comment").val(), currentUserLogin);
 });
 
 $('.editButton').on('click', function () {
     editInterview($("#idEd").val(), $("#companyEd").val(), $("#descriptionEd").val(), $("#contactsEd").val(), $("#dateEd").val(), $("#timeEd").val(),
-        $("#meetingLinkEd").val(), $(`#forkEd`).val(), $("#stackEd").val(), $("#distanceWorkEd").val(), $("#commentEd").val(), currentUserLogin);
+        $("#meetingLinkEd").val(), $(`#salaryEd`).val(), $("#stackEd").val(), $("#distanceWorkEd").val(), $("#commentEd").val(), currentUserLogin);
 });
 
-function editInterview(id, company, description, contacts, date, time, meetingLink, fork, stack, distanceWork, comment, currentUserLogin) {
+function editInterview(id, company, description, contacts, date, time, meetingLink, salary, stack, distanceWork, comment, currentUserLogin) {
     $.ajax({
         url: '/interviewData/save',
         dataType: 'json',
@@ -26,7 +26,7 @@ function editInterview(id, company, description, contacts, date, time, meetingLi
             date: date,
             time: time,
             meetingLink: meetingLink,
-            fork: fork,
+            salary: salary,
             stack: stack,
             distanceWork: distanceWork,
             comment: comment,
@@ -39,7 +39,7 @@ function editInterview(id, company, description, contacts, date, time, meetingLi
     });
 }
 
-function addInterview(company, description, contacts, date, time, meetingLink, fork, stack, distanceWork, comment, currentUserLogin) {
+function addInterview(company, description, contacts, date, time, meetingLink, salary, stack, distanceWork, comment, currentUserLogin) {
     $.ajax({
         url: '/interviewData/save',
         dataType: 'json',
@@ -53,7 +53,7 @@ function addInterview(company, description, contacts, date, time, meetingLink, f
             date: date,
             time: time,
             meetingLink: meetingLink,
-            fork: fork,
+            salary: salary,
             stack: stack,
             distanceWork: distanceWork,
             comment: comment,
@@ -102,7 +102,7 @@ function addColumn(data) {
     insertTd(data.date, tr);
     insertTd(data.time, tr);
     insertTdLink(data.meetingLink, tr);
-    insertTd(data.fork, tr);
+    insertTd(data.salary, tr);
     insertTd(data.stack, tr);
     insertTd(data.distanceWork, tr);
     insertTd(data.comment, tr);
@@ -139,7 +139,7 @@ function edit(id) {
         $(".modal #dateEd").val(interviewTable.date);
         $(".modal #timeEd").val(interviewTable.time);
         $(".modal #meetingLinkEd").val(interviewTable.meetingLink);
-        $(".modal #forkEd").val(interviewTable.fork);
+        $(".modal #salaryEd").val(interviewTable.salary);
         $(".modal #stackEd").val(interviewTable.stack);
         $(".modal #distanceWorkEd").val(interviewTable.distanceWork);
         $(".modal #commentEd").val(interviewTable.comment);
