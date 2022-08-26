@@ -11,6 +11,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findReviewByStudentLoginAndBookedDate(String student, LocalDate date);
 
+    Review findFirstByStudentId(Long userId);
+
     List<Review> findReviewByStudentLogin(String student);
 
     List<Review> findReviewByBookedDate(LocalDate date);
