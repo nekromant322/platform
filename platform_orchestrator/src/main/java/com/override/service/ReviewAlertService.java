@@ -31,11 +31,13 @@ public class ReviewAlertService {
         List<PlatformUser> admins = platformUserService.getAllAdmins();
 
         for (PlatformUser student : students) {
-            int countDays = Math.abs(reviewRepository.findFirstByStudentId(student.getId()).getBookedDate().getDayOfMonth() - LocalDate.now().getDayOfMonth());
-            String adminMessage = "студент " + student.getLogin() + " давно не был на ревью ";
-            if (countDays > days) {
-                for (PlatformUser admin : admins) {
-                    notificatorFeign.sendMessage(admin.getLogin(), adminMessage, Communication.TELEGRAM);
+            if (reviewRepository.findFirstByStudentIdOrderByIdDesc(student.getId()) != null) {
+                int countDays = Math.abs(reviewRepository.findFirstByStudentIdOrderByIdDesc(student.getId()).getBookedDate().getDayOfMonth() - LocalDate.now().getDayOfMonth());
+                if (countDays > days) {
+                    String adminMessage = "студент " + student.getLogin() + " давно не был на ревью ";
+                    for (PlatformUser admin : admins) {
+                        notificatorFeign.sendMessage(admin.getLogin(), adminMessage, Communication.TELEGRAM);
+                    }
                 }
             }
         }
