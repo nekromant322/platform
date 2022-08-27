@@ -27,25 +27,15 @@ public class PersonalData {
     private Long id;
 
     @Unupdatable
-    @Column(name = "actNumber")
-    @ApiModelProperty(
-            value = "Номер акта",
-            name = "actNumber",
-            dataType = "Long",
-            example = "222L")
+    @Column(name = "act_number")
     private Long actNumber;
 
     @Unupdatable
-    @Column(name = "contractNumber")
-    @ApiModelProperty(
-            value = "Номер контракта",
-            name = "contractNumber",
-            dataType = "String",
-            example = "22/22/2222")
+    @Column(name = "contract_number")
     private String contractNumber;
 
     @Unupdatable
-    @Column(name = "date")
+    @Column(name = "contract_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     @ApiModelProperty(
             value = "Дата подписания контракта",

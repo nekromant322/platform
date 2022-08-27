@@ -6,7 +6,7 @@ window.onload = function () {
 
 var actNumber;
 var contractNumber;
-var date;
+var contractDate;
 var fullName;
 var passportSeries;
 var passportNumber;
@@ -33,7 +33,7 @@ function getUserPersonalData() {
 
             actNumber = currentUser.personalData.actNumber;
             contractNumber = currentUser.personalData.contractNumber;
-            date = currentUser.personalData.date;
+            contractDate = currentUser.personalData.contractDate;
             fullName = currentUser.personalData.fullName;
             passportSeries = currentUser.personalData.passportSeries;
             passportNumber = currentUser.personalData.passportNumber;
@@ -54,7 +54,7 @@ function getUserPersonalData() {
                 '</h5><br>' +
                 '<h5>Номер контракта : ' + (contractNumber == null ? empty : contractNumber) +
                 '</h5><br>' +
-                '<h5>Дата : ' + (date == null ? empty : date) +
+                '<h5>Дата : ' + (contractDate == null ? empty : contractDate) +
                 '</h5><br>' +
                 '<h5>ФИО : ' + (fullName == null ? empty : fullName) +
                 '</h5><br>' +
@@ -92,10 +92,17 @@ function getUserPersonalData() {
                 (contractNumber != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Дата</h5>' +
+<<<<<<< HEAD
                 '<input class="form-control" id="date" type="text" ' +
                 'placeholder="date" ' +
                 'value="' + (date == null ? empty : date) + '" ' +
                 (date != null ? 'disabled' : empty) + '>' +
+=======
+                '<input class="form-control" id="contractDate" type="text" ' +
+                'placeholder="contractDate" ' +
+                'value="' + (contractDate == null ? empty : contractDate) + '" ' +
+                (contractDate != null ? 'disabled' : '') + '>' +
+>>>>>>> main
                 '<br>' +
                 '<h5>ФИО</h5>' +
                 '<input class="form-control" id="fullName" ' +
@@ -235,7 +242,7 @@ function getUserPersonalData() {
 
             $('#editForm').submit(function () {
                 save(null, $('#actNumber').val(), $('#contractNumber').val(),
-                    $('#date').val(), $('#fullName').val(),
+                    $('#contractDate').val(), $('#fullName').val(),
                     $('#passportSeries').val(), $('#passportNumber').val(),
                     $('#passportIssued').val(), $('#issueDate').val(),
                     $('#birthDate').val(), $('#registration').val(),
@@ -246,6 +253,7 @@ function getUserPersonalData() {
     });
 }
 
+<<<<<<< HEAD
 function findRequestToCheck(userLogin) {
 
     let dataId;
@@ -266,6 +274,9 @@ function findRequestToCheck(userLogin) {
 }
 
 function save(id, actNumber, contractNumber, date, fullName, passportSeries, passportNumber, passportIssued,
+=======
+function save(id, actNumber, contractNumber, contractDate, fullName, passportSeries, passportNumber, passportIssued,
+>>>>>>> main
               issueDate, birthDate, registration, email, phoneNumber, login) {
     $.ajax({
         url: 'personalData/' + login,
@@ -277,7 +288,7 @@ function save(id, actNumber, contractNumber, date, fullName, passportSeries, pas
             id: id,
             actNumber: actNumber,
             contractNumber: contractNumber,
-            date: date,
+            contractDate: contractDate,
             fullName: fullName,
             passportSeries: passportSeries,
             passportNumber: passportNumber,
