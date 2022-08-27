@@ -163,7 +163,7 @@ function getRequestCheckingPersonalData(userLogin, tr) {
 
             let actNumber = personalData.actNumber;
             let contractNumber = personalData.contractNumber;
-            let date = personalData.date;
+            let contractDate = personalData.contractDate;
             let fullName = personalData.fullName;
             let passportSeries = personalData.passportSeries;
             let passportNumber = personalData.passportNumber;
@@ -200,9 +200,9 @@ function getRequestCheckingPersonalData(userLogin, tr) {
                 '<br>' +
 
                 '<h5>Дата</h5>' +
-                '<input class="form-control" id="date-' + dataId + '" type="text" ' +
-                'placeholder="date" ' +
-                'value="' + (date == null ? empty : date) + '" >' +
+                '<input class="form-control" id="contractDate-' + dataId + '" type="text" ' +
+                'placeholder="contractDate" ' +
+                'value="' + (contractDate == null ? empty : contractDate) + '" >' +
                 '<br>' +
 
                 '<h5>ФИО</h5>' +
@@ -267,7 +267,7 @@ function getRequestCheckingPersonalData(userLogin, tr) {
                 save(dataId,
                     $('#actNumber-'+ dataId).val(),
                     $('#contractNumber-'+ dataId).val(),
-                    $('#date-'+ dataId).val(),
+                    $('#contractDate-'+ dataId).val(),
                     $('#fullName-'+ dataId).val(),
                     $('#passportSeries-'+ dataId).val(),
                     $('#passportNumber-'+ dataId).val(),
@@ -288,7 +288,7 @@ function getRequestCheckingPersonalData(userLogin, tr) {
 
 }
 
-function save(id, actNumber, contractNumber, date, fullName, passportSeries, passportNumber, passportIssued,
+function save(id, actNumber, contractNumber, contractDate, fullName, passportSeries, passportNumber, passportIssued,
               issueDate, birthDate, registration, email, phoneNumber, login) {
     $.ajax({
         url: '/personalData/requestToCheck/' + login,
@@ -300,7 +300,7 @@ function save(id, actNumber, contractNumber, date, fullName, passportSeries, pas
             id: id,
             actNumber: actNumber,
             contractNumber: contractNumber,
-            date: date,
+            contractDate: contractDate,
             fullName: fullName,
             passportSeries: passportSeries,
             passportNumber: passportNumber,

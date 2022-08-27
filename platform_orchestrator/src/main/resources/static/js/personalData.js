@@ -92,17 +92,10 @@ function getUserPersonalData() {
                 (contractNumber != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Дата</h5>' +
-<<<<<<< HEAD
-                '<input class="form-control" id="date" type="text" ' +
-                'placeholder="date" ' +
-                'value="' + (date == null ? empty : date) + '" ' +
-                (date != null ? 'disabled' : empty) + '>' +
-=======
                 '<input class="form-control" id="contractDate" type="text" ' +
                 'placeholder="contractDate" ' +
                 'value="' + (contractDate == null ? empty : contractDate) + '" ' +
-                (contractDate != null ? 'disabled' : '') + '>' +
->>>>>>> main
+                (contractDate != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>ФИО</h5>' +
                 '<input class="form-control" id="fullName" ' +
@@ -253,7 +246,6 @@ function getUserPersonalData() {
     });
 }
 
-<<<<<<< HEAD
 function findRequestToCheck(userLogin) {
 
     let dataId;
@@ -270,13 +262,9 @@ function findRequestToCheck(userLogin) {
     });
 
     return dataId;
-
 }
 
-function save(id, actNumber, contractNumber, date, fullName, passportSeries, passportNumber, passportIssued,
-=======
 function save(id, actNumber, contractNumber, contractDate, fullName, passportSeries, passportNumber, passportIssued,
->>>>>>> main
               issueDate, birthDate, registration, email, phoneNumber, login) {
     $.ajax({
         url: 'personalData/' + login,

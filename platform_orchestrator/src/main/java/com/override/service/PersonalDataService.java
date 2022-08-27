@@ -1,11 +1,13 @@
 package com.override.service;
 
+import com.override.mapper.PersonalDataMapper;
 import com.override.model.PersonalData;
 import com.override.model.PlatformUser;
 import com.override.model.RequestPersonalData;
 import com.override.repository.PersonalDataRepository;
 import com.override.repository.RequestPersonalDataRepository;
 import com.override.util.UnupdatableFieldChecker;
+import dto.PersonalDataDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ public class PersonalDataService {
     private UnupdatableFieldChecker<PersonalData> checker;
 
     @Autowired
+    private PersonalDataMapper personalDataMapper;
+
+    @Autowired
     private PersonalDataRepository personalDataRepository;
 
     @Autowired
@@ -24,31 +29,30 @@ public class PersonalDataService {
     @Autowired
     private PlatformUserService platformUserService;
 
-    public void save(PersonalData newPersonalData, String login) {
+    public void save(PersonalDataDTO newPersonalDataDTO, String login) {
 
         PlatformUser user = platformUserService.findPlatformUserByLogin(login);
         PersonalData currentPersonalData = user.getPersonalData();
 
+        PersonalData newPersonalData = personalDataMapper.dtoToEntity(newPersonalDataDTO);
         newPersonalData.setId(currentPersonalData.getId());
 
         personalDataRepository.save(newPersonalData);
     }
 
-    public void saveOrSendToCheck(PersonalData newPersonalData, String login) {
+    public void saveOrCreateRequest(PersonalDataDTO newPersonalDataDTO, String login) {
 
         PlatformUser user = platformUserService.findPlatformUserByLogin(login);
         PersonalData currentPersonalData = user.getPersonalData();
 
+        PersonalData newPersonalData = personalDataMapper.dtoToEntity(newPersonalDataDTO);
         newPersonalData.setId(currentPersonalData.getId());
 
         if(checker.executeCheckOfFillingInField(currentPersonalData, newPersonalData)) {
-
-            RequestPersonalData requestPersonalData = new RequestPersonalData(newPersonalData);
-            requestPersonalDataRepository.save(requestPersonalData);
+            createRequest(newPersonalData);
         } else {
-
             checker.executeCheckOfFieldChanges(currentPersonalData, newPersonalData);
-            personalDataRepository.save(newPersonalData);
+            save(newPersonalData);
         }
     }
 
@@ -61,7 +65,16 @@ public class PersonalDataService {
                 .orElse(new RequestPersonalData());
     }
 
-    public void deleteRequestToCheck(PersonalData personalData) {
-        requestPersonalDataRepository.deleteById(personalData.getId());
+    public void deleteRequestToCheck(PersonalDataDTO personalDataDTO) {
+        requestPersonalDataRepository.deleteById(personalDataDTO.getId());
+    }
+
+    private void save(PersonalData personalData) {
+        personalDataRepository.save(personalData);
+    }
+
+    private void createRequest(PersonalData personalData) {
+        RequestPersonalData requestPersonalData = personalDataMapper.dataToRequest(personalData);
+        requestPersonalDataRepository.save(requestPersonalData);
     }
 }

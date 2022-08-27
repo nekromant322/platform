@@ -1,7 +1,7 @@
 package com.override.service;
 
 import com.override.feign.NotificatorFeign;
-import com.override.model.PersonalData;
+import dto.PersonalDataDTO;
 import dto.RecipientDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,12 +12,12 @@ public class RequestInNotificationService {
     @Autowired
     private NotificatorFeign notificatorFeign;
 
-    public void saveRecipient(PersonalData personalData, String userLogin) {
+    public void saveRecipient(PersonalDataDTO personalDataDTO, String userLogin) {
 
         RecipientDTO recipientDTO = RecipientDTO.builder()
                 .login(userLogin)
-                .email(personalData.getEmail())
-                .phoneNumber(personalData.getPhoneNumber() != null ? Long.toString(personalData.getPhoneNumber()) : null)
+                .email(personalDataDTO.getEmail())
+                .phoneNumber(personalDataDTO.getPhoneNumber() != null ? Long.toString(personalDataDTO.getPhoneNumber()) : null)
                 .build();
 
         notificatorFeign.saveRecipient(recipientDTO);
