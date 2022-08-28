@@ -1,6 +1,5 @@
 package com.override.controller.rest;
 
-import com.override.model.PersonalData;
 import com.override.model.RequestPersonalData;
 import com.override.service.PersonalDataService;
 import com.override.service.RequestInNotificationService;

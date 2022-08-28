@@ -1,12 +1,14 @@
 package com.override.service;
 
 import com.override.exception.UnupdatableDataException;
+import com.override.mapper.PersonalDataMapper;
 import com.override.model.PersonalData;
 import com.override.model.PlatformUser;
 import com.override.model.RequestPersonalData;
 import com.override.repository.PersonalDataRepository;
 import com.override.repository.RequestPersonalDataRepository;
 import com.override.util.UnupdatableFieldChecker;
+import dto.PersonalDataDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,6 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static com.override.utils.TestFieldsUtil.generatePersonalData;
+import static com.override.utils.TestFieldsUtil.generatePersonalDataDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -38,18 +42,23 @@ public class PersonalDataServiceTest {
     @Mock
     private UnupdatableFieldChecker<PersonalData> checker;
 
+    @Mock
+    private PersonalDataMapper personalDataMapper;
+
     @Test
     public void saveTest() {
 
-        PersonalData newPersonalData = new PersonalData();
+        PersonalDataDTO newPersonalDataDTO = generatePersonalDataDTO();
+        PersonalData newPersonalData = generatePersonalData();
 
         PersonalData existingPersonalData = new PersonalData();
         PlatformUser platformUser = new PlatformUser();
         platformUser.setPersonalData(existingPersonalData);
 
+        when(personalDataMapper.dtoToEntity(newPersonalDataDTO)).thenReturn(newPersonalData);
         when(platformUserService.findPlatformUserByLogin("login")).thenReturn(platformUser);
 
-        personalDataService.save(newPersonalData, "login");
+        personalDataService.save(newPersonalDataDTO, "login");
 
         verify(personalDataRepository, times(1)).save(newPersonalData);
 
@@ -58,17 +67,19 @@ public class PersonalDataServiceTest {
     @Test
     public void saveUpdatableFieldsTest() {
 
-        PersonalData newPersonalData = new PersonalData();
+        PersonalDataDTO newPersonalDataDTO = generatePersonalDataDTO();
+        PersonalData newPersonalData = generatePersonalData();
 
         PersonalData existingPersonalData = new PersonalData();
         PlatformUser platformUser = new PlatformUser();
         platformUser.setPersonalData(existingPersonalData);
 
+        when(personalDataMapper.dtoToEntity(newPersonalDataDTO)).thenReturn(newPersonalData);
         when(platformUserService.findPlatformUserByLogin("login")).thenReturn(platformUser);
         when(checker.executeCheckOfFillingInField(existingPersonalData, newPersonalData))
                 .thenReturn(false);
 
-        personalDataService.saveOrSendToCheck(newPersonalData, "login");
+        personalDataService.saveOrCreateRequest(newPersonalDataDTO, "login");
 
         verify(checker, times(1))
                 .executeCheckOfFillingInField(existingPersonalData, newPersonalData);
@@ -79,20 +90,23 @@ public class PersonalDataServiceTest {
     }
 
     @Test
-    public void sendToCheckTest() {
+    public void createRequestTest() {
 
+        PersonalDataDTO newPersonalDataDTO = generatePersonalDataDTO();
         PersonalData newPersonalData = new PersonalData();
-        RequestPersonalData requestPersonalData = new RequestPersonalData(newPersonalData);
+        RequestPersonalData requestPersonalData = new RequestPersonalData();
 
         PersonalData existingPersonalData = new PersonalData();
         PlatformUser platformUser = new PlatformUser();
         platformUser.setPersonalData(existingPersonalData);
 
+        when(personalDataMapper.dtoToEntity(newPersonalDataDTO)).thenReturn(newPersonalData);
+        when(personalDataMapper.dataToRequest(newPersonalData)).thenReturn(requestPersonalData);
         when(platformUserService.findPlatformUserByLogin("login")).thenReturn(platformUser);
         when(checker.executeCheckOfFillingInField(existingPersonalData, newPersonalData))
                 .thenReturn(true);
 
-        personalDataService.saveOrSendToCheck(newPersonalData, "login");
+        personalDataService.saveOrCreateRequest(newPersonalDataDTO, "login");
 
         verify(checker, times(1))
                 .executeCheckOfFillingInField(existingPersonalData, newPersonalData);
@@ -107,8 +121,10 @@ public class PersonalDataServiceTest {
         PlatformUser platformUser = new PlatformUser();
         platformUser.setPersonalData(existingPersonalData);
 
+        PersonalDataDTO newPersonalDataDTO = generatePersonalDataDTO();
         PersonalData newPersonalData = new PersonalData();
 
+        when(personalDataMapper.dtoToEntity(newPersonalDataDTO)).thenReturn(newPersonalData);
         when(platformUserService.findPlatformUserByLogin("login")).thenReturn(platformUser);
         when(checker.executeCheckOfFillingInField(existingPersonalData, newPersonalData))
                 .thenReturn(false);
@@ -117,7 +133,7 @@ public class PersonalDataServiceTest {
                 .when(checker).executeCheckOfFieldChanges(any(), any());
 
         assertThrows(UnupdatableDataException.class,
-                () -> personalDataService.saveOrSendToCheck(newPersonalData, "login"));
+                () -> personalDataService.saveOrCreateRequest(newPersonalDataDTO, "login"));
 
     }
 
@@ -145,12 +161,12 @@ public class PersonalDataServiceTest {
     @Test
     public void deleteRequestToCheckTest() {
 
-        PersonalData personalData = new PersonalData();
+        PersonalDataDTO personalDataDTO = generatePersonalDataDTO();
 
-        personalDataService.deleteRequestToCheck(personalData);
+        personalDataService.deleteRequestToCheck(personalDataDTO);
 
         verify(requestPersonalDataRepository, times(1))
-                .deleteById(personalData.getId());
+                .deleteById(personalDataDTO.getId());
 
     }
 

@@ -22,15 +22,6 @@ class ActGenerationServiceTest {
     @InjectMocks
     private ActGenerationService actGenerationService;
 
-    @Mock
-    private ITemplateEngine templateEngine;
-
-    @Mock
-    private ITextRenderer iTextRenderer;
-
-    @Mock
-    private PersonalData personalData;
-
     @Test
     public void testCreatePDFWhenException() {
         assertThrows(InvalidPersonalDataException.class, () -> actGenerationService.createPDF(null));
@@ -45,7 +36,7 @@ class ActGenerationServiceTest {
 
         assertEquals(context.getVariable("actNumber"), contextTest.getVariable("actNumber"));
         assertEquals(context.getVariable("contactNumber"), contextTest.getVariable("contactNumber"));
-        assertEquals(context.getVariable("date"), contextTest.getVariable("date"));
+        assertEquals(context.getVariable("contractDate"), contextTest.getVariable("contractDate"));
         assertEquals(context.getVariable("fullName"), contextTest.getVariable("fullName"));
         assertEquals(context.getVariable("passportSeries"), contextTest.getVariable("passportSeries"));
         assertEquals(context.getVariable("passportNumber"), contextTest.getVariable("passportNumber"));
