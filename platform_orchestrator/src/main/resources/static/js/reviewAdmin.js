@@ -8,7 +8,7 @@ window.onload = function () {
     newReviewRequests();
 };
 
-function findReview(reviewFilterDTO) {
+function findReview(reviewFilterDTO, identifier) {
     $.ajax({
         method: 'POST',
         url: '/reviews',
@@ -16,7 +16,7 @@ function findReview(reviewFilterDTO) {
         data: JSON.stringify(reviewFilterDTO),
         success: function (response) {
             console.log(response);
-            drawColumns(response);
+            drawColumns(response, identifier);
         },
         error: function (error) {
             console.log(error);
@@ -92,14 +92,69 @@ function separatePastReviews(data) {
     } else return data;
 }
 
-function drawColumns(data) {
+function drawColumns(data, identifier) {
     while (document.getElementById("review-table").getElementsByTagName("tbody")[0].rows[0])
         document.getElementById("review-table").getElementsByTagName("tbody")[0].deleteRow(0);
     data = sortDataByTime(data);
     data = separatePastReviews(data);
+    if (identifier === "tomorrow" || identifier === "today") {
+        for (let i = 0; i < data.length; i++) {
+            addColumnForTodayAndTomorrow(data[i]);
+        }
+    } else {
+        for (let i = 0; i < data.length; i++) {
+            addColumn(data[i]);
+        }
+    }
+}
 
-    for (let i = 0; i < data.length; i++) {
-        addColumn(data[i]);
+function addColumnForTodayAndTomorrow(data) {
+    let table = document.getElementById("review-table").getElementsByTagName("tbody")[0];
+    let tr = table.insertRow(table.rows.length);
+    let td;
+
+    if (data.bookedTime != null) {
+        insertTd(data.id, tr);
+        insertTd(data.topic, tr);
+        insertTd(data.studentLogin, tr);
+        insertTd(data.mentorLogin, tr);
+        insertTd(data.bookedDate, tr);
+        if (data.bookedTime != null) {
+            insertTd(data.bookedTime.substring(0, 5), tr);
+        } else insertTd(data.bookedTime, tr);
+
+
+        let review = {}
+        review.id = data.id;
+        review.topic = data.topic;
+        review.studentLogin = data.studentLogin;
+        review.mentorLogin = data.mentorLogin;
+        review.bookedDate = data.bookedDate;
+        review.bookedTime = data.bookedTime;
+        review.timeSlots = data.timeSlots;
+
+        let times = data.timeSlots.toString().split(",");
+        for (i = 0; i < times.length; i++) {
+            times[i] = times[i].substring(0, 5);
+        }
+        times.sort();
+
+        if (btnCase === 1) {
+            for (let i = 0; i < times.length; i++) {
+                let sumId = "#lastColumn";
+                $(sumId).append("<th scope=\"col\" id=\"lastColumn" + i + "\">  </th>");
+                let acceptBtn = document.createElement("button");
+                acceptBtn.className = "btn btn-success";
+                acceptBtn.innerHTML = times[i];
+                acceptBtn.type = "submit";
+                acceptBtn.addEventListener("click", () => {
+                    review.bookedTime = times[i];
+                    editReview(review);
+                });
+                td = tr.insertCell(6);
+                td.insertAdjacentElement("beforeend", acceptBtn);
+            }
+        }
     }
 }
 
@@ -180,7 +235,7 @@ function newReviewRequests() {
     reviewFilterDTO.bookedDate = null;
     reviewFilterDTO.mentorLogin = null;
     reviewFilterDTO.studentLogin = null;
-    findReview(reviewFilterDTO);
+    findReview(reviewFilterDTO, "new");
 }
 
 function myReview() {
@@ -189,7 +244,7 @@ function myReview() {
     reviewFilterDTO.bookedDate = null;
     reviewFilterDTO.mentorLogin = mentor;
     reviewFilterDTO.studentLogin = null;
-    findReview(reviewFilterDTO);
+    findReview(reviewFilterDTO, "my");
 }
 
 function todayReview() {
@@ -198,7 +253,7 @@ function todayReview() {
     reviewFilterDTO.mentorLogin = null;
     reviewFilterDTO.studentLogin = null;
     reviewFilterDTO.bookedDate = today;
-    findReview(reviewFilterDTO);
+    findReview(reviewFilterDTO, "today");
 }
 
 function tomorrowReview() {
@@ -207,7 +262,7 @@ function tomorrowReview() {
     reviewFilterDTO.mentorLogin = null;
     reviewFilterDTO.studentLogin = null;
     reviewFilterDTO.bookedDate = tomorrow;
-    findReview(reviewFilterDTO);
+    findReview(reviewFilterDTO, "tomorrow");
 }
 
 function editReview(reviewDTO) {
