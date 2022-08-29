@@ -10,7 +10,7 @@ public class CodeCallResponseDTO {
 
     private String callID;
 
-    private String cost;
+    private double cost;
 
-    private String balance;
+    private double balance;
 }

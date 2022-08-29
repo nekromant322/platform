@@ -1,6 +1,6 @@
 package com.override.feign;
 
-
+import dto.CodeCallSecurityCodeDTO;
 import dto.RecipientDTO;
 import enums.Communication;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -14,6 +14,9 @@ public interface NotificatorFeign {
 
     @GetMapping("/calls/balance")
     Double getBalance();
+
+    @PostMapping("/calls/code")
+    String callToClient(@RequestBody String phoneNumber);
 
     @PostMapping("/recipients/save")
     void saveRecipient(@RequestBody RecipientDTO recipientDTO);

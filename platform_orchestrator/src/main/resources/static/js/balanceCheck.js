@@ -1,6 +1,18 @@
 window.onload = initBalance();
 
 function initBalance() {
+
+    $.ajax({
+        method: "POST",
+        url: "/notification/code",
+        dataType: "json",
+        async: "false",
+        success: function (data) {
+            document.getElementById("codeCallSecurity")
+                .setAttribute("value", data.codeCallSecurity);
+        }
+    });
+
     $.ajax({
         method: "GET",
         url: "/notification/balance",
