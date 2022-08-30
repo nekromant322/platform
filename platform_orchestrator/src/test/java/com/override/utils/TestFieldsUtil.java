@@ -22,19 +22,18 @@ public class TestFieldsUtil {
 
     public static Context generateContextByPersonalData() {
         PersonalData personalData = generatePersonalData();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 
         Context context = new Context();
 
         context.setVariable("actNumber", personalData.getActNumber());
         context.setVariable("contractNumber", personalData.getContractNumber());
-        context.setVariable("date", formatter.format(personalData.getContractDate()));
+        context.setVariable("contractDate", personalData.getContractDate().toString());
         context.setVariable("fullName", personalData.getFullName());
         context.setVariable("passportSeries", personalData.getPassportSeries());
         context.setVariable("passportNumber", personalData.getPassportNumber());
         context.setVariable("passportIssued", personalData.getPassportIssued());
-        context.setVariable("issueDate", formatter.format(personalData.getIssueDate()));
-        context.setVariable("birthDate", formatter.format(personalData.getBirthDate()));
+        context.setVariable("issueDate", personalData.getIssueDate().toString());
+        context.setVariable("birthDate", personalData.getBirthDate().toString());
         context.setVariable("registration", personalData.getRegistration());
         context.setVariable("email", personalData.getEmail());
         context.setVariable("phoneNumber", personalData.getPhoneNumber());
@@ -48,16 +47,36 @@ public class TestFieldsUtil {
                 .id(5l)
                 .actNumber(950L)
                 .contractNumber("9/6/2022")
-                .contractDate(new Date(1654819200000L)) // 2022-06-10 00:00:00.0 - in ms
+                .contractDate(LocalDate.of(2022, 6, 10))
                 .fullName("Erich Zieme DVM")
                 .passportSeries(5369L)
                 .passportNumber(642705L)
                 .passportIssued("Apt. 470 17253 Bradtke Extensions, South Betsey, NV 60678-6968")
-                .issueDate(new Date(1654819200000L)) // 2024-03-12 00:00:00.0 - in ms
-                .birthDate(new Date(686793600000L))   // 1991-10-07 00:00:00.0 - in ms
+                .issueDate(LocalDate.of(2024, 03, 12))
+                .birthDate(LocalDate.of(1991, 10, 07))
                 .registration("Apt. 403 1396 Little Ranch, Volkmanland, NC 35258-6649")
                 .email("arnette22@gmail.com")
                 .phoneNumber(82531250128L)
+                .build();
+    }
+
+    public static PersonalDataDTO generatePersonalDataDTO() {
+
+        PersonalData personalData = generatePersonalData();
+        return PersonalDataDTO.builder()
+                .id(personalData.getId())
+                .actNumber(personalData.getActNumber())
+                .contractNumber(personalData.getContractNumber())
+                .contractDate(personalData.getContractDate())
+                .fullName(personalData.getFullName())
+                .passportSeries(personalData.getPassportSeries())
+                .passportNumber(personalData.getPassportNumber())
+                .passportIssued(personalData.getPassportIssued())
+                .issueDate(personalData.getIssueDate())
+                .birthDate(personalData.getBirthDate())
+                .registration(personalData.getRegistration())
+                .email(personalData.getEmail())
+                .phoneNumber(personalData.getPhoneNumber())
                 .build();
     }
 
