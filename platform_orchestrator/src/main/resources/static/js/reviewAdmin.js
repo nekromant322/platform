@@ -95,13 +95,13 @@ function separatePastReviews(data) {
 function drawColumns(data, identifier) {
     while (document.getElementById("review-table").getElementsByTagName("tbody")[0].rows[0])
         document.getElementById("review-table").getElementsByTagName("tbody")[0].deleteRow(0);
-    data = sortDataByTime(data);
-    data = separatePastReviews(data);
     if (identifier === "tomorrow" || identifier === "today") {
         for (let i = 0; i < data.length; i++) {
             addColumnForTodayAndTomorrow(data[i]);
         }
     } else {
+        data = sortDataByTime(data);
+        data = separatePastReviews(data);
         for (let i = 0; i < data.length; i++) {
             addColumn(data[i]);
         }
