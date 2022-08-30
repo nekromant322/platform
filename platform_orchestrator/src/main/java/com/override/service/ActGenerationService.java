@@ -11,7 +11,6 @@ import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -45,19 +44,17 @@ public class ActGenerationService {
 
     public Context contextCreation(PersonalData personalData) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-
         Context context = new Context();
 
         context.setVariable("actNumber", personalData.getActNumber());
         context.setVariable("contractNumber", personalData.getContractNumber());
-        context.setVariable("date", formatter.format(personalData.getContractDate()));
+        context.setVariable("contractDate", personalData.getContractDate().toString());
         context.setVariable("fullName", personalData.getFullName());
         context.setVariable("passportSeries", personalData.getPassportSeries());
         context.setVariable("passportNumber", personalData.getPassportNumber());
         context.setVariable("passportIssued", personalData.getPassportIssued());
-        context.setVariable("issueDate", formatter.format(personalData.getIssueDate()));
-        context.setVariable("birthDate", formatter.format(personalData.getBirthDate()));
+        context.setVariable("issueDate", personalData.getIssueDate().toString());
+        context.setVariable("birthDate", personalData.getBirthDate().toString());
         context.setVariable("registration", personalData.getRegistration());
         context.setVariable("email", personalData.getEmail());
         context.setVariable("phoneNumber", personalData.getPhoneNumber());

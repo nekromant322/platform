@@ -10,12 +10,30 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="act_number" type="bigint"/>
-            <column name="birth_date" type="timestamp"/>
+            <column name="birth_date" type="date"/>
             <column name="contract_number" type="varchar(255)"/>
-            <column name="contract_date" type="timestamp"/>
+            <column name="contract_date" type="date"/>
             <column name="email" type="varchar(255)"/>
             <column name="full_name" type="varchar(255)"/>
-            <column name="issue_date" type="timestamp"/>
+            <column name="issue_date" type="date"/>
+            <column name="passport_issued" type="varchar(255)"/>
+            <column name="passport_number" type="bigint"/>
+            <column name="passport_series" type="bigint"/>
+            <column name="phone_number" type="bigint"/>
+            <column name="registration" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="request_personal_data">
+            <column name="id" type="bigint" autoIncrement="false">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="act_number" type="bigint"/>
+            <column name="birth_date" type="date"/>
+            <column name="contract_number" type="varchar(255)"/>
+            <column name="contract_date" type="date"/>
+            <column name="email" type="varchar(255)"/>
+            <column name="full_name" type="varchar(255)"/>
+            <column name="issue_date" type="date"/>
             <column name="passport_issued" type="varchar(255)"/>
             <column name="passport_number" type="bigint"/>
             <column name="passport_series" type="bigint"/>

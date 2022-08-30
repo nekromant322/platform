@@ -9,15 +9,14 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.event.annotation.BeforeTestMethod;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(MockitoExtension.class)
 public class CheckerUnupdatableFieldTest {
 
     @InjectMocks
-    private UnupdatableFieldChecker<PersonalData> unupdatableFieldChecker;
+    private UnupdatableFieldChecker<PersonalData> checker;
 
     @Test
     public void changingUnupdatableFieldTest() {
@@ -31,7 +30,7 @@ public class CheckerUnupdatableFieldTest {
                 .build();
 
         assertThrows(UnupdatableDataException.class,
-                () -> unupdatableFieldChecker.executeCheck(existingPersonalData, newPersonalData));
+                () -> checker.executeCheckOfFieldChanges(existingPersonalData, newPersonalData));
 
     }
 
@@ -46,7 +45,7 @@ public class CheckerUnupdatableFieldTest {
                 .phoneNumber(333L)
                 .build();
 
-        unupdatableFieldChecker.executeCheck(existingPersonalData, newPersonalData);
+        checker.executeCheckOfFieldChanges(existingPersonalData, newPersonalData);
 
     }
 
@@ -61,7 +60,38 @@ public class CheckerUnupdatableFieldTest {
                 .actNumber(123L)
                 .build();
 
-        unupdatableFieldChecker.executeCheck(existingPersonalData, newPersonalData);
+        checker.executeCheckOfFieldChanges(existingPersonalData, newPersonalData);
 
     }
+
+    @Test
+    public void fillingInEmptyFields() {
+
+        PersonalData existingPersonalData = PersonalData.builder()
+                .actNumber(null) //@Unupdatable empty field
+                .build();
+
+        PersonalData newPersonalData = PersonalData.builder()
+                .actNumber(123L)
+                .build();
+
+        assertTrue(checker.executeCheckOfFillingInField(existingPersonalData, newPersonalData));
+
+    }
+
+    @Test
+    public void fillingInNonEmptyFields() {
+
+        PersonalData existingPersonalData = PersonalData.builder()
+                .actNumber(1L) //@Unupdatable non empty field
+                .build();
+
+        PersonalData newPersonalData = PersonalData.builder()
+                .actNumber(123L)
+                .build();
+
+        assertFalse(checker.executeCheckOfFillingInField(existingPersonalData, newPersonalData));
+
+    }
+
 }
