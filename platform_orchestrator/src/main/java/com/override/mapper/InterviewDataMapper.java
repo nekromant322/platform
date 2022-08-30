@@ -23,4 +23,21 @@ public class InterviewDataMapper {
                 .distanceWork(interviewTable.getDistanceWork())
                 .build();
     }
+
+    public InterviewData dtoToEntity(InterviewDataDTO interviewTableDTO) {
+        return InterviewData.builder()
+                .id(interviewTableDTO.getId())
+                .userLogin(interviewTableDTO.getUserLogin())
+                .company(interviewTableDTO.getCompany())
+                .description(interviewTableDTO.getDescription())
+                .contacts(interviewTableDTO.getContacts())
+                .date(interviewTableDTO.getDate())
+                .time(interviewTableDTO.getTime())
+                .comment(interviewTableDTO.getComment())
+                .stack(interviewTableDTO.getStack())
+                .salary(interviewTableDTO.getSalary())
+                .meetingLink(interviewTableDTO.getMeetingLink())
+                .distanceWork(interviewTableDTO.getDistanceWork())
+                .build();
+    }
 }

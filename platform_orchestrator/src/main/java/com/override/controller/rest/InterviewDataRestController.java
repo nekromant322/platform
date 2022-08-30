@@ -4,6 +4,7 @@ import com.override.model.InterviewData;
 import com.override.service.InterviewDataService;
 import dto.InterviewDataDTO;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class InterviewDataRestController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Данные собеседования удалены")
     })
-    public ResponseEntity<String> deleteInterview(@RequestParam Long id) {
+    public ResponseEntity<String> deleteInterview(@ApiParam(value = "id собеседования") @RequestParam Long id) {
         interviewDataService.delete(id);
         return new ResponseEntity<>("Данные собеседования удалены", HttpStatus.OK);
     }
@@ -41,14 +42,14 @@ public class InterviewDataRestController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Данные собеседования сохранены")
     })
-    public ResponseEntity<String> save(@RequestBody InterviewData interviewTable) {
-        interviewDataService.save(interviewTable);
+    public ResponseEntity<String> save(@RequestBody InterviewDataDTO interviewDataDTO) {
+        interviewDataService.save(interviewDataDTO);
         return new ResponseEntity<>("Данные собеседования сохранены", HttpStatus.OK);
     }
 
     @GetMapping("/getData")
     @ApiOperation(value = "Получает из БД данные собеседования по его id")
-    public ResponseEntity<InterviewData> getInterviewData(@RequestParam Long id) {
+    public ResponseEntity<InterviewData> getInterviewData(@ApiParam(value = "id собеседования") @RequestParam Long id) {
         InterviewData interviewTable = interviewDataService.findById(id);
         return new ResponseEntity<>(interviewTable, HttpStatus.OK);
     }

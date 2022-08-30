@@ -28,9 +28,8 @@ public class InterviewDataService {
     public void delete(Long id) {
         interviewDataRepository.deleteById(id);
     }
-
-    public void save(InterviewData interviewData) {
-        interviewDataRepository.save(interviewData);
+    public void save(InterviewDataDTO interviewDataDTO) {
+        interviewDataRepository.save(interviewDataMapper.dtoToEntity(interviewDataDTO));
     }
 
     public InterviewData findById(Long id) {
