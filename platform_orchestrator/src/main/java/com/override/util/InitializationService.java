@@ -2,6 +2,7 @@ package com.override.util;
 
 import com.github.javafaker.Faker;
 import com.override.exception.UserAlreadyExistException;
+import com.override.mapper.PersonalDataMapper;
 import com.override.model.*;
 import com.override.model.enums.CoursePart;
 import com.override.model.enums.Role;
@@ -67,6 +68,9 @@ public class InitializationService {
 
     @Autowired
     private PersonalDataService personalDataService;
+
+    @Autowired
+    private PersonalDataMapper personalDataMapper;
 
     @Autowired
     private CodeTryService codeTryService;
@@ -377,23 +381,21 @@ public class InitializationService {
         PersonalData personalData = user.getPersonalData();
         personalData.setActNumber(faker.number().numberBetween(1L, 1000L));
         personalData.setContractNumber(day + "/" + month + "/" + year);
-        personalData.setContractDate(new Date(year - 1900, month - 1, day + 1));
+        personalData.setContractDate(LocalDate.of(year, month, day));
         personalData.setFullName(faker.name().fullName());
         personalData.setPassportSeries(Long.valueOf(faker.bothify("####")));
         personalData.setPassportNumber(Long.valueOf(faker.bothify("######")));
         personalData.setPassportIssued(faker.address().fullAddress());
-        personalData.setIssueDate(new Date(faker.number().numberBetween(123, 127),
-                faker.number().numberBetween(0, 11),
-                faker.number().numberBetween(1, 30)));
-        personalData.setBirthDate(new Date(faker.number().numberBetween(90, 104),
-                faker.number().numberBetween(0, 11),
-                faker.number().numberBetween(1, 30)));
+        personalData.setIssueDate(LocalDate.of(faker.number().numberBetween(123, 127), month, day));
+        personalData.setBirthDate(LocalDate.of(faker.number().numberBetween(90, 104), month, day));
         personalData.setRegistration(faker.address().fullAddress());
         personalData.setEmail(faker.name().firstName().toLowerCase(Locale.ROOT) +
                 faker.bothify("##@") + "gmail.com");
         personalData.setPhoneNumber(Long.valueOf("8" + faker.bothify("##########")));
 
-        personalDataService.save(personalData, user.getLogin());
+        PersonalDataDTO personalDataDTO = personalDataMapper.entityToDto(personalData);
+
+        personalDataService.save(personalDataDTO, user.getLogin());
     }
 
     public void userSettingsInit(PlatformUser user) {
