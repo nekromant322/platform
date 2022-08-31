@@ -372,4 +372,39 @@ public class TestFieldsUtil {
                 .label(interviewReportList.get(0).getUserLogin())
                 .build();
     }
+
+    public static InterviewData generateTestInterviewData() {
+        return InterviewData.builder()
+                .id(1L)
+                .userLogin("testUser")
+                .company("Test Company")
+                .description("Test description")
+                .contacts("880055535535")
+                .date(LocalDate.of(2022, 7, 3))
+                .time(LocalTime.of(22, 22, 0))
+                .comment("Test comment")
+                .stack("Test stack")
+                .salary(250)
+                .meetingLink("https://meet.google.com/oqc-sijo-esb")
+                .distanceWork("Да")
+                .build();
+    }
+
+    public static InterviewDataDTO generateTestInterviewDataDTO() {
+        InterviewData interviewData = generateTestInterviewData();
+        return InterviewDataDTO.builder()
+                .id(interviewData.getId())
+                .userLogin(interviewData.getUserLogin())
+                .company(interviewData.getCompany())
+                .description(interviewData.getDescription())
+                .contacts(interviewData.getContacts())
+                .date(interviewData.getDate())
+                .time(interviewData.getTime())
+                .comment(interviewData.getComment())
+                .stack(interviewData.getStack())
+                .salary(interviewData.getSalary())
+                .meetingLink(interviewData.getMeetingLink())
+                .distanceWork(interviewData.getDistanceWork())
+                .build();
+    }
 }

@@ -251,5 +251,22 @@
             <column name="question" type="varchar(255)"/>
             <column name="section" type="integer"/>
         </createTable>
+
+        <createTable tableName="interview_data">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="company" type="varchar(255)"/>
+            <column name="description" type="varchar(255)"/>
+            <column name="contacts" type="varchar(255)"/>
+            <column name="date" type="date"/>
+            <column name="time" type="time"/>
+            <column name="meeting_link" type="varchar(255)"/>
+            <column name="salary" type="integer"/>
+            <column name="stack" type="varchar(255)"/>
+            <column name="distance_work" type="varchar(255)"/>
+            <column name="comment" type="varchar(255)"/>
+            <column name="user_login" type="varchar(255)"/>
+        </createTable>
     </changeSet>
 </databaseChangeLog>
