@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class AlertService {
@@ -33,7 +35,7 @@ public class AlertService {
         List<PlatformUser> admins = platformUserService.getAllAdmins();
 
         for (PlatformUser student : students) {
-            int countDays = Math.abs(codeTryRepository.findFirstByUserIdOrderByDate(student.getId()).getDate().getDayOfMonth() - LocalDate.now().getDayOfMonth());
+            long countDays = DAYS.between(codeTryRepository.findFirstByUserIdOrderByDate(student.getId()).getDate(), LocalDateTime.now());
             String studentMessage = countDays + " - уже столько дней ты не отправляешь новых решений :(";
             String adminMessage = countDays + " - столько дней " + student.getLogin() + " не присылал новых решений на платформу";
 
