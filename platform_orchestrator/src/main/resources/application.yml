@@ -65,12 +65,12 @@ testData:
   preProjectLessonCount: 5
 
 alert:
-  daysWithoutNewSolutionsAlertThreshold: 3L
+  daysWithoutNewSolutionsAlertThreshold: 3
   cronNotificationPeriodForStudentsWithNoNewSolutions: 0 00 10 * * ?
 
 reviewAlert:
-  daysWithoutReviewAlertThreshold: 7L
-  cronNotificationPeriodForStudentsWithNoNewSolutions: 0 00 11 * * ?
+  daysWithoutReviewAlertThreshold: 7
+  cronNotificationPeriodForStudentsWithNoNewSolutions: 0 40 23 * * ?
 
 logging:
   file:
