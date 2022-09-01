@@ -4,6 +4,7 @@ import com.override.feign.NotificatorFeign;
 import com.override.model.PlatformUser;
 import com.override.model.enums.CoursePart;
 import com.override.repository.CodeTryRepository;
+import com.override.repository.ReviewRepository;
 import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,9 @@ public class AlertService {
     @Autowired
     private NotificatorFeign notificatorFeign;
 
+    @Autowired
+    private ReviewRepository reviewRepository;
+
     public void alertBadStudents() {
 
         List<PlatformUser> students = platformUserService.getStudentsByCoursePart(CoursePart.CORE.ordinal());
@@ -42,6 +46,25 @@ public class AlertService {
 
                 for (PlatformUser admin : admins) {
                     notificatorFeign.sendMessage(admin.getLogin(), adminMessage, Communication.TELEGRAM);
+                }
+            }
+        }
+    }
+
+    public void alertMentorsAboutBadStudents() {
+
+        List<PlatformUser> students = platformUserService.getAllStudents();
+        List<PlatformUser> admins = platformUserService.getAllAdmins();
+
+        for (PlatformUser student : students) {
+            if (reviewRepository.findFirstByStudentIdOrderByIdDesc(student.getId()) != null) {
+                int countDays = Math.abs(reviewRepository.findFirstByStudentIdOrderByIdDesc(student.getId())
+                        .getBookedDate().getDayOfMonth() - LocalDate.now().getDayOfMonth());
+                if (countDays > days) {
+                    String adminMessage = "студент " + student.getLogin() + " давно не был на ревью ";
+                    for (PlatformUser admin : admins) {
+                        notificatorFeign.sendMessage(admin.getLogin(), adminMessage, Communication.TELEGRAM);
+                    }
                 }
             }
         }
