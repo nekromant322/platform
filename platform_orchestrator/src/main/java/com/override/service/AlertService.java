@@ -11,13 +11,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class AlertService {
 
     @Value("${alert.daysWithoutNewSolutionsAlertThreshold}")
-    private int days;
+    private long days;
+
+    @Value("${reviewAlert.daysWithoutReviewAlertThreshold}")
+    private long daysForReview;
 
     @Autowired
     private PlatformUserService platformUserService;
@@ -31,13 +37,21 @@ public class AlertService {
     @Autowired
     private ReviewRepository reviewRepository;
 
+    public void setDays(long days) {
+        this.days = days;
+    }
+
+    public void setDaysForReview(long daysForReview) {
+        this.daysForReview = daysForReview;
+    }
+
     public void alertBadStudents() {
 
         List<PlatformUser> students = platformUserService.getStudentsByCoursePart(CoursePart.CORE.ordinal());
         List<PlatformUser> admins = platformUserService.getAllAdmins();
 
         for (PlatformUser student : students) {
-            int countDays = Math.abs(codeTryRepository.findFirstByUserIdOrderByDate(student.getId()).getDate().getDayOfMonth() - LocalDate.now().getDayOfMonth());
+            long countDays = DAYS.between(codeTryRepository.findFirstByUserIdOrderByDate(student.getId()).getDate(), LocalDateTime.now());
             String studentMessage = countDays + " - уже столько дней ты не отправляешь новых решений :(";
             String adminMessage = countDays + " - столько дней " + student.getLogin() + " не присылал новых решений на платформу";
 
@@ -58,9 +72,8 @@ public class AlertService {
 
         for (PlatformUser student : students) {
             if (reviewRepository.findFirstByStudentIdOrderByIdDesc(student.getId()) != null) {
-                int countDays = Math.abs(reviewRepository.findFirstByStudentIdOrderByIdDesc(student.getId())
-                        .getBookedDate().getDayOfMonth() - LocalDate.now().getDayOfMonth());
-                if (countDays > days) {
+                long countDays = DAYS.between(reviewRepository.findFirstByStudentIdOrderByIdDesc(student.getId()).getBookedDate(), LocalDate.now());
+                if (countDays > daysForReview) {
                     String adminMessage = "студент " + student.getLogin() + " давно не был на ревью ";
                     for (PlatformUser admin : admins) {
                         notificatorFeign.sendMessage(admin.getLogin(), adminMessage, Communication.TELEGRAM);

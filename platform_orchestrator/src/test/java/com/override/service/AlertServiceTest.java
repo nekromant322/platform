@@ -12,19 +12,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.mockito.Mockito.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+
+import static java.time.temporal.ChronoUnit.DAYS;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static com.override.utils.TestFieldsUtil.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AlertServiceTest {
@@ -47,80 +44,100 @@ public class AlertServiceTest {
     @Test
     public void alertBadStudents() {
 
-        List<PlatformUser> students = List.of(generateTestUser());
+        alertService.setDays(3L);
 
-        List<PlatformUser> admins = List.of(new PlatformUser(4L, "Liza", "a", StudyStatus.ACTIVE, CoursePart.CORE,
-                Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings()));
+        List<PlatformUser> students = List.of(new PlatformUser(1L, "Student1", "a", StudyStatus.ACTIVE, CoursePart.CORE,
+                        Collections.singletonList(new Authority(null, "user")), new PersonalData(), new UserSettings()),
+                new PlatformUser(2L, "Student2", "s", StudyStatus.ACTIVE, CoursePart.CORE,
+                        Collections.singletonList(new Authority(null, "user")), new PersonalData(), new UserSettings()),
+                new PlatformUser(3L, "Student3", "e", StudyStatus.ACTIVE, CoursePart.CORE,
+                        Collections.singletonList(new Authority(null, "user")), new PersonalData(), new UserSettings()));
 
-        List<CodeTry> testCodeTryList = new ArrayList<>();
+        List<PlatformUser> admins = List.of(new PlatformUser(4L, "Admin1", "a", StudyStatus.ACTIVE, CoursePart.CORE,
+                        Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings()),
+                new PlatformUser(5L, "Admin2", "s", StudyStatus.ACTIVE, CoursePart.CORE,
+                        Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings()));
 
-        LocalDate testLocalDate = LocalDate.of(2022, 7, 28);
-        LocalTime testLocalTime = LocalTime.of(23, 55);
-        LocalDateTime testLocalDateTime = LocalDateTime.of(testLocalDate, testLocalTime);
+        CodeTry codeTry1 = new CodeTry();
+        codeTry1.setDate(LocalDateTime.now().minusDays(10));
 
-        CodeTry codeTry1 = generateTestCodeTry();
-        codeTry1.setId(1L);
-        codeTry1.setDate(LocalDateTime.now().minusDays(4));
-        testCodeTryList.add(codeTry1);
+        CodeTry codeTry2 = new CodeTry();
+        codeTry2.setDate(LocalDateTime.now().minusDays(8));
 
-        CodeTry codeTry2 = generateTestCodeTry();
-        codeTry1.setId(2L);
-        codeTry2.setDate(LocalDateTime.now().minusDays(4));
-        testCodeTryList.add(codeTry2);
-
-        CodeTry codeTry3 = generateTestCodeTry();
-        codeTry1.setId(3L);
-        codeTry3.setDate(LocalDateTime.now().minusDays(8));
-        testCodeTryList.add(codeTry3);
+        CodeTry codeTry3 = new CodeTry();
+        codeTry3.setDate(LocalDateTime.now().minusDays(1));
 
         when(platformUserService.getStudentsByCoursePart(CoursePart.CORE.ordinal())).thenReturn(students);
         when(platformUserService.getAllAdmins()).thenReturn(admins);
 
-        when(codeTryRepository.findFirstByUserIdOrderByDate(codeTry1.getUser().getId())).thenReturn(testCodeTryList.get(0));
-        when(codeTryRepository.findFirstByUserIdOrderByDate(codeTry2.getUser().getId())).thenReturn(testCodeTryList.get(1));
-        when(codeTryRepository.findFirstByUserIdOrderByDate(codeTry3.getUser().getId())).thenReturn(testCodeTryList.get(2));
-
-       // int countDays = codeTry3.getDate().getDayOfMonth();
-
-       // String messageText = countDays + " - уже столько дней ты не отправляешь новых решений :(";
+        when(codeTryRepository.findFirstByUserIdOrderByDate(students.get(0).getId())).thenReturn(codeTry1);
+        when(codeTryRepository.findFirstByUserIdOrderByDate(students.get(1).getId())).thenReturn(codeTry2);
+        when(codeTryRepository.findFirstByUserIdOrderByDate(students.get(2).getId())).thenReturn(codeTry3);
 
         alertService.alertBadStudents();
 
-        verify(notificatorFeign, times(2)).sendMessage(codeTry3.getUser().getLogin(),
-                Math.abs(codeTryRepository.findFirstByUserIdOrderByDate(students.get(0).getId()).getDate().getDayOfMonth()
-                        - testLocalDateTime.getDayOfMonth()) + " - уже столько дней ты не отправляешь новых решений :(", Communication.EMAIL);
+        verify(notificatorFeign, times(1)).sendMessage(students.get(0).getLogin(), DAYS.between(codeTryRepository.findFirstByUserIdOrderByDate(students.get(0).getId()).getDate(), LocalDateTime.now()) + " - уже столько дней ты не отправляешь новых решений :(", Communication.EMAIL);
+        verify(notificatorFeign, times(1)).sendMessage(students.get(1).getLogin(), DAYS.between(codeTryRepository.findFirstByUserIdOrderByDate(students.get(1).getId()).getDate(), LocalDateTime.now()) + " - уже столько дней ты не отправляешь новых решений :(", Communication.EMAIL);
+        verify(notificatorFeign, times(0)).sendMessage(students.get(2).getLogin(), DAYS.between(codeTryRepository.findFirstByUserIdOrderByDate(students.get(2).getId()).getDate(), LocalDateTime.now()) + " - уже столько дней ты не отправляешь новых решений :(", Communication.EMAIL);
+
+
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), DAYS.between(codeTryRepository.findFirstByUserIdOrderByDate(students.get(0).getId()).getDate(), LocalDateTime.now()) + " - столько дней " + students.get(0).getLogin() + " не присылал новых решений на платформу", Communication.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), DAYS.between(codeTryRepository.findFirstByUserIdOrderByDate(students.get(1).getId()).getDate(), LocalDateTime.now()) + " - столько дней " + students.get(1).getLogin() + " не присылал новых решений на платформу", Communication.TELEGRAM);
+        verify(notificatorFeign, times(0)).sendMessage(admins.get(0).getLogin(), DAYS.between(codeTryRepository.findFirstByUserIdOrderByDate(students.get(2).getId()).getDate(), LocalDateTime.now()) + " - столько дней " + students.get(2).getLogin() + " не присылал новых решений на платформу", Communication.TELEGRAM);
+
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(1).getLogin(), DAYS.between(codeTryRepository.findFirstByUserIdOrderByDate(students.get(0).getId()).getDate(), LocalDateTime.now()) + " - столько дней " + students.get(0).getLogin() + " не присылал новых решений на платформу", Communication.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(1).getLogin(), DAYS.between(codeTryRepository.findFirstByUserIdOrderByDate(students.get(1).getId()).getDate(), LocalDateTime.now()) + " - столько дней " + students.get(1).getLogin() + " не присылал новых решений на платформу", Communication.TELEGRAM);
+        verify(notificatorFeign, times(0)).sendMessage(admins.get(1).getLogin(), DAYS.between(codeTryRepository.findFirstByUserIdOrderByDate(students.get(2).getId()).getDate(), LocalDateTime.now()) + " - столько дней " + students.get(2).getLogin() + " не присылал новых решений на платформу", Communication.TELEGRAM);
 
     }
 
-    /*@Test
+    @Test
     public void alertMentorsAboutBadStudents() {
-        List<PlatformUser> students = List.of(new PlatformUser(1L, "Andrey", "a", StudyStatus.ACTIVE, CoursePart.CORE,
+
+        alertService.setDaysForReview(7L);
+
+        List<PlatformUser> students = List.of(new PlatformUser(1L, "Student1", "a", StudyStatus.ACTIVE, CoursePart.CORE,
                         Collections.singletonList(new Authority(null, "user")), new PersonalData(), new UserSettings()),
-                new PlatformUser(2L, "Liza", "s", StudyStatus.ACTIVE, CoursePart.CORE,
+                new PlatformUser(2L, "Student2", "s", StudyStatus.ACTIVE, CoursePart.CORE,
                         Collections.singletonList(new Authority(null, "user")), new PersonalData(), new UserSettings()),
-                new PlatformUser(3L, "Artur", "e", StudyStatus.ACTIVE, CoursePart.CORE,
+                new PlatformUser(3L, "Student3", "e", StudyStatus.ACTIVE, CoursePart.CORE,
                         Collections.singletonList(new Authority(null, "user")), new PersonalData(), new UserSettings()));
 
-        List<PlatformUser> admins = List.of(new PlatformUser(4L, "Andrey", "a", StudyStatus.ACTIVE, CoursePart.CORE,
+        List<PlatformUser> admins = List.of(new PlatformUser(4L, "Admin1", "a", StudyStatus.ACTIVE, CoursePart.CORE,
                         Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings()),
-                new PlatformUser(5L, "Liza", "s", StudyStatus.ACTIVE, CoursePart.CORE,
+                new PlatformUser(5L, "Admin2", "s", StudyStatus.ACTIVE, CoursePart.CORE,
                         Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings()));
+
+        Review review1 = new Review();
+        review1.setBookedDate(LocalDate.now().minusDays(10));
+
+        Review review2 = new Review();
+        review2.setBookedDate(LocalDate.now().minusDays(8));
+
+        Review review3 = new Review();
+        review3.setBookedDate(LocalDate.now().minusDays(1));
 
         when(platformUserService.getAllStudents()).thenReturn(students);
         when(platformUserService.getAllAdmins()).thenReturn(admins);
-
-        Review review1 = new Review();
-        review1.setBookedDate(LocalDate.now());
-        Review review2 = new Review();
-        review2.setBookedDate(LocalDate.now());
-        Review review3 = new Review();
-        review3.setBookedDate(LocalDate.now());
 
         when(reviewRepository.findFirstByStudentIdOrderByIdDesc(students.get(0).getId())).thenReturn(review1);
         when(reviewRepository.findFirstByStudentIdOrderByIdDesc(students.get(1).getId())).thenReturn(review2);
         when(reviewRepository.findFirstByStudentIdOrderByIdDesc(students.get(2).getId())).thenReturn(review3);
 
+        when(reviewRepository.findFirstByStudentIdOrderByIdDesc(students.get(0).getId())).thenReturn(review1);
+        when(reviewRepository.findFirstByStudentIdOrderByIdDesc(students.get(1).getId())).thenReturn(review2);
+        when(reviewRepository.findFirstByStudentIdOrderByIdDesc(students.get(2).getId())).thenReturn(review3);
 
-    }*/
+        alertService.alertMentorsAboutBadStudents();
+
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), "студент " + students.get(0).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), "студент " + students.get(1).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
+        verify(notificatorFeign, times(0)).sendMessage(admins.get(0).getLogin(), "студент " + students.get(2).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
+
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(1).getLogin(), "студент " + students.get(0).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(1).getLogin(), "студент " + students.get(1).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
+        verify(notificatorFeign, times(0)).sendMessage(admins.get(1).getLogin(), "студент " + students.get(2).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
+
+    }
 
 }
