@@ -161,7 +161,8 @@ navbar:
       /payments
     - Личный кабинет
       /personalData
-
+    - Мои собеседования
+      /interviews
 management:
   info:
     build:
