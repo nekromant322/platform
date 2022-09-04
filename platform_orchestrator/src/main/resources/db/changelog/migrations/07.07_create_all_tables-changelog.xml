@@ -10,12 +10,30 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="act_number" type="bigint"/>
-            <column name="birth_date" type="timestamp"/>
+            <column name="birth_date" type="date"/>
             <column name="contract_number" type="varchar(255)"/>
-            <column name="contract_date" type="timestamp"/>
+            <column name="contract_date" type="date"/>
             <column name="email" type="varchar(255)"/>
             <column name="full_name" type="varchar(255)"/>
-            <column name="issue_date" type="timestamp"/>
+            <column name="issue_date" type="date"/>
+            <column name="passport_issued" type="varchar(255)"/>
+            <column name="passport_number" type="bigint"/>
+            <column name="passport_series" type="bigint"/>
+            <column name="phone_number" type="bigint"/>
+            <column name="registration" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="request_personal_data">
+            <column name="id" type="bigint" autoIncrement="false">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="act_number" type="bigint"/>
+            <column name="birth_date" type="date"/>
+            <column name="contract_number" type="varchar(255)"/>
+            <column name="contract_date" type="date"/>
+            <column name="email" type="varchar(255)"/>
+            <column name="full_name" type="varchar(255)"/>
+            <column name="issue_date" type="date"/>
             <column name="passport_issued" type="varchar(255)"/>
             <column name="passport_number" type="bigint"/>
             <column name="passport_series" type="bigint"/>
@@ -232,6 +250,23 @@
             <column name="chapter" type="varchar(255)"/>
             <column name="question" type="varchar(255)"/>
             <column name="section" type="integer"/>
+        </createTable>
+
+        <createTable tableName="interview_data">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="company" type="varchar(255)"/>
+            <column name="description" type="varchar(255)"/>
+            <column name="contacts" type="varchar(255)"/>
+            <column name="date" type="date"/>
+            <column name="time" type="time"/>
+            <column name="meeting_link" type="varchar(255)"/>
+            <column name="salary" type="integer"/>
+            <column name="stack" type="varchar(255)"/>
+            <column name="distance_work" type="varchar(255)"/>
+            <column name="comment" type="varchar(255)"/>
+            <column name="user_login" type="varchar(255)"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

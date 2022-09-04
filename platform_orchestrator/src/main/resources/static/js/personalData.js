@@ -30,6 +30,7 @@ function getUserPersonalData() {
         contentType: 'application/json',
         cache: false,
         success: function (currentUser) {
+
             actNumber = currentUser.personalData.actNumber;
             contractNumber = currentUser.personalData.contractNumber;
             contractDate = currentUser.personalData.contractDate;
@@ -42,6 +43,8 @@ function getUserPersonalData() {
             registration = currentUser.personalData.registration;
             email = currentUser.personalData.email;
             phoneNumber = currentUser.personalData.phoneNumber;
+
+            let requestToCheck = findRequestToCheck(currentUser.login);
 
             $('#lk').append(currentUser.login);
 
@@ -71,6 +74,7 @@ function getUserPersonalData() {
                 '</h5><br>' +
                 '<h5>Номер телефона : ' + (phoneNumber == null ? empty : phoneNumber) +
                 '</h5><br>' +
+                (requestToCheck == null ? empty : '<h2 style="color:green">Ваши данные находятся на согласовании</h2>') +
                 '<button type="button" id="editButton" ' +
                 'class="btn btn-primary">Изменить</button></div>' +
                 '<form id="editForm">' +
@@ -78,62 +82,62 @@ function getUserPersonalData() {
                 '<h5>Номер акта</h5>' +
                 '<input class="form-control input-number" id="actNumber" ' +
                 'placeholder="actNumber" maxlength="255" ' +
-                'value="' + (actNumber == null ? empty : actNumber) + '" ' + 
-                (actNumber != null ? 'disabled' : '') + '>' +
+                'value="' + (actNumber == null ? empty : actNumber) + '" ' +
+                (actNumber != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Номер контракта</h5>' +
                 '<input class="form-control" id="contractNumber" type="text" ' +
                 'placeholder="contractNumber" maxlength="255" ' +
                 'value="' + (contractNumber == null ? empty : contractNumber) + '" ' +
-                (contractNumber != null ? 'disabled' : '') + '>' +
+                (contractNumber != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Дата</h5>' +
                 '<input class="form-control" id="contractDate" type="text" ' +
                 'placeholder="contractDate" ' +
                 'value="' + (contractDate == null ? empty : contractDate) + '" ' +
-                (contractDate != null ? 'disabled' : '') + '>' +
+                (contractDate != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>ФИО</h5>' +
                 '<input class="form-control" id="fullName" ' +
                 'placeholder="fullName" maxlength="255" ' +
                 'value="' + (fullName == null ? empty : fullName) + '" ' +
-                (fullName != null ? 'disabled' : '') + '>' +
+                (fullName != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Серия паспорта</h5>' +
                 '<input class="form-control input-number" id="passportSeries" ' +
                 'placeholder="passportSeries" maxlength="4" ' +
                 'value="' + (passportSeries == null ? empty : passportSeries) + '" ' +
-                (passportSeries != null ? 'disabled' : '') + '>' +
+                (passportSeries != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Номер паспорта</h5>' +
                 '<input class="form-control input-number" id="passportNumber" ' +
                 'placeholder="passportNumber" maxlength="6" ' +
                 'value="' + (passportSeries == null ? empty : passportNumber) + '" ' +
-                (passportSeries != null ? 'disabled' : '') + '>' +
+                (passportSeries != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Выдан</h5>' +
                 '<input class="form-control" id="passportIssued" ' +
                 'placeholder="passportIssued" maxlength="255" ' +
                 'value="' + (passportIssued == null ? empty : passportIssued) + '" ' +
-                (passportIssued != null ? 'disabled' : '') + '>' +
+                (passportIssued != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Годен</h5>' +
                 '<input class="form-control" id="issueDate" type="text" ' +
                 'placeholder="issueDate" ' +
                 'value="' + (issueDate == null ? empty : issueDate) + '" ' +
-                (issueDate != null ? 'disabled' : '') + '>' +
+                (issueDate != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Дата рождения</h5>' +
                 '<input class="form-control" id="birthDate" type="text" ' +
                 'placeholder="birthDate" ' +
                 'value="' + (birthDate == null ? empty : birthDate) + '" ' +
-                (birthDate != null ? 'disabled' : '') + '>' +
+                (birthDate != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Регистрация</h5>' +
                 '<input class="form-control" id="registration" ' +
                 'placeholder="registration" maxlength="255" ' +
                 'value="' + (registration == null ? empty : registration) + '" ' +
-                (registration != null ? 'disabled' : '') + '>' +
+                (registration != null ? 'disabled' : empty) + '>' +
                 '<br>' +
                 '<h5>Email</h5>' +
                 '<input class="form-control" id="email" type="email" ' +
@@ -237,10 +241,27 @@ function getUserPersonalData() {
                     $('#birthDate').val(), $('#registration').val(),
                     $('#email').val(), $('#phoneNumber').val(),
                     currentUser.login);
-                // getCurrentUser()
             });
         }
     });
+}
+
+function findRequestToCheck(userLogin) {
+
+    let dataId;
+
+    $.ajax({
+        url: '/personalData/requestToCheck/' + userLogin,
+        method: 'GET',
+        contentType: 'application/json',
+        async: false,
+        cache: false,
+        success: function(personalData) {
+            dataId = personalData.id;
+        }
+    });
+
+    return dataId;
 }
 
 function save(id, actNumber, contractNumber, contractDate, fullName, passportSeries, passportNumber, passportIssued,
