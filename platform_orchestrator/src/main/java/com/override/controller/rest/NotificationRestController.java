@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -31,10 +28,33 @@ public class NotificationRestController {
         return new BalanceResponseFromNotificationControllerDTO(notificatorFeign.getBalance(), urlToReplenishBalance);
     }
 
-    @Secured("ROLE_ADMIN")
-    @PostMapping("/code")
-    public CodeCallSecurityCodeDTO getCodeCallSecurityDTO() {
-        CodeCallSecurityCodeDTO codeCallSecurityCodeDTO = new CodeCallSecurityCodeDTO(notificatorFeign.callToClient("79026526186"));
+
+    @PatchMapping("/phone")
+    public CodeCallSecurityCodeDTO getPhoneCallSecurityDTO(@RequestParam String phone) {
+        CodeCallSecurityCodeDTO codeCallSecurityCodeDTO = new CodeCallSecurityCodeDTO(notificatorFeign.callToClient(phone));
         return codeCallSecurityCodeDTO;
+    }
+
+    @PatchMapping("/email")
+    public void email(@RequestParam String email) {
+        System.out.println("Тут отправляется письмо с кодом на почту: " + email);
+    }
+
+    @PatchMapping("/codeEmail")
+    public boolean getCodeEmail(@RequestParam int code) {
+        //сравнеие кода
+        if (code == 5555) {
+            return true;
+        }
+        return false;
+    }
+
+    @PatchMapping("/codePhone")
+    public boolean getCodePhone(@RequestParam int code) {
+        //сравнеие кода
+        if (code == 6666) {
+            return true;
+        }
+        return false;
     }
 }

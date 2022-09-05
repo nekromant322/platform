@@ -29,6 +29,10 @@
                     <a class="nav-link" id="notifications-tab" data-toggle="tab" href="#notifications" role="tab"
                        aria-controls="notifications" aria-selected="false">Уведомления</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contacts-tab" data-toggle="tab" href="#contacts" role="tab"
+                       aria-controls="contacts" aria-selected="false">Контакты</a>
+                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
@@ -88,11 +92,58 @@
                         <br>
                     </div>
                 </div>
+                <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="notifications-tab">
+                    <div class="card card-body" id="contactsBox">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
+<form>
+    <div id="myModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">Подтверждение email</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <b>Код подтверждения</b>
+                    <input type="text" class="form-control" id="code" name="code" value="">
+                </div>
+                <div class="modal-footer">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                    <button type="button" class="btn btn-primary confirmationButton" value="Edit">Подтвердить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form>
+    <div id="modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalLabel">Подтверждение номера телефона</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <b>Код подтверждения</b>
+                    <input type="text" class="form-control" id="codePhone" name="code" value="">
+                </div>
+                <div class="modal-footer">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                    <button type="button" class="btn btn-primary confirmationPhoneButton" value="Edit">Подтвердить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>
