@@ -1,6 +1,5 @@
 package com.override.feign;
 
-import dto.CodeCallSecurityCodeDTO;
 import dto.RecipientDTO;
 import enums.Communication;
 import org.springframework.cloud.openfeign.FeignClient;
