@@ -12,13 +12,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static org.mockito.Mockito.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +41,7 @@ public class AlertServiceTest {
     @Test
     public void alertBadStudents() {
 
-        alertService.setDays(3L);
+        alertService.setDaysOfInactivity(3L);
 
         List<PlatformUser> students = List.of(new PlatformUser(1L, "Student1", "a", StudyStatus.ACTIVE, CoursePart.CORE,
                         Collections.singletonList(new Authority(null, "user")), new PersonalData(), new UserSettings()),
@@ -94,6 +91,8 @@ public class AlertServiceTest {
     @Test
     public void alertMentorsAboutBadStudents() {
 
+        long daysForReview = 7L;
+
         alertService.setDaysForReview(7L);
 
         List<PlatformUser> students = List.of(new PlatformUser(1L, "Student1", "a", StudyStatus.ACTIVE, CoursePart.CORE,
@@ -108,35 +107,16 @@ public class AlertServiceTest {
                 new PlatformUser(5L, "Admin2", "s", StudyStatus.ACTIVE, CoursePart.CORE,
                         Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings()));
 
-        Review review1 = new Review();
-        review1.setBookedDate(LocalDate.now().minusDays(10));
 
-        Review review2 = new Review();
-        review2.setBookedDate(LocalDate.now().minusDays(8));
-
-        Review review3 = new Review();
-        review3.setBookedDate(LocalDate.now().minusDays(1));
-
-        when(platformUserService.getAllStudents()).thenReturn(students);
+        when(platformUserService.getStudentsByLastReview(daysForReview)).thenReturn(students);
         when(platformUserService.getAllAdmins()).thenReturn(admins);
 
-        when(reviewRepository.findFirstByStudentIdOrderByIdDesc(students.get(0).getId())).thenReturn(review1);
-        when(reviewRepository.findFirstByStudentIdOrderByIdDesc(students.get(1).getId())).thenReturn(review2);
-        when(reviewRepository.findFirstByStudentIdOrderByIdDesc(students.get(2).getId())).thenReturn(review3);
-
-        when(reviewRepository.findFirstByStudentIdOrderByIdDesc(students.get(0).getId())).thenReturn(review1);
-        when(reviewRepository.findFirstByStudentIdOrderByIdDesc(students.get(1).getId())).thenReturn(review2);
-        when(reviewRepository.findFirstByStudentIdOrderByIdDesc(students.get(2).getId())).thenReturn(review3);
 
         alertService.alertMentorsAboutBadStudents();
 
         verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), "студент " + students.get(0).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
         verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), "студент " + students.get(1).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
-        verify(notificatorFeign, times(0)).sendMessage(admins.get(0).getLogin(), "студент " + students.get(2).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
-
-        verify(notificatorFeign, times(1)).sendMessage(admins.get(1).getLogin(), "студент " + students.get(0).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
-        verify(notificatorFeign, times(1)).sendMessage(admins.get(1).getLogin(), "студент " + students.get(1).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
-        verify(notificatorFeign, times(0)).sendMessage(admins.get(1).getLogin(), "студент " + students.get(2).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), "студент " + students.get(2).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
 
     }
 

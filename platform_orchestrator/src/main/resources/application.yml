@@ -70,7 +70,7 @@ alert:
 
 reviewAlert:
   daysWithoutReviewAlertThreshold: 7
-  cronNotificationPeriodForStudentsWithNoNewSolutions: 0 40 23 * * ?
+  cronNotificationPeriodForStudentsWithNoNewSolutions: 0 00 11 * * ?
 
 logging:
   file:
