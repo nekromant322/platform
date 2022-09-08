@@ -41,13 +41,18 @@ public class NotificationRestController {
         return verificationService.getCodeEmailSecurity(email);
     }
 
-    @PatchMapping("/codePhone")
-    public boolean getCodePhone(@RequestParam String code) {
-        return verificationService.getCodePhone(code);
+    @PatchMapping("/codePhone/{codePhone}/{phoneNumber}")
+    public boolean getCodePhone(@PathVariable String codePhone, @PathVariable String phoneNumber) {
+        return verificationService.getCodePhone(codePhone, phoneNumber);
     }
 
-    @PatchMapping("/codeEmail")
-    public boolean getCodeEmail(@RequestParam String code) {
-        return verificationService.getCodeEmail(code);
+    @PatchMapping("/codeEmail/{codeEmail}/{email}")
+    public boolean getCodeEmail(@PathVariable String codeEmail, @PathVariable String email) {
+        return verificationService.getCodeEmail(codeEmail, email);
+    }
+
+    @PatchMapping("/contacts/{login}/{email}/{phoneNumber}")
+    public void savePhoneNumberAndEmail(@PathVariable String login, @PathVariable String email, @PathVariable Long phoneNumber) {
+        verificationService.savePhoneNumberAndEmail(login, email, phoneNumber);
     }
 }

@@ -234,7 +234,7 @@ function getUserPersonalData() {
                 '<div class="form-group">' +
                 '<h5>Email</h5>' +
                 '<div style="display:flex" ">' +
-                '<input class="form-control" id="email" type="email" ' +
+                '<input class="form-control" id="emailForUser" type="email" ' +
                 'placeholder="email" maxlength="255" ' +
                 'value="' + (email == null ? empty : email) + '">' +
                 '<button type="button" style="margin-left:10px" id="emailBtn" ' +
@@ -244,7 +244,7 @@ function getUserPersonalData() {
                 '<br>' +
                 '<h5>Номер телефона</h5>' +
                 '<div style="display:flex" ">' +
-                '<input class="form-control input-number" id="phoneNumber" ' +
+                '<input class="form-control input-number" id="phoneNumberForUser" ' +
                 'placeholder="phoneNumber" maxlength="11" ' +
                 'value="' + (phoneNumber == null ? empty : phoneNumber) + '">' +
                 '<button type="button" id="phoneBtn" ' +
@@ -259,44 +259,56 @@ function getUserPersonalData() {
                 '</form>'
             )
 
-            $('#phoneNumber').mouseout(function () {
-                if (phoneNumber.toString() !== $('#phoneNumber').val()) {
+            $('#phoneNumberForUser').mouseout(function () {
+                if (phoneNumber === null && $('#phoneNumberForUser').val() !== null && $('#phoneNumberForUser').val() !== "") {
+                    $('#phoneBtn').removeAttr('disabled', 'false');
+                } else {
+                    $('#phoneBtn').attr('disabled', 'disabled');
+                }
+                if (phoneNumber.toString() !== $('#phoneNumberForUser').val() && $('#phoneNumberForUser').val() !== "") {
                     $('#phoneBtn').removeAttr('disabled', 'false');
                 } else {
                     $('#phoneBtn').attr('disabled', 'disabled');
                 }
             });
 
-            $('#email').mouseout(function () {
-                if (email.toString() !== $('#email').val()) {
+            $('#emailForUser').mouseout(function () {
+                if (email === null && $('#emailForUser').val() !== null && $('#emailForUser').val() !== "") {
+                    $('#emailBtn').removeAttr('disabled', 'false');
+                } else {
+                    $('#emailBtn').attr('disabled', 'disabled');
+                }
+                if (email.toString() !== $('#emailForUser').val() && $('#emailForUser').val() !== "") {
                     $('#emailBtn').removeAttr('disabled', 'false');
                 } else {
                     $('#emailBtn').attr('disabled', 'disabled');
                 }
             });
 
+            let phoneNumberForUser = phoneNumber;
+            let emailForUser = email;
             $('#addButtonContacts').click(function () {
-                    if (phoneNumber.toString() !== $('#phoneNumber').val() || email.toString() !== $('#email').val()) {
-                        if (phoneNumber.toString() !== $('#phoneNumber').val() && email.toString() !== $('#email').val()) {
+                    if (phoneNumber !== $('#phoneNumberForUser').val() || email !== $('#emailForUser').val()) {
+                        if (phoneNumberForUser !== $('#phoneNumberForUser').val() && emailForUser !== $('#emailForUser').val()) {
                             alert("Номер и email не подтверждены")
                         } else {
-                            if (phoneNumber.toString() !== $('#phoneNumber').val()) {
+                            if (phoneNumberForUser !== $('#phoneNumberForUser').val()) {
                                 alert("Номер не подтвержден")
                             }
-                            if (email.toString() !== $('#email').val()) {
+                            if (emailForUser !== $('#emailForUser').val()) {
                                 alert("Email не подтвержден")
                             }
                         }
                     }
-                    else{
-                        saveContacts($('#email').val(), $('#phoneNumber').val(),currentUser.login);
+                    if (phoneNumberForUser === $('#phoneNumberForUser').val() && emailForUser === $('#emailForUser').val()) {
+                        saveContacts($('#emailForUser').val(), $('#phoneNumberForUser').val(),currentUser.login);
                     }
                 }
             );
             $('#phoneBtn').click(function () {
                 $('#modal').modal('show');
                 $.ajax({
-                    url: '/notification/phone?phone=' + $('#phoneNumber').val(),
+                    url: '/notification/phone?phone=' + $('#phoneNumberForUser').val(),
                     dataType: 'json',
                     method: 'PATCH',
                     contentType: 'application/json',
@@ -310,8 +322,10 @@ function getUserPersonalData() {
             });
 
             $('.confirmationPhoneButton').click(function () {
+                let codePhone = $('#codePhone').val();
+                let phoneNumber = $('#phoneNumberForUser').val();
                 $.ajax({
-                    url: '/notification/codePhone?code=' + $('#codePhone').val(),
+                    url: '/notification/codePhone/' + codePhone + '/' + phoneNumber,
                     dataType: 'json',
                     method: 'PATCH',
                     contentType: 'application/json',
@@ -320,7 +334,7 @@ function getUserPersonalData() {
                             $('.modal').each(function(){
                                 $(this).modal('hide');
                             });
-                            saveContacts($('#email').val(), $('#phoneNumber').val(),currentUser.login);
+                            phoneNumberForUser = phoneNumber;
                         }
                         else{
                             $('.modal').each(function(){
@@ -334,7 +348,7 @@ function getUserPersonalData() {
             $('#emailBtn').click(function () {
                 $('#myModal').modal('show');
                 $.ajax({
-                    url: '/notification/email?email=' + $('#email').val(),
+                    url: '/notification/email?email=' + $('#emailForUser').val(),
                     dataType: 'json',
                     method: 'PATCH',
                     contentType: 'application/json',
@@ -348,8 +362,10 @@ function getUserPersonalData() {
             });
 
             $('.confirmationButton').click(function () {
+                let codeEmail = $('#codeEmail').val();
+                let email = $('#emailForUser').val();
                 $.ajax({
-                    url: '/notification/codeEmail?code=' + $('#code').val(),
+                    url: '/notification/codeEmail/' + codeEmail + '/' + email,
                     dataType: 'json',
                     method: 'PATCH',
                     contentType: 'application/json',
@@ -358,7 +374,7 @@ function getUserPersonalData() {
                             $('.modal').each(function(){
                                 $(this).modal('hide');
                             });
-                            saveContacts($('#email').val(), $('#phoneNumber').val(),currentUser.login);
+                            emailForUser = email;
                         }
                         else{
                             $('.modal').each(function(){
@@ -375,15 +391,10 @@ function getUserPersonalData() {
 
 function saveContacts(email, phoneNumber, login) {
     $.ajax({
-        url: '/contacts/' + login,
+        url: '/notification/contacts/' + login + '/' + email + '/' + phoneNumber,
         dataType: 'json',
         method: 'PATCH',
-        cache: false,
         contentType: 'application/json',
-        data: JSON.stringify({
-            email: email,
-            phoneNumber: phoneNumber,
-        }),
         success: function (data) {
             console.log(data);
         }
