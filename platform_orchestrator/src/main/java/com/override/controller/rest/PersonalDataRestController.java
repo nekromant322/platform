@@ -2,7 +2,6 @@ package com.override.controller.rest;
 
 import com.override.model.RequestPersonalData;
 import com.override.service.PersonalDataService;
-import com.override.service.RequestInNotificationService;
 import dto.PersonalDataDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
