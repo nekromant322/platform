@@ -242,9 +242,21 @@ function getUserPersonalData() {
                     $('#email').val(), $('#phoneNumber').val(),
                     currentUser.login);
             });
+
+            $('#actBtn').click(function () {
+                $.ajax({
+                    url: '/act',
+                    method: 'GET',
+                    contentType: 'application/json',
+                    success: function () {
+                        $('#modalAct').modal('show');
+                    }
+                });
+            })
         }
     });
 }
+
 
 function findRequestToCheck(userLogin) {
 
@@ -256,7 +268,7 @@ function findRequestToCheck(userLogin) {
         contentType: 'application/json',
         async: false,
         cache: false,
-        success: function(personalData) {
+        success: function (personalData) {
             dataId = personalData.id;
         }
     });
@@ -332,6 +344,7 @@ function addColumn(data) {
     downloadBtn.className = "download btn-success";
     downloadBtn.innerHTML = "Download";
     downloadBtn.type = "submit";
+    downloadBtn.style = "float: left";
     downloadBtn.addEventListener("click", () => {
         downloadFile(data.id, data.name);
     });
@@ -362,7 +375,6 @@ function downloadFile(id, name) {
         }
     });
 }
-
 
 function getCurrentUser() {
     $.ajax({

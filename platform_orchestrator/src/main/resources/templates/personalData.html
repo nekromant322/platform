@@ -42,6 +42,12 @@
                         <form id="docForm" action="/document/personalData" method="POST" enctype="multipart/form-data">
                             <table>
                                 <tr>
+                                <div class="form-row text-center">
+                                    <button id = "actBtn" class="btn btn-lg btn-success">Сгенерировать новый акт</button>
+                                </div>
+                                </tr>
+                                <br>
+                                <tr>
                                     <h5>Выберите файл для загрузки</h5>
                                     <h7>Размер файла не должен превышать 5 МБ</h7>
                                 </tr>
@@ -73,7 +79,6 @@
                             <tbody class="table-light">
                             </tbody>
                         </table>
-
                     </div>
                 </div>
                 <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
@@ -92,7 +97,26 @@
         </div>
     </div>
 </div>
-
+<form>
+    <div id="modalAct" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="myModalAct">Сообщение</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <b>Сгенерированный акт необходимо распечатать, заполнить в нём пустые поля, отсканировать и загрузить файл в формате .pdf </b>
+                </div>
+                <div class="modal-footer">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>

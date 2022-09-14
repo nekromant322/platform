@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -18,12 +19,14 @@ public class Document {
 
     private String type;
 
+    @Column
+    private LocalDateTime date = LocalDateTime.now();
+
     @JsonIgnore
     @Lob
     @Type(type = "org.hibernate.type.ImageType")
     private byte[] content;
 
-    @JsonIgnore
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.EAGER)
     private PlatformUser user;

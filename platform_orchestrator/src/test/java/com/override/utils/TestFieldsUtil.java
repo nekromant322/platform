@@ -254,12 +254,23 @@ public class TestFieldsUtil {
                 .build();
     }
 
+    public static DocumentDTO generateTestDocumentDTO() {
+        Document testDocument = generateTestDocument();
+        return DocumentDTO.builder()
+                .id(testDocument.getId())
+                .name(testDocument.getName())
+                .type(testDocument.getType())
+                .date(testDocument.getDate())
+                .build();
+    }
+
     public static Document generateTestDocument() {
         Document document = new Document();
         document.setId(1L);
         document.setName("filename.txt");
         document.setType("text/plain");
         document.setContent("some content".getBytes());
+        document.setDate(LocalDateTime.of(2022,4,16,20,0));
         return document;
     }
 

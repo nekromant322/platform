@@ -1,9 +1,12 @@
 package com.override.service;
 
+import com.override.mapper.DocumentMapper;
 import com.override.model.Document;
+import com.override.model.InterviewData;
 import com.override.model.PlatformUser;
 import com.override.repository.DocumentRepository;
 import dto.DocumentDTO;
+import dto.InterviewDataDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,8 +17,8 @@ import org.springframework.mock.web.MockMultipartFile;
 
 import java.util.List;
 
-import static com.override.utils.TestFieldsUtil.generateTestDocument;
-import static com.override.utils.TestFieldsUtil.generateTestUser;
+import static com.override.utils.TestFieldsUtil.*;
+import static com.override.utils.TestFieldsUtil.generateTestInterviewData;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -30,6 +33,9 @@ public class DocumentServiceTest {
 
     @Mock
     private PlatformUserService platformUserService;
+
+    @Mock
+    private DocumentMapper documentMapper;
 
     @Test
     public void uploadTest() {
@@ -88,5 +94,17 @@ public class DocumentServiceTest {
         documentService.delete(1L);
 
         verify(documentRepository, times(1)).deleteById(document.getId());
+    }
+
+    @Test
+    public void testFindAllByUserId() {
+        List<DocumentDTO> testDTOList = List.of(generateTestDocumentDTO());
+        List<Document> testList = List.of(generateTestDocument());
+
+        when(documentRepository.findAllByUserId(1L)).thenReturn(testList);
+        when(documentMapper.entityToDto(testList.iterator().next())).thenReturn(testDTOList.iterator().next());
+
+        List<DocumentDTO> DTOList = documentService.findAllByUserId(1L);
+        Assertions.assertEquals(DTOList.iterator().next(), testDTOList.iterator().next());
     }
 }

@@ -117,6 +117,7 @@
             <column name="content" type="bytea"/>
             <column name="name" type="varchar(255)"/>
             <column name="type" type="varchar(255)"/>
+            <column name="date" type="timestamp"/>
             <column name="user_id" type="bigint">
                 <constraints foreignKeyName="user_id" references="platform_user(id)"/>
             </column>
