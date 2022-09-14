@@ -37,7 +37,6 @@ public class ActGenerationService {
             iTextRenderer.finishPDF();
 
             Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + new File("D:\\platform\\" + "act" + personalData.getActNumber() + ".pdf"));
-
         } catch (DocumentException | IOException e) {
             log.warn("При создании акта №" + personalData.getActNumber() + " произошла ошибка!");
         } catch (NullPointerException e) {
