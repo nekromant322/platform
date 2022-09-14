@@ -26,9 +26,7 @@ public class ActGenerationService {
 
     public void createPDF(PersonalData personalData) {
 
-        String name = "act" + personalData.getActNumber() + ".pdf";
-
-        try (OutputStream outputStream = new FileOutputStream(name)) {
+        try (OutputStream outputStream = new FileOutputStream("act" + personalData.getActNumber() + ".pdf")) {
 
             String processHTML = templateEngine.process("docs/actGenerationTemplate",
                     contextCreation(personalData));
@@ -38,7 +36,7 @@ public class ActGenerationService {
             iTextRenderer.createPDF(outputStream, false);
             iTextRenderer.finishPDF();
 
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + new File("D:\\platform\\" + name));
+            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + new File("D:\\platform\\" + "act" + personalData.getActNumber() + ".pdf"));
 
         } catch (DocumentException | IOException e) {
             log.warn("При создании акта №" + personalData.getActNumber() + " произошла ошибка!");
