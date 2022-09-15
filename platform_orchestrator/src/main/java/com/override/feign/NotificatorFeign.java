@@ -1,5 +1,6 @@
 package com.override.feign;
 
+import dto.MailDTO;
 import dto.RecipientDTO;
 import enums.Communication;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -28,4 +29,7 @@ public interface NotificatorFeign {
             @RequestParam("login") String login,
             @RequestParam("message") String message,
             @RequestParam("type") Communication... type);
+
+    @PostMapping("/email")
+    void sendMessageByMail(@RequestBody MailDTO mailDTO);
 }

@@ -5,6 +5,7 @@ import com.override.mapper.PersonalDataMapper;
 import com.override.model.PersonalData;
 import com.override.repository.PersonalDataRepository;
 import com.override.repository.PlatformUserRepository;
+import dto.MailDTO;
 import dto.PersonalDataDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
@@ -12,29 +13,29 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class VerificationService {
 
     @Autowired
-    NotificatorFeign notificatorFeign;
+    private NotificatorFeign notificatorFeign;
 
     @Autowired
-    CacheManager cacheManager;
+    private CacheManager cacheManager;
 
     @Autowired
-    DefaultEmailService emailService;
+    private PersonalDataRepository personalDataRepository;
 
     @Autowired
-    PersonalDataRepository personalDataRepository;
+    private PlatformUserRepository platformUserRepository;
 
     @Autowired
-    PlatformUserRepository platformUserRepository;
+    private RequestInNotificationService requestInNotificationService;
 
     @Autowired
-    RequestInNotificationService requestInNotificationService;
-
-    @Autowired
-    PersonalDataMapper personalDataMapper;
+    private PersonalDataMapper personalDataMapper;
 
     @CachePut(value="codeCallSecurity")
     public String getCodeCallSecurity(String phone) {
@@ -49,7 +50,14 @@ public class VerificationService {
             sb.append(numberForCode);
         }
         String code = sb.toString();
-        emailService.sendSimpleEmail(email, "Код подтверждения", "Ваш код подтверждения - " + code);
+        List<String> listTo = new ArrayList<>();
+        listTo.add(email);
+        MailDTO mailDTO = MailDTO.builder()
+                .to(listTo)
+                .subject("Код подтверждения")
+                .text("Ваш код подтверждения - " + code)
+                .build();
+        notificatorFeign.sendMessageByMail(mailDTO);
         return code;
     }
 
