@@ -68,6 +68,10 @@ alert:
   daysWithoutNewSolutionsAlertThreshold: 3
   cronNotificationPeriodForStudentsWithNoNewSolutions: 0 00 10 * * ?
 
+reviewAlert:
+  daysWithoutReviewAlertThreshold: 7
+  cronNotificationPeriodForStudentsWithNoNewSolutions: 0 00 11 * * ?
+
 logging:
   file:
     name: logs/app.log
