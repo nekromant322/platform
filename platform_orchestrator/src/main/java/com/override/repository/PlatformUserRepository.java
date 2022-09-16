@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface PlatformUserRepository extends CrudRepository<PlatformUser, Long> {
 
+    PlatformUser findByLogin(String login);
+
     PlatformUser findFirstByLogin(String login);
 
     @Query(value = "select p_user.id, p_user.login, p_user.password, p_user.telegram_chat_id " +
