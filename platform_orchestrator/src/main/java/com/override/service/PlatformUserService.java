@@ -1,10 +1,7 @@
 package com.override.service;
 
 import com.override.exception.UserAlreadyExistException;
-import com.override.model.Authority;
-import com.override.model.PersonalData;
-import com.override.model.PlatformUser;
-import com.override.model.UserSettings;
+import com.override.model.*;
 import com.override.model.enums.CoursePart;
 import com.override.model.enums.Role;
 import com.override.repository.PlatformUserRepository;
@@ -156,5 +153,9 @@ public class PlatformUserService {
 
     public CoursePart getCurrentCoursePart(String login) {
         return platformUserRepository.findFirstByLogin(login).getCoursePart();
+    }
+
+    public List<PlatformUser> getStudentsByLastReview(long daysForReview) {
+        return platformUserRepository.findStudentsByLastReview(daysForReview);
     }
 }

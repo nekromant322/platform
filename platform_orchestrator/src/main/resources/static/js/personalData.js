@@ -70,10 +70,6 @@ function getUserPersonalData() {
                 '</h5><br>' +
                 '<h5>Регистрация : ' + (registration == null ? empty : registration) +
                 '</h5><br>' +
-                '<h5>Email : ' + (email == null ? empty : email) +
-                '</h5><br>' +
-                '<h5>Номер телефона : ' + (phoneNumber == null ? empty : phoneNumber) +
-                '</h5><br>' +
                 (requestToCheck == null ? empty : '<h2 style="color:green">Ваши данные находятся на согласовании</h2>') +
                 '<button type="button" id="editButton" ' +
                 'class="btn btn-primary">Изменить</button></div>' +
@@ -138,16 +134,6 @@ function getUserPersonalData() {
                 'placeholder="registration" maxlength="255" ' +
                 'value="' + (registration == null ? empty : registration) + '" ' +
                 (registration != null ? 'disabled' : empty) + '>' +
-                '<br>' +
-                '<h5>Email</h5>' +
-                '<input class="form-control" id="email" type="email" ' +
-                'placeholder="email" maxlength="255" ' +
-                'value="' + (email == null ? empty : email) + '">' +
-                '<br>' +
-                '<h5>Номер телефона</h5>' +
-                '<input class="form-control input-number" id="phoneNumber" ' +
-                'placeholder="phoneNumber" maxlength="11" ' +
-                'value="' + (phoneNumber == null ? empty : phoneNumber) + '">' +
                 '<br>' +
                 '</div>' +
                 '  <input class="form-check-input"  type="checkbox" value="" id="flexCheckDefault" required>\n' +
@@ -242,6 +228,175 @@ function getUserPersonalData() {
                     $('#email').val(), $('#phoneNumber').val(),
                     currentUser.login);
             });
+
+            $('#contactsBox').append(
+                '<form id="editFormContacts">' +
+                '<div class="form-group">' +
+                '<h5>Email</h5>' +
+                '<div style="display:flex" ">' +
+                '<input class="form-control" id="emailForUser" type="email" ' +
+                'placeholder="email" maxlength="255" ' +
+                'value="' + (email == null ? empty : email) + '">' +
+                '<button type="button" style="margin-left:10px" id="emailBtn" ' +
+                'class="btn btn-success" disabled="true">Подтвердить' +
+                '</button>' +
+                '</div>' +
+                '<br>' +
+                '<h5>Номер телефона</h5>' +
+                '<div style="display:flex" ">' +
+                '<input class="form-control input-number" id="phoneNumberForUser" ' +
+                'placeholder="phoneNumber" maxlength="11" ' +
+                'value="' + (phoneNumber == null ? empty : phoneNumber) + '">' +
+                '<button type="button" id="phoneBtn" ' +
+                'class="btn btn-success btnC" style="margin-left:10px" disabled="true">Подтвердить' +
+                '</button>' +
+                '</div>' +
+                '<br>' +
+                '</div>' +
+                '<button type="button" id="addButtonContacts" ' +
+                'class="btn btn-success">Сохранить' +
+                '</button>' +
+                '</form>'
+            )
+
+            $('#phoneNumberForUser').mouseout(function () {
+                if (phoneNumber === null && $('#phoneNumberForUser').val() !== null && $('#phoneNumberForUser').val() !== "") {
+                    $('#phoneBtn').removeAttr('disabled', 'false');
+                } else {
+                    $('#phoneBtn').attr('disabled', 'disabled');
+                }
+                if (phoneNumber.toString() !== $('#phoneNumberForUser').val() && $('#phoneNumberForUser').val() !== "") {
+                    $('#phoneBtn').removeAttr('disabled', 'false');
+                } else {
+                    $('#phoneBtn').attr('disabled', 'disabled');
+                }
+            });
+
+            $('#emailForUser').mouseout(function () {
+                if (email === null && $('#emailForUser').val() !== null && $('#emailForUser').val() !== "") {
+                    $('#emailBtn').removeAttr('disabled', 'false');
+                } else {
+                    $('#emailBtn').attr('disabled', 'disabled');
+                }
+                if (email.toString() !== $('#emailForUser').val() && $('#emailForUser').val() !== "") {
+                    $('#emailBtn').removeAttr('disabled', 'false');
+                } else {
+                    $('#emailBtn').attr('disabled', 'disabled');
+                }
+            });
+
+            let phoneNumberForUser = phoneNumber;
+            let emailForUser = email;
+            $('#addButtonContacts').click(function () {
+                    if (phoneNumber !== $('#phoneNumberForUser').val() || email !== $('#emailForUser').val()) {
+                        if (phoneNumberForUser !== $('#phoneNumberForUser').val() && emailForUser !== $('#emailForUser').val()) {
+                            alert("Номер и email не подтверждены")
+                        } else {
+                            if (phoneNumberForUser !== $('#phoneNumberForUser').val()) {
+                                alert("Номер не подтвержден")
+                            }
+                            if (emailForUser !== $('#emailForUser').val()) {
+                                alert("Email не подтвержден")
+                            }
+                        }
+                    }
+                    if (phoneNumberForUser === $('#phoneNumberForUser').val() && emailForUser === $('#emailForUser').val()) {
+                        saveContacts($('#emailForUser').val(), $('#phoneNumberForUser').val(),currentUser.login);
+                    }
+                }
+            );
+            $('#phoneBtn').click(function () {
+                $('#modal').modal('show');
+                $.ajax({
+                    url: '/notification/phone?phone=' + $('#phoneNumberForUser').val(),
+                    dataType: 'json',
+                    method: 'PATCH',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            $('.confirmationPhoneButton').click(function () {
+                let codePhone = $('#codePhone').val();
+                let phoneNumber = $('#phoneNumberForUser').val();
+                $.ajax({
+                    url: '/notification/codePhone/' + codePhone + '/' + phoneNumber,
+                    dataType: 'json',
+                    method: 'PATCH',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if(data===true){
+                            $('.modal').each(function(){
+                                $(this).modal('hide');
+                            });
+                            phoneNumberForUser = phoneNumber;
+                        }
+                        else{
+                            $('.modal').each(function(){
+                                $(this).modal('hide');
+                            });
+                            alert("Неверный код")
+                        }
+                    }
+                });
+            });
+            $('#emailBtn').click(function () {
+                $('#myModal').modal('show');
+                $.ajax({
+                    url: '/notification/email?email=' + $('#emailForUser').val(),
+                    dataType: 'json',
+                    method: 'PATCH',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            $('.confirmationButton').click(function () {
+                let codeEmail = $('#codeEmail').val();
+                let email = $('#emailForUser').val();
+                $.ajax({
+                    url: '/notification/codeEmail/' + codeEmail + '/' + email,
+                    dataType: 'json',
+                    method: 'PATCH',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if(data===true){
+                            $('.modal').each(function(){
+                                $(this).modal('hide');
+                            });
+                            emailForUser = email;
+                        }
+                        else{
+                            $('.modal').each(function(){
+                                $(this).modal('hide');
+                            });
+                            alert("Неверный код")
+                        }
+                    }
+                });
+            });
+        }
+    });
+}
+
+function saveContacts(email, phoneNumber, login) {
+    $.ajax({
+        url: '/notification/contacts/' + login + '/' + email + '/' + phoneNumber,
+        dataType: 'json',
+        method: 'PATCH',
+        contentType: 'application/json',
+        success: function (data) {
+            console.log(data);
         }
     });
 }
@@ -256,7 +411,7 @@ function findRequestToCheck(userLogin) {
         contentType: 'application/json',
         async: false,
         cache: false,
-        success: function(personalData) {
+        success: function (personalData) {
             dataId = personalData.id;
         }
     });

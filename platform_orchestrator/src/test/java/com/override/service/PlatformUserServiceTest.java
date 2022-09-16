@@ -209,4 +209,19 @@ class PlatformUserServiceTest {
 
         assertEquals(user, Role.USER);
     }
+
+    @Test
+    public void testGetStudentsByLastReview() {
+        List<PlatformUser> platformUsers = new ArrayList<>() {{
+            add(new PlatformUser());
+            add(new PlatformUser());
+        }};
+
+        when(platformUserRepository.findStudentsByLastReview(7L)).thenReturn(platformUsers);
+
+        List<PlatformUser> allStudents = platformUserService.getStudentsByLastReview(7L);
+
+        assertEquals(platformUsers, allStudents);
+        verify(platformUserRepository, times(1)).findStudentsByLastReview(7L);
+    }
 }

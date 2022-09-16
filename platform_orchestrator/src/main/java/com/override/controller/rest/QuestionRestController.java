@@ -22,6 +22,7 @@ public class QuestionRestController {
     @Autowired
     private LessonStructureService lessonStructureService;
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/{login}/{chapter}")
     @ApiOperation(value = "Возвращает список вопросов по логину и главе")
     public List<Question> findAll(@PathVariable String login,

@@ -1,6 +1,6 @@
 package com.override.feign;
 
-
+import dto.MailDTO;
 import dto.RecipientDTO;
 import enums.Communication;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -15,6 +15,9 @@ public interface NotificatorFeign {
     @GetMapping("/calls/balance")
     Double getBalance();
 
+    @PostMapping("/calls/code")
+    String callToClient(@RequestBody String phoneNumber);
+
     @PostMapping("/recipients/save")
     void saveRecipient(@RequestBody RecipientDTO recipientDTO);
 
@@ -26,4 +29,7 @@ public interface NotificatorFeign {
             @RequestParam("login") String login,
             @RequestParam("message") String message,
             @RequestParam("type") Communication... type);
+
+    @PostMapping("/email")
+    void sendMessageByMail(@RequestBody MailDTO mailDTO);
 }

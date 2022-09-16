@@ -38,8 +38,18 @@ spring:
       location: ${java.io.tmpdir}
       max-file-size: 100MB
       max-request-size: 100MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    protocol: smtp
+    username: evlantevartur@gmail.com
+    password: bfqdcpdmwcxpjxzl
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
 
----
 documentSizeLimit:
   forPersonalData: 5 # 5 МБ
   forBugReports: 5 # 5 МБ
@@ -67,6 +77,10 @@ testData:
 alert:
   daysWithoutNewSolutionsAlertThreshold: 3
   cronNotificationPeriodForStudentsWithNoNewSolutions: 0 00 10 * * ?
+
+reviewAlert:
+  daysWithoutReviewAlertThreshold: 7
+  cronNotificationPeriodForStudentsWithNoNewSolutions: 0 00 11 * * ?
 
 logging:
   file:
