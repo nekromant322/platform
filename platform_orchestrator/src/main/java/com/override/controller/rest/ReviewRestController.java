@@ -2,8 +2,10 @@ package com.override.controller.rest;
 
 import com.override.service.CustomStudentDetailService;
 import com.override.service.ReviewService;
+import com.override.service.VkApiService;
 import dto.ReviewDTO;
 import dto.ReviewFilterDTO;
+import dto.VkActorDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -23,6 +25,15 @@ public class ReviewRestController {
 
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private VkApiService vkApiService;
+
+    @Secured("ROLE_ADMIN")
+    @PatchMapping("/createVkCall")
+    public void createVkCallCall(@RequestParam Long reviewId, @RequestBody VkActorDTO vkActorDTO) {
+        vkApiService.createVkCall(reviewId, vkActorDTO);
+    }
 
     @PatchMapping
     @ApiOperation(notes = "Варианты условий:\n" +
@@ -53,7 +64,8 @@ public class ReviewRestController {
             "Ревью можно найти по логину студента или ментора, а также по дате.\n" +
             "Если эти параметры имеют значение null, то отбираются новые ревью, которым еще не назначены ментор и время",
             value = "Возвращает список ревью, полученный путем сопоставления списка найденных отзывов.")
-    public List<ReviewDTO> findReview(@RequestBody @ApiParam(value = "reviewFilterDTO поступает из запроса") ReviewFilterDTO reviewFilterDTO) {
+    public List<ReviewDTO> findReview(@RequestBody @ApiParam(value = "reviewFilterDTO поступает из запроса")
+                                          ReviewFilterDTO reviewFilterDTO) {
         return reviewService.find(reviewFilterDTO);
     }
 

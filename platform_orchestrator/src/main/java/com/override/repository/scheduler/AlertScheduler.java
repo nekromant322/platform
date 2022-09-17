@@ -1,4 +1,4 @@
-package com.override.scheduler;
+package com.override.repository.scheduler;
 
 import com.override.service.AlertService;
 import org.springframework.beans.factory.annotation.Autowired;

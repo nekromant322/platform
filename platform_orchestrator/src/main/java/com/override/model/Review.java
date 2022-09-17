@@ -43,6 +43,7 @@ public class Review {
     @Column(name = "time_slots")
     private Set<LocalTime> timeSlots;
 
-    @Column
+    //добавить joincolumn модели VkCall
+    @Column(name = "call_link")
     private String callLink;
 }

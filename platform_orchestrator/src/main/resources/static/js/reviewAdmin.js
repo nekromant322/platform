@@ -2,8 +2,11 @@ let today = new Date();
 let tomorrow = new Date(today.getTime() + MILLIS_PER_DAY);
 let btnCase;
 let mentor;
+const editReviewId = parseUrlParams("reviewId");
+const editReviewBookedTime = parseUrlParams("reviewBookedTime");
 
 window.onload = function () {
+    parseAnchorIfExist();
     mentor = getCurrentUser().login;
     newReviewRequests();
 };
@@ -134,6 +137,11 @@ function addColumn(data) {
     times.sort();
 
     if (btnCase === 1) {
+         if (editReviewId == review.id) {
+             review.bookedTime = editReviewBookedTime;
+             editReview(review);
+         }
+
         for (let i = 0; i < times.length; i++) {
             let sumId = "#lastColumn";
             $(sumId).append("<th scope=\"col\" id=\"lastColumn" + i + "\">  </th>");
@@ -143,7 +151,7 @@ function addColumn(data) {
             acceptBtn.type = "submit";
             acceptBtn.addEventListener("click", () => {
                 review.bookedTime = times[i];
-                editReview(review);
+                initCall(review);
             });
             td = tr.insertCell(6);
             td.insertAdjacentElement("beforeend", acceptBtn);
@@ -181,6 +189,7 @@ function newReviewRequests() {
     reviewFilterDTO.mentorLogin = null;
     reviewFilterDTO.studentLogin = null;
     findReview(reviewFilterDTO);
+
 }
 
 function myReview() {
@@ -210,25 +219,6 @@ function tomorrowReview() {
     findReview(reviewFilterDTO);
 }
 
-function editReview(reviewDTO) {
-    let confirmation = confirm("Вы уверены, что хотите взять ревью " + reviewDTO.id + " и назначить его время на " + reviewDTO.bookedTime + "?");
-    if (confirmation === true) {
-        $.ajax({
-            url: '/reviews',
-            method: 'PATCH',
-            contentType: 'application/json',
-            data: JSON.stringify(reviewDTO),
-            success: function () {
-                console.log('accepted')
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        })
-        location.reload();
-    }
-}
-
 function deleteReview(id) {
     let confirmation = confirm("Вы уверены, что хотите отменить ревью " + id + "?");
     if (confirmation === true) {
@@ -245,3 +235,117 @@ function deleteReview(id) {
         location.reload();
     }
 }
+
+function initCall(reviewDTO) {
+
+    let confirmation = confirm("Вы уверены, что хотите взять ревью " + reviewDTO.id +
+        + " и назначить его время на " + reviewDTO.bookedTime + "?");
+
+    //Сделать запрос на сервер и возвращать из конфигурацинных перменных
+    let clientVkId = "51409619";
+    let redirectUri = "http://localhost:8000/reviews?editReview=" + reviewDTO.id + "." + reviewDTO.bookedTime;
+
+    if (confirmation === true) {
+        window.location.replace("https://oauth.vk.com/authorize?" +
+            "client_id=" + clientVkId + "&" +
+            "display=page" + "&" +
+            "response_type=token" + "&" +
+            "v=5.131" + "&" +
+            "redirect_uri=" + redirectUri);
+    }
+}
+
+function parseAnchorIfExist() {
+
+    let actorObj = {};
+    let anchor = window.location.hash;
+
+    console.log("Review id: " + editReviewId);
+    console.log("Review booked time: " + editReviewBookedTime);
+
+    if (anchor === "" || editReviewId === "") {
+        console.log("Anchor or reviewId not found");
+        return;
+    }
+
+    //достаем anchor и парсим в нужный вид
+    anchor.substring(1).split("&").forEach(element => {
+        let couple = element.split("=");
+        actorObj[parseToActorField(couple[0])] = couple[1];
+    });
+
+    console.log(JSON.stringify(actorObj));
+    console.log("Access token: " + actorObj.accessToken);
+
+    if (actorObj.accessToken != undefined) {
+        createCall(actorObj, editReviewId);
+    }
+}
+
+function parseUrlParams(param) {
+
+    let urlParams = new URLSearchParams(window.location.search);
+    let paramsString = urlParams.get("editReview");
+
+    console.log("Params string: " + paramsString);
+
+    if (paramsString == undefined) { return; }
+
+    let paramsArray = paramsString.split(".");
+
+    switch(param) {
+        case "reviewId":
+            return paramsArray[0];
+        case "reviewBookedTime":
+            return paramsArray[1];
+        default:
+            return console.log("Такого параметра не сущетсвует");
+    }
+}
+
+function parseToActorField(str) {
+
+    let strSubs = str.split("_");
+
+    for(let i = 1; i < strSubs.length; i++) {
+        strSubs[i] = strSubs[i][0].toUpperCase() + strSubs[i].substring(1);
+    }
+
+    return strSubs.join("");
+}
+
+function createCall(actorObj, reviewId) {
+
+    $.ajax({
+        url: '/reviews/createVkCall?reviewId=' + reviewId,
+        method: 'PATCH',
+        contentType: 'application/json',
+        data: JSON.stringify(actorObj),
+        async: false,
+        success: function () {
+            console.log('Call created');
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+function editReview(reviewDTO) {
+
+        $.ajax({
+            url: '/reviews',
+            method: 'PATCH',
+            contentType: 'application/json',
+            data: JSON.stringify(reviewDTO),
+            async: false,
+            success: function () {
+                console.log('accepted')
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+        window.location.replace("/reviews");
+}
+

@@ -57,6 +57,10 @@ sms:
   url:
     replenish-balance: https://sms.ru/pay.php
 
+vk:
+  api:
+    version: 5.131
+
 testData:
   enabled: true
   usersCount: 5
@@ -124,7 +128,7 @@ navbar:
     - Статистика
       /statistics
     - Ревью
-      /reviewAdmin
+      /reviews
     - PreProject
       /preProjectLinks
     - Собеседования
