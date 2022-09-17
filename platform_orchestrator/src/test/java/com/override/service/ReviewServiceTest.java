@@ -48,6 +48,9 @@ public class ReviewServiceTest {
     @Mock
     private CurrentTimeService currentTimeService;
 
+    @Mock
+    VkApiService vkApiService;
+
     @Test
     public void saveOrUpdateConfirmReview() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
@@ -56,6 +59,7 @@ public class ReviewServiceTest {
 
         when(platformUserRepository.findFirstByLogin(testReviewDTO.getStudentLogin()))
                 .thenReturn(testUser);
+        when(vkApiService.getCall(any())).thenReturn("");
 
         reviewService.saveOrUpdate(testReviewDTO, testUser.getLogin());
 
@@ -75,6 +79,7 @@ public class ReviewServiceTest {
                 .thenReturn(testUser);
         when(platformUserRepository.findFirstByLogin(testReviewDTO.getMentorLogin()))
                 .thenReturn(testUser);
+        when(vkApiService.getCall(any())).thenReturn("");
 
         reviewService.saveOrUpdate(testReviewDTO, testReviewDTO.getMentorLogin());
 
@@ -95,6 +100,7 @@ public class ReviewServiceTest {
                 .thenReturn(testUser);
         when(platformUserRepository.findFirstByLogin(testReviewDTO.getMentorLogin()))
                 .thenReturn(testUser);
+        when(vkApiService.getCall(any())).thenReturn("");
 
         reviewService.saveOrUpdate(testReviewDTO, testUserLogin);
 

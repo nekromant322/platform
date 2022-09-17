@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.ws.rs.Path;
-
 @FeignClient(value="vkApiFeignClient", url="https://api.vk.com")
 public interface VkApiFeign {
 
