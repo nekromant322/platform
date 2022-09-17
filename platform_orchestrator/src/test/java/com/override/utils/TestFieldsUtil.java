@@ -146,6 +146,16 @@ public class TestFieldsUtil {
         return List.of(firstUserWithoutReport, secondUserWithoutReport, thirdUserWithoutReport);
     }
 
+    public static List<PlatformUser> generateTestListOfTwoAdmins() {
+        PlatformUser firstUserWithoutReport = new PlatformUser(4L, "Admin1", "a", StudyStatus.ACTIVE, CoursePart.CORE,
+                Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings());
+        PlatformUser secondUserWithoutReport = new PlatformUser(5L, "Admin2", "s", StudyStatus.ACTIVE, CoursePart.CORE,
+                Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings());
+
+        return List.of(firstUserWithoutReport, secondUserWithoutReport);
+    }
+
+
     public static TaskIdentifierDTO generateTestTaskIdentifierDTO() {
         return TaskIdentifierDTO.builder()
                 .chapter(1)
@@ -370,6 +380,41 @@ public class TestFieldsUtil {
                 .data(interviewReportList.stream().map(InterviewReport::getMaxSalary).collect(Collectors.toList()))
                 .borderWidth(1)
                 .label(interviewReportList.get(0).getUserLogin())
+                .build();
+    }
+
+    public static InterviewData generateTestInterviewData() {
+        return InterviewData.builder()
+                .id(1L)
+                .userLogin("testUser")
+                .company("Test Company")
+                .description("Test description")
+                .contacts("880055535535")
+                .date(LocalDate.of(2022, 7, 3))
+                .time(LocalTime.of(22, 22, 0))
+                .comment("Test comment")
+                .stack("Test stack")
+                .salary(250)
+                .meetingLink("https://meet.google.com/oqc-sijo-esb")
+                .distanceWork("Да")
+                .build();
+    }
+
+    public static InterviewDataDTO generateTestInterviewDataDTO() {
+        InterviewData interviewData = generateTestInterviewData();
+        return InterviewDataDTO.builder()
+                .id(interviewData.getId())
+                .userLogin(interviewData.getUserLogin())
+                .company(interviewData.getCompany())
+                .description(interviewData.getDescription())
+                .contacts(interviewData.getContacts())
+                .date(interviewData.getDate())
+                .time(interviewData.getTime())
+                .comment(interviewData.getComment())
+                .stack(interviewData.getStack())
+                .salary(interviewData.getSalary())
+                .meetingLink(interviewData.getMeetingLink())
+                .distanceWork(interviewData.getDistanceWork())
                 .build();
     }
 }

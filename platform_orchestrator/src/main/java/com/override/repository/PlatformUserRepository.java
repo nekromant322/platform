@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface PlatformUserRepository extends CrudRepository<PlatformUser, Long> {
 
+    PlatformUser findByLogin(String login);
+
     PlatformUser findFirstByLogin(String login);
 
     @Query(value = "select p_user.id, p_user.login, p_user.password, p_user.telegram_chat_id " +
@@ -43,4 +45,13 @@ public interface PlatformUserRepository extends CrudRepository<PlatformUser, Lon
             "and not exists ( " +
             "select authority from p_user.authorities authority where authority.authority = 'ROLE_ADMIN')")
     List<PlatformUser> findStudentsByCoursePart(@Param("coursePart") int courcePart);
+
+    @Query(value = "SELECT DISTINCT p_user.* " +
+            "FROM platform_user p_user" +
+            "         inner join Review review ON p_user.id = review.student_id " +
+            "WHERE p_user.id  in (SELECT student_id FROM Review " +
+            "         GROUP BY student_id" +
+            "         HAVING current_date - max(booked_date) >= :daysForReview)",
+            nativeQuery = true)
+    List<PlatformUser> findStudentsByLastReview(@Param("daysForReview") long daysForReview);
 }

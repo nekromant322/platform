@@ -1,7 +1,6 @@
 package com.override.controller;
 
 import com.override.service.SmsRuService;
-import dto.CodeCallSecurityCodeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +11,9 @@ public class SmsRuController {
     @Autowired
     private SmsRuService smsRuService;
 
-    @GetMapping("/code")
-    public CodeCallSecurityCodeDTO callToClient(@RequestBody String clientPhoneNumber) {
-        String securityCode = smsRuService.verifyNumber(clientPhoneNumber);
-        return new CodeCallSecurityCodeDTO(securityCode);
+    @PostMapping("/code")
+    public String callToClient(@RequestBody String clientPhoneNumber) {
+        return smsRuService.verifyNumber(clientPhoneNumber);
     }
 
     @GetMapping("/balance")

@@ -20,5 +20,14 @@ public class AlertScheduler {
     public void alertCoreStudentsWithLowActivityAndMentors() {
         alertService.alertBadStudents();
     }
+
+    /**
+     * Оповещения для менторов о студентах, которые давно не приходили на ревью
+     */
+
+    @Scheduled(cron = "${reviewAlert.cronNotificationPeriodForStudentsWithNoNewSolutions}")
+    public void alertMentorsAboutLowStudentActivity() {
+        alertService.alertMentorsAboutBadStudents();
+    }
 }
 

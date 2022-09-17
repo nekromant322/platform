@@ -116,7 +116,6 @@ public class ReviewService {
         sendMessage(reviewRepository.findById(id).get().getStudent().getLogin(),
                 DELETED_REVIEW_MESSAGE_TELEGRAM, Communication.TELEGRAM);
         reviewRepository.deleteById(id);
-        vkCallRepository.deleteVkCallByReviewId(id);
     }
 
     /**
