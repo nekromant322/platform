@@ -31,7 +31,9 @@ public class ReviewRestController {
 
     @Secured("ROLE_ADMIN")
     @PatchMapping("/createVkCall")
-    public void createVkCallCall(@RequestParam Long reviewId, @RequestBody VkActorDTO vkActorDTO) {
+    @ApiOperation(value = "Создание звонка в ВК", notes = "Делает запрос по open VK API на создание звонка")
+    public void createVkCallCall(@ApiParam(value = "ID ревью", example = "Shu") @RequestParam Long reviewId,
+                                 @RequestBody VkActorDTO vkActorDTO) {
         vkApiService.createVkCall(reviewId, vkActorDTO);
     }
 

@@ -101,7 +101,8 @@ public class ReviewService {
         }
         reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
                 platformUserRepository.findFirstByLogin(reviewDTO.getStudentLogin()),
-                platformUserRepository.findFirstByLogin(reviewDTO.getMentorLogin())));
+                platformUserRepository.findFirstByLogin(reviewDTO.getMentorLogin()),
+                vkCallRepository.findVkCallByReviewId(reviewDTO.getId())));
     }
 
     public void sendMessage(String login, String message, Communication type) {
@@ -160,7 +161,7 @@ public class ReviewService {
                             " с @" + review.getMentor().getLogin() + "\n" +
                             review.getBookedDate() + " " + review.getBookedTime() +
                             "\nТема: " + review.getTopic() + "\n" +
-                            "Ссылка на звонок: " + review.getCallLink();
+                            "Ссылка на звонок: " + review.getVkCall().getJoinLink();
                     notificatorFeign.sendMessage(review.getStudent().getLogin(), messageText, Communication.TELEGRAM);
                     notificatorFeign.sendMessage(review.getMentor().getLogin(), messageText, Communication.TELEGRAM);
                 });

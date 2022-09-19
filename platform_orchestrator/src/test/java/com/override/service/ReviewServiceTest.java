@@ -4,8 +4,10 @@ import com.override.feign.NotificatorFeign;
 import com.override.mapper.ReviewMapper;
 import com.override.model.PlatformUser;
 import com.override.model.Review;
+import com.override.model.VkCall;
 import com.override.repository.PlatformUserRepository;
 import com.override.repository.ReviewRepository;
+import com.override.repository.VkCallRepository;
 import com.override.util.CurrentTimeService;
 import dto.ReviewDTO;
 import dto.ReviewFilterDTO;
@@ -37,6 +39,9 @@ public class ReviewServiceTest {
     private ReviewRepository reviewRepository;
 
     @Mock
+    private VkCallRepository vkCallRepository;
+
+    @Mock
     private ReviewMapper reviewMapper;
 
     @Mock
@@ -55,16 +60,18 @@ public class ReviewServiceTest {
     public void saveOrUpdateConfirmReview() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         PlatformUser testUser = generateTestUser();
+        VkCall testVkCall = generateTestVkCall();
         testReviewDTO.setMentorLogin("");
 
         when(platformUserRepository.findFirstByLogin(testReviewDTO.getStudentLogin()))
                 .thenReturn(testUser);
+        when(vkCallRepository.findVkCallByReviewId(any())).thenReturn(testVkCall);
         when(vkApiService.getCall(any())).thenReturn("");
 
         reviewService.saveOrUpdate(testReviewDTO, testUser.getLogin());
 
         verify(reviewRepository, times(1)).save(any());
-        verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
+        verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any(), any());
         verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(),
                 String.format(ReviewService.CONFIRMED_REVIEW_MESSAGE_TELEGRAM, testUser.getLogin(), testReviewDTO.getBookedDate(),
                         testReviewDTO.getBookedTime(), testReviewDTO.getCallLink()), Communication.TELEGRAM);
@@ -74,11 +81,13 @@ public class ReviewServiceTest {
     public void saveOrUpdateChangeReviewTime() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         PlatformUser testUser = generateTestUser();
+        VkCall testVkCall = generateTestVkCall();
 
         when(platformUserRepository.findFirstByLogin(testReviewDTO.getStudentLogin()))
                 .thenReturn(testUser);
         when(platformUserRepository.findFirstByLogin(testReviewDTO.getMentorLogin()))
                 .thenReturn(testUser);
+        when(vkCallRepository.findVkCallByReviewId(any())).thenReturn(testVkCall);
         when(vkApiService.getCall(any())).thenReturn("");
 
         reviewService.saveOrUpdate(testReviewDTO, testReviewDTO.getMentorLogin());
@@ -87,19 +96,21 @@ public class ReviewServiceTest {
                 ReviewService.CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM, testReviewDTO.getBookedDate(),
                 testReviewDTO.getBookedTime(), testReviewDTO.getCallLink()), Communication.TELEGRAM);
         verify(reviewRepository, times(1)).save(any());
-        verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
+        verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any(), any());
     }
 
     @Test
     public void saveOrUpdateChangeReviewMentor() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         PlatformUser testUser = generateTestUser();
+        VkCall testVkCall = generateTestVkCall();
         String testUserLogin = "Ivan";
 
         when(platformUserRepository.findFirstByLogin(testReviewDTO.getStudentLogin()))
                 .thenReturn(testUser);
         when(platformUserRepository.findFirstByLogin(testReviewDTO.getMentorLogin()))
                 .thenReturn(testUser);
+        when(vkCallRepository.findVkCallByReviewId(any())).thenReturn(testVkCall);
         when(vkApiService.getCall(any())).thenReturn("");
 
         reviewService.saveOrUpdate(testReviewDTO, testUserLogin);
@@ -108,13 +119,14 @@ public class ReviewServiceTest {
                 String.format(ReviewService.CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM, testUserLogin,
                         testReviewDTO.getBookedDate(), testReviewDTO.getBookedTime(), testReviewDTO.getCallLink()), Communication.TELEGRAM);
         verify(reviewRepository, times(1)).save(any());
-        verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
+        verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any(), any());
     }
 
     @Test
     public void saveOrUpdateNewReviewMessageTelegram() {
         ReviewDTO testReviewDTO = generateTestReviewDTO();
         PlatformUser testUser = generateTestUser();
+        VkCall testVkCall = generateTestVkCall();
 
         testReviewDTO.setId(null);
         testReviewDTO.setStudentLogin(null);
@@ -128,6 +140,7 @@ public class ReviewServiceTest {
                 .thenReturn(testUser);
         when(platformUserRepository.findFirstByLogin(testReviewDTO.getMentorLogin()))
                 .thenReturn(testUser);
+        when(vkCallRepository.findVkCallByReviewId(any())).thenReturn(testVkCall);
 
         when(platformUserRepository.findAllByAuthorityName(any()))
                 .thenReturn(testList);
@@ -137,7 +150,7 @@ public class ReviewServiceTest {
         verify(notificatorFeign, times(1)).sendMessage(testUser.getLogin(),
                 String.format(ReviewService.NEW_REVIEW_MESSAGE_TELEGRAM, testUser.getLogin()), Communication.TELEGRAM);
         verify(reviewRepository, times(1)).save(any());
-        verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any());
+        verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any(), any());
     }
 
     @Test
@@ -283,7 +296,7 @@ public class ReviewServiceTest {
                 " с @" + review4.getMentor().getLogin() + "\n" +
                 review4.getBookedDate() + " " + review4.getBookedTime() +
                 "\nТема: " + review4.getTopic() + "\n" +
-                "Ссылка на звонок: " + review4.getCallLink();
+                "Ссылка на звонок: " + review4.getVkCall().getJoinLink();
 
         reviewService.sendScheduledNotification();
         verify(notificatorFeign, times(2)).sendMessage(review4.getStudent().getLogin(), messageText, Communication.TELEGRAM);

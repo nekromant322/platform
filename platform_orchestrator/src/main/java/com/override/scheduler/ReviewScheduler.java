@@ -1,4 +1,4 @@
-package com.override.repository.scheduler;
+package com.override.scheduler;
 
 import com.override.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;

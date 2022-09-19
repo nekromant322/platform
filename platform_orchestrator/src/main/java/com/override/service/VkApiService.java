@@ -27,7 +27,6 @@ public class VkApiService {
 
         VkCall vkCall = vkCallRepository.findVkCallByReviewId(reviewId);
 
-        //Изменить на модель VkCall
         return vkCall.getJoinLink();
     }
 
@@ -38,11 +37,10 @@ public class VkApiService {
         VkCall vkCall = parseToVkCall(response);
 
         vkCall.setReviewId(reviewId);
-
-        saveCall(vkCall);
+        vkCallRepository.save(vkCall);
 
         //После сохраннеия в БД принудительное завершения звонка необходимо, чтобы их не плодить
-        vkApiFeign.finishCall(vkActorDTO.getAccessToken(), vkCall.getCallId(), VERSION_VK_API);
+        vkApiFeign.finishCall(vkActorDTO.getAccessToken(), vkCall.getId(), VERSION_VK_API);
     }
 
     private VkCall parseToVkCall(ResponseEntity<String> responseEntity) {
@@ -58,6 +56,4 @@ public class VkApiService {
 
         return vkCall;
     }
-
-    private void saveCall(VkCall vkCall) { vkCallRepository.save(vkCall); }
 }

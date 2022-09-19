@@ -203,6 +203,15 @@
             </column>
         </createTable>
 
+        <createTable tableName="vk_call">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="join_link" type="varchar(255)"/>
+            <column name="vk_call_id" type="varchar(255)"/>
+            <column name="review_id" type="bigint"/>
+        </createTable>
+
         <createTable tableName="review">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -210,23 +219,16 @@
             <column name="booked_date" type="date"/>
             <column name="booked_time" type="time"/>
             <column name="mentor_id" type="bigint">
-                <constraints foreignKeyName="platform_user_id" references="platform_user(id)"/>
+                <constraints foreignKeyName="platform_mentor_id" references="platform_user(id)"/>
             </column>
             <column name="student_id" type="bigint">
-                <constraints foreignKeyName="review" references="platform_user(id)"/>
+                <constraints foreignKeyName="platform_student_id" references="platform_user(id)"/>
             </column>
             <column name="time_slots" type="varchar(255)"/>
             <column name="topic" type="varchar(255)"/>
-            <column name="call_link" type="varchar(255)"/>
-        </createTable>
-
-        <createTable tableName="vk_call">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+            <column name="call_id" type="bigint">
+                <constraints foreignKeyName="call_id" references="vk_call(id)"/>
             </column>
-            <column name="join_link" type="varchar(255)"/>
-            <column name="call_id" type="varchar(255)"/>
-            <column name="review_id" type="bigint"/>
         </createTable>
 
         <createTable tableName="student_report">

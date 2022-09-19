@@ -6,6 +6,4 @@ import org.springframework.data.repository.CrudRepository;
 public interface VkCallRepository extends CrudRepository<VkCall, Long> {
 
     VkCall findVkCallByReviewId(Long reviewId);
-
-    void deleteVkCallByReviewId(Long reviewId);
 }

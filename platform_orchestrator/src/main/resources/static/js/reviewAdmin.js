@@ -299,6 +299,7 @@ function initCall(reviewDTO) {
     let clientVkId = "51409619"; //заменить на id созданного standalone-приложения в ВК
     let redirectUri = "http://localhost:8000/reviews?editReview=" + reviewDTO.id + "." + reviewDTO.bookedTime;
 
+
     if (confirmation === true) {
         window.location.replace("https://oauth.vk.com/authorize?" +
             "client_id=" + clientVkId + "&" +
