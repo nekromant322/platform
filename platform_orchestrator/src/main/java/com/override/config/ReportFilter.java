@@ -35,14 +35,14 @@ public class ReportFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        String token = jwtFilter.getTokenFromRequest((HttpServletRequest) servletRequest);
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
+        String token = jwtFilter.getTokenFromRequest(httpRequest);
 
         if (token != null && jwtProvider.validateToken(token)) {
             String userLogin = jwtProvider.getLoginFromToken(token);
             PlatformUser platformUser = platformUserService.findPlatformUserByLogin(userLogin);
 
-            for (String url : permitAllUrls.getPermitAllUrlsForReportFilter()) {
+            for (String url : permitAllUrls.getPermitAllUrls()) {
                 if (httpRequest.getRequestURI().contains(url)) {
                     filterChain.doFilter(servletRequest, servletResponse);
                     return;
@@ -50,7 +50,7 @@ public class ReportFilter extends GenericFilterBean {
             }
             if (platformUser.getAuthorities().stream().noneMatch(role -> role.getAuthority().equals("ROLE_ADMIN")) &&
                     platformUser.getAuthorities().stream().noneMatch(role -> role.getAuthority().equals("ROLE_GRADUATE")) &&
-                    !(((HttpServletRequest) servletRequest).getRequestURI().contains("/report")) &&
+                    !(httpRequest.getRequestURI().contains("/report")) &&
                     DAYS.between(studentReportRepository.findFirstByStudentOrderByDateDesc(platformUser).getDate(), LocalDate.now()) > 3){
                 ((HttpServletResponse) servletResponse).sendRedirect("/report");
                 return;
