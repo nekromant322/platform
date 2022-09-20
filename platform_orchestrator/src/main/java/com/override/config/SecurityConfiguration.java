@@ -29,6 +29,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private AuthenticationEntryPoint unauthorizedHandler;
     @Autowired
     private LessonFilter lessonFilter;
+    @Autowired
+    private ReportFilter reportFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -49,6 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(lessonFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(reportFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(tokenFilter, JwtFilter.class);
     }
 
