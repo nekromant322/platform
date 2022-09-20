@@ -53,6 +53,6 @@ public class VkApiServiceTest {
         vkApiService.createVkCall(1L, vkActorDTO);
 
         verify(vkCallRepository, times(1)).save(vkCall);
-        verify(vkApiFeign, times(1)).finishCall(any(),any(), any());
+        verify(vkApiFeign, times(1)).forceCallFinish(any(),any(), any());
     }
 }

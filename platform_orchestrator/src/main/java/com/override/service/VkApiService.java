@@ -43,7 +43,7 @@ public class VkApiService {
         vkCallRepository.save(vkCall);
 
         //После сохраннеия в БД принудительное завершения звонка необходимо, чтобы их не плодить
-        vkApiFeign.finishCall(vkActorDTO.getAccessToken(), vkCall.getId(), VERSION_VK_API);
+        vkApiFeign.forceCallFinish(vkActorDTO.getAccessToken(), vkCall.getId(), VERSION_VK_API);
     }
 
     private VkCall parseToVkCall(ResponseEntity<String> responseEntity) {
