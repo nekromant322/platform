@@ -54,7 +54,7 @@ public class ReviewServiceTest {
     private CurrentTimeService currentTimeService;
 
     @Mock
-    VkApiService vkApiService;
+    private VkApiService vkApiService;
 
     @Test
     public void saveOrUpdateConfirmReview() {

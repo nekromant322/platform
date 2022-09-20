@@ -23,6 +23,9 @@ public class VkApiService {
     @Value("${vk.api.version}")
     private String VERSION_VK_API;
 
+    @Value("${vk.api.appId}")
+    private Long VK_APP_ID;
+
     public String getCall(Long reviewId) {
 
         VkCall vkCall = vkCallRepository.findVkCallByReviewId(reviewId);
@@ -55,5 +58,9 @@ public class VkApiService {
                 .build();
 
         return vkCall;
+    }
+
+    public Long getVkAppId() {
+        return VK_APP_ID;
     }
 }

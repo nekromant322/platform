@@ -295,10 +295,8 @@ function initCall(reviewDTO) {
     let confirmation = confirm("Вы уверены, что хотите взять ревью " + reviewDTO.id +
         + " и назначить его время на " + reviewDTO.bookedTime + "?");
 
-    //Сделать запрос на сервер и возвращать из конфигурацинных перменных
-    let clientVkId = "51409619"; //заменить на id созданного standalone-приложения в ВК
+    let clientVkId = getVkAppId(); //заменить на id созданного standalone-приложения в ВК
     let redirectUri = "http://localhost:8000/reviews?editReview=" + reviewDTO.id + "." + reviewDTO.bookedTime;
-
 
     if (confirmation === true) {
         window.location.replace("https://oauth.vk.com/authorize?" +
@@ -308,6 +306,22 @@ function initCall(reviewDTO) {
             "v=5.131" + "&" +
             "redirect_uri=" + redirectUri);
     }
+}
+
+function getVkAppId() {
+
+    let vkAppId;
+
+    $.ajax({
+        url: '/reviews/vkAppId',
+        method: 'GET',
+        async: false,
+        success: function (id) {
+            vkAppId = id;
+        }
+    });
+
+    return vkAppId;
 }
 
 function parseAnchorIfExist() {

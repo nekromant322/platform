@@ -29,14 +29,6 @@ public class ReviewRestController {
     @Autowired
     private VkApiService vkApiService;
 
-    @Secured("ROLE_ADMIN")
-    @PatchMapping("/createVkCall")
-    @ApiOperation(value = "Создание звонка в ВК", notes = "Делает запрос по open VK API на создание звонка")
-    public void createVkCallCall(@ApiParam(value = "ID ревью", example = "Shu") @RequestParam Long reviewId,
-                                 @RequestBody VkActorDTO vkActorDTO) {
-        vkApiService.createVkCall(reviewId, vkActorDTO);
-    }
-
     @PatchMapping
     @ApiOperation(notes = "Варианты условий:\n" +
             "reviewDTO.getId() == null, reviewDTO.getStudentLogin() == null — будет отправлено уведомление в Telegram\n" +
@@ -80,5 +72,21 @@ public class ReviewRestController {
     public ResponseEntity<String> deleteReview(@RequestParam Long id) {
         reviewService.delete(id);
         return new ResponseEntity<>("Ревью удалено!", HttpStatus.OK);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @PatchMapping("/createVkCall")
+    @ApiOperation(value = "Создание звонка в ВК", notes = "Делает запрос по open VK API на создание звонка")
+    public void createVkCallCall(@ApiParam(value = "ID ревью", example = "Shu") @RequestParam Long reviewId,
+                                 @RequestBody VkActorDTO vkActorDTO) {
+        vkApiService.createVkCall(reviewId, vkActorDTO);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/vkAppId")
+    @ApiOperation(value = "Запрос на ID VK приложения")
+    public Long getVkAppId() {
+        System.out.println(vkApiService.getVkAppId());
+        return vkApiService.getVkAppId();
     }
 }

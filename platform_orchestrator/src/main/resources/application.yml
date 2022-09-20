@@ -70,6 +70,7 @@ sms:
 vk:
   api:
     version: 5.131
+    appId: 51409619
 
 testData:
   enabled: true
