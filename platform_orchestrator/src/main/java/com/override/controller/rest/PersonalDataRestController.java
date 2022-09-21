@@ -2,7 +2,6 @@ package com.override.controller.rest;
 
 import com.override.model.RequestPersonalData;
 import com.override.service.PersonalDataService;
-import com.override.service.RequestInNotificationService;
 import dto.PersonalDataDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -17,9 +16,6 @@ public class PersonalDataRestController {
     @Autowired
     private PersonalDataService personalDataService;
 
-    @Autowired
-    private RequestInNotificationService requestInNotificationService;
-
     @PatchMapping("{userLogin}")
     @ApiOperation(
             value = "Сохранение данных в БД",
@@ -29,7 +25,6 @@ public class PersonalDataRestController {
     public void patch(@RequestBody PersonalDataDTO personalDataDTO,
                       @ApiParam(value = "Логин пользователя", example = "Shu") @PathVariable String userLogin) {
         personalDataService.saveOrCreateRequest(personalDataDTO, userLogin);
-        requestInNotificationService.saveRecipient(personalDataDTO, userLogin);
     }
 
     @GetMapping("/requestToCheck/{userLogin}")

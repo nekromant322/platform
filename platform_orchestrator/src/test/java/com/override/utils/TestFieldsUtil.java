@@ -146,6 +146,16 @@ public class TestFieldsUtil {
         return List.of(firstUserWithoutReport, secondUserWithoutReport, thirdUserWithoutReport);
     }
 
+    public static List<PlatformUser> generateTestListOfTwoAdmins() {
+        PlatformUser firstUserWithoutReport = new PlatformUser(4L, "Admin1", "a", StudyStatus.ACTIVE, CoursePart.CORE,
+                Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings());
+        PlatformUser secondUserWithoutReport = new PlatformUser(5L, "Admin2", "s", StudyStatus.ACTIVE, CoursePart.CORE,
+                Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings());
+
+        return List.of(firstUserWithoutReport, secondUserWithoutReport);
+    }
+
+
     public static TaskIdentifierDTO generateTestTaskIdentifierDTO() {
         return TaskIdentifierDTO.builder()
                 .chapter(1)

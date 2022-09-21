@@ -291,6 +291,9 @@ public class InitializationService {
             StudentReport report = new StudentReport();
             report.setStudent(student);
             currentDate = getRandomDate();
+            if (i == 4) {
+                currentDate = LocalDate.now().minusDays(1);
+            }
             while (datesOfReports.contains(currentDate)) {
                 currentDate = getRandomDate();
             }

@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class CodeCallSecurityCodeDTO {
-    private final String code;
+    private final String codeCallSecurity;
 }
