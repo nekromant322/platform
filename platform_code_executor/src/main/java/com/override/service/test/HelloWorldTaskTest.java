@@ -26,7 +26,7 @@ public class HelloWorldTaskTest extends AbstractTaskTest {
         return TaskIdentifierDTO.builder()
                 .chapter(1)
                 .step(2)
-                .lesson(13)
+                .lesson(8)
                 .build();
     }
 

@@ -20,9 +20,9 @@ public class CompilerService {
     private static final String TOP_LEVEL_HELPER_CLASS_NAME = "Main";
 
     public synchronized Class makeClassFromCode(String studentsCode) {
-        new File("customClasses").mkdirs();
-        clearCustomClasses();
-
+       if(!new File("customClasses").mkdirs()) {
+           clearCustomClasses();
+       }
         try {
             PrintWriter out = new PrintWriter(CUSTOM_CLASSES_DIR_NAME + File.separator + TOP_LEVEL_HELPER_CLASS_NAME + ".java");
             out.write(studentsCode);
