@@ -14,12 +14,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletContext;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 @RestController
 @RequestMapping("/act")
 public class ActGenerationRestController {
@@ -37,13 +31,12 @@ public class ActGenerationRestController {
         actGenerationService.createPDF(platformUserService.findPlatformUserByLogin(studentLogin).getPersonalData());
     }
 
-    /*@GetMapping
+    @GetMapping
     @ApiOperation(value = "Создает акт о выполненной работе формата .PDF для текущего юзера")
-    public ResponseEntity<Resource> generateCurrentUserAct(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) throws IOException {
-        actGenerationService.createPDF(platformUserService.findPlatformUserByLogin(user.getUsername()).getPersonalData());
+    public ResponseEntity<Resource> generateCurrentUserAct(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(document.getType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + document.getName())
-                .body(new ByteArrayResource(document.getContent()));
-    }*/
+                .contentType(MediaType.parseMediaType("application/pdf"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + "act")
+                .body(new ByteArrayResource(actGenerationService.createPDF(platformUserService.findPlatformUserByLogin(user.getUsername()).getPersonalData())));
+    }
 }

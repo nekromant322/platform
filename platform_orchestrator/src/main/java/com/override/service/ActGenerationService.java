@@ -36,7 +36,6 @@ public class ActGenerationService {
             iTextRenderer.createPDF(byteArrayOutputStream);
 
             return byteArrayOutputStream.toByteArray();
-
         } catch (DocumentException | IOException e) {
             log.warn("При создании акта №" + personalData.getActNumber() + " произошла ошибка!");
         } catch (NullPointerException e) {

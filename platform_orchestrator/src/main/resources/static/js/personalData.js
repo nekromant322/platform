@@ -246,12 +246,20 @@ function getUserPersonalData() {
             $('#actBtn').click(function () {
                 $.ajax({
                     url: '/act',
-                    method: 'GET',
-                    contentType: 'application/json',
-                    success: function () {
+                    dataType: 'binary',
+                    xhrFields: {
+                        'responseType': 'blob'
+                    },
+                    success: function (data, status, xhr) {
+                        var blob = new Blob([data], {type: xhr.getResponseHeader('Content-Type')});
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = '' + "act";
+                        link.click();
                         $('#modalAct').modal('show');
                     }
                 });
+
             })
         }
     });
