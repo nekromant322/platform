@@ -2,6 +2,7 @@ package com.override.mapper;
 
 import com.override.model.PlatformUser;
 import com.override.model.Review;
+import com.override.model.VkCall;
 import dto.ReviewDTO;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +11,8 @@ public class ReviewMapper {
 
     public Review dtoToEntity(ReviewDTO reviewDTO,
                               PlatformUser student,
-                              PlatformUser mentor){
+                              PlatformUser mentor,
+                              VkCall vkCall){
         return Review.builder()
                 .id(reviewDTO.getId())
                 .topic(reviewDTO.getTopic())
@@ -19,7 +21,7 @@ public class ReviewMapper {
                 .bookedDate(reviewDTO.getBookedDate())
                 .bookedTime(reviewDTO.getBookedTime())
                 .timeSlots(reviewDTO.getTimeSlots())
-                .callLink(reviewDTO.getCallLink())
+                .vkCall(vkCall)
                 .build();
     }
 
@@ -32,7 +34,7 @@ public class ReviewMapper {
                 .bookedDate(review.getBookedDate())
                 .bookedTime(review.getBookedTime())
                 .timeSlots(review.getTimeSlots())
-                .callLink(review.getCallLink())
+                .callLink("")
                 .build();
         if (review.getMentor() != null) {
             reviewDTO.setMentorLogin(review.getMentor().getLogin());

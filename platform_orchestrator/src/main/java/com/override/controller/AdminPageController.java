@@ -38,7 +38,7 @@ public class AdminPageController {
     }
 
     @Secured("ROLE_ADMIN")
-    @GetMapping("/reviewAdmin")
+    @GetMapping("/reviews")
     public String reviewAdminPage() {
         return "reviewAdmin";
     }

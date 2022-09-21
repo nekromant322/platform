@@ -43,6 +43,7 @@ public class Review {
     @Column(name = "time_slots")
     private Set<LocalTime> timeSlots;
 
-    @Column
-    private String callLink;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "call_id")
+    private VkCall vkCall;
 }

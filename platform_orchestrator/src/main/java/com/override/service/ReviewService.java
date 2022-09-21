@@ -7,6 +7,7 @@ import com.override.model.PlatformUser;
 import com.override.model.enums.Role;
 import com.override.repository.PlatformUserRepository;
 import com.override.repository.ReviewRepository;
+import com.override.repository.VkCallRepository;
 import com.override.util.CurrentTimeService;
 import dto.ReviewDTO;
 import dto.ReviewFilterDTO;
@@ -31,6 +32,9 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
     @Autowired
+    private VkCallRepository vkCallRepository;
+
+    @Autowired
     private ReviewMapper reviewMapper;
 
     @Autowired
@@ -38,6 +42,9 @@ public class ReviewService {
 
     @Autowired
     private CurrentTimeService currentTimeService;
+
+    @Autowired
+    private VkApiService vkApiService;
 
     public static String CONFIRMED_REVIEW_MESSAGE_TELEGRAM = "Ментор %s подтвердил ревью %s в %s, ссылка на звонок: %s";
     public static String DELETED_REVIEW_MESSAGE_TELEGRAM = "Ментор вынужден был отменить ревью. " +
@@ -77,24 +84,25 @@ public class ReviewService {
                 reviewDTO.setStudentLogin(userLogin);
             }
         } else if (reviewDTO.getBookedTime() != null && reviewDTO.getMentorLogin() == "") {
-            reviewDTO.setCallLink(startCall());
+            reviewDTO.setCallLink(vkApiService.getCall(reviewDTO.getId()));
             sendMessage(reviewDTO.getStudentLogin(), String.format(CONFIRMED_REVIEW_MESSAGE_TELEGRAM, userLogin,
                     reviewDTO.getBookedDate(), reviewDTO.getBookedTime(), reviewDTO.getCallLink()), Communication.TELEGRAM);
             reviewDTO.setMentorLogin(userLogin);
         } else if (reviewDTO.getMentorLogin() != null && reviewDTO.getBookedTime() != null) {
             if (!reviewDTO.getMentorLogin().equals(userLogin)) {
-                reviewDTO.setCallLink(startCall());
+                reviewDTO.setCallLink(vkApiService.getCall(reviewDTO.getId()));
                 sendMessage(reviewDTO.getStudentLogin(), String.format(CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM,
                         userLogin, reviewDTO.getBookedDate(), reviewDTO.getBookedTime(), reviewDTO.getCallLink()), Communication.TELEGRAM);
             } else {
-                reviewDTO.setCallLink(startCall());
+                reviewDTO.setCallLink(vkApiService.getCall(reviewDTO.getId()));
                 sendMessage(reviewDTO.getStudentLogin(), String.format(CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM,
                         reviewDTO.getBookedDate(), reviewDTO.getBookedTime(), reviewDTO.getCallLink()), Communication.TELEGRAM);
             }
         }
         reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
                 platformUserRepository.findFirstByLogin(reviewDTO.getStudentLogin()),
-                platformUserRepository.findFirstByLogin(reviewDTO.getMentorLogin())));
+                platformUserRepository.findFirstByLogin(reviewDTO.getMentorLogin()),
+                vkCallRepository.findVkCallByReviewId(reviewDTO.getId())));
     }
 
     public void sendMessage(String login, String message, Communication type) {
@@ -153,15 +161,10 @@ public class ReviewService {
                             " с @" + review.getMentor().getLogin() + "\n" +
                             review.getBookedDate() + " " + review.getBookedTime() +
                             "\nТема: " + review.getTopic() + "\n" +
-                            "Ссылка на звонок: " + review.getCallLink();
+                            "Ссылка на звонок: " + review.getVkCall().getJoinLink();
                     notificatorFeign.sendMessage(review.getStudent().getLogin(), messageText, Communication.TELEGRAM);
                     notificatorFeign.sendMessage(review.getMentor().getLogin(), messageText, Communication.TELEGRAM);
                 });
-    }
-
-    //TODO BQFI-19 доделать интеграциюс VK API
-    public String startCall(){
-        return  "https://vk.com/call/join/4WaALCm7XxBMugVAKkafGQ8O6RDi8pDpqHNJs8eW5eyQydvAF49IuShz0oqK5uzdAVuT1dBQcbzZ6ThMUUCjT7dSRQ15oV2ycQTUgZPk3Io";
     }
 }
 

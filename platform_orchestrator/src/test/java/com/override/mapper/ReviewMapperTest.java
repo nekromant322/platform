@@ -2,6 +2,7 @@ package com.override.mapper;
 
 import com.override.model.PlatformUser;
 import com.override.model.Review;
+import com.override.model.VkCall;
 import dto.ReviewDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -23,8 +24,9 @@ public class ReviewMapperTest {
         PlatformUser testStudent = generateTestUser();
         PlatformUser testMentor = generateTestUser();
         ReviewDTO testReviewDTO = generateTestReviewDTO();
+        VkCall testVkCall = generateTestVkCall();
 
-        Review review = reviewMapper.dtoToEntity(testReviewDTO, testStudent, testMentor);
+        Review review = reviewMapper.dtoToEntity(testReviewDTO, testStudent, testMentor, testVkCall);
 
         Assertions.assertEquals(review.getId(), testReview.getId());
         Assertions.assertEquals(review.getTopic(), testReview.getTopic());
@@ -33,6 +35,7 @@ public class ReviewMapperTest {
         Assertions.assertEquals(review.getBookedDate(), testReview.getBookedDate());
         Assertions.assertEquals(review.getBookedTime(), testReview.getBookedTime());
         Assertions.assertEquals(review.getTimeSlots(), testReview.getTimeSlots());
+        Assertions.assertEquals(review.getVkCall(), testReview.getVkCall());
     }
 
     @Test
