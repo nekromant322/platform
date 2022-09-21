@@ -88,13 +88,9 @@ public class StatisticsService {
     }
 
     public IncomeFromUsersDTO getAllPayment() {
-        List<Long> sum = new ArrayList<>();
         List<String> studentsName = paymentRepository.findDistinctStudentNameValues();
-        studentsName.forEach(name -> sum.add(paymentRepository.findAllByStudentName(name)
-                .stream()
-                .map(Payment::getSum)
-                .mapToLong(Long::longValue)
-                .sum()));
+        List<Long> sum = paymentRepository.findSumForStudent();
+
         return incomeFromUsersMapper.entityToDto(studentsName, sum);
     }
 
@@ -111,6 +107,10 @@ public class StatisticsService {
                     .map(Payment::getSum)
                     .mapToLong(Long::longValue)
                     .sum()));
+
+        System.out.println(firstPaymentDate);
+        System.out.println(firstMonthPayment);
+        System.out.println(labels);
         return generalIncomeMapper.entityToDto(labels, income);
     }
 }
