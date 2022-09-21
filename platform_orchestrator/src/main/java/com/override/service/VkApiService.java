@@ -41,9 +41,6 @@ public class VkApiService {
 
         vkCall.setReviewId(reviewId);
         vkCallRepository.save(vkCall);
-
-        //После сохраннеия в БД принудительное завершения звонка необходимо, чтобы их не плодить
-        vkApiFeign.forceCallFinish(vkActorDTO.getAccessToken(), vkCall.getId(), VERSION_VK_API);
     }
 
     private VkCall parseToVkCall(ResponseEntity<String> responseEntity) {

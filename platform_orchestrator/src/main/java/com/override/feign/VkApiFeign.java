@@ -10,7 +10,4 @@ public interface VkApiFeign {
 
     @GetMapping("/method/calls.start?access_token={accessToken}&v={versionVkApi}")
     ResponseEntity<String> createCall(@PathVariable String accessToken, @PathVariable String versionVkApi);
-
-    @GetMapping("/method/calls.forceFinish?access_token={accessToken}&call_id={callId}&v={versionVkApi}")
-    void forceCallFinish(@PathVariable String accessToken, @PathVariable Long callId, @PathVariable String versionVkApi);
 }
