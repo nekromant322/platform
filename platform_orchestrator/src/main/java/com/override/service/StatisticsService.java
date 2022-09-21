@@ -107,10 +107,6 @@ public class StatisticsService {
                     .map(Payment::getSum)
                     .mapToLong(Long::longValue)
                     .sum()));
-
-        System.out.println(firstPaymentDate);
-        System.out.println(firstMonthPayment);
-        System.out.println(labels);
         return generalIncomeMapper.entityToDto(labels, income);
     }
 }

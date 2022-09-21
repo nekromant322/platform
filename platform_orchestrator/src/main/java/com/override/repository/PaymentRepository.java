@@ -10,16 +10,11 @@ import java.util.List;
 
 public interface PaymentRepository  extends JpaRepository<Payment, Long> {
 
-    /*@Query(value = "SELECT DISTINCT student_name FROM payment ORDER BY student_name", nativeQuery = true)
-    List<String> findDistinctStudentNameValues();*/
-
     @Query(value = "SELECT student_name as sum FROM payment Group BY student_name", nativeQuery = true)
     List<String> findDistinctStudentNameValues();
 
     @Query(value = "SELECT SUM(sum) as sum FROM payment Group BY student_name", nativeQuery = true)
     List<Long> findSumForStudent ();
-
-    List<Payment> findAllByStudentName(String studentName);
 
     @Query(value = "SELECT min(date) FROM payment", nativeQuery = true)
     LocalDate findFirstDate();
