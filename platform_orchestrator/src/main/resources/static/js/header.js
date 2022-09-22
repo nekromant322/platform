@@ -17,6 +17,24 @@ function renderNavbar(navbar) {
     document.getElementById("navbar").innerHTML = html;
 }
 
+$('#bugButton').on('click', function upload(e) {
+    let files = new FormData(document.bugForm);
+
+    $.ajax({
+        type: 'POST',
+        url: '/bugs/',
+        processData: false,
+        contentType: false,
+        data: files,
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+});
+
 // Try to get data from the cache, but fall back to fetching it live.
 async function getData() {
     let cacheName = "navbar";
