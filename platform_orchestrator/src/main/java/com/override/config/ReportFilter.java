@@ -51,7 +51,8 @@ public class ReportFilter extends GenericFilterBean {
             if (platformUser.getAuthorities().stream().noneMatch(role -> role.getAuthority().equals("ROLE_ADMIN")) &&
                     platformUser.getAuthorities().stream().noneMatch(role -> role.getAuthority().equals("ROLE_GRADUATE")) &&
                     !(httpRequest.getRequestURI().contains("/report")) &&
-                    DAYS.between(studentReportRepository.findFirstByStudentOrderByDateDesc(platformUser).getDate(), LocalDate.now()) > 3){
+                    studentReportRepository.findFirstByStudentOrderByDateDesc(platformUser).isPresent() &&
+                    DAYS.between(studentReportRepository.findFirstByStudentOrderByDateDesc(platformUser).get().getDate(), LocalDate.now()) > 3){
                 ((HttpServletResponse) servletResponse).sendRedirect("/report");
                 return;
             }

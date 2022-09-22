@@ -5,10 +5,11 @@ import com.override.model.StudentReport;
 import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public interface StudentReportRepository extends CrudRepository<StudentReport, Long> {
 
     StudentReport findFirstByDateAndStudentLogin(LocalDate date, String login);
 
-    StudentReport findFirstByStudentOrderByDateDesc(PlatformUser platformUser);
+    Optional<StudentReport> findFirstByStudentOrderByDateDesc(PlatformUser platformUser);
 }

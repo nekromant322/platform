@@ -156,6 +156,34 @@ public class ReportFilterTest {
     }
 
     @Test
+    public void testDoFilterWhenNewUser() throws ServletException, IOException {
+
+        String token = "token";
+        String userLogin = "userLogin";
+
+        PlatformUser user = new PlatformUser(1L, "User", "User", StudyStatus.ACTIVE, CoursePart.CORE,
+                Collections.singletonList(new Authority(3L, "ROLE_USER")), new PersonalData(), new UserSettings());
+
+        String[] urls = (new String[]{"/login", "/init", "/css/*", "/images/*", "/js/*", "css", "js", "bugs", "navbar"});
+
+        Optional<StudentReport> studentReport = Optional.ofNullable(null);
+
+        HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
+
+        when(jwtFilter.getTokenFromRequest(httpRequest)).thenReturn(token);
+        when(jwtProvider.validateToken(token)).thenReturn(true);
+        when(jwtProvider.getLoginFromToken(token)).thenReturn(userLogin);
+        when(platformUserService.findPlatformUserByLogin(userLogin)).thenReturn(user);
+        when(permitAllUrls.getPermitAllUrls()).thenReturn(urls);
+        when(httpRequest.getRequestURI()).thenReturn("/personalData");
+        when(studentReportRepository.findFirstByStudentOrderByDateDesc(user)).thenReturn(studentReport);
+
+        reportFilter.doFilter(servletRequest, servletResponse, filterChain);
+
+        verify(filterChain, times(1)).doFilter(servletRequest, servletResponse);
+    }
+
+    @Test
     public void testDoFilterWhenRequestFromUserNotForReportAndReportPresent() throws ServletException, IOException {
 
         String token = "token";
@@ -166,7 +194,7 @@ public class ReportFilterTest {
 
         String[] urls = (new String[]{"/login", "/init", "/css/*", "/images/*", "/js/*", "css", "js", "bugs", "navbar"});
 
-        StudentReport studentReport = new StudentReport(LocalDate.now().minusDays(1), "Отчет", 4.0);
+        Optional<StudentReport> studentReport = Optional.of(new StudentReport(LocalDate.now().minusDays(1), "Отчет", 4.0));
 
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
 
@@ -194,7 +222,7 @@ public class ReportFilterTest {
 
         String[] urls = (new String[]{"/login", "/init", "/css/*", "/images/*", "/js/*", "css", "js", "bugs", "navbar"});
 
-        StudentReport studentReport = new StudentReport(LocalDate.now().minusDays(5), "Отчет", 4.0);
+        Optional<StudentReport> studentReport = Optional.of(new StudentReport(LocalDate.now().minusDays(5), "Отчет", 4.0));
 
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
 
