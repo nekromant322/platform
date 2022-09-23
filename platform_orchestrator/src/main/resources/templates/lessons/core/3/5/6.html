@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Обязательные метатеги -->
     <meta charset="utf-8">
@@ -8,57 +8,40 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="import" href="fragments/reviewRequestButton.html">
     <title>Override платформа</title>
 </head>
 <header th:replace="fragments/navbar.html :: header"></header>
 <body>
+
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
         <div class="col-1">
             <div th:replace="fragments/lessonSidebar.html"/>
         </div>
         <div class="col-11">
-            <h4>Java pre-project. Практическая задача 1.1.4</h4><br>
-            <p><h5>Практическая задача</h5>
-            В этом задании мы познакомимся с фреймворком Hibernate и научимся взаимодействовать с помощью него с базой
-            данных.<br>
-            <h5>Для выполнения задания необходимо:</h5>
-            <ol>
-                <li>Ознакомиться с Hibernate. Подробнее узнать о Hibernate можно <a href="https://hibernate.org/orm/">Здесь</a>
-                </li>
-                <li>Готовая прошлая задача ( работа будет происходить в этом же проекте )</li>
-            </ol>
-            <br>
-            <h5>Описание задачи:</h5> <br>
-            В прошлой задаче мы познакомились с Maven и JDBC, доработали приложение, взаимодействующее с базой
-            данных.<br>
-            На этот раз обратим внимание на класс UserHibernateDaoImpl, который реализует тот же интерефейс, что и
-            UserDaoJdbcImpl.<br>
-            В рамках этой задачи необходимо реализовать взаимодействие с базой данных с помощью Hibernate и дописать
-            методы в классе UserHibernateDaoImpl, проверить свои методы заранее написанными JUnit тестами из
-            заготовки.<br><br>
-            <h5>Требования к классам приложения:</h5><br>
-            <ol>
-                <li>UserHibernateDaoImpl должен реализовывать интерефейс UserDao</li>
-                <li>В класс Util должна быть добавлена конфигурация для Hibernate ( рядом с JDBC), без использования
-                    xml.
-                </li>
-                <li>Service на этот раз использует реализацию dao через Hibernate</li>
-                <li>Методы создания и удаления таблицы пользователей в классе UserHibernateDaoImpl должны быть
-                    реализованы с помощью SQL.
-                </li>
-            </ol>
-            <br>
-            Алгоритм приложения и операции не меняются в сравнении с предыдущим заданием.</p>
+            <div id="taskText">
+                <p>Задача</p>
+            </div>
+
+            <button type="button" class="btn btn-dark" onclick="sendCode(editor)">Проверить</button>
+            <div style="position: relative;
+    width: 500px;
+    height: 400px;" id="editor">код писать сюда</div>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/ace.js" type="text/javascript" charset="utf-8"></script>
+            <script>
+                var editor = ace.edit("editor");
+            </script>
+
+            <div th:replace="fragments/helpMeButton.html :: body"> </div>
+            <div th:replace="fragments/myCodeTryButton.html :: body"></div>
         </div>
     </div>
-    <div th:replace="fragments/PreProjectLink.html :: body"></div>
-    <div th:replace="fragments/PreProjectStatus.html :: body"></div>
-
-    <br>
-    <a href="/lessons/spring/2/1/1" class="btn btn-success btn-lg" role="button" id="nextLesson">Следующий урок</a>
+    <a href="/lessons/core/4/1/1" class="btn btn-success btn-lg" role="button" id="nextLesson">Следующий урок</a>
     <button class="button__request" onclick="openForm()">Запросить ревью</button>
 </div>
+
 <form>
     <div id="formReview" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -89,13 +72,14 @@
     </div>
 </form>
 
+<!-- Дополнительный JavaScript; выберите один из двух! -->
+
 <!-- Вариант 1: Bootstrap в связке с Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
 <script src="/js/nextLessonButton.js"></script>
-<script src="/js/preProjectLink.js"></script>
 <script src="/js/reviewRequestForm.js"></script>
 </body>
 </html>
