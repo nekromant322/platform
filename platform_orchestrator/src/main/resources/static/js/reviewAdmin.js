@@ -106,7 +106,7 @@ function drawColumns(data, identifier) {
         data = sortDataByTime(data);
         data = separatePastReviews(data);
         for (let i = 0; i < data.length; i++) {
-            addColumn(data[i]);
+            addColumn(data[i], identifier);
         }
     }
 }
@@ -122,10 +122,12 @@ function addColumnForTodayAndTomorrow(data) {
         insertTd(data.studentLogin, tr);
         insertTd(data.mentorLogin, tr);
         insertTd(data.bookedDate, tr);
+        if (data.callLink != "") {
+            insertTdLink(data.callLink, tr);
+        }else insertTd("", tr);
         if (data.bookedTime != null) {
             insertTd(data.bookedTime.substring(0, 5), tr);
         } else insertTd(data.bookedTime, tr);
-
 
         let review = {}
         review.id = data.id;
@@ -154,14 +156,27 @@ function addColumnForTodayAndTomorrow(data) {
                     review.bookedTime = times[i];
                     editReview(review);
                 });
-                td = tr.insertCell(6);
+                td = tr.insertCell(7);
                 td.insertAdjacentElement("beforeend", acceptBtn);
             }
         }
     }
 }
 
-function addColumn(data) {
+function insertTdLink(value, parent) {
+    let element = document.createElement("td");
+    element.scope = "row";
+
+    let link = document.createElement("a")
+    link.setAttribute("href", value)
+    link.setAttribute("target", "_blank")
+    link.innerText = "Ссылка на встречу";
+
+    element.insertAdjacentElement("afterbegin", link);
+    parent.insertAdjacentElement("beforeend", element)
+}
+
+function addColumn(data,identifier) {
     let table = document.getElementById("review-table").getElementsByTagName("tbody")[0];
     let tr = table.insertRow(table.rows.length);
     let td;
@@ -171,9 +186,15 @@ function addColumn(data) {
     insertTd(data.studentLogin, tr);
     insertTd(data.mentorLogin, tr);
     insertTd(data.bookedDate, tr);
+    if(identifier=="my") {
+        if (data.callLink != "") {
+            insertTdLink(data.callLink, tr);
+        }else insertTd("", tr);
+    }
     if (data.bookedTime != null) {
         insertTd(data.bookedTime.substring(0, 5), tr);
     } else insertTd(data.bookedTime, tr);
+
 
 
     let review = {}
@@ -224,7 +245,7 @@ function addColumn(data) {
         deleteBtn.addEventListener("click", () => {
             deleteReview(data.id);
         });
-        td = tr.insertCell(6);
+        td = tr.insertCell(7);
         td.insertAdjacentElement("beforeend", deleteBtn);
     }
 }
