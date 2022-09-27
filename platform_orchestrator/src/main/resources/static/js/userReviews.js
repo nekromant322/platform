@@ -56,6 +56,22 @@ function addColumns(data) {
     if (data.bookedTime != null) {
         insertTd(data.bookedTime, tr);
     } else insertTd("Ожидает подтверждения", tr);
+    if (data.callLink != "") {
+        insertTdLink(data.callLink, tr);
+    } else insertTd("Ожидает подтверждения", tr);
+}
+
+function insertTdLink(value, parent) {
+    let element = document.createElement("td");
+    element.scope = "row";
+
+    let link = document.createElement("a")
+    link.setAttribute("href", value)
+    link.setAttribute("target", "_blank")
+    link.innerText = "Ссылка на встречу";
+
+    element.insertAdjacentElement("afterbegin", link);
+    parent.insertAdjacentElement("beforeend", element)
 }
 
 function insertTd(value, parent) {

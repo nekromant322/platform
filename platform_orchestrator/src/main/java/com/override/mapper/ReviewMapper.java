@@ -39,6 +39,9 @@ public class ReviewMapper {
         if (review.getMentor() != null) {
             reviewDTO.setMentorLogin(review.getMentor().getLogin());
         }
+        if (review.getVkCall() != null){
+            reviewDTO.setCallLink(review.getVkCall().getJoinLink());
+        }
         return reviewDTO;
     }
 }
