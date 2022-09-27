@@ -24,22 +24,24 @@ public class ActGenerationService {
     @Autowired
     private ITextRenderer iTextRenderer;
 
-    public void createPDF(PersonalData personalData) {
+    public byte[] createPDF(PersonalData personalData) {
 
-        try (OutputStream outputStream = new FileOutputStream("act" + personalData.getActNumber() + ".pdf")) {
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
 
             String processHTML = templateEngine.process("docs/actGenerationTemplate",
                     contextCreation(personalData));
 
             iTextRenderer.setDocumentFromString(processHTML);
             iTextRenderer.layout();
-            iTextRenderer.createPDF(outputStream, false);
-            iTextRenderer.finishPDF();
+            iTextRenderer.createPDF(byteArrayOutputStream);
+
+            return byteArrayOutputStream.toByteArray();
         } catch (DocumentException | IOException e) {
             log.warn("При создании акта №" + personalData.getActNumber() + " произошла ошибка!");
         } catch (NullPointerException e) {
             throw new InvalidPersonalDataException("Данные пользователя содержат пустые поля");
         }
+        return null;
     }
 
     public Context contextCreation(PersonalData personalData) {

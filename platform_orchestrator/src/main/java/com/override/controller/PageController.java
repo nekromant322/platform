@@ -28,6 +28,11 @@ public class PageController {
         return "codeTryList";
     }
 
+    @GetMapping("/documentList")
+    public String documentListPage() {
+        return "documentList";
+    }
+
     @GetMapping("/helpMe/{key}")
     public String getHelpView(@PathVariable int key) {
         if (helpMeCache.getIfPresent(key) == null) {

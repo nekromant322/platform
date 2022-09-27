@@ -361,6 +361,25 @@ function getUserPersonalData() {
                 });
             });
 
+            $('#actBtn').click(function () {
+                $.ajax({
+                    url: '/act',
+                    dataType: 'binary',
+                    xhrFields: {
+                        'responseType': 'blob'
+                    },
+                    success: function (data, status, xhr) {
+                        var blob = new Blob([data], {type: xhr.getResponseHeader('Content-Type')});
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = '' + "act";
+                        link.click();
+                        $('#modalAct').modal('show');
+                    }
+                });
+
+            })
+
             $('.confirmationButton').click(function () {
                 let codeEmail = $('#codeEmail').val();
                 let email = $('#emailForUser').val();
@@ -487,6 +506,7 @@ function addColumn(data) {
     downloadBtn.className = "download btn-success";
     downloadBtn.innerHTML = "Download";
     downloadBtn.type = "submit";
+    downloadBtn.style = "float: left";
     downloadBtn.addEventListener("click", () => {
         downloadFile(data.id, data.name);
     });

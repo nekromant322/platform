@@ -1,5 +1,6 @@
 package com.override.service;
 
+import com.override.mapper.DocumentMapper;
 import com.override.model.Document;
 import com.override.repository.DocumentRepository;
 import dto.DocumentDTO;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DocumentService {
@@ -19,6 +21,9 @@ public class DocumentService {
 
     @Autowired
     private PlatformUserService platformUserService;
+
+    @Autowired
+    private DocumentMapper documentMapper;
 
     public void uploadFile(MultipartFile file, String login) {
 
@@ -40,10 +45,10 @@ public class DocumentService {
         List<DocumentDTO> documentDTOS = new ArrayList<>();
         for (Document document : documents) {
             documentDTOS.add(DocumentDTO.builder()
-                            .id(document.getId())
-                            .name(document.getName())
-                            .type(document.getType())
-                            .build());
+                    .id(document.getId())
+                    .name(document.getName())
+                    .type(document.getType())
+                    .build());
         }
         return documentDTOS;
     }
@@ -54,5 +59,10 @@ public class DocumentService {
 
     public void delete(Long fileId) {
         documentRepository.deleteById(fileId);
+    }
+
+    public List<DocumentDTO> findAllByUserId(Long id) {
+        return (documentRepository.findAllByUserId(id)).stream()
+                .map(documentMapper::entityToDto).collect(Collectors.toList());
     }
 }

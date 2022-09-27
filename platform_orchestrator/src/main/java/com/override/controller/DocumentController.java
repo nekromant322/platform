@@ -5,6 +5,7 @@ import com.override.model.Document;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.DocumentService;
 import dto.DocumentDTO;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -31,7 +32,6 @@ public class DocumentController {
     @MaxFileSize("${documentSizeLimit.forPersonalData}")
     public String personalDataDocumentUpload(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user,
                                              @RequestParam("file") MultipartFile multipartFile) throws FileUploadException {
-
         documentService.uploadFile(multipartFile, user.getUsername());
         return "redirect:/personalData";
     }
@@ -60,7 +60,15 @@ public class DocumentController {
     }
 
     @DeleteMapping("/{fileId}")
+    @ResponseBody
     public void delete(@PathVariable Long fileId) {
         documentService.delete(fileId);
+    }
+
+    @GetMapping("/documentList/{id}")
+    @ResponseBody
+    @ApiOperation(value = "Возвращает все \"документы\" студента по его id")
+    public List<DocumentDTO> getStudentDocuments(@PathVariable Long id) {
+        return documentService.findAllByUserId(id);
     }
 }
