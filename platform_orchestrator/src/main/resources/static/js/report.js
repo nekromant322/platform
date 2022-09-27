@@ -30,6 +30,7 @@ function sendReport() {
         data: JSON.stringify(report),
         success: function (result) {
             successHandle(result);
+            $('#myModal').modal('show');
         },
         error: function (error) {
             errorHandle(error);
