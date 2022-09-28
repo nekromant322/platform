@@ -57,37 +57,8 @@
 
     <br>
     <a href="/lessons/spring/2/1/1" class="btn btn-success btn-lg" role="button" id="nextLesson">Следующий урок</a>
-    <button class="button__request" onclick="openForm()">Запросить ревью</button>
+    <div th:replace="fragments/reviewRequestButton.html :: body"></div>
 </div>
-<form>
-    <div id="formReview" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 id="myModalLabel">Запись на ревью</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeForm()"></button>
-                </div>
-                <div class="modal-body">
-                    <label for="review-topic"><b>Тема</b></label>
-                    <input type="text" id="review-topic" placeholder="Напишите тему" name="topic" th:required="required">
-                    <label for="review-date"><b>Дата</b></label>
-                    <input type="date" id="review-date" placeholder="Сегодня или завтра" name="bookedDate" th:required="required">
-                    <div class="form-container" id="timeContainer">
-                        <label for="review-timeSlots0"><b>Время</b></label>
-                        <input type="time" class="input-group timepicker" id="review-timeSlots0" name="timeSlots" placeholder="Выберите время" th:required="required">
-                    </div>
-                    <button type="button" class="btn" onclick="renderAdditionalButton()">+</button>
-                </div>
-                <div class="modal-footer">
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-danger" onclick="closeForm()">Закрыть</button>
-                    </div>
-                    <button type="button" class="btn btn-outline-success" onclick="sendRequest()">Отправить</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
 
 <!-- Вариант 1: Bootstrap в связке с Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
