@@ -4,9 +4,6 @@ function logout() {
     window.location.href = "/login";
 
 }
-function openForm() {
-    document.getElementById("formReview").style.display = "block";
-}
 function renderNavbar(navbar) {
     let html = "";
     for (let i = 0; i < navbar.length; i++) {
