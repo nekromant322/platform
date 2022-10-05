@@ -4,13 +4,13 @@ function logout() {
     window.location.href = "/login";
 
 }
-
 function renderNavbar(navbar) {
     let html = "";
     for (let i = 0; i < navbar.length; i++) {
         html += "<li class=\"nav-item\">\n" + "<a class=\"nav-link\" href=\"" + navbar[i].url + "\">"
             + navbar[i].text + "</a>\n</li>";
     }
+    html += "<li class=\"nav-item\">\n<button class=\"button__request\" onclick=\"openForm()\">Запросить ревью</button>\n</li>";
     html += "<li class=\"nav-item\">\n<button class=\"button__bugReports\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\">Сообщить об ошибке</button>\n</li>";
     html += "<li class=\"nav-item\">\n<button class=\"button__logout\" onclick=\"logout()\">Выйти</button>\n</li>";
 

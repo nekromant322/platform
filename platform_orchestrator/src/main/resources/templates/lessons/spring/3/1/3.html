@@ -34,13 +34,12 @@
 
         </div>
     </div>
-    <div th:replace="fragments/PreProjectLink.html :: body">/div>
-
-        <br>
-    </div>
+    <div th:replace="fragments/PreProjectLink.html :: body"></div>
     <div th:replace="fragments/PreProjectStatus.html :: body"></div>
-
+    <br>
+    <div th:replace="fragments/reviewRequestButton.html :: body"></div>
 </div>
+
 
 <!-- Вариант 1: Bootstrap в связке с Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -49,5 +48,6 @@
 <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
 <script src="/js/nextLessonButton.js"></script>
 <script src="/js/preProjectLink.js"></script>
+<script src="/js/reviewRequestForm.js"></script>
 </body>
 </html>
