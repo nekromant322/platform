@@ -28,9 +28,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(request);
         ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
 
-
         filterChain.doFilter(requestWrapper, responseWrapper);
-
 
         Map<String, String> map = new HashMap<>();
 
