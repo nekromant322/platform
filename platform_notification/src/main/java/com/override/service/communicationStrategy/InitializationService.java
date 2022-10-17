@@ -1,4 +1,4 @@
-package com.override.util;
+package com.override.service.communicationStrategy;
 
 import com.github.javafaker.Faker;
 import com.override.service.RecipientService;

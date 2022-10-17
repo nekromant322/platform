@@ -1,10 +1,10 @@
 package utils;
 
 import com.override.model.Recipient;
-import com.override.util.CommunicationStrategy;
-import com.override.util.EmailCommunication;
-import com.override.util.SmsCommunication;
-import com.override.util.TelegramCommunication;
+import com.override.service.communicationStrategy.CommunicationStrategy;
+import com.override.service.communicationStrategy.EmailCommunication;
+import com.override.service.communicationStrategy.SmsCommunication;
+import com.override.service.communicationStrategy.TelegramCommunication;
 import dto.RecipientDTO;
 import enums.Communication;
 

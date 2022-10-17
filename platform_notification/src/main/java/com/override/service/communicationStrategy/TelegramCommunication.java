@@ -1,4 +1,4 @@
-package com.override.util;
+package com.override.service.communicationStrategy;
 
 import com.override.model.Recipient;
 import com.override.service.TelegramService;
@@ -23,7 +23,7 @@ public class TelegramCommunication implements CommunicationStrategy {
     }
 
     @Override
-    public Recipient setCommunication(Recipient recipient, String value) {
+    public Recipient updateRecipient(Recipient recipient, String value) {
         recipient.setTelegramId(value);
         return recipient;
     }

@@ -1,4 +1,4 @@
-package com.override.util;
+package com.override.service.communicationStrategy;
 
 import com.override.model.Recipient;
 import com.override.service.VkService;
@@ -23,8 +23,9 @@ public class VkCommunication implements CommunicationStrategy {
     }
 
     @Override
-    public Recipient setCommunication(Recipient recipient, String value) {
-        return null;
+    public Recipient updateRecipient(Recipient recipient, String value) {
+        recipient.setVkChatId(value);
+        return recipient;
     }
 
     @Override
