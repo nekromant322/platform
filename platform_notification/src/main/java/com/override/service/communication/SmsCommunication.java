@@ -1,4 +1,4 @@
-package com.override.service.communicationStrategy;
+package com.override.service.communication;
 
 import com.override.model.Recipient;
 import com.override.service.SmsRuServiceImpl;

@@ -4,7 +4,7 @@ import com.override.mapper.RecipientMapper;
 import com.override.model.Recipient;
 import com.override.repository.RecipientRepository;
 import com.override.service.RecipientService;
-import com.override.service.communicationStrategy.*;
+import com.override.service.communication.*;
 import dto.RecipientDTO;
 import enums.Communication;
 import org.junit.jupiter.api.Test;
