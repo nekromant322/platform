@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class VkCommunication implements CommunicationStrategy{
+public class VkCommunication implements CommunicationStrategy {
 
     @Autowired
-    VkService vkService;
+    private VkService vkService;
 
     @Override
     public void sendMessage(Recipient recipient, String message) {
@@ -24,8 +24,7 @@ public class VkCommunication implements CommunicationStrategy{
 
     @Override
     public Recipient setCommunication(Recipient recipient, String value) {
-        recipient.setVkChatId(value);
-        return recipient;
+        return null;
     }
 
     @Override

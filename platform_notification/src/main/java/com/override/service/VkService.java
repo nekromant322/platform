@@ -6,11 +6,14 @@ import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
 import dto.MessageDTO;
+import feign.FeignException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
+@Slf4j
 @Service
 public class VkService {
 
@@ -29,8 +32,8 @@ public class VkService {
                     .userId(Integer.parseInt(message.getChatId()))
                     .randomId(new Random().nextInt(10000))
                     .execute();
-        } catch (ApiException | ClientException e) {
-            e.printStackTrace();
+        } catch (ApiException | ClientException | FeignException e) {
+            log.error("При попытке отправить сообщение произошла ошибка \"{}\"", e.getMessage());
         }
     }
 }
