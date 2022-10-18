@@ -12,5 +12,4 @@ public class LoggingConfig {
     public LoggingFilter loggingFilter() {
         return new LoggingFilter();
     }
-
 }
