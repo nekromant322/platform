@@ -24,6 +24,25 @@
     <button class="button__request" onclick="sendReport()">Отправить отчет</button>
 </div>
 
+<form>
+    <div id="myModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">Сообщение</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Отчет отправлен</p>
+                </div>
+                <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
 
 </body>
 <script src="/js/utils.js"></script>

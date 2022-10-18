@@ -4,7 +4,7 @@ import com.override.mapper.RecipientMapper;
 import com.override.model.Recipient;
 import com.override.repository.RecipientRepository;
 import com.override.service.RecipientService;
-import com.override.util.*;
+import com.override.service.communication.*;
 import dto.RecipientDTO;
 import enums.Communication;
 import org.junit.jupiter.api.Test;
@@ -108,7 +108,7 @@ public class RecipientServiceTest {
         when(recipientRepository.findRecipientByLogin(recipient.getLogin())).thenReturn(Optional.of(recipient));
         when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
         recipient.setTelegramId(value);
-        when(telegramCommunication.setCommunication(recipient, value)).thenReturn(recipient);
+        when(telegramCommunication.updateRecipient(recipient, value)).thenReturn(recipient);
         when(recipientRepository.save(recipient)).thenReturn(recipient);
 
         recipientService.updateCommunication(recipient.getLogin(), value, Communication.TELEGRAM);

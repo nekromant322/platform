@@ -142,8 +142,19 @@ function addColumn(data) {
         window.location.href = "/codeTryList";
     });
 
-    getRequestCheckingPersonalData(data.login, tr);
+    let documents = document.createElement("button");
+    documents.className = "btn btn-outline-dark";
+    documents.innerHTML = "Посмотреть документы";
+    documents.type = "submit";
+    documents.addEventListener("click", () => {
+        sessionStorage.setItem("id", data.id)
+        window.location.href = "/documentList";
+    });
 
+    td = tr.insertCell(6);
+    td.insertAdjacentElement("beforeend", documents);
+
+    getRequestCheckingPersonalData(data.login, tr);
 }
 
 function getRequestCheckingPersonalData(userLogin, tr) {

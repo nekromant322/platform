@@ -3,8 +3,8 @@ package com.override.service;
 import com.override.mapper.RecipientMapper;
 import com.override.model.Recipient;
 import com.override.repository.RecipientRepository;
-import com.override.util.CommunicationStrategy;
-import com.override.util.CommunicationStrategyFactory;
+import com.override.service.communication.CommunicationStrategy;
+import com.override.service.communication.CommunicationStrategyFactory;
 import dto.RecipientDTO;
 import enums.Communication;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +44,7 @@ public class RecipientService {
                 new EntityNotFoundException("Recipient with login " + login + " not found"));
         Map<Communication, CommunicationStrategy> strategyMap = strategyFactory.getSenderMap();
 
-        recipient = strategyMap.get(type).setCommunication(recipient, value);
+        recipient = strategyMap.get(type).updateRecipient(recipient, value);
         repository.save(recipient);
     }
 
