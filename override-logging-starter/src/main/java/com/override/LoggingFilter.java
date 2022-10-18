@@ -1,4 +1,4 @@
-package com.override.config.security;
+package com.override;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -12,12 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
-@Component
 public class LoggingFilter extends OncePerRequestFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingFilter.class);
@@ -30,15 +28,17 @@ public class LoggingFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(requestWrapper, responseWrapper);
 
-        Map<String, String> map = new HashMap<>();
-
-        Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String key = headerNames.nextElement();
-            String value = request.getHeader(key);
-            map.put(key, value);
-        }
         if (!request.getRequestURI().contains("js") && !request.getRequestURI().contains("css") && !request.getRequestURI().contains("images")) {
+
+            Map<String, String> map = new HashMap<>();
+
+            Enumeration<String> headerNames = request.getHeaderNames();
+            while (headerNames.hasMoreElements()) {
+                String key = headerNames.nextElement();
+                String value = request.getHeader(key);
+                map.put(key, value);
+            }
+
             LOGGER.info("\n METHOD={};\n REQUESTURI={};\n RESPONSE CODE={};\n HEADER={};\n ",
                     request.getMethod(), request.getRequestURI(), response.getStatus(), map);
         }
