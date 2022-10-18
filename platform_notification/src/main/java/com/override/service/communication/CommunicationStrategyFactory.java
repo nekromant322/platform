@@ -1,4 +1,4 @@
-package com.override.util;
+package com.override.service.communication;
 
 import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;

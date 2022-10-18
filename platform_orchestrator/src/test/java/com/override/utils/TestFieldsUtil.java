@@ -41,6 +41,13 @@ public class TestFieldsUtil {
 
         return context;
     }
+    public static UserSettings generateUserSettings() {
+        return UserSettings.builder()
+                .id(6L)
+                .telegramNotification(true)
+                .vkNotification(true)
+                .build();
+    }
 
     public static PersonalData generatePersonalData() {
         return PersonalData.builder()
@@ -132,7 +139,7 @@ public class TestFieldsUtil {
 
     public static PlatformUser generateTestUser() {
         return new PlatformUser(null, "Andrey", "a", StudyStatus.ACTIVE, CoursePart.CORE,
-                Collections.singletonList(new Authority(null, "admin")), new PersonalData(), new UserSettings());
+                Collections.singletonList(new Authority(null, "admin")), new PersonalData(), generateUserSettings());
     }
 
     public static List<PlatformUser> generateTestListOfThreeUsersWithoutReportsOnCurrentDay() {

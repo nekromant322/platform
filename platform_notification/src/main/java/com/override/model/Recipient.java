@@ -28,6 +28,8 @@ public class Recipient {
 
     private String telegramId;
 
+    private String vkChatId;
+
     /**
      * Аннотация @Pattern содержит регулярное выражения для российских номеров
      * формате их записи: +7..., 7..., 8..., 9998886655, 7-999-888-66-55, 7 999 888 66 55
@@ -45,5 +47,9 @@ public class Recipient {
 
     public Optional<String> getPhoneNumber() {
         return Optional.ofNullable(phoneNumber);
+    }
+
+    public Optional<String> getVkChatId() {
+        return Optional.ofNullable(vkChatId);
     }
 }

@@ -63,10 +63,13 @@ public class ReviewServiceTest {
         VkCall testVkCall = generateTestVkCall();
         testReviewDTO.setMentorLogin("");
 
+
         when(platformUserRepository.findFirstByLogin(testReviewDTO.getStudentLogin()))
                 .thenReturn(testUser);
         when(vkCallRepository.findVkCallByReviewId(any())).thenReturn(testVkCall);
         when(vkApiService.getCall(any())).thenReturn("");
+        when(platformUserRepository.findFirstByLogin(testUser.getLogin())).thenReturn(testUser);
+
 
         reviewService.saveOrUpdate(testReviewDTO, testUser.getLogin());
 
@@ -161,6 +164,8 @@ public class ReviewServiceTest {
         Review testReview = generateTestReview();
 
         when(reviewRepository.findById(any())).thenReturn(Optional.ofNullable(testReview));
+        when(platformUserRepository.findFirstByLogin(testReviewDTO.getStudentLogin()))
+                .thenReturn(testUser);
 
         reviewService.delete(testReviewDTO.getId());
 
@@ -259,6 +264,7 @@ public class ReviewServiceTest {
         LocalDate testLocalDate = LocalDate.of(2022, 7, 28);
         LocalTime testLocalTime = LocalTime.of(23, 55);
         LocalDateTime testLocalDateTime = LocalDateTime.of(testLocalDate, testLocalTime);
+        PlatformUser testUser = generateTestUser();
 
         Review review1 = generateTestReview();
         review1.setId(10L);
@@ -291,6 +297,8 @@ public class ReviewServiceTest {
         when(currentTimeService.getCurrentDateTime()).thenReturn(testLocalDateTime);
         when(reviewRepository.findReviewByBookedDate(currentTimeService.getCurrentDateTime().plusMinutes(10).toLocalDate()))
                 .thenReturn(testReviewList);
+        when(platformUserRepository.findFirstByLogin(review4.getStudent().getLogin()))
+                .thenReturn(testUser);
 
         String messageText = "Скоро ревью у @" + review4.getStudent().getLogin() +
                 " с @" + review4.getMentor().getLogin() + "\n" +

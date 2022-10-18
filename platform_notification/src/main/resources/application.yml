@@ -95,3 +95,7 @@ info:
 
 mail:
   subject: Оповещение
+
+vk:
+  groupId: ${VK_GROUP_ID}
+  token: ${VK_TOKEN}

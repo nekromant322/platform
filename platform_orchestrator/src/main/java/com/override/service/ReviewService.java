@@ -80,23 +80,23 @@ public class ReviewService {
             List<PlatformUser> mentorList = platformUserRepository.findAllByAuthorityName(Role.ADMIN.getName());
             for (PlatformUser mentor : mentorList) {
                 sendMessage(mentor.getLogin(), String.format(NEW_REVIEW_MESSAGE_TELEGRAM,
-                        userLogin), Communication.TELEGRAM);
+                        userLogin));
                 reviewDTO.setStudentLogin(userLogin);
             }
         } else if (reviewDTO.getBookedTime() != null && reviewDTO.getMentorLogin() == "") {
             reviewDTO.setCallLink(vkApiService.getCall(reviewDTO.getId()));
             sendMessage(reviewDTO.getStudentLogin(), String.format(CONFIRMED_REVIEW_MESSAGE_TELEGRAM, userLogin,
-                    reviewDTO.getBookedDate(), reviewDTO.getBookedTime(), reviewDTO.getCallLink()), Communication.TELEGRAM);
+                    reviewDTO.getBookedDate(), reviewDTO.getBookedTime(), reviewDTO.getCallLink()));
             reviewDTO.setMentorLogin(userLogin);
         } else if (reviewDTO.getMentorLogin() != null && reviewDTO.getBookedTime() != null) {
             if (!reviewDTO.getMentorLogin().equals(userLogin)) {
                 reviewDTO.setCallLink(vkApiService.getCall(reviewDTO.getId()));
                 sendMessage(reviewDTO.getStudentLogin(), String.format(CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM,
-                        userLogin, reviewDTO.getBookedDate(), reviewDTO.getBookedTime(), reviewDTO.getCallLink()), Communication.TELEGRAM);
+                        userLogin, reviewDTO.getBookedDate(), reviewDTO.getBookedTime(), reviewDTO.getCallLink()));
             } else {
                 reviewDTO.setCallLink(vkApiService.getCall(reviewDTO.getId()));
                 sendMessage(reviewDTO.getStudentLogin(), String.format(CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM,
-                        reviewDTO.getBookedDate(), reviewDTO.getBookedTime(), reviewDTO.getCallLink()), Communication.TELEGRAM);
+                        reviewDTO.getBookedDate(), reviewDTO.getBookedTime(), reviewDTO.getCallLink()));
             }
         }
         reviewRepository.save(reviewMapper.dtoToEntity(reviewDTO,
@@ -105,17 +105,23 @@ public class ReviewService {
                 vkCallRepository.findVkCallByReviewId(reviewDTO.getId())));
     }
 
-    public void sendMessage(String login, String message, Communication type) {
+    public void sendMessage(String login, String message) {
         try {
-            notificatorFeign.sendMessage(login, message, type);
+            PlatformUser user = platformUserRepository.findFirstByLogin(login);
+            if (user.getUserSettings().getVkNotification()) {
+                notificatorFeign.sendMessage(login, message, Communication.VK);
+            }
+            if (user.getUserSettings().getTelegramNotification()) {
+                notificatorFeign.sendMessage(login, message, Communication.TELEGRAM);
+            }
         } catch (FeignException e) {
-            log.error("Не удалось отправить сообщение в Telegram пользователю " + login);
+            log.error("При попытке отправить сообщение пользователю \"{}\" произошла ошибка \"{}\"", login, e.getLocalizedMessage());
         }
     }
 
     public void delete(Long id) {
         sendMessage(reviewRepository.findById(id).get().getStudent().getLogin(),
-                DELETED_REVIEW_MESSAGE_TELEGRAM, Communication.TELEGRAM);
+                DELETED_REVIEW_MESSAGE_TELEGRAM);
         reviewRepository.deleteById(id);
     }
 
@@ -162,8 +168,8 @@ public class ReviewService {
                             review.getBookedDate() + " " + review.getBookedTime() +
                             "\nТема: " + review.getTopic() + "\n" +
                             "Ссылка на звонок: " + review.getVkCall().getJoinLink();
-                    notificatorFeign.sendMessage(review.getStudent().getLogin(), messageText, Communication.TELEGRAM);
-                    notificatorFeign.sendMessage(review.getMentor().getLogin(), messageText, Communication.TELEGRAM);
+                    sendMessage(review.getStudent().getLogin(), messageText);
+                    sendMessage(review.getMentor().getLogin(), messageText);
                 });
     }
 }

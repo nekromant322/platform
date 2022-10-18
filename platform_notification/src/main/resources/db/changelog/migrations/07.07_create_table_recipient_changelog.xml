@@ -12,6 +12,7 @@
             <column name="login" type="varchar(255)"/>
             <column name="phone_number" type="varchar(255)"/>
             <column name="telegram_id" type="varchar(255)"/>
+            <column name="vk_chat_id" type="varchar(255)"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

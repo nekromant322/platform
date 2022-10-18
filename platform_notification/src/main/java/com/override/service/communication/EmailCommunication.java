@@ -1,4 +1,4 @@
-package com.override.util;
+package com.override.service.communication;
 
 import com.override.model.Recipient;
 import com.override.service.EmailService;
@@ -32,7 +32,7 @@ public class EmailCommunication implements CommunicationStrategy {
     }
 
     @Override
-    public Recipient setCommunication(Recipient recipient, String value) {
+    public Recipient updateRecipient(Recipient recipient, String value) {
         recipient.setEmail(value);
         return recipient;
     }

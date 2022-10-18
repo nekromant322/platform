@@ -1,4 +1,4 @@
-package com.override.util;
+package com.override.service.communication;
 
 import com.override.model.Recipient;
 import com.override.service.SmsRuServiceImpl;
@@ -19,7 +19,7 @@ public class SmsCommunication implements CommunicationStrategy {
     }
 
     @Override
-    public Recipient setCommunication(Recipient recipient, String value) {
+    public Recipient updateRecipient(Recipient recipient, String value) {
         recipient.setPhoneNumber(value);
         return recipient;
     }
