@@ -181,6 +181,12 @@
             <version>2.7.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.override</groupId>
+            <artifactId>override-logging-starter</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
 
     </dependencies>
 

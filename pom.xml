@@ -23,6 +23,7 @@
         <module>platform_notification</module>
         <module>platform_bot</module>
         <module>platform_code_executor</module>
+        <module>override-logging-starter</module>
     </modules>
 
     <properties>
