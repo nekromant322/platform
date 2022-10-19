@@ -60,9 +60,6 @@ function drawColumns() {
         let step = sessionStorage.getItem("step");
         let lesson = sessionStorage.getItem("lesson");
 
-        alert (chapter)
-        alert(step)
-        alert(lesson)
         $.ajax({
             method: 'GET',
             url: "/codeTry?chapter=" + chapter + "&step=" + step + "&lesson=" + lesson,
