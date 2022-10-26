@@ -115,7 +115,7 @@
 
         <dependency>
             <groupId>com.override</groupId>
-            <artifactId>override-logging-starter</artifactId>
+            <artifactId>platform_logging_starter</artifactId>
             <version>0.0.1</version>
         </dependency>
 

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>override-logging-starter</artifactId>
+    <artifactId>platform_logging_starter</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
