@@ -88,5 +88,12 @@ function remove(id) {
         }
     })
 }
+function insertTd(value, parent) {
+    let element = document.createElement("td");
+    element.scope = "row";
+    element.innerText = value;
+    parent.insertAdjacentElement("beforeend", element);
+}
+
 
 
