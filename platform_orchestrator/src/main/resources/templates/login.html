@@ -26,11 +26,14 @@
     <input type="password" placeholder="пароль" class="input start" style="height: 45px" id="password"
            th:required="required">
 
-    <button class="button__request" style="background-color: #928AAE" onclick="sendLogin()">Войти</button>
+    <button id="restore-button" onclick="sendTelegramMessage()">Forgot password?</button>
+
+        <button class="button__request" style="background-color: #928AAE" onclick="sendLogin()">Войти</button>
 </div>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="/js/utils.js"></script>
+<script src="/js/restore.js"></script>
 <script src="/js/auth.js"></script>
 </html>

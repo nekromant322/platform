@@ -1,4 +1,4 @@
-package com.override.config;
+package com.override.controller.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

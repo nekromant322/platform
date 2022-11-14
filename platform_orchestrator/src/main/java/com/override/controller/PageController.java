@@ -13,6 +13,11 @@ public class PageController {
     @Autowired
     private Cache<Integer, HelpMeDTO> helpMeCache;
 
+    @GetMapping("/restore")
+    public String restorePage(){
+        return "restore";
+    }
+
     @GetMapping("/")
     public String indexPage() {
         return "index";

@@ -54,4 +54,5 @@ public interface PlatformUserRepository extends CrudRepository<PlatformUser, Lon
             "         HAVING current_date - max(booked_date) >= :daysForReview)",
             nativeQuery = true)
     List<PlatformUser> findStudentsByLastReview(@Param("daysForReview") long daysForReview);
+
 }
