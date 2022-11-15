@@ -1,36 +1,42 @@
-$(function (){
+$(function () {
 
-    $('#code-form').submit(function (e){
+    $('#code-form').submit(function (e) {
         e.preventDefault();
-        var login = $('#login-code').val()
+        const login = $('#login-code').val();
         $.ajax({
-            url : '/getCode/'+login,
-            type : 'GET',
-            async : false
+            url: '/getCode/' + login,
+            type: 'GET',
+            async: false
         })
         $('#change-0').val(login)
     })
-    $('#change-password').submit(function (e){
+    $('#change-password').submit(function (e) {
         e.preventDefault();
 
         let passwordForm = {};
         passwordForm.username = $('#change-0').val();
         passwordForm.password = $('#change-1').val()
-        passwordForm.passwordRepeated = $('#change-2').val()
         passwordForm.code = $('#change-3').val()
-        $.ajax({
-            url: '/restore',
-            type: 'POST',
-            async: false,
-            contentType: "application/json; charset=utf-8",
-            data : JSON.stringify(passwordForm)
-        })
 
-        window.location.replace('/login')
+        let pass = $('#change-1').val()
+        let passRepeated = $('#change-2').val()
 
+        if (pass === passRepeated) {
+            $.ajax({
+                url: '/restore',
+                type: 'POST',
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(passwordForm)
+            })
+
+            window.location.replace('/login')
+        } else {
+            alert('Пароли не совпадают')
+        }
     })
 
-    $('#code-bph-form').submit(function (e){
+    $('#code-bph-form').submit(function (e) {
         e.preventDefault();
         let phone = $('#phone-code').val();
         $.ajax({
@@ -42,7 +48,7 @@ $(function (){
         $('#change-bph-0').val(phone)
     })
 
-    $('#change-byPhone').submit(function (e){
+    $('#change-byPhone').submit(function (e) {
         e.preventDefault();
         let passwordFormByPhone = {};
         passwordFormByPhone.username = $('#change-bph-0').val();
@@ -54,7 +60,7 @@ $(function (){
             type: 'POST',
             async: false,
             contentType: "application/json; charset=utf-8",
-            data : JSON.stringify(passwordFormByPhone)
+            data: JSON.stringify(passwordFormByPhone)
         });
         window.location.replace('/login')
     })
@@ -62,6 +68,6 @@ $(function (){
 
 })
 
-function sendTelegramMessage(){
-window.location.replace('/restore');
+function sendTelegramMessage() {
+    window.location.replace('/restore');
 }
