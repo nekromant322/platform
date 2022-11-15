@@ -43,11 +43,9 @@ public class RestoreService {
         return changePasswordDTO;
     }
 
-    public boolean getCodeTelegram(String code, String username) {
+    public boolean isEqualCodeTelegram(String code, String username) {
         Cache data = cacheManager.getCache("codeTelegramSecurity");
-        assert data != null;
         Cache.ValueWrapper cacheCode = data.get(username);
-        assert cacheCode != null;
         ChangePasswordDTO changePasswordDTO = (ChangePasswordDTO) cacheCode.get();
         return code.equals(changePasswordDTO.getCode());
     }
@@ -57,5 +55,4 @@ public class RestoreService {
         platformUser.setPassword(passwordEncoder.encode(changePasswordDTO.getPassword()));
         platformUserRepository.save(platformUser);
     }
-
 }

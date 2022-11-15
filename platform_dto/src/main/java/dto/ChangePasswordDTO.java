@@ -5,11 +5,10 @@ import lombok.Data;
 @Data
 public class ChangePasswordDTO {
 
-    String username;
+    private String username;
 
-    String password;
+    private String password;
 
-    String code;
-
+    private String code;
 }
 

@@ -1,4 +1,4 @@
-package com.override.controller.config;
+package com.override.config;
 
 import feign.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Value;

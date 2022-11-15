@@ -4,7 +4,7 @@ $(function () {
         e.preventDefault();
         const login = $('#login-code').val();
         $.ajax({
-            url: '/getCode/' + login,
+            url: '/restore/getCode/' + login,
             type: 'GET',
             async: false
         })
@@ -23,7 +23,7 @@ $(function () {
 
         if (pass === passRepeated) {
             $.ajax({
-                url: '/restore',
+                url: '/restore/changePassword',
                 type: 'POST',
                 async: false,
                 contentType: "application/json; charset=utf-8",
