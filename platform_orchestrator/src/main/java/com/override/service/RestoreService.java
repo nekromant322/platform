@@ -30,13 +30,15 @@ public class RestoreService {
 
     @CachePut(value = "codeTelegramSecurity")
     public ChangePasswordDTO getCodeTelegramSecurity(String username) {
-        return getTelegramCode(username);
+        return sendSecurityCode(username);
     }
 
-    public ChangePasswordDTO getTelegramCode(String username) {
+    private final String MESSAGE_WITH_CODE =  "Ваш разовый код: %s.\nНикому не сообщайте этот код.";
+
+    public ChangePasswordDTO sendSecurityCode(String username) {
         Random random = new Random();
         String code = Integer.toString(random.nextInt(9999));
-        notificatorFeign.sendMessage(username, "Ваш разовый код: " + code + ".\nНикому не сообщайте этот код.", Communication.TELEGRAM);
+        notificatorFeign.sendMessage(username, String.format(MESSAGE_WITH_CODE,code), Communication.TELEGRAM);
         ChangePasswordDTO changePasswordDTO = new ChangePasswordDTO();
         changePasswordDTO.setUsername(username);
         changePasswordDTO.setCode(code);
