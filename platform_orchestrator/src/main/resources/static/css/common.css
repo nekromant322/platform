@@ -158,3 +158,26 @@ textarea:focus {
 textarea::placeholder {
     color: #cccccc;
 }
+
+#restore-button {
+    background-color: #000cf3;
+    border: none;
+    color: white;
+    padding: 10px 50px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 10px;
+
+    -webkit-box-shadow: 0 10px 30px 0 rgb(16, 45, 152);
+    box-shadow: 0 10px 30px 0 rgb(22, 42, 128);
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    margin: 4px auto 1px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
