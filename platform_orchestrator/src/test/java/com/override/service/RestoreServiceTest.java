@@ -10,6 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -31,8 +33,15 @@ public class RestoreServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
+    @Mock
+    private Cache cache;
+
+    @Mock
+    private CacheManager cacheManager;
+
     @Test
     public void testSendSecurityCode() {
+        when(cacheManager.getCache("codeTelegramSecurity")).thenReturn(cache);
         restoreService.sendSecurityCode("Artol7");
         verify(notificatorFeign, times(1)).sendMessage(eq("Artol7"), any(String.class), eq(Communication.TELEGRAM));
     }
