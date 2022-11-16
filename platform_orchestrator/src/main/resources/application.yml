@@ -55,7 +55,7 @@ documentSizeLimit:
   forBugReports: 5 # 5 МБ
 
 cache:
-  timeout: 5 #minutes
+  timeout: 6 #minutes
   size: 100
 ---
 

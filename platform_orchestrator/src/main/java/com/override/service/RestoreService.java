@@ -8,7 +8,6 @@ import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,9 @@ import java.util.Random;
 
 @Service
 public class RestoreService {
+
+    private final String MESSAGE_WITH_CODE = "Ваш разовый код: %s.\nНикому не сообщайте этот код.";
+
     @Autowired
     private NotificatorFeign notificatorFeign;
 
@@ -28,21 +30,19 @@ public class RestoreService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @CachePut(value = "codeTelegramSecurity")
-    public ChangePasswordDTO getCodeTelegramSecurity(String username) {
-        return sendSecurityCode(username);
-    }
-
-    private final String MESSAGE_WITH_CODE =  "Ваш разовый код: %s.\nНикому не сообщайте этот код.";
-
-    public ChangePasswordDTO sendSecurityCode(String username) {
-        Random random = new Random();
-        String code = Integer.toString(random.nextInt(9999));
-        notificatorFeign.sendMessage(username, String.format(MESSAGE_WITH_CODE,code), Communication.TELEGRAM);
+    public void getCodeTelegramSecurity(String username, String code) {
         ChangePasswordDTO changePasswordDTO = new ChangePasswordDTO();
         changePasswordDTO.setUsername(username);
         changePasswordDTO.setCode(code);
-        return changePasswordDTO;
+        Cache data = cacheManager.getCache("codeTelegramSecurity");
+        data.put(username, changePasswordDTO);
+    }
+
+    public void sendSecurityCode(String username) {
+        Random random = new Random();
+        String code = Integer.toString(random.nextInt(9999));
+        notificatorFeign.sendMessage(username, String.format(MESSAGE_WITH_CODE, code), Communication.TELEGRAM);
+        getCodeTelegramSecurity(username, code);
     }
 
     public boolean isEqualCodeTelegram(String code, String username) {

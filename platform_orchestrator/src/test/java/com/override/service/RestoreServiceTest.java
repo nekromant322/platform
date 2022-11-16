@@ -10,14 +10,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.cache.CacheManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 public class RestoreServiceTest {
@@ -27,9 +24,6 @@ public class RestoreServiceTest {
 
     @Mock
     private NotificatorFeign notificatorFeign;
-
-    @Mock
-    private CacheManager cacheManager;
 
     @Mock
     private PlatformUserRepository platformUserRepository;
@@ -55,6 +49,5 @@ public class RestoreServiceTest {
         when(passwordEncoder.encode(changePasswordDTO.getPassword())).thenReturn(changePasswordDTO.getPassword());
         restoreService.changePassword(changePasswordDTO);
         verify(platformUserRepository, times(1)).save(platformUser);
-        assertEquals(platformUser.getPassword(), changePasswordDTO.getPassword());
     }
 }

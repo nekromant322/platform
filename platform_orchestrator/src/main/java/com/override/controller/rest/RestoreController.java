@@ -22,6 +22,6 @@ public class RestoreController {
 
     @GetMapping("/getCode/{username}")
     public void getCode(@PathVariable("username") String username) {
-        restoreService.getCodeTelegramSecurity(username);
+        restoreService.sendSecurityCode(username);
     }
 }
