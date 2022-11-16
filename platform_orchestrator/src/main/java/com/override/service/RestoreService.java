@@ -36,7 +36,7 @@ public class RestoreService {
     public ChangePasswordDTO getTelegramCode(String username) {
         Random random = new Random();
         String code = Integer.toString(random.nextInt(9999));
-        notificatorFeign.sendMessage(username, code, Communication.TELEGRAM);
+        notificatorFeign.sendMessage(username, "Ваш разовый код: " + code + ".\nНикому не сообщайте этот код.", Communication.TELEGRAM);
         ChangePasswordDTO changePasswordDTO = new ChangePasswordDTO();
         changePasswordDTO.setUsername(username);
         changePasswordDTO.setCode(code);
