@@ -1,13 +1,12 @@
 package com.override.service;
 
 import com.override.feign.NotificatorFeign;
-import com.override.feign.TelegramBotFeign;
 import com.override.mapper.JoinRequestMapper;
 import com.override.mapper.PlatformUserMapper;
 import com.override.model.JoinRequest;
 import com.override.repository.JoinRequestRepository;
 import dto.*;
-import enums.RequestStatus;
+import enums.Communication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +17,12 @@ import java.util.List;
 @Slf4j
 public class JoinRequestService {
 
-    @Autowired
-    private JoinRequestRepository requestRepository;
+    private final String DECLINE_MESSAGE = "Ваш запрос не был одобрен, повторите попытку";
+
+    private final String ACCEPT_MESSAGE = "login: %s\npassword: %s";
 
     @Autowired
-    private TelegramBotFeign telegramBotFeign;
+    private JoinRequestRepository requestRepository;
 
     @Autowired
     private NotificatorFeign notificatorFeign;
@@ -57,20 +57,18 @@ public class JoinRequestService {
     public void responseForJoinRequest(boolean approve, Long id) {
         JoinRequest request = requestRepository.findById(id).get();
         PlatformUserDTO student;
-        ResponseJoinRequestDTO responseDTO;
-        RecipientDTO recipientDTO = RecipientDTO.builder().login(request.getNickName()).telegramId(request.getChatId()).build();
+        RecipientDTO recipientDTO = RecipientDTO.builder().login(request.getNickName()).telegramId(request.getChatId()).email("").build();
         notificatorFeign.saveRecipient(recipientDTO);
         if (approve) {
             student = accountMapper.entityToDto(accountService.generateAccount(request.getNickName()));
-            responseDTO = ResponseJoinRequestDTO.builder().accountDTO(student).status(RequestStatus.APPROVED).build();
             log.info("Запрос от {} в чате № {} разрешен", request.getNickName(), request.getChatId());
+            notificatorFeign.sendMessage(student.getLogin(), String.format(ACCEPT_MESSAGE, student.getLogin(), student.getPassword()), Communication.TELEGRAM);
         } else {
             student = PlatformUserDTO.builder().login(request.getNickName()).build();
-            responseDTO = ResponseJoinRequestDTO.builder().status(RequestStatus.DECLINED).accountDTO(student).build();
             notificatorFeign.deleteRecipient(recipientDTO);
             log.info("Запрос от {} в чате № {} отклонен", request.getNickName(), request.getChatId());
+            notificatorFeign.sendMessage(student.getLogin(), DECLINE_MESSAGE, Communication.TELEGRAM);
         }
         requestRepository.delete(request);
-        telegramBotFeign.responseForRequest(responseDTO);
     }
 }

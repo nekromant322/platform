@@ -1,8 +1,6 @@
 package com.override.service;
 
-import com.override.feign.TelegramBotFeign;
 import com.override.mapper.JoinRequestMapper;
-import com.override.mapper.PlatformUserMapper;
 import com.override.model.JoinRequest;
 import com.override.model.PlatformUser;
 import com.override.repository.JoinRequestRepository;
@@ -31,17 +29,10 @@ public class JoinRequestServiceTest {
     private JoinRequestRepository requestRepository;
 
     @Mock
-    private TelegramBotFeign telegramBotFeign;
-
-    @Mock
     private JoinRequestMapper joinRequestMapper;
 
     @Mock
     private PlatformUserService accountService;
-
-    @Mock
-    private PlatformUserMapper accountMapper;
-
 
     @Test
     public void testWhenAlreadyExistJoinRequest() {
