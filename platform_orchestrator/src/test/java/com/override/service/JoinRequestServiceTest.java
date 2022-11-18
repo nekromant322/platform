@@ -1,21 +1,26 @@
 package com.override.service;
 
-import com.override.feign.TelegramBotFeign;
+import com.override.feign.NotificatorFeign;
 import com.override.mapper.JoinRequestMapper;
 import com.override.mapper.PlatformUserMapper;
 import com.override.model.JoinRequest;
 import com.override.model.PlatformUser;
 import com.override.repository.JoinRequestRepository;
 import dto.JoinRequestStatusDTO;
+import dto.PlatformUserDTO;
 import dto.RegisterUserRequestDTO;
+import enums.Communication;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,17 +36,16 @@ public class JoinRequestServiceTest {
     private JoinRequestRepository requestRepository;
 
     @Mock
-    private TelegramBotFeign telegramBotFeign;
-
-    @Mock
     private JoinRequestMapper joinRequestMapper;
 
     @Mock
     private PlatformUserService accountService;
 
     @Mock
-    private PlatformUserMapper accountMapper;
+    private NotificatorFeign notificatorFeign;
 
+    @Mock
+    private PlatformUserMapper accountMapper;
 
     @Test
     public void testWhenAlreadyExistJoinRequest() {
@@ -61,7 +65,6 @@ public class JoinRequestServiceTest {
     public void testWhenAlreadyExistUserInPlatform() {
         RegisterUserRequestDTO requestDTO = RegisterUserRequestDTO.builder()
                 .telegramUserName("Marandyuk_Anatolii")
-
                 .chatId("1234")
                 .build();
 
@@ -91,5 +94,16 @@ public class JoinRequestServiceTest {
         assertEquals(new JoinRequestStatusDTO("Ваш запрос на регистрацию в платформе создан, ожидайте подтверждения"),
                 joinRequestStatusDTO);
         verify(requestRepository, times(1)).save(requestEntity);
+    }
+
+    @Test
+    public void testResponseForJoinRequest() {
+        JoinRequest joinRequest = new JoinRequest(1L, "Marandyuk_Anatolii", "1234");
+        Optional optional = Optional.of(joinRequest);
+        when(requestRepository.findById(1L)).thenReturn(optional);
+        when(accountMapper.entityToDto(any())).thenReturn(PlatformUserDTO.builder().login(joinRequest.getNickName()).build());
+        joinRequestService.responseForJoinRequest(true, 1L);
+        verify(notificatorFeign, times(1)).sendMessage(eq(joinRequest.getNickName()), any(), eq(Communication.TELEGRAM));
+        verify(requestRepository, times(1)).delete(joinRequest);
     }
 }
