@@ -20,14 +20,13 @@ public class StepikCodeTryController {
     private StepikService stepikService;
 
     @PostMapping
-    public void sendStepikCodeTry (@RequestBody String code) {
-        System.out.println(String.format(REQUESTS_JSON, code));
+    public void sendStepikCodeTry(@RequestBody String code) {
         stepikCodeExecutorFeign.execute(stepikService.getStepikToken(), String.format(REQUESTS_JSON, code));
     }
 
     @GetMapping(value = "/result", consumes = "application/json", produces = "application/json")
-    public ResponseEntity <String> getStepikCodeTryResult(){
-        String result = stepikCodeExecutorFeign.getResult(stepikService.getStepikToken());
+    public ResponseEntity<String> getStepikCodeTryResult() {
+        String result = stepikCodeExecutorFeign.getResult("57792", stepikService.getStepikToken());
         System.out.println(result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

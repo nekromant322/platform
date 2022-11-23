@@ -12,5 +12,4 @@ public class StepikTokenDTO {
     private String token_type;
 
     private String scope;
-
 }
