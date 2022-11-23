@@ -60,7 +60,7 @@ cache:
 ---
 
 ---
-orchestrator:
+stepik:
   authorization: ${STEPIK_AUTHORIZATION}
 
 token:
