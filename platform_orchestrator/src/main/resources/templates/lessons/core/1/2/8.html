@@ -31,11 +31,13 @@
             </div>
 
 
-            <button type="button" class="btn btn-dark" onclick="sendCode(editor)">Проверить</button>
             <div style="position: relative;
     width: 500px;
     height: 400px;" id="editor">код писать сюда</div>
+            <button type="button" class="btn btn-dark" onclick="sendStepikCode(editor)" id="gg" about="765027396" step="44236">Проверить</button>
+            <p class="block" id="result"></p>
 
+            <script src="/js/stepikCode.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/ace.js" type="text/javascript" charset="utf-8"></script>
             <script>
                 var editor = ace.edit("editor");
