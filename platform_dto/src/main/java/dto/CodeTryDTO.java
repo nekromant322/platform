@@ -14,4 +14,8 @@ public class CodeTryDTO {
     private TaskIdentifierDTO taskIdentifier;
     @Size(max = 8096)
     private String studentsCode;
+
+    private String attempt;
+
+    private String step;
 }

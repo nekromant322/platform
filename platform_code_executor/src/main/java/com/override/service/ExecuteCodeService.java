@@ -2,8 +2,7 @@ package com.override.service;
 
 import com.override.exception.CompilingCodeException;
 import com.override.service.test.AbstractTaskTest;
-import dto.TaskIdentifierDTO;
-import dto.TestResultDTO;
+import dto.*;
 import enums.CodeExecutionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +15,7 @@ import java.util.Map;
 public class ExecuteCodeService {
 
     private Map<TaskIdentifierDTO, AbstractTaskTest> testsMap = new HashMap<>();
+
     private CompilerService compilerService;
 
     @Autowired

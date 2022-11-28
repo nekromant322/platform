@@ -12,10 +12,10 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class CacheConfig {
 
-    @Value("6")
+    @Value("${cache.timeout}")
     private long timeToExpireCache;
 
-    @Value("100")
+    @Value("${cache.size}")
     private long sizeOfCache;
 
     @Bean

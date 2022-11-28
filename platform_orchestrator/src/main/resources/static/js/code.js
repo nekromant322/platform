@@ -7,14 +7,24 @@ function sendCode(editor) {
     codeTry.taskIdentifier.chapter = url[url.length - 3];
     codeTry.taskIdentifier.step = url[url.length - 2];
     codeTry.taskIdentifier.lesson = url[url.length - 1];
+    codeTry.step = $('#gg').attr("step");
+    codeTry.attempt = $('#gg').attr("about");
     //codeTry.theme = url[url.length - 4];
-    codeTry.studentsCode = editor.getValue();
+    codeTry.studentsCode = JSON.stringify(editor.getValue());
     $.ajax({
         method: 'POST',
         url: "/codeTry",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(codeTry),
         success: function (result) {
+            console.log(result)
+            var res = JSON.parse(result)
+            console.log(res.submissions)
+            if (res.submissions[0].status === "correct"){
+                $('#result').text(res.submissions[0].status).attr('style', 'background-color: green; color: white')
+            } else {
+                $('#result').text(res.submissions[0].status + " : " + res.submissions[0].hint).attr('style', 'background-color: red; color: white')
+            }
         },
         error: function (error) {
             console.log(error);
