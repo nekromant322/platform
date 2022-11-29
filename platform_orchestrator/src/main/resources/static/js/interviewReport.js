@@ -9,7 +9,7 @@ var arrayOfCompanies = ["SBER", "TINKOFF", "VK"];
 function autocomplete(inp, arr) {
     var currentFocus;
 
-    inp.addEventListener("input", function(e) {
+    inp.addEventListener("input", function (e) {
         var a, b, i, val = this.value;
 
         closeAllLists();
@@ -30,7 +30,7 @@ function autocomplete(inp, arr) {
                 b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
                 b.innerHTML += arr[i].substr(val.length);
                 b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                b.addEventListener("click", function(e) {
+                b.addEventListener("click", function (e) {
                     inp.value = this.getElementsByTagName("input")[0].value;
                     closeAllLists();
                 });
@@ -39,7 +39,7 @@ function autocomplete(inp, arr) {
         }
     });
 
-    inp.addEventListener("keydown", function(e) {
+    inp.addEventListener("keydown", function (e) {
         var x = document.getElementById(this.id + "autocomplete-list");
         if (x) {
             x = x.getElementsByTagName("div");
@@ -59,6 +59,7 @@ function autocomplete(inp, arr) {
             }
         }
     });
+
     function addActive(x) {
         if (!x) {
             return false;
@@ -72,11 +73,13 @@ function autocomplete(inp, arr) {
         }
         x[currentFocus].classList.add("autocomplete-active");
     }
+
     function removeActive(x) {
         for (var i = 0; i < x.length; i++) {
             x[i].classList.remove("autocomplete-active");
         }
     }
+
     function closeAllLists(element) {
         var x = document.getElementsByClassName("autocomplete-items");
         for (var i = 0; i < x.length; i++) {
@@ -307,8 +310,8 @@ function insertTd(value, parent, color, legend) {
 }
 
 function changeStatus(interviewReportUpdateDTO, data, status) {
-    let confirmation =  (status === "offer") ? confirm("Вы уверены, что хотите изменить статус на " + status + "?") :
-                        (status === "accepted") ? confirm("Вы уверены, что принимаете данный оффер и выходите на работу в " + data.company + "?") : false;
+    let confirmation = (status === "offer") ? confirm("Вы уверены, что хотите изменить статус на " + status + "?") :
+        (status === "accepted") ? confirm("Вы уверены, что принимаете данный оффер и выходите на работу в " + data.company + "?") : false;
 
     if (confirmation === true) {
         interviewReportUpdateDTO.salary = prompt("Уточните зарплату на руки", interviewReportUpdateDTO.salary);
@@ -337,12 +340,13 @@ function saveInterviewReport(interviewReportDTO) {
         data: JSON.stringify(interviewReportDTO),
         success: function () {
             console.log('saved')
+            location.reload();
         },
         error: function (error) {
-            console.log(error)
+            alert("Произошла непредвиденная ошибка. Пожалуйста, повторите попытку.");
+            console.log(error);
         }
     });
-    location.reload();
 }
 
 function sendInterviewReport() {
@@ -362,6 +366,7 @@ function sendInterviewReport() {
     function emptyField(field) {
         return String(field).length < 1;
     }
+
     const errorMessage = "Поле не должно быть пустым";
 
     if (checkAlert("interviewReport-date", "interviewReport-date-alert", errorMessage, emptyField(interviewReportDTO.date))) {
