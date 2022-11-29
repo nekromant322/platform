@@ -60,6 +60,9 @@ cache:
 ---
 
 ---
+stepik:
+  authorization: ${STEPIK_AUTHORIZATION}
+
 token:
   X-MS-AUTH: ${MICROSERVICES_SECRET_TOKEN:0LDRhdGD0LXRgtGMINC90LUg0LLRgdGC0LDRgtGMXl4=}
 

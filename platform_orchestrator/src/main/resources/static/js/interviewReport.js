@@ -337,12 +337,12 @@ function saveInterviewReport(interviewReportDTO) {
         data: JSON.stringify(interviewReportDTO),
         success: function () {
             console.log('saved')
+            location.reload();
         },
-        error: function (error) {
-            console.log(error);
+        error: function () {
+            alert("Произошла непредвиденная ошибка. Пожалуйста, повторите попытку.");
         }
     });
-    location.reload();
 }
 
 function sendInterviewReport() {

@@ -48,6 +48,9 @@ public class CodeTryRestController {
         studentCodeService.saveCodeTry(codeTryDTO, testResult, user.getUsername());
 
         if (testResult.getCodeExecutionStatus() == CodeExecutionStatus.OK) {
+            if (codeTryDTO.getAttempt() != null) {
+                return new ResponseEntity<>(testResult.getOutput(), HttpStatus.OK);
+            }
             return new ResponseEntity<>("Все тесты пройдены", HttpStatus.OK);
         }
         return new ResponseEntity<>(testResult.getOutput(), HttpStatus.BAD_REQUEST);

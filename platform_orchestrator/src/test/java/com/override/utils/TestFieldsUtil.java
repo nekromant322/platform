@@ -185,7 +185,7 @@ public class TestFieldsUtil {
     }
 
     public static CodeTryDTO generateTestCodeTryDTO() {
-        return new CodeTryDTO(generateTestTaskIdentifierDTO(), generateTestCode());
+        return new CodeTryDTO(generateTestTaskIdentifierDTO(), generateTestCode(),null,null);
     }
 
     public static List<Object[]> generateListObjects() {
