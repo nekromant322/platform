@@ -68,7 +68,6 @@ public class StepikService {
 
     @ApiOperation("Добавляет в константу REQUESTS_JSON две необходимые переменные: code и attempt, после возвращает строку запроса.")
     public String getRequest(CodeTryDTO codeTryDTO) {
-        System.out.println(String.format(REQUESTS_JSON, codeTryDTO.getStudentsCode(), codeTryDTO.getAttempt()));
         return String.format(REQUESTS_JSON, codeTryDTO.getStudentsCode(), codeTryDTO.getAttempt());
     }
 }
