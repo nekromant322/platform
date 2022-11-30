@@ -25,6 +25,10 @@ token:
 task-test:
   defaultTimeout: 8000
 
+cache:
+  timeout: 60 #minutes
+  size: 100
+
 management:
   info:
     build:
