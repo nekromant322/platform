@@ -2,6 +2,7 @@ window.onload = function () {
     getCurrentUser();
     getUserPersonalData();
     getUserDoc();
+    $('#vkBot').hide();
 };
 
 var actNumber;
@@ -552,8 +553,8 @@ function getCurrentUser() {
             telegramCheck = telegramNotification;
             vkCheck = vkNotification;
 
-            $('#telegram').append((telegramNotification === false ? 'No' : 'Yes') + ' ');
-            $('#vk').append((vkNotification === false ? 'No' : 'Yes') + ' ');
+            $('#telegram').append((telegramNotification === false ? ' No' : ' Yes') + ' ');
+            $('#vk').append((vkNotification === false ? ' No' : ' Yes') + ' ');
 
             if (telegramNotification === true) {
                 $('#telegramCheck').prop('checked', true);
@@ -581,6 +582,9 @@ function getCurrentUser() {
 
             $('#editButton').click(function () {
                 saveChanges(null, telegramCheck, vkCheck, currentUserLogin);
+                if ($('#vk').text() === 'VK: No ' && $('#vkCheck').prop('checked') === true){
+                    $('#vkBot').show()
+                }
             })
         }
     })
@@ -605,6 +609,7 @@ function saveChanges(id, telegramCheck, vkCheck, currentUserLogin) {
         error: function (data) {
             console.log(data)
             getUserChanges();
+            $('#vkBot').hide();
         }
     })
 }

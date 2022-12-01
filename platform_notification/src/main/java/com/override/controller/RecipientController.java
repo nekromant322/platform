@@ -1,6 +1,10 @@
 package com.override.controller;
 
+import com.override.mapper.RecipientMapper;
 import com.override.service.RecipientService;
+import com.override.service.VkService;
+import com.vk.api.sdk.exceptions.ApiException;
+import com.vk.api.sdk.exceptions.ClientException;
 import dto.RecipientDTO;
 import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,22 @@ public class RecipientController {
 
     @Autowired
     private RecipientService recipientService;
+
+    @Autowired
+    private RecipientMapper recipientMapper;
+
+    @Autowired
+    private VkService vkService;
+
+    @GetMapping("/recipient/get/{login}")
+    RecipientDTO getRecipient(@PathVariable("login") String login) {
+        return recipientMapper.entityToDto(recipientService.findRecipientByLogin(login));
+    }
+
+    @GetMapping("/recipient/setVkChatId/{login}")
+    void setVkChatID(@PathVariable String login) throws ClientException, InterruptedException, ApiException {
+        vkService.getMessages(login);
+    }
 
     @PostMapping("/recipients/save")
     void saveRecipient(@RequestBody RecipientDTO recipientDTO) {

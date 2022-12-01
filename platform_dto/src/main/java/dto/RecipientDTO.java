@@ -10,9 +10,14 @@ import javax.validation.constraints.Pattern;
 @Builder
 public class RecipientDTO {
     private String login;
+
     @Email
     private String email;
+
     private String telegramId;
+
+    private String vkChatId;
+
     /**
      * Аннотация @Pattern содержит регулярное выражения для российских номеров
      * формате их записи: +7..., 7..., 8..., 9998886655, 7-999-888-66-55, 7 999 888 66 55
