@@ -583,11 +583,30 @@ function getCurrentUser() {
             $('#editButton').click(function () {
                 saveChanges(null, telegramCheck, vkCheck, currentUserLogin);
                 if ($('#vk').text() === 'VK: No ' && $('#vkCheck').prop('checked') === true){
+                    let code = getSecurityCode(currentUserLogin);
+                    console.log(code)
+                    $('#code').text('Ваш код доступа - ' + code)
                     $('#vkBot').show()
                 }
             })
         }
     })
+}
+
+function getSecurityCode(login){
+    let code = null;
+    $.ajax({
+        url : '/getSecurityCode/' + login,
+        dataType: 'json',
+        method: 'GET',
+        cache: false,
+        async : false,
+        contentType: 'application/json',
+        success: function (data){
+            code = data;
+        }
+    })
+    return code;
 }
 
 function saveChanges(id, telegramCheck, vkCheck, currentUserLogin) {
@@ -605,6 +624,7 @@ function saveChanges(id, telegramCheck, vkCheck, currentUserLogin) {
         success: function (data) {
             console.log(data)
             getUserChanges();
+            result = data;
         },
         error: function (data) {
             console.log(data)

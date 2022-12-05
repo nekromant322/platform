@@ -47,6 +47,10 @@ spring:
 token:
   X-MS-AUTH: ${MICROSERVICES_SECRET_TOKEN:0LDRhdGD0LXRgtGMINC90LUg0LLRgdGC0LDRgtGMXl4=}
 
+cache:
+  timeout: 6 #minutes
+  size: 100
+
 eureka:
   instance:
     hostname: localhost

@@ -18,8 +18,17 @@ public interface NotificatorFeign {
     @GetMapping("/recipient/get/{login}")
     RecipientDTO getRecipient(@PathVariable("login") String login);
 
-    @GetMapping("/recipient/setVkChatId/{login}")
-    void setVkChatID(@PathVariable String login);
+    @GetMapping("/recipient/getSecurityCode/{login}")
+    String getSecurityCode(@PathVariable("login") String login);
+
+    @GetMapping("/recipient/getVkChatId/{login}")
+    Integer getVkChatID(@PathVariable String login);
+
+    @PostMapping("/recipients/setCommunication")
+    void setCommunications(
+            @RequestParam("login") String login,
+            @RequestParam("value") String value,
+            @RequestParam("type") Communication type);
 
     @PostMapping("/recipients/save")
     void saveRecipient(@RequestBody RecipientDTO recipientDTO);

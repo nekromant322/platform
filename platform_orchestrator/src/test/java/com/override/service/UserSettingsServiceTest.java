@@ -42,7 +42,7 @@ public class UserSettingsServiceTest {
         when(notificatorFeign.getRecipient(any())).thenReturn(recipientDTO);
 
         userSettingsService.save(settings, user.getLogin());
-        verify(notificatorFeign,times(1)).setVkChatID(user.getLogin());
+        verify(notificatorFeign,times(1)).getVkChatID(user.getLogin());
         verify(userSettingsRepository, times(1)).save(any());
     }
 }

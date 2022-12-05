@@ -27,9 +27,14 @@ public class RecipientController {
         return recipientMapper.entityToDto(recipientService.findRecipientByLogin(login));
     }
 
-    @GetMapping("/recipient/setVkChatId/{login}")
-    void setVkChatID(@PathVariable String login) throws ClientException, InterruptedException, ApiException {
-        vkService.getMessages(login);
+    @GetMapping("/recipient/getVkChatId/{login}")
+    Integer getVkChatID(@PathVariable String login) throws ClientException, InterruptedException, ApiException {
+        return recipientService.getVkChatId(login);
+    }
+
+    @GetMapping("/recipient/getSecurityCode/{login}")
+    String getSecurityCode(@PathVariable("login") String login){
+        return vkService.getCode(login);
     }
 
     @PostMapping("/recipients/save")
