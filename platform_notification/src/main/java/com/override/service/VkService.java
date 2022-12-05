@@ -63,7 +63,6 @@ public class VkService {
                 List<Message> messages = historyQuery.execute().getMessages().getItems();
                 if (!messages.isEmpty()) {
                     messages.forEach(message -> {
-                        System.out.println(message.toString());
                         try {
                             if (message.getText().contains("/code")) {
                                 String code = message.getText().substring(6);
