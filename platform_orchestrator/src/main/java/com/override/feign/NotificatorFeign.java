@@ -15,13 +15,13 @@ public interface NotificatorFeign {
     @PostMapping("/calls/code")
     String callToClient(@RequestBody String phoneNumber);
 
-    @GetMapping("/recipient/get/{login}")
+    @GetMapping("/recipient/{login}")
     RecipientDTO getRecipient(@PathVariable("login") String login);
 
-    @GetMapping("/recipient/getSecurityCode/{login}")
+    @GetMapping("/securityCode/{login}")
     String getSecurityCode(@PathVariable("login") String login);
 
-    @GetMapping("/recipient/getVkChatId/{login}")
+    @GetMapping("/vkChatId/{login}")
     Integer getVkChatID(@PathVariable String login);
 
     @PostMapping("/recipients/setCommunication")

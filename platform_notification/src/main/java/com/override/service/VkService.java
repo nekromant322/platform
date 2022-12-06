@@ -51,8 +51,8 @@ public class VkService {
     }
 
     public synchronized Integer getVkChatIdFromBot() throws InterruptedException, ClientException, ApiException {
-        Boolean[] stop = {false};
-        Integer[] result = {null};
+        Boolean stop = false;
+        Integer result = null;
         VkApiClient vk = new VkApiClient(new HttpTransportClient());
         GroupActor actor = new GroupActor(groupId, vkToken);
         Random random = new Random();
@@ -62,35 +62,35 @@ public class VkService {
                 MessagesGetLongPollHistoryQuery historyQuery = vk.messages().getLongPollHistory(actor).ts(ts);
                 List<Message> messages = historyQuery.execute().getMessages().getItems();
                 if (!messages.isEmpty()) {
-                    messages.forEach(message -> {
-                        try {
-                            if (message.getText().contains("/code")) {
-                                String code = message.getText().substring(6);
-                                if (getLoginFromCache(code) == null) {
-                                    vk.messages().send(actor).message("Вы ввели неверный код.").userId(message.getFromId()).randomId(random.nextInt(10000)).execute();
+                    for(Message message : messages) {
+                            try {
+                                if (message.getText().contains("/code")) {
+                                    String code = message.getText().substring(6);
+                                    if (getLoginFromCache(code) == null) {
+                                        vk.messages().send(actor).message("Вы ввели неверный код.").userId(message.getFromId()).randomId(random.nextInt(10000)).execute();
+                                    } else {
+                                        vk.messages().send(actor).message("Уведомления успешно подключены для пользователя " + getLoginFromCache(code) + ".").userId(message.getFromId()).randomId(random.nextInt(10000)).execute();
+                                        stop = true;
+                                        result = message.getFromId();
+                                    }
                                 } else {
-                                    vk.messages().send(actor).message("Уведомления успешно подключены для пользователя " + getLoginFromCache(code) + ".").userId(message.getFromId()).randomId(random.nextInt(10000)).execute();
-                                    stop[0] = true;
-                                    result[0] = message.getFromId();
+                                    vk.messages().send(actor).message("Я тебя не понял.").userId(message.getFromId()).randomId(random.nextInt(10000)).execute();
                                 }
-                            } else {
-                                vk.messages().send(actor).message("Я тебя не понял.").userId(message.getFromId()).randomId(random.nextInt(10000)).execute();
+                            } catch (ApiException | ClientException e) {
+                                e.printStackTrace();
                             }
-                        } catch (ApiException | ClientException e) {
-                            e.printStackTrace();
-                        }
-                    });
+                    }
                 }
             } catch (ApiException | ClientException | FeignException e) {
                 log.error("При попытке отправить сообщение произошла ошибка \"{}\"", e.getMessage());
             }
             ts = vk.messages().getLongPollServer(actor).execute().getTs();
-            if (stop[0]) {
+            if (stop) {
                 break;
             }
             Thread.sleep(500);
         }
-        return result[0];
+        return result;
     }
 
     public String getCode(String login) {
@@ -118,6 +118,6 @@ public class VkService {
         if (recipientService.findRecipientByLogin(login).getVkChatId().isEmpty()) {
             return getVkChatIdFromBot();
         }
-        return null;
+        throw new IllegalArgumentException();
     }
 }

@@ -61,8 +61,4 @@ public class RecipientService {
     public Recipient findRecipientByLogin(String login) {
         return repository.findRecipientByLogin(login).get();
     }
-
-    public Integer getVkChatId(String login) throws ClientException, InterruptedException, ApiException {
-        return vkService.getVkChatId(login);
-    }
 }
