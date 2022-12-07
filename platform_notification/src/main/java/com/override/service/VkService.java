@@ -21,7 +21,7 @@ import java.util.Random;
 
 @Slf4j
 @Service
-public class VkService {
+public class VkService extends Thread{
 
     @Value("${vk.groupId}")
     private Integer groupId;
@@ -35,9 +35,13 @@ public class VkService {
     @Autowired
     private CacheManager cacheManager;
 
+    VkApiClient vk = new VkApiClient(new HttpTransportClient());
+
+    GroupActor actor = new GroupActor(groupId, vkToken);
+
+    Random random = new Random();
+
     public void sendMessage(MessageDTO message) {
-        VkApiClient vk = new VkApiClient(new HttpTransportClient());
-        GroupActor actor = new GroupActor(groupId, vkToken);
         try {
             vk.messages()
                     .send(actor)
@@ -50,12 +54,7 @@ public class VkService {
         }
     }
 
-    public synchronized Integer getVkChatIdFromBot() throws InterruptedException, ClientException, ApiException {
-        Boolean stop = false;
-        Integer result = null;
-        VkApiClient vk = new VkApiClient(new HttpTransportClient());
-        GroupActor actor = new GroupActor(groupId, vkToken);
-        Random random = new Random();
+    public void enableBot() throws InterruptedException, ClientException, ApiException {
         Integer ts = vk.messages().getLongPollServer(actor).execute().getTs();
         while (true) {
             try {
@@ -66,13 +65,8 @@ public class VkService {
                             try {
                                 if (message.getText().contains("/code")) {
                                     String code = message.getText().substring(6);
-                                    if (getLoginFromCache(code) == null) {
-                                        vk.messages().send(actor).message("Вы ввели неверный код.").userId(message.getFromId()).randomId(random.nextInt(10000)).execute();
-                                    } else {
-                                        vk.messages().send(actor).message("Уведомления успешно подключены для пользователя " + getLoginFromCache(code) + ".").userId(message.getFromId()).randomId(random.nextInt(10000)).execute();
-                                        stop = true;
-                                        result = message.getFromId();
-                                    }
+                                    Cache data = cacheManager.getCache("vkChatId");
+                                    data.put(code, message.getFromId());
                                 } else {
                                     vk.messages().send(actor).message("Я тебя не понял.").userId(message.getFromId()).randomId(random.nextInt(10000)).execute();
                                 }
@@ -85,39 +79,56 @@ public class VkService {
                 log.error("При попытке отправить сообщение произошла ошибка \"{}\"", e.getMessage());
             }
             ts = vk.messages().getLongPollServer(actor).execute().getTs();
-            if (stop) {
-                break;
-            }
             Thread.sleep(500);
         }
-        return result;
     }
 
-    public String getCode(String login) {
+    public String generateCode(String login) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < 6; i++) {
             stringBuilder.append(random.nextInt(9));
         }
         Cache data = cacheManager.getCache("vkSecurityCode");
-        data.put(stringBuilder.toString(), login);
+        data.put(login, stringBuilder.toString());
         return stringBuilder.toString();
     }
 
-    public String getLoginFromCache(String code) {
-        Cache data = cacheManager.getCache("vkSecurityCode");
+    public String getChatIdByCode(String code) {
+        Cache data = cacheManager.getCache("vkChatId");
         if (data.get(code) == null) {
             return null;
         }
         Cache.ValueWrapper cacheCode = data.get(code);
+        String chatId = (String) cacheCode.get();
+        return chatId;
+    }
+
+    public String getSecurityCodeByLogin(String login){
+        Cache data = cacheManager.getCache("vkSecurityCode");
+        if (data.get(login) == null) {
+            throw new NullPointerException();
+        }
+        Cache.ValueWrapper cacheCode = data.get(login);
         String securityCode = (String) cacheCode.get();
         return securityCode;
     }
 
-    public Integer getVkChatId(String login) throws ClientException, InterruptedException, ApiException {
-        if (recipientService.findRecipientByLogin(login).getVkChatId().isEmpty()) {
-            return getVkChatIdFromBot();
+    public String getVkChatId(String login){
+       String code = getSecurityCodeByLogin(login);
+       return getChatIdByCode(code);
+    }
+
+    @Override
+    public void run() {
+        try {
+            enableBot();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ClientException e) {
+            throw new RuntimeException(e);
+        } catch (ApiException e) {
+            throw new RuntimeException(e);
         }
-        throw new IllegalArgumentException();
     }
 }

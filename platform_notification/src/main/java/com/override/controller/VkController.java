@@ -1,8 +1,6 @@
 package com.override.controller;
 
 import com.override.service.VkService;
-import com.vk.api.sdk.exceptions.ApiException;
-import com.vk.api.sdk.exceptions.ClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,14 +12,21 @@ public class VkController {
     @Autowired
     private VkService vkService;
 
+    Thread thread = new VkService();
+
 
     @GetMapping("/securityCode/{login}")
     public String getSecurityCode(@PathVariable("login") String login){
-        return vkService.getCode(login);
+        return vkService.generateCode(login);
+    }
+
+    @GetMapping("/enableVkBot")
+    public void getVkCode() {
+        thread.start();
     }
 
     @GetMapping("/vkChatId/{login}")
-    public Integer getVkCode(@PathVariable String login) throws ClientException, InterruptedException, ApiException {
+    public String getVkChatId(@PathVariable("login") String login){
         return vkService.getVkChatId(login);
     }
 }
