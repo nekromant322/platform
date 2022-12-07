@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,11 +29,11 @@ public class LessonStructureService {
     @PostConstruct
     public void refillCourseLessonStructure() {
         String stringPathToCourses = "platform_orchestrator" + File.separator +
-                                        "src" + File.separator +
-                                        "main" + File.separator +
-                                        "resources" + File.separator +
-                                        "templates" + File.separator +
-                                        "lessons";
+                "src" + File.separator +
+                "main" + File.separator +
+                "resources" + File.separator +
+                "templates" + File.separator +
+                "lessons";
         List<String> listOfCourses = getDirectoryStructure(stringPathToCourses);
         courseLessonStructure = new HashMap<>();
         for (String courseName : listOfCourses) {
@@ -42,12 +43,12 @@ public class LessonStructureService {
 
     private JsonObject scanLessonStructure(String courseName) {
         String stringPathToCourse = "platform_orchestrator" + File.separator +
-                                    "src" + File.separator +
-                                    "main" + File.separator +
-                                    "resources" + File.separator +
-                                    "templates" + File.separator +
-                                    "lessons" + File.separator +
-                                    courseName;
+                "src" + File.separator +
+                "main" + File.separator +
+                "resources" + File.separator +
+                "templates" + File.separator +
+                "lessons" + File.separator +
+                courseName;
         JsonObject resultJSON = new JsonObject();
         JsonArray lessonsJsonArray;
         JsonObject stepLessonStructure;
@@ -60,7 +61,7 @@ public class LessonStructureService {
                     File.separator + chapter);
             stepLessonStructure = new JsonObject();
             for (String step : listOfSteps) {
-                listOfLessons = getDirectoryStructure(stringPathToCourse +
+                listOfLessons = getStepsDirectoryStructure(stringPathToCourse +
                         File.separator + chapter +
                         File.separator + step);
                 lessonsJsonArray = new JsonArray(listOfLessons.size());
@@ -86,7 +87,39 @@ public class LessonStructureService {
         return resultList;
     }
 
-    public List<String> getChapterNamesList(){
+    /**
+     * Этот метод является имплементацией getDirectoryStructure для работы с директориями,
+     * количество файлов в которых превышает 9,
+     * ибо метод getDirectoryStructure возвращает некорректную последовательность файлов для таких директорий.
+     */
+    @SneakyThrows
+    private List<String> getStepsDirectoryStructure(String stringPathToDirectory) {
+        List<String> filesList;
+        Path path = Paths.get(stringPathToDirectory);
+        Stream<Path> fileStream = Files.list(path);
+        filesList = fileStream
+                .map(Path::getFileName)
+                .map(Path::toString)
+                .collect(Collectors.toList());
+        List<String> intermediateResultList = new ArrayList<>();
+        for (String file : filesList) {
+            String result = file.replace(".html", "");
+            intermediateResultList.add(result);
+        }
+        intermediateResultList = intermediateResultList
+                .stream()
+                .sorted(Comparator.comparing(Integer::valueOf))
+                .collect(Collectors.toList());
+
+        List<String> resultList = new ArrayList<>();
+        for (String step : intermediateResultList) {
+            String result = step + ".html";
+            resultList.add(result);
+        }
+        return resultList;
+    }
+
+    public List<String> getChapterNamesList() {
         List<String> listOfCourses;
         List<String> listToReturn = new ArrayList<>();
         String path = "platform_orchestrator" + File.separator +
@@ -96,10 +129,10 @@ public class LessonStructureService {
                 "templates" + File.separator +
                 "lessons";
         listOfCourses = getDirectoryStructure(path);
-        for(String course : listOfCourses){
+        for (String course : listOfCourses) {
             List<String> listOfChapters = getDirectoryStructure(path + File.separator + course);
-            for (String chapter : listOfChapters){
-                listToReturn.add(String.format("%s %s",course, chapter));
+            for (String chapter : listOfChapters) {
+                listToReturn.add(String.format("%s %s", course, chapter));
             }
         }
         return listToReturn;
