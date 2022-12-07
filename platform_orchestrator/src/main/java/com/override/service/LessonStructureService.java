@@ -94,28 +94,16 @@ public class LessonStructureService {
      */
     @SneakyThrows
     private List<String> getStepsDirectoryStructure(String stringPathToDirectory) {
-        List<String> filesList;
+        List<String> resultList;
         Path path = Paths.get(stringPathToDirectory);
         Stream<Path> fileStream = Files.list(path);
-        filesList = fileStream
+        resultList = fileStream
                 .map(Path::getFileName)
                 .map(Path::toString)
-                .collect(Collectors.toList());
-        List<String> intermediateResultList = new ArrayList<>();
-        for (String file : filesList) {
-            String result = file.replace(".html", "");
-            intermediateResultList.add(result);
-        }
-        intermediateResultList = intermediateResultList
-                .stream()
+                .map(x -> x.replace(".html", ""))
                 .sorted(Comparator.comparing(Integer::valueOf))
+                .map(x -> x + ".html")
                 .collect(Collectors.toList());
-
-        List<String> resultList = new ArrayList<>();
-        for (String step : intermediateResultList) {
-            String result = step + ".html";
-            resultList.add(result);
-        }
         return resultList;
     }
 
