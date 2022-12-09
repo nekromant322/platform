@@ -1,0 +1,108 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Обязательные метатеги -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="import" href="fragments/reviewRequestButton.html">
+    <title>Override платформа</title>
+</head>
+<header th:replace="fragments/navbar.html :: header"></header>
+<body>
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+        <div class="col-1">
+            <div th:replace="fragments/lessonSidebar.html"/>
+        </div>
+        <div class="col-11">
+            <div id="taskText">
+                <p style="transition: var(--focus-outline-transition); box-sizing: border-box; margin: 1em 0px; padding: 0px; direction: ltr; line-height: inherit; font-family: inherit; font-weight: inherit; font-size: inherit; text-rendering: optimizelegibility;">
+                    Укажите пары эквивалентных булевских операторов.</p>
+                <p style="transition: var(--focus-outline-transition); box-sizing: border-box; margin: 1em 0px; padding: 0px; direction: ltr; line-height: inherit; font-family: inherit; font-weight: inherit; font-size: inherit; text-rendering: optimizelegibility;">
+                    Операторы эквивалентны, если их&nbsp;<a
+                        href="https://ru.wikipedia.org/wiki/%D0%A2%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0_%D0%B8%D1%81%D1%82%D0%B8%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8"
+                        rel="nofollow noopener noreferrer"
+                        style="transition: var(--focus-outline-transition); box-sizing: border-box; background: 0px 0px; border-radius: 1px; color: var(--link-color,inherit); text-decoration-line: var(--link-line); text-decoration-color: var(--link-line-color); text-underline-offset: var(--link-line-offset); --link-color:#4485ed; --link-line:underline; --link-line-color:rgba(86, 164, 255, 0.3); --link-line-offset:0.2em; --link-hover-color:#1466C6; --link-hover-line-color:#1466C6; --link-active-color:#4485ed; --link-active-line-color:#4485ed; --link-disabled-color:rgba(68, 133, 237, 0.5);"
+                        target="_blank"
+                        title="Link: https://ru.wikipedia.org/wiki/%D0%A2%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0_%D0%B8%D1%81%D1%82%D0%B8%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8">таблицы
+                    истинности</a> совпадают, т.е. для любой пары аргументов оба оператора дают один и тот же результат.
+                </p>
+                <p style="transition: var(--focus-outline-transition); box-sizing: border-box; margin: 1em 0px; padding: 0px; direction: ltr; line-height: inherit; font-family: inherit; font-weight: inherit; font-size: inherit; text-rendering: optimizelegibility;">
+                    Если ответ не очевиден, то составьте таблицы истинности для всех упомянутых операторов и сравните
+                    их.</p>
+                <h3 class="quiz__typename"
+                    style="transition: var(--focus-outline-transition); box-sizing: border-box; margin: 0px; padding: 0px; direction: ltr; font-family: Roboto, sans-serif; font-weight: 500; font-style: normal; color: rgb(34, 34, 34); text-rendering: optimizelegibility; line-height: 1.4; font-size: 20px; letter-spacing: 0.15px; align-self: flex-end;">
+                    Выберите все подходящие ответы из списка</h3>
+            </div>
+            <div style="position: relative;
+    width: 500px;
+    height: 400px;" id="switch_panel">
+                <form id="check-form">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+                        <label class="form-check-label" for="flexCheckDefault1">
+                            | и ||
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+                        <label class="form-check-label" for="flexCheckDefault2">
+                            | и !=
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+                        <label class="form-check-label" for="flexCheckDefault3">
+                            ^ и !=
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault4">
+                        <label class="form-check-label" for="flexCheckDefault4">
+                            & и ==
+                        </label>
+                    </div>
+                    <button class="btn btn-success" id="check-btn" type="submit">Отправить</button>
+                </form>
+                <p class="block mt-2" id="result"></p>
+            </div>
+            <script>
+                $('#check-form').submit(function (e){
+                    e.preventDefault()
+                    if ($('#flexCheckDefault1').is(':checked') && $('#flexCheckDefault3').is(':checked')){
+                        $('#result').text("Верно").attr('style', 'background-color: green; color: white')
+                    } else {
+                        $('#result').text("Неверно, попробуйте снова").attr('style', 'background-color: red; color: white')
+                    }
+                })
+            </script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/ace.js" type="text/javascript"
+                    charset="utf-8"></script>
+            <script>
+                var editor = ace.edit("editor");
+            </script>
+
+            <div th:replace="fragments/helpMeButton.html :: body"></div>
+            <div th:replace="fragments/myCodeTryButton.html :: body"></div>
+        </div>
+    </div>
+    <a href="/lessons/core/3/1/1" class="btn btn-success btn-lg" role="button" id="nextLesson">Следующий урок</a>
+    <div th:replace="fragments/reviewRequestButton.html :: body"></div>
+</div>
+<!-- Дополнительный JavaScript; выберите один из двух! -->
+
+<!-- Вариант 1: Bootstrap в связке с Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.plyr.io/3.6.12/text/html; charset=utf-8.js"></script>
+<script src="/js/nextLessonButton.js"></script>
+<script src="/js/reviewRequestForm.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Обязательные метатеги -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="import" href="fragments/reviewRequestButton.html">
+  <title>Override платформа</title>
+</head>
+<header th:replace="fragments/navbar.html :: header"></header>
+<body>
+
+<div class="container">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+    <div class="col-1">
+      <div th:replace="fragments/lessonSidebar.html"/>
+    </div>
+    <div class="col-11">
+      <div id="taskText">
+        <div class="html-content rich-text-viewer ember-view" data-processed="" style="transition: var(--focus-outline-transition); box-sizing: border-box; margin: 0px; padding: 0px; direction: ltr; scroll-margin-top: calc(var(--header-height) + 2ex); font-family: Roboto, sans-serif; font-size: 16px; color: rgb(34, 34, 34); line-height: 1.6; overflow-wrap: break-word; word-break: break-word; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"><span style="transition: var(--focus-outline-transition); box-sizing: border-box;">В Григорианском календаре год является&nbsp;<a href="https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D1%81%D0%BE%D0%BA%D0%BE%D1%81%D0%BD%D1%8B%D0%B9_%D0%B3%D0%BE%D0%B4" rel="nofollow noopener noreferrer" style="transition: var(--focus-outline-transition); box-sizing: border-box; background: 0px 0px; border-radius: 1px; color: var(--link-color,inherit); text-decoration-line: var(--link-line); text-decoration-color: var(--link-line-color); text-underline-offset: var(--link-line-offset); --link-color:#4485ed; --link-line:underline; --link-line-color:rgba(86, 164, 255, 0.3); --link-line-offset:0.2em; --link-hover-color:#1466C6; --link-hover-line-color:#1466C6; --link-active-color:#4485ed; --link-active-line-color:#4485ed; --link-disabled-color:rgba(68, 133, 237, 0.5);" target="_blank">високосным</a> в двух случаях: либо он кратен 4, но при этом не кратен 100, либо кратен 400.<br style="transition: var(--focus-outline-transition); box-sizing: border-box;"><br style="transition: var(--focus-outline-transition); box-sizing: border-box;">Реализуйте метод, вычисляющий количество високосных лет с начала нашей эры (первого года) до заданного года включительно. На самом деле Григорианский календарь был введен значительно позже, но здесь для упрощения мы распространяем его действие на всю нашу эру.<br style="transition: var(--focus-outline-transition); box-sizing: border-box;"><br style="transition: var(--focus-outline-transition); box-sizing: border-box;">Ввод-вывод обеспечивает проверяющая система. Вам надо только проанализировать переданное в метод значение и вернуть результат. В программу всегда подается положительный номер года. Предполагается решение без циклов. Вам надо придумать и записать несложную формулу, использующую только арифметические операторы.<br style="transition: var(--focus-outline-transition); box-sizing: border-box;"><br style="transition: var(--focus-outline-transition); box-sizing: border-box;">В качестве примера написано заведомо неправильное выражение. Исправьте его.<br style="transition: var(--focus-outline-transition); box-sizing: border-box;"></span></div>
+        <div class="step-text-wrapper" style="transition: var(--focus-outline-transition); box-sizing: border-box; margin: 0px; padding: 0px; direction: ltr; line-height: 1.6em; color: rgb(0, 0, 0); font-family: Roboto, sans-serif; overflow: hidden; outline: 0px; border-style: none; text-align: left; height: 409.179px; font-size: 16px; min-height: 4.625em; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+          <p class="step-text__limit-title" style="transition: var(--focus-outline-transition); box-sizing: border-box; margin: 0.5em 0px 0px; padding: 0.5em 0px 0px; direction: ltr; line-height: 1.6; font-family: inherit; font-weight: 400; font-size: 1em; text-rendering: optimizelegibility; border-top: 1px solid rgb(204, 204, 204); border-right-color: rgb(204, 204, 204); border-bottom-color: rgb(204, 204, 204); border-left-color: rgb(204, 204, 204);"><strong style="transition: var(--focus-outline-transition); box-sizing: border-box; font-weight: 700; line-height: inherit;">Sample Input&nbsp;1:</strong></p>
+          <pre class="step-text__limit-value" style='transition: var(--focus-outline-transition); box-sizing: border-box; font-size: 1em; white-space: pre-wrap; margin: 0px 0px 0px 1em; padding: 0px; direction: ltr; font-family: "JetBrains Mono", monospace;'>1</pre>
+          <p class="step-text__limit-title" style="transition: var(--focus-outline-transition); box-sizing: border-box; margin: 0.5em 0px 0px; padding: 0.5em 0px 0px; direction: ltr; line-height: 1.6; font-family: inherit; font-weight: 400; font-size: 1em; text-rendering: optimizelegibility; border-top: 1px solid rgb(204, 204, 204); border-right-color: rgb(204, 204, 204); border-bottom-color: rgb(204, 204, 204); border-left-color: rgb(204, 204, 204);"><strong style="transition: var(--focus-outline-transition); box-sizing: border-box; font-weight: 700; line-height: inherit;">Sample Output&nbsp;1:</strong></p>
+          <pre class="step-text__limit-value" style='transition: var(--focus-outline-transition); box-sizing: border-box; font-size: 1em; white-space: pre-wrap; margin: 0px 0px 0px 1em; padding: 0px; direction: ltr; font-family: "JetBrains Mono", monospace;'>0</pre>
+          <p class="step-text__limit-title" style="transition: var(--focus-outline-transition); box-sizing: border-box; margin: 0.5em 0px 0px; padding: 0.5em 0px 0px; direction: ltr; line-height: 1.6; font-family: inherit; font-weight: 400; font-size: 1em; text-rendering: optimizelegibility; border-top: 1px solid rgb(204, 204, 204); border-right-color: rgb(204, 204, 204); border-bottom-color: rgb(204, 204, 204); border-left-color: rgb(204, 204, 204);"><strong style="transition: var(--focus-outline-transition); box-sizing: border-box; font-weight: 700; line-height: inherit;">Sample Input&nbsp;2:</strong></p>
+          <pre class="step-text__limit-value" style='transition: var(--focus-outline-transition); box-sizing: border-box; font-size: 1em; white-space: pre-wrap; margin: 0px 0px 0px 1em; padding: 0px; direction: ltr; font-family: "JetBrains Mono", monospace;'>4</pre>
+          <p class="step-text__limit-title" style="transition: var(--focus-outline-transition); box-sizing: border-box; margin: 0.5em 0px 0px; padding: 0.5em 0px 0px; direction: ltr; line-height: 1.6; font-family: inherit; font-weight: 400; font-size: 1em; text-rendering: optimizelegibility; border-top: 1px solid rgb(204, 204, 204); border-right-color: rgb(204, 204, 204); border-bottom-color: rgb(204, 204, 204); border-left-color: rgb(204, 204, 204);"><strong style="transition: var(--focus-outline-transition); box-sizing: border-box; font-weight: 700; line-height: inherit;">Sample Output&nbsp;2:</strong></p>
+          <pre class="step-text__limit-value" style='transition: var(--focus-outline-transition); box-sizing: border-box; font-size: 1em; white-space: pre-wrap; margin: 0px 0px 0px 1em; padding: 0px; direction: ltr; font-family: "JetBrains Mono", monospace;'>1</pre>
+          <p class="step-text__limit-title" style="transition: var(--focus-outline-transition); box-sizing: border-box; margin: 0.5em 0px 0px; padding: 0.5em 0px 0px; direction: ltr; line-height: 1.6; font-family: inherit; font-weight: 400; font-size: 1em; text-rendering: optimizelegibility; border-top: 1px solid rgb(204, 204, 204); border-right-color: rgb(204, 204, 204); border-bottom-color: rgb(204, 204, 204); border-left-color: rgb(204, 204, 204);"><strong style="transition: var(--focus-outline-transition); box-sizing: border-box; font-weight: 700; line-height: inherit;">Sample Input&nbsp;3:</strong></p>
+          <pre class="step-text__limit-value" style='transition: var(--focus-outline-transition); box-sizing: border-box; font-size: 1em; white-space: pre-wrap; margin: 0px 0px 0px 1em; padding: 0px; direction: ltr; font-family: "JetBrains Mono", monospace;'>100</pre>
+          <p class="step-text__limit-title" style="transition: var(--focus-outline-transition); box-sizing: border-box; margin: 0.5em 0px 0px; padding: 0.5em 0px 0px; direction: ltr; line-height: 1.6; font-family: inherit; font-weight: 400; font-size: 1em; text-rendering: optimizelegibility; border-top: 1px solid rgb(204, 204, 204); border-right-color: rgb(204, 204, 204); border-bottom-color: rgb(204, 204, 204); border-left-color: rgb(204, 204, 204);"><strong style="transition: var(--focus-outline-transition); box-sizing: border-box; font-weight: 700; line-height: inherit;">Sample Output&nbsp;3:</strong></p>
+          <pre class="step-text__limit-value" style='transition: var(--focus-outline-transition); box-sizing: border-box; font-size: 1em; white-space: pre-wrap; margin: 0px 0px 0px 1em; padding: 0px; direction: ltr; font-family: "JetBrains Mono", monospace;'>24</pre>
+        </div>
+      </div>
+      <div style="position: relative;
+    width: 500px;
+    height: 400px;" id="editor">public static int leapYearCount(int year) {
+  return year;
+}
+      </div>
+      <button type="button" class="btn btn-dark" onclick="sendCode(editor)" id="gg" about="774447167" step="47533">Проверить</button>
+      <p class="block" id="result"></p>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/ace.js" type="text/javascript"
+              charset="utf-8"></script>
+      <script>
+        var editor = ace.edit("editor");
+      </script>
+
+      <div th:replace="fragments/helpMeButton.html :: body"></div>
+      <div th:replace="fragments/myCodeTryButton.html :: body"></div>
+    </div>
+  </div>
+  <a href="/lessons/core/3/1/1" class="btn btn-success btn-lg" role="button" id="nextLesson">Следующий урок</a>
+  <div th:replace="fragments/reviewRequestButton.html :: body"></div>
+</div>
+<!-- Дополнительный JavaScript; выберите один из двух! -->
+
+<!-- Вариант 1: Bootstrap в связке с Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.plyr.io/3.6.12/text/html; charset=utf-8.js"></script>
+<script src="/js/stepikCode.js"></script>
+<script src="/js/nextLessonButton.js"></script>
+<script src="/js/reviewRequestForm.js"></script>
+</body>
+</html>
