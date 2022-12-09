@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserSettingsService {
 
+    private final Integer NUMBER_OF_ATTEMPTS = 30;
+
     @Autowired
     private UserSettingsRepository userSettingsRepository;
 
@@ -27,8 +29,20 @@ public class UserSettingsService {
         UserSettings settings = user.getUserSettings();
         userSettings.setId(settings.getId());
         if (recipientDTO.getVkChatId().equals("None") && userSettings.getVkNotification().equals(true)) {
+            for (int i = 0; i < NUMBER_OF_ATTEMPTS; i++) {
+                if (notificatorFeign.getVkChatID(login) == null) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    break;
+                }
+            }
             Integer res = notificatorFeign.getVkChatID(login);
             notificatorFeign.setCommunications(login, String.valueOf(res), Communication.VK);
+            notificatorFeign.sendMessage(login, "Уведомления подключены", Communication.VK);
         }
         userSettingsRepository.save(userSettings);
     }

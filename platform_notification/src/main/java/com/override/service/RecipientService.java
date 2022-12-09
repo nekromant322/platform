@@ -5,8 +5,6 @@ import com.override.model.Recipient;
 import com.override.repository.RecipientRepository;
 import com.override.service.communication.CommunicationStrategy;
 import com.override.service.communication.CommunicationStrategyFactory;
-import com.vk.api.sdk.exceptions.ApiException;
-import com.vk.api.sdk.exceptions.ClientException;
 import dto.RecipientDTO;
 import enums.Communication;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +24,6 @@ public class RecipientService {
     private RecipientMapper recipientMapper;
     @Autowired
     private CommunicationStrategyFactory strategyFactory;
-
-    @Autowired
-    private VkService vkService;
 
     public void save(RecipientDTO recipientDTO) {
         if (repository.findRecipientByLogin(recipientDTO.getLogin()).isPresent()) {

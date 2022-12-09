@@ -2,9 +2,6 @@ package com.override.controller;
 
 import com.override.mapper.RecipientMapper;
 import com.override.service.RecipientService;
-import com.override.service.VkService;
-import com.vk.api.sdk.exceptions.ApiException;
-import com.vk.api.sdk.exceptions.ClientException;
 import dto.RecipientDTO;
 import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
