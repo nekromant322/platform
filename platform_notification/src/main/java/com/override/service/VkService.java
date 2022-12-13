@@ -14,15 +14,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Random;
 
 @Slf4j
 @Service("VkService")
-public class VkService extends Thread {
+public class VkService {
 
     @Value("${vk.groupId}")
     private Integer groupId;
@@ -33,9 +36,16 @@ public class VkService extends Thread {
     @Autowired
     private CacheManager cacheManager;
 
+    @Autowired
+    private VkApiClient vk;
+
+    @Autowired
+    private GroupActor actor;
+
+    @Autowired
+    private Random random;
+
     public void sendMessage(MessageDTO message) {
-        VkApiClient vk = new VkApiClient(new HttpTransportClient());
-        GroupActor actor = new GroupActor(groupId, vkToken);
         try {
             vk.messages()
                     .send(actor)
@@ -48,35 +58,38 @@ public class VkService extends Thread {
         }
     }
 
+    @Scheduled(initialDelay = 1000, fixedDelay = Long.MAX_VALUE)
     public void enableBot() throws InterruptedException, ClientException, ApiException {
-        VkApiClient vk = new VkApiClient(new HttpTransportClient());
-        GroupActor actor = new GroupActor(groupId, vkToken);
-        Random random = new Random();
         Integer ts = vk.messages().getLongPollServer(actor).execute().getTs();
         while (true) {
             try {
                 MessagesGetLongPollHistoryQuery historyQuery = vk.messages().getLongPollHistory(actor).ts(ts);
                 List<Message> messages = historyQuery.execute().getMessages().getItems();
-                if (!messages.isEmpty()) {
-                    for (Message message : messages) {
-                        try {
-                            if (message.getText().contains("/code")) {
-                                String code = message.getText().substring(6);
-                                Cache data = cacheManager.getCache("vkChatId");
-                                data.put(code, String.valueOf(message.getFromId()));
-                            } else {
-                                vk.messages().send(actor).message("Я тебя не понял.").userId(message.getFromId()).randomId(random.nextInt(10000)).execute();
-                            }
-                        } catch (ApiException | ClientException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                if (messages.isEmpty()) {
+                    Thread.sleep(500);
+                    continue;
+                }
+                for (Message message : messages) {
+                    extractCode(message);
                 }
             } catch (ApiException | ClientException | FeignException e) {
                 log.error("При попытке отправить сообщение произошла ошибка \"{}\"", e.getMessage());
             }
             ts = vk.messages().getLongPollServer(actor).execute().getTs();
-            Thread.sleep(500);
+        }
+    }
+
+    public void extractCode(Message message) {
+        try {
+            if (message.getText().contains("/code")) {
+                String code = message.getText().substring(6);
+                Cache data = cacheManager.getCache("vkChatId");
+                data.put(code, String.valueOf(message.getFromId()));
+            } else {
+                vk.messages().send(actor).message("Я тебя не понял.").userId(message.getFromId()).randomId(random.nextInt(10000)).execute();
+            }
+        } catch (ApiException | ClientException e) {
+            e.printStackTrace();
         }
     }
 
@@ -94,7 +107,7 @@ public class VkService extends Thread {
     public Integer getChatIdByCode(String code) {
         Cache data = cacheManager.getCache("vkChatId");
         if (data.get(code) == null) {
-            return null;
+            throw new NullPointerException();
         }
         Cache.ValueWrapper cacheCode = data.get(code);
         String chatId = (String) cacheCode.get();
@@ -104,34 +117,31 @@ public class VkService extends Thread {
     public String getSecurityCodeByLogin(String login) {
         Cache data = cacheManager.getCache("vkSecurityCode");
         if (data.get(login) == null) {
-            throw new RuntimeException();
+            return null;
         }
         Cache.ValueWrapper cacheCode = data.get(login);
         String securityCode = (String) cacheCode.get();
         return securityCode;
     }
 
+    @Retryable(value = NullPointerException.class, backoff = @Backoff(value = 1000), maxAttempts = 30)
     public Integer getVkChatId(String login) {
         String code = getSecurityCodeByLogin(login);
         return getChatIdByCode(code);
     }
 
-    @Override
-    public void run() {
-        try {
-            enableBot();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ClientException e) {
-            throw new RuntimeException(e);
-        } catch (ApiException e) {
-            throw new RuntimeException(e);
-        }
+    @Bean
+    public VkApiClient getVkApiClient() {
+        return new VkApiClient(new HttpTransportClient());
     }
 
-    @Override
-    @PostConstruct
-    public synchronized void start() {
-        super.start();
+    @Bean
+    public GroupActor getGroupActor() {
+        return new GroupActor(groupId, vkToken);
+    }
+
+    @Bean
+    public Random getRandom() {
+        return new Random();
     }
 }

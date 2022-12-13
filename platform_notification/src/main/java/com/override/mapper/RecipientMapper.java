@@ -13,7 +13,7 @@ public class RecipientMapper {
                 .email(recipient.getEmail().get())
                 .telegramId(recipient.getTelegramId().get())
                 .phoneNumber(recipient.getPhoneNumber().get())
-                .vkChatId(recipient.getVkChatId().orElse("None"))
+                .vkChatId(recipient.getVkChatId().orElse(null))
                 .build();
     }
 

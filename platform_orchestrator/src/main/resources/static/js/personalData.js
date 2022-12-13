@@ -596,7 +596,7 @@ function getCurrentUser() {
 function getSecurityCode(login){
     let code = null;
     $.ajax({
-        url : '/securityCode/' + login,
+        url : '/' + login + '/securityCode',
         dataType: 'json',
         method: 'GET',
         cache: false,

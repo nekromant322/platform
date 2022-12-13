@@ -12,7 +12,7 @@ public class SecurityCodeRestController {
     @Autowired
     private NotificatorFeign notificatorFeign;
 
-    @GetMapping("/securityCode/{login}")
+    @GetMapping("/{login}/securityCode")
     public String getSecurityCode(@PathVariable("login") String login) {
         return notificatorFeign.getSecurityCode(login);
     }

@@ -31,9 +31,9 @@ public class UserSettingsServiceTest {
     private NotificatorFeign notificatorFeign;
 
     @Test
-    public void testSave() throws InterruptedException {
+    public void testSave() {
         PlatformUser user = generateTestUser();
-        RecipientDTO recipientDTO = RecipientDTO.builder().vkChatId("None").email("email").build();
+        RecipientDTO recipientDTO = RecipientDTO.builder().vkChatId(null).email("email").build();
         UserSettings settings = new UserSettings(null, true, true);
 
         when(platformUserService.findPlatformUserByLogin(user.getLogin()))
@@ -42,7 +42,7 @@ public class UserSettingsServiceTest {
         when(notificatorFeign.getRecipient(any())).thenReturn(recipientDTO);
 
         userSettingsService.save(settings, user.getLogin());
-        verify(notificatorFeign, times(2)).getVkChatID(user.getLogin());
+        verify(notificatorFeign, times(1)).getVkChatID(user.getLogin());
         verify(userSettingsRepository, times(1)).save(any());
     }
 }

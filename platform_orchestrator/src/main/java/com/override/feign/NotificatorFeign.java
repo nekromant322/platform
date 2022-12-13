@@ -18,7 +18,7 @@ public interface NotificatorFeign {
     @GetMapping("/recipient/{login}")
     RecipientDTO getRecipient(@PathVariable("login") String login);
 
-    @GetMapping("/securityCode/{login}")
+    @GetMapping("/{login}/securityCode")
     String getSecurityCode(@PathVariable("login") String login);
 
     @GetMapping("/vkChatId/{login}")

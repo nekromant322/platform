@@ -14,9 +14,9 @@ public class VkController {
     @Autowired
     private VkService vkService;
 
-    @GetMapping("/securityCode/{login}")
-    public String getSecurityCode(@PathVariable("login") String login) {
-        return vkService.generateCode(login);
+    @GetMapping("/{login}/securityCode")
+    public ResponseEntity<String> getSecurityCode(@PathVariable("login") String login) {
+        return new ResponseEntity<>(vkService.generateCode(login), HttpStatus.OK);
     }
 
     @GetMapping("/vkChatId/{login}")
