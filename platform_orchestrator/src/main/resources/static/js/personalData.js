@@ -2,6 +2,7 @@ window.onload = function () {
     getCurrentUser();
     getUserPersonalData();
     getUserDoc();
+    $('#vkBot').hide();
 };
 
 var actNumber;
@@ -552,8 +553,8 @@ function getCurrentUser() {
             telegramCheck = telegramNotification;
             vkCheck = vkNotification;
 
-            $('#telegram').append((telegramNotification === false ? 'No' : 'Yes') + ' ');
-            $('#vk').append((vkNotification === false ? 'No' : 'Yes') + ' ');
+            $('#telegram').append((telegramNotification === false ? ' No' : ' Yes') + ' ');
+            $('#vk').append((vkNotification === false ? ' No' : ' Yes') + ' ');
 
             if (telegramNotification === true) {
                 $('#telegramCheck').prop('checked', true);
@@ -581,9 +582,31 @@ function getCurrentUser() {
 
             $('#editButton').click(function () {
                 saveChanges(null, telegramCheck, vkCheck, currentUserLogin);
+                if ($('#vk').text() === 'VK: No ' && $('#vkCheck').prop('checked') === true){
+                    let code = getSecurityCode(currentUserLogin);
+                    console.log(code)
+                    $('#code').text('Ваш код доступа - ' + code)
+                    $('#vkBot').show()
+                }
             })
         }
     })
+}
+
+function getSecurityCode(login){
+    let code = null;
+    $.ajax({
+        url : '/' + login + '/securityCode',
+        dataType: 'json',
+        method: 'GET',
+        cache: false,
+        async : false,
+        contentType: 'application/json',
+        success: function (data){
+            code = data;
+        }
+    })
+    return code;
 }
 
 function saveChanges(id, telegramCheck, vkCheck, currentUserLogin) {
@@ -601,10 +624,12 @@ function saveChanges(id, telegramCheck, vkCheck, currentUserLogin) {
         success: function (data) {
             console.log(data)
             getUserChanges();
+            result = data;
         },
         error: function (data) {
             console.log(data)
             getUserChanges();
+            $('#vkBot').hide();
         }
     })
 }

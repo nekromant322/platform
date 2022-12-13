@@ -1,5 +1,6 @@
 package com.override.controller;
 
+import com.override.mapper.RecipientMapper;
 import com.override.service.RecipientService;
 import dto.RecipientDTO;
 import enums.Communication;
@@ -11,6 +12,14 @@ public class RecipientController {
 
     @Autowired
     private RecipientService recipientService;
+
+    @Autowired
+    private RecipientMapper recipientMapper;
+
+    @GetMapping("/recipient/{login}")
+    RecipientDTO getRecipient(@PathVariable("login") String login) {
+        return recipientMapper.entityToDto(recipientService.findRecipientByLogin(login));
+    }
 
     @PostMapping("/recipients/save")
     void saveRecipient(@RequestBody RecipientDTO recipientDTO) {

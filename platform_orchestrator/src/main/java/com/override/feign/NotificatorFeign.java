@@ -4,10 +4,7 @@ import dto.MailDTO;
 import dto.RecipientDTO;
 import enums.Communication;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name = "notification")
 public interface NotificatorFeign {
@@ -17,6 +14,21 @@ public interface NotificatorFeign {
 
     @PostMapping("/calls/code")
     String callToClient(@RequestBody String phoneNumber);
+
+    @GetMapping("/recipient/{login}")
+    RecipientDTO getRecipient(@PathVariable("login") String login);
+
+    @GetMapping("/{login}/securityCode")
+    String getSecurityCode(@PathVariable("login") String login);
+
+    @GetMapping("/vkChatId/{login}")
+    Integer getVkChatID(@PathVariable String login);
+
+    @PostMapping("/recipients/setCommunication")
+    void setCommunications(
+            @RequestParam("login") String login,
+            @RequestParam("value") String value,
+            @RequestParam("type") Communication type);
 
     @PostMapping("/recipients/save")
     void saveRecipient(@RequestBody RecipientDTO recipientDTO);
