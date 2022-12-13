@@ -10,6 +10,7 @@ import com.vk.api.sdk.queries.messages.MessagesGetLongPollHistoryQuery;
 import dto.MessageDTO;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.cache.CacheException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.Cache;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.Random;
 
 @Slf4j
-@Service("VkService")
+@Service
 public class VkService {
 
     @Value("${vk.groupId}")
@@ -106,8 +107,8 @@ public class VkService {
 
     public Integer getChatIdByCode(String code) {
         Cache data = cacheManager.getCache("vkChatId");
-        if (data.get(code) == null) {
-            throw new NullPointerException();
+        if (data == null || data.get(code) == null) {
+            throw new CacheException("There is no such cache");
         }
         Cache.ValueWrapper cacheCode = data.get(code);
         String chatId = (String) cacheCode.get();
@@ -124,7 +125,7 @@ public class VkService {
         return securityCode;
     }
 
-    @Retryable(value = NullPointerException.class, backoff = @Backoff(value = 1000), maxAttempts = 30)
+    @Retryable(value = CacheException.class, backoff = @Backoff(value = 1000), maxAttempts = 30)
     public Integer getVkChatId(String login) {
         String code = getSecurityCodeByLogin(login);
         return getChatIdByCode(code);
