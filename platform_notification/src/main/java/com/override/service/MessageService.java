@@ -72,6 +72,9 @@ public class MessageService {
         if (recipient.getTelegramId().isPresent()) {
             communicationList1.add(Communication.valueOf("TELEGRAM"));
         }
+        if (recipient.getVkChatId().isPresent()) {
+            communicationList1.add(Communication.valueOf("VK"));
+        }
 
         return communicationList1;
     }

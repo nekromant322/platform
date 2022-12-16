@@ -15,7 +15,7 @@
     <description>Orchestration for platform application</description>
 
     <properties>
-        <jacoco.min.coverage>0.59</jacoco.min.coverage>
+        <jacoco.min.coverage>0.7</jacoco.min.coverage>
         <java.version>11</java.version>
     </properties>
 

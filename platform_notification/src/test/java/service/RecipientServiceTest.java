@@ -136,4 +136,12 @@ public class RecipientServiceTest {
 
         verify(recipientRepository, times(1)).findRecipientByLogin(recipient.getLogin());
     }
+
+    @Test
+    public void testSave() {
+        RecipientDTO recipientDTO = RecipientDTO.builder().email("test").vkChatId("test").login("test").phoneNumber("test").build();
+        when(recipientRepository.findRecipientByLogin(recipientDTO.getLogin())).thenReturn(Optional.of(Recipient.builder().build()));
+        recipientService.save(recipientDTO);
+        verify(recipientRepository, times(1)).save(Recipient.builder().email("test").phoneNumber("test").build());
+    }
 }

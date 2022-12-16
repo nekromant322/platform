@@ -15,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.MailSendException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -120,5 +122,17 @@ public class MessageServiceTest {
         assertThrows(MailSendException.class, () -> emailCommunication.sendMessage(recipient, message));
         assertThrows(SmsRuException.class, () -> smsCommunication.sendMessage(recipient, message));
         assertThatThrownBy(() -> messageService.sendMessage(recipient.getLogin(), message, communication)).isInstanceOf(SendMessageException.class);
+    }
+
+    @Test
+    public void testCheckNotificationMethods() {
+        List<Communication> communications = new ArrayList<>();
+        communications.add(Communication.EMAIL);
+        communications.add(Communication.SMS);
+        communications.add(Communication.TELEGRAM);
+        communications.add(Communication.VK);
+        when(recipientService.findRecipientByLogin(any())).thenReturn(new Recipient(1L, "test", "test", "test", "test", "test"));
+        List<Communication> result = messageService.checkNotificationMethods("test");
+        assertEquals(communications, result);
     }
 }
