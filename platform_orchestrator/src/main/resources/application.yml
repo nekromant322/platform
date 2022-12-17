@@ -57,6 +57,10 @@ documentSizeLimit:
 cache:
   timeout: 6 #minutes
   size: 100
+
+cacheManager:
+  timeout: 5m
+  size: 100
 ---
 
 ---
