@@ -24,5 +24,4 @@ public class CacheManagerSettingsGenerationService {
     public String getRestoreCacheManagerSpecification() {
         return String.format(SPEC_AS_STRING, sizeOfCache, timeToExpireRestoreCache);
     }
-
 }

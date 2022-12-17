@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -37,7 +37,7 @@ public class RestoreServiceTest {
     private Cache cache;
 
     @Mock
-    private CacheManager cacheManager;
+    private CaffeineCacheManager cacheManager;
 
     @Test
     public void testSendSecurityCode() {
