@@ -9,10 +9,11 @@ import dto.MailDTO;
 import dto.PersonalDataDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class VerificationService {
     private NotificatorFeign notificatorFeign;
 
     @Autowired
-    private CacheManager cacheManager;
+    private CaffeineCacheManager cacheManager;
 
     @Autowired
     private PersonalDataRepository personalDataRepository;
@@ -37,16 +38,24 @@ public class VerificationService {
     @Autowired
     private PersonalDataMapper personalDataMapper;
 
-    @CachePut(value="codeCallSecurity")
+    @Autowired
+    private CacheManagerSettingsGenerationService cacheManagerSettingsGenerationService;
+
+    @PostConstruct
+    private void setCacheSettings() {
+        cacheManager.setCacheSpecification(cacheManagerSettingsGenerationService.getVerificationCacheManagerSpecification());
+    }
+
+    @CachePut(value = "codeCallSecurity")
     public String getCodeCallSecurity(String phone) {
         return notificatorFeign.callToClient(phone);
     }
 
-    @CachePut(value="codeEmailMessageSecurity")
+    @CachePut(value = "codeEmailMessageSecurity")
     public String getCodeEmailSecurity(String email) {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < 4; i++) {
-            int numberForCode = (int)(Math.random() * 10);
+        for (int i = 0; i < 4; i++) {
+            int numberForCode = (int) (Math.random() * 10);
             sb.append(numberForCode);
         }
         String code = sb.toString();

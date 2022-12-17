@@ -7,10 +7,11 @@ import dto.ChangePasswordDTO;
 import enums.Communication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Random;
 
 @Service
@@ -22,13 +23,21 @@ public class RestoreService {
     private NotificatorFeign notificatorFeign;
 
     @Autowired
-    private CacheManager cacheManager;
+    private CaffeineCacheManager cacheManager;
 
     @Autowired
     private PlatformUserRepository platformUserRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private CacheManagerSettingsGenerationService cacheManagerSettingsGenerationService;
+
+    @PostConstruct
+    private void setCacheSettings() {
+        cacheManager.setCacheSpecification(cacheManagerSettingsGenerationService.getRestoreCacheManagerSpecification());
+    }
 
     public void getCodeTelegramSecurity(String username, String code) {
         ChangePasswordDTO changePasswordDTO = new ChangePasswordDTO();
