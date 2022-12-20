@@ -26,8 +26,6 @@ public class YooMoneyService {
     @Autowired
     private YooMoneyApiFeign yooMoneyApiFeign;
 
-    Random random = new Random();
-
     public YooMoneyConfirmationRequestDTO createYooMoneyConfirmationRequestDTO(YooMoneyRequestInfoDTO yooMoneyRequestInfoDTO) {
         return YooMoneyConfirmationRequestDTO
                 .builder()
@@ -55,6 +53,7 @@ public class YooMoneyService {
     }
 
     public Integer getRandomInteger() {
+        Random random = new Random();
         return random.nextInt();
     }
 }
