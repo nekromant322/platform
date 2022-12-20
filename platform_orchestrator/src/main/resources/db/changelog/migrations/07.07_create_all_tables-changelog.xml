@@ -251,8 +251,10 @@
             <column name="date" type="date"/>
             <column name="account_number" type="bigint"/>
             <column name="message" type="varchar(255)"/>
+            <column name="payment_id" type="varchar(255)"/>
+            <column name="status" type="varchar(255)"/>
             <column name="student_name" type="varchar(255)"/>
-            <column name="sum" type="bigint"/>
+            <column name="sum" type="float"/>
         </createTable>
 
         <createTable tableName="default_question">
