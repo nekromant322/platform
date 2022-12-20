@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public class GeneralIncomeMapper {
 
-    public GeneralIncomeDTO entityToDto(List<LocalDate> labels, List<Long> income){
+    public GeneralIncomeDTO entityToDto(List<LocalDate> labels, List<Double> income) {
         return GeneralIncomeDTO.builder()
                 .dataMonth(labels)
                 .income(income)

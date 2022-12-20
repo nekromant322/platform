@@ -75,6 +75,9 @@ vk:
     version: 5.131
     appId: 51409619
 
+yooMoney:
+  authorization : ${YOO_MONEY_AUTH}
+
 testData:
   enabled: true
   usersCount: 5

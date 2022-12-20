@@ -14,7 +14,7 @@ public class PageController {
     private Cache<Integer, HelpMeDTO> helpMeCache;
 
     @GetMapping("/restore")
-    public String restorePage(){
+    public String restorePage() {
         return "restore";
     }
 
@@ -110,5 +110,10 @@ public class PageController {
     @GetMapping("/login")
     public String authPage() {
         return "login";
+    }
+
+    @GetMapping("/yooMoneyPayment")
+    public String yooMoneyPayment() {
+        return "yooMoneyPayment";
     }
 }

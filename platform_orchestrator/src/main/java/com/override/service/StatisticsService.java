@@ -95,7 +95,7 @@ public class StatisticsService {
     }
 
     public GeneralIncomeDTO getGeneralPayment() {
-        List<Long> income = new ArrayList<>();
+        List<Double> income = new ArrayList<>();
         LocalDate firstPaymentDate = paymentRepository.findFirstDate();
         LocalDate firstMonthPayment = LocalDate.of(firstPaymentDate.getYear(), firstPaymentDate.getMonth(), 1);
 
@@ -103,10 +103,10 @@ public class StatisticsService {
                 .limit(MONTHS.between(firstMonthPayment, LocalDate.now()) + 1)
                 .collect(Collectors.toList());
         labels.forEach(label -> income.add(paymentRepository.getAllBetweenDates(label, label.plusMonths(1).minusDays(1))
-                    .stream()
-                    .map(Payment::getSum)
-                    .mapToLong(Long::longValue)
-                    .sum()));
+                .stream()
+                .map(Payment::getSum)
+                .mapToDouble(Double::doubleValue)
+                .sum()));
         return generalIncomeMapper.entityToDto(labels, income);
     }
 }

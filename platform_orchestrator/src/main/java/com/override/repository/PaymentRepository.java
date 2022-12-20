@@ -8,17 +8,20 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface PaymentRepository  extends JpaRepository<Payment, Long> {
+public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     @Query(value = "SELECT student_name as sum FROM payment Group BY student_name", nativeQuery = true)
     List<String> findDistinctStudentNameValues();
 
     @Query(value = "SELECT SUM(sum) as sum FROM payment Group BY student_name", nativeQuery = true)
-    List<Long> findSumForStudent ();
+    List<Long> findSumForStudent();
 
     @Query(value = "SELECT min(date) FROM payment", nativeQuery = true)
     LocalDate findFirstDate();
 
     @Query(value = "SELECT * FROM payment WHERE date >= :startDate AND date <= :endDate", nativeQuery = true)
     List<Payment> getAllBetweenDates(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    @Query(value = "SELECT * FROM payment WHERE status = 'pending'", nativeQuery = true)
+    List<Payment> getAllPaymentIdsWithPendingStatus();
 }

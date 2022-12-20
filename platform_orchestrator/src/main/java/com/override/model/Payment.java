@@ -24,11 +24,15 @@ public class Payment {
 
     private LocalDate date;
 
-    private Long sum;
+    private Double sum;
 
     @ApiModelProperty(value = "Номер рассчетного счета, куда делается платеж (номер карты получателя платежа)")
     @Column(name = "account_number")
     private Long accountNumber;
 
     private String message;
+
+    private String status;
+
+    private String paymentId;
 }

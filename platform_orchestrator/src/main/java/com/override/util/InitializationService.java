@@ -152,7 +152,7 @@ public class InitializationService {
                             .studentName(graduateUserList.get(rand.nextInt(graduateUserList.size())).getLogin())
                             .date(getRandomDateForTestPayment())
                             .accountNumber((long) faker.number().numberBetween(100000000, 900000000))
-                            .sum((long) faker.number().numberBetween(10000, 100000))
+                            .sum((double) faker.number().numberBetween(10000, 100000))
                             .message(faker.letterify("???????????????????????????????????????????"))
                             .build()
             );
