@@ -29,14 +29,17 @@ public class YooMoneyService {
     @Autowired
     private YooMoneyApiFeign yooMoneyApiFeign;
 
-    public YooMoneyConfirmationRequestDTO createYooMoneyConfirmationRequestDTO(YooMoneyRequestInfoDTO yooMoneyRequestInfoDTO) {
+    public YooMoneyConfirmationRequestDTO createYooMoneyConfirmationRequestDTO(YooMoneyRequestInfoDTO infoDTO) {
         return YooMoneyConfirmationRequestDTO
                 .builder()
-                .amount(YooMoneyConfirmationRequestDTO.Amount.builder().currency("RUB").value(yooMoneyRequestInfoDTO.getAmount()).build())
+                .amount(YooMoneyConfirmationRequestDTO.Amount.builder()
+                        .currency("RUB")
+                        .value(infoDTO.getAmount())
+                        .build())
                 .confirmation(YooMoneyConfirmationRequestDTO.Confirmation.builder().type("embedded").build())
                 .capture(true)
-                .description(yooMoneyRequestInfoDTO.getComment())
-                .merchantCustomerId(yooMoneyRequestInfoDTO.getLogin())
+                .description(infoDTO.getComment())
+                .merchantCustomerId(infoDTO.getLogin())
                 .build();
     }
 
