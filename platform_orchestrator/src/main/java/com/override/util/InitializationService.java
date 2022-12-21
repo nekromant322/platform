@@ -315,9 +315,9 @@ public class InitializationService {
     private LocalDateTime getRandomDateForTestPayment() {
         LocalDateTime start = LocalDateTime.of(LocalDate.of(2020, 1, 1), LocalTime.of(0, 0));
         LocalDateTime end = LocalDateTime.now();
-        long startEpochMilli = start.toEpochSecond(ZoneOffset.of("Europe/Moscow"));
-        long endEpochMilli = end.toEpochSecond(ZoneOffset.of("Europe/Moscow"));
-        return LocalDateTime.ofInstant(between(Instant.ofEpochMilli(startEpochMilli), Instant.ofEpochMilli(endEpochMilli)), ZoneOffset.of("Europe/Moscow"));
+        long startEpochSecond = start.toEpochSecond(ZoneOffset.of("Europe/Moscow"));
+        long endEpochSecond = end.toEpochSecond(ZoneOffset.of("Europe/Moscow"));
+        return LocalDateTime.ofInstant(between(Instant.ofEpochMilli(startEpochSecond), Instant.ofEpochMilli(endEpochSecond)), ZoneOffset.of("Europe/Moscow"));
     }
 
     public Instant between(Instant startInclusive, Instant endExclusive) {
