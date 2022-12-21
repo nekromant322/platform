@@ -248,7 +248,7 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="date" type="date"/>
+            <column name="date" type="datetime"/>
             <column name="account_number" type="bigint"/>
             <column name="message" type="varchar(255)"/>
             <column name="payment_id" type="varchar(255)"/>

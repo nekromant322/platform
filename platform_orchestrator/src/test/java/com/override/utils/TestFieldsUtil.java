@@ -120,7 +120,7 @@ public class TestFieldsUtil {
                 .message("Первый платеж")
                 .accountNumber(123321L)
                 .studentName("Andrey")
-                .date(LocalDate.of(2022, 7, 24))
+                .date(LocalDateTime.of(LocalDate.of(2022, 7, 24),LocalTime.of(0,0)))
                 .build();
     }
 
@@ -129,7 +129,7 @@ public class TestFieldsUtil {
                 .sum(200000.00)
                 .comment("Первый платеж")
                 .accountNumber(123321L)
-                .date(LocalDate.of(2022, 7, 24))
+                .date(LocalDateTime.of(LocalDate.of(2022, 7, 24),LocalTime.of(0,0)))
                 .build();
     }
 

@@ -16,7 +16,7 @@ function storeToken() {
 
     $.ajax({
         method: 'POST',
-        url: "/confirmationToken",
+        url: "/yooMoney/authorize",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(yooMoneyRequestInfoDTO),
         success: function (result) {

@@ -1,13 +1,12 @@
 package com.override.model;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -22,11 +21,10 @@ public class Payment {
     @Column(name = "student_name")
     private String studentName;
 
-    private LocalDate date;
+    private LocalDateTime date;
 
     private Double sum;
 
-    @ApiModelProperty(value = "Номер рассчетного счета, куда делается платеж (номер карты получателя платежа)")
     @Column(name = "account_number")
     private Long accountNumber;
 

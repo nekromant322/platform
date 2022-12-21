@@ -5,7 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -14,7 +15,7 @@ public class PaymentDTO {
     private Long accountNumber;
     private String comment;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDate date;
+    private LocalDateTime date;
     private Double sum;
     private String status;
     private String paymentId;

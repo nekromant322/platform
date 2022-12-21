@@ -22,6 +22,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     @Query(value = "SELECT * FROM payment WHERE date >= :startDate AND date <= :endDate", nativeQuery = true)
     List<Payment> getAllBetweenDates(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
-    @Query(value = "SELECT * FROM payment WHERE status = 'pending'", nativeQuery = true)
-    List<Payment> getAllPaymentIdsWithPendingStatus();
+    List<Payment> getByStatus(@Param("status") String status);
 }

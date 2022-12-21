@@ -6,6 +6,8 @@ import com.override.repository.PaymentRepository;
 import dto.YooMoneyConfirmationRequestDTO;
 import dto.YooMoneyConfirmationResponseDTO;
 import dto.YooMoneyRequestInfoDTO;
+import enums.PaymentStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Random;
 
 @Service
+@Slf4j
 public class YooMoneyService {
 
     @Value("${yooMoney.authorization}")
@@ -33,27 +36,35 @@ public class YooMoneyService {
                 .confirmation(YooMoneyConfirmationRequestDTO.Confirmation.builder().type("embedded").build())
                 .capture(true)
                 .description(yooMoneyRequestInfoDTO.getComment())
-                .merchant_customer_id(yooMoneyRequestInfoDTO.getLogin())
+                .merchantCustomerId(yooMoneyRequestInfoDTO.getLogin())
                 .build();
     }
 
-    @Scheduled(initialDelay = 60000, fixedDelay = 1800000)
-    private void tryToUpdatePayments() {
-        List<Payment> listOfPayments = paymentRepository.getAllPaymentIdsWithPendingStatus();
+    @Scheduled(initialDelayString = "${yooMoney.initialDelay}", fixedDelayString = "${yooMoney.fixedDelay}")
+    public void tryToUpdatePayments() {
+        List<Payment> listOfPayments = paymentRepository.getByStatus(PaymentStatus.PENDING.getName());
         for (Payment payment : listOfPayments) {
-            YooMoneyConfirmationResponseDTO responseDTO = yooMoneyApiFeign.getPaymentInfo(payment.getPaymentId(), authorization);
-            if (responseDTO.getStatus().equals("succeeded")) {
-                payment.setStatus(responseDTO.getStatus());
+            YooMoneyConfirmationResponseDTO response;
+            try {
+                response = yooMoneyApiFeign.getPaymentInfo(payment.getPaymentId(), authorization);
+            } catch (Exception e) {
+                log.warn("При проверки платежа № " + payment.getPaymentId() + " произошла ошибка " + e.getClass());
+                continue;
+            }
+
+            if (response.getStatus().equals(PaymentStatus.SUCCEEDED.getName())) {
+                payment.setStatus(response.getStatus());
                 paymentRepository.save(payment);
             }
-            if (responseDTO.getStatus().equals("canceled")) {
+            if (response.getStatus().equals(PaymentStatus.CANCELED.getName())) {
                 paymentRepository.delete(payment);
             }
         }
     }
 
-    public Integer getRandomInteger() {
+    public YooMoneyConfirmationResponseDTO getConfirmationResponseDTO(YooMoneyRequestInfoDTO yooMoneyRequestInfoDTO) {
         Random random = new Random();
-        return random.nextInt();
+        YooMoneyConfirmationRequestDTO request = createYooMoneyConfirmationRequestDTO(yooMoneyRequestInfoDTO);
+        return yooMoneyApiFeign.getConfirmationResponse(random.nextInt(), authorization, request);
     }
 }
