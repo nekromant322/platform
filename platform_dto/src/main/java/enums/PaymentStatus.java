@@ -1,17 +1,12 @@
 package enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum PaymentStatus {
-    SUCCEEDED("succeeded"),
-    PENDING("pending"),
-    CANCELED("canceled");
-
-    private final String name;
-
-    PaymentStatus(String status) {
-        name = status;
-    }
-
-    public String getName() {
-        return name;
-    }
+    @JsonProperty("succeeded")
+    SUCCEEDED,
+    @JsonProperty("pending")
+    PENDING,
+    @JsonProperty("canceled")
+    CANCELED
 }

@@ -10,7 +10,6 @@ import enums.PaymentStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,9 +42,8 @@ public class YooMoneyService {
                 .build();
     }
 
-    @Scheduled(initialDelayString = "${yooMoney.initialDelay}", fixedDelayString = "${yooMoney.fixedDelay}")
     public void tryToUpdatePayments() {
-        List<Payment> listOfPayments = paymentRepository.getByStatus(PaymentStatus.PENDING.getName());
+        List<Payment> listOfPayments = paymentRepository.getByStatus(PaymentStatus.PENDING);
         for (Payment payment : listOfPayments) {
             YooMoneyConfirmationResponseDTO response;
             try {
@@ -55,11 +53,11 @@ public class YooMoneyService {
                 continue;
             }
 
-            if (response.getStatus().equals(PaymentStatus.SUCCEEDED.getName())) {
+            if (response.getStatus().equals(PaymentStatus.SUCCEEDED)) {
                 payment.setStatus(response.getStatus());
                 paymentRepository.save(payment);
             }
-            if (response.getStatus().equals(PaymentStatus.CANCELED.getName())) {
+            if (response.getStatus().equals(PaymentStatus.CANCELED)) {
                 paymentRepository.delete(payment);
             }
         }

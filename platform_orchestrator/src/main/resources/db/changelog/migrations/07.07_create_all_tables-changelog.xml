@@ -252,7 +252,7 @@
             <column name="account_number" type="bigint"/>
             <column name="message" type="varchar(255)"/>
             <column name="payment_id" type="varchar(255)"/>
-            <column name="status" type="varchar(255)"/>
+            <column name="status" type="int"/>
             <column name="student_name" type="varchar(255)"/>
             <column name="sum" type="float"/>
         </createTable>

@@ -1,5 +1,6 @@
 package com.override.model;
 
+import enums.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,7 +31,7 @@ public class Payment {
 
     private String message;
 
-    private String status;
+    private PaymentStatus status;
 
     private String paymentId;
 }

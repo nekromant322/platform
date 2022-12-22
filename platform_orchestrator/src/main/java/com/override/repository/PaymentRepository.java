@@ -1,6 +1,7 @@
 package com.override.repository;
 
 import com.override.model.Payment;
+import enums.PaymentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,5 +23,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     @Query(value = "SELECT * FROM payment WHERE date >= :startDate AND date <= :endDate", nativeQuery = true)
     List<Payment> getAllBetweenDates(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
-    List<Payment> getByStatus(@Param("status") String status);
+    List<Payment> getByStatus(@Param("status") PaymentStatus status);
 }

@@ -1,5 +1,6 @@
 package dto;
 
+import enums.PaymentStatus;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,7 @@ public class PaymentDTO {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime date;
     private Double sum;
-    private String status;
+    private PaymentStatus status;
     private String paymentId;
 }
 

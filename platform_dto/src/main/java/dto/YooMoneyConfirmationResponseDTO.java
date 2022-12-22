@@ -1,6 +1,7 @@
 package dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import enums.PaymentStatus;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,7 @@ public class YooMoneyConfirmationResponseDTO {
     private String id;
 
     @ApiModelProperty(value = "Статус платежа. Возможные значения: pending, waiting_for_capture, succeeded и canceled.")
-    private String status;
+    private PaymentStatus status;
 
     private Amount amount;
 

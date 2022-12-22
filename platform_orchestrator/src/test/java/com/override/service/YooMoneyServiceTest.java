@@ -47,17 +47,17 @@ public class YooMoneyServiceTest {
                 .builder()
                 .paymentId("testPaymentId")
                 .build();
-        when(paymentRepository.getByStatus(PaymentStatus.PENDING.getName()))
+        when(paymentRepository.getByStatus(PaymentStatus.PENDING))
                 .thenReturn(List.of(payment));
         when(yooMoneyApiFeign.getPaymentInfo(payment.getPaymentId(), authorization))
                 .thenReturn(YooMoneyConfirmationResponseDTO
                         .builder()
-                        .status(PaymentStatus.SUCCEEDED.getName())
+                        .status(PaymentStatus.SUCCEEDED)
                         .build());
         Payment paymentSucceeded = Payment
                 .builder()
                 .paymentId(payment.getPaymentId())
-                .status(PaymentStatus.SUCCEEDED.getName())
+                .status(PaymentStatus.SUCCEEDED)
                 .build();
         yooMoneyService.tryToUpdatePayments();
         verify(paymentRepository, times(1)).save(paymentSucceeded);
@@ -69,12 +69,12 @@ public class YooMoneyServiceTest {
                 .builder()
                 .paymentId("testPaymentId")
                 .build();
-        when(paymentRepository.getByStatus(PaymentStatus.PENDING.getName()))
+        when(paymentRepository.getByStatus(PaymentStatus.PENDING))
                 .thenReturn(List.of(payment));
         when(yooMoneyApiFeign.getPaymentInfo(payment.getPaymentId(), authorization))
                 .thenReturn(YooMoneyConfirmationResponseDTO
                         .builder()
-                        .status(PaymentStatus.CANCELED.getName())
+                        .status(PaymentStatus.CANCELED)
                         .build());
         yooMoneyService.tryToUpdatePayments();
         verify(paymentRepository, times(1)).delete(payment);
