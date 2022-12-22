@@ -1,5 +1,6 @@
 package dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,8 @@ public class YooMoneyConfirmationResponseDTO {
     private Recipient recipient;
 
     @ApiModelProperty(value = "Время создания заказа. Указывается по UTC и передается в формате ISO 8601.")
-    private String created_at;
+    @JsonProperty("created_at")
+    private String createdAt;
 
     private Confirmation confirmation;
 
@@ -39,7 +41,8 @@ public class YooMoneyConfirmationResponseDTO {
     private Object metadata;
 
     @ApiModelProperty(value = "Идентификатор покупателя в нашей системе (Login)")
-    private String merchant_customer_id;
+    @JsonProperty("merchant_customer_id")
+    private String merchantCustomerId;
 
     @Data
     public static class Amount {
@@ -55,11 +58,13 @@ public class YooMoneyConfirmationResponseDTO {
     public static class Recipient {
 
         @ApiModelProperty(value = "Идентификатор магазина в ЮKassa.")
-        private Integer account_id;
+        @JsonProperty("account_id")
+        private Integer accountId;
 
         @ApiModelProperty(value = "Идентификатор субаккаунта." +
                 " Используется для разделения потоков платежей в рамках одного аккаунта.")
-        private Integer gateway_id;
+        @JsonProperty("gateway_id")
+        private Integer gatewayId;
     }
 
     @Data
@@ -69,6 +74,7 @@ public class YooMoneyConfirmationResponseDTO {
         private String type;
 
         @ApiModelProperty(value = "Токен для инициализации платежного виджета ЮKassa ")
-        private String confirmation_token;
+        @JsonProperty("confirmation_token")
+        private String confirmationToken;
     }
 }
