@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <jacoco.min.coverage>0.7</jacoco.min.coverage>
+        <jacoco.min.coverage>0</jacoco.min.coverage>
     </properties>
 
     <dependencies>
@@ -157,7 +157,6 @@
                         <exclude>**/exception/**</exclude>
                         <exclude>**/feign/**</exclude>
                         <exclude>**/mapper/**</exclude>
-                        <exclude>**/model/**</exclude>
                         <exclude>**/repository/**</exclude>
                     </excludes>
                 </configuration>
