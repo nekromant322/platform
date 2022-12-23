@@ -61,7 +61,8 @@ cache:
 cacheManager:
   restoreTimeout: 5m
   verificationTimeout: 10m
-  size: 100
+  sizeOfRestoreCache: 100
+  sizeOfVerificationCache: 100
 ---
 
 ---
