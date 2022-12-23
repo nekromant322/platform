@@ -156,7 +156,6 @@
                         <exclude>**/controller/**</exclude>
                         <exclude>**/exception/**</exclude>
                         <exclude>**/feign/**</exclude>
-                        <exclude>**/mapper/**</exclude>
                         <exclude>**/repository/**</exclude>
                     </excludes>
                 </configuration>
