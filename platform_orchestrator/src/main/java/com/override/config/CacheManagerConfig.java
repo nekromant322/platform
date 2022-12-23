@@ -1,4 +1,4 @@
-package com.override.config.security;
+package com.override.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -12,19 +12,24 @@ public class CacheManagerConfig {
 
     private final String SPEC_AS_STRING = "maximumSize=%s,expireAfterAccess=%s";
 
-    @Value("${cacheManager.restoreTimeout}")
+    @Value("${cacheManager.restore.timeout}")
     private String timeToExpireRestoreCache;
 
-    @Value("${cacheManager.verificationTimeout}")
+    @Value("${cacheManager.verification.timeout}")
     private String timeToExpireVerificationCache;
 
-    @Value("${cacheManager.sizeOfRestoreCache}")
+    @Value("${cacheManager.restore.size}")
     private long sizeOfRestoreCache;
 
-    @Value("${cacheManager.sizeOfVerificationCache}")
+    @Value("${cacheManager.verification.size}")
     private long sizeOfVerificationCache;
 
     @Primary
+    @Bean
+    public CacheManager getCacheManager() {
+        return new CaffeineCacheManager();
+    }
+
     @Bean
     public CacheManager getRestoreCacheManager() {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager();
