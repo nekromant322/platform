@@ -75,6 +75,12 @@ vk:
     version: 5.131
     appId: 51409619
 
+yooMoney:
+  authorization : ${YOO_MONEY_AUTH}
+  url : https://api.yookassa.ru/v3
+  initialDelay : 60000
+  fixedDelay : 1800000
+
 testData:
   enabled: true
   usersCount: 5

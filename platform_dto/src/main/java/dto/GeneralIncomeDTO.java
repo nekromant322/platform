@@ -14,5 +14,5 @@ public class GeneralIncomeDTO {
             "Самая первая дата - это первое число того месяца, в котором был первый платеж от студента")
     private List<LocalDate> dataMonth;
     @ApiModelProperty(value = "Лист с доходами от студентов за каждый месяц")
-    private List<Long> income;
+    private List<Double> income;
 }

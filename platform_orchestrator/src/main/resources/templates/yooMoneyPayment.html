@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YooMoneyPaymentPage</title>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
+<script src="/js/yooMoneyPayment.js"></script>
+
+<div id="ids"></div>
+<div id="payment-form"></div>
+
+<script>
+    //Инициализация виджета. Все параметры обязательные.
+    const checkout = new window.YooMoneyCheckoutWidget({
+        confirmation_token: getToken(), //Токен, который перед проведением оплаты нужно получить от ЮKassa
+        return_url: 'http://localhost:8000', //Ссылка на страницу завершения оплаты
+        error_callback: function (error) {
+            //Обработка ошибок инициализации
+        }
+    });
+
+    //Отображение платежной формы в контейнере
+    checkout.render('payment-form')
+        //Метод возвращает Promise, исполнение которого говорит о полной загрузке платежной формы (можно не использовать).
+        .then(() => {
+            //Код, который нужно выполнить после отображения платежной формы.
+        });
+</script>
+</body>
+</html>

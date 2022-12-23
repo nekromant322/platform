@@ -17,8 +17,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -152,7 +151,7 @@ public class InitializationService {
                             .studentName(graduateUserList.get(rand.nextInt(graduateUserList.size())).getLogin())
                             .date(getRandomDateForTestPayment())
                             .accountNumber((long) faker.number().numberBetween(100000000, 900000000))
-                            .sum((long) faker.number().numberBetween(10000, 100000))
+                            .sum((double) faker.number().numberBetween(10000, 100000))
                             .message(faker.letterify("???????????????????????????????????????????"))
                             .build()
             );
@@ -313,11 +312,21 @@ public class InitializationService {
         return LocalDate.ofEpochDay(randomDay);
     }
 
-    private LocalDate getRandomDateForTestPayment() {
-        long minDay = LocalDate.now().minusDays(150).toEpochDay();
-        long maxDay = LocalDate.now().minusDays(2).toEpochDay();
-        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
-        return LocalDate.ofEpochDay(randomDay);
+    private LocalDateTime getRandomDateForTestPayment() {
+        LocalDateTime start = LocalDateTime.of(LocalDate.of(2020, 1, 1), LocalTime.of(0, 0));
+        LocalDateTime end = LocalDateTime.now();
+        long startEpochSecond = start.toEpochSecond(ZoneOffset.of("Europe/Moscow"));
+        long endEpochSecond = end.toEpochSecond(ZoneOffset.of("Europe/Moscow"));
+        return LocalDateTime.ofInstant(between(Instant.ofEpochMilli(startEpochSecond), Instant.ofEpochMilli(endEpochSecond)), ZoneOffset.of("Europe/Moscow"));
+    }
+
+    public Instant between(Instant startInclusive, Instant endExclusive) {
+        long startSeconds = startInclusive.getEpochSecond();
+        long endSeconds = endExclusive.getEpochSecond();
+        long random = ThreadLocalRandom
+                .current()
+                .nextLong(startSeconds, endSeconds);
+        return Instant.ofEpochSecond(random);
     }
 
     private void joinRequestsInit() {

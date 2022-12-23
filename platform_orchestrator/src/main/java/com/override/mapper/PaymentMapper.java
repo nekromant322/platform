@@ -13,6 +13,8 @@ public class PaymentMapper {
                 .sum(paymentDTO.getSum())
                 .accountNumber(paymentDTO.getAccountNumber())
                 .message(paymentDTO.getComment())
+                .status(paymentDTO.getStatus())
+                .paymentId(paymentDTO.getPaymentId())
                 .build();
     }
 }

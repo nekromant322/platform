@@ -116,20 +116,20 @@ public class TestFieldsUtil {
 
     public static Payment generateTestPayment() {
         return Payment.builder()
-                .sum(200000L)
+                .sum(200000.00)
                 .message("Первый платеж")
                 .accountNumber(123321L)
                 .studentName("Andrey")
-                .date(LocalDate.of(2022, 7, 24))
+                .date(LocalDateTime.of(LocalDate.of(2022, 7, 24),LocalTime.of(0,0)))
                 .build();
     }
 
     public static PaymentDTO generateTestPaymentDTO() {
         return PaymentDTO.builder()
-                .sum(200000L)
+                .sum(200000.00)
                 .comment("Первый платеж")
                 .accountNumber(123321L)
-                .date(LocalDate.of(2022, 7, 24))
+                .date(LocalDateTime.of(LocalDate.of(2022, 7, 24),LocalTime.of(0,0)))
                 .build();
     }
 
