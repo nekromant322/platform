@@ -99,3 +99,7 @@ mail:
 vk:
   groupId: ${VK_GROUP_ID}
   token: ${VK_TOKEN}
+
+cacheManager:
+  timeout: 1m
+  size: 100
