@@ -62,15 +62,18 @@ public class MessageService {
         List<Communication> communicationList1 = new ArrayList<>();
 
         if (recipient.getEmail().isPresent()) {
-            communicationList1.add(Communication.valueOf("EMAIL"));
+            communicationList1.add(Communication.EMAIL);
         }
 
         if (recipient.getPhoneNumber().isPresent()) {
-            communicationList1.add(Communication.valueOf("SMS"));
+            communicationList1.add(Communication.SMS);
         }
 
         if (recipient.getTelegramId().isPresent()) {
-            communicationList1.add(Communication.valueOf("TELEGRAM"));
+            communicationList1.add(Communication.TELEGRAM);
+        }
+        if (recipient.getVkChatId().isPresent()) {
+            communicationList1.add(Communication.VK);
         }
 
         return communicationList1;

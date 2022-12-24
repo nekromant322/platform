@@ -60,23 +60,35 @@ public class VkService {
     }
 
     @Scheduled(initialDelay = 1000, fixedDelay = Long.MAX_VALUE)
-    public void enableBot() throws InterruptedException, ClientException, ApiException {
-        Integer ts = vk.messages().getLongPollServer(actor).execute().getTs();
+    public void enableBot() throws ClientException, ApiException, InterruptedException {
+        Integer ts = vk
+                .messages()
+                .getLongPollServer(actor)
+                .execute()
+                .getTs();
         while (true) {
-            try {
-                MessagesGetLongPollHistoryQuery historyQuery = vk.messages().getLongPollHistory(actor).ts(ts);
-                List<Message> messages = historyQuery.execute().getMessages().getItems();
-                if (messages.isEmpty()) {
-                    Thread.sleep(500);
-                    continue;
-                }
-                for (Message message : messages) {
-                    extractCode(message);
-                }
-            } catch (ApiException | ClientException | FeignException e) {
-                log.error("При попытке отправить сообщение произошла ошибка \"{}\"", e.getMessage());
+            getMessages(ts);
+            ts = vk
+                    .messages()
+                    .getLongPollServer(actor)
+                    .execute()
+                    .getTs();
+            Thread.sleep(500);
+        }
+    }
+
+    public void getMessages(Integer ts) {
+        try {
+            MessagesGetLongPollHistoryQuery historyQuery = vk.messages().getLongPollHistory(actor).ts(ts);
+            List<Message> messages = historyQuery.execute().getMessages().getItems();
+            if (messages.isEmpty()) {
+                return;
             }
-            ts = vk.messages().getLongPollServer(actor).execute().getTs();
+            for (Message message : messages) {
+                extractCode(message);
+            }
+        } catch (ApiException | ClientException | FeignException e) {
+            log.error("При попытке отправить сообщение произошла ошибка \"{}\"", e.getMessage());
         }
     }
 
@@ -87,7 +99,13 @@ public class VkService {
                 Cache data = cacheManager.getCache("vkChatId");
                 data.put(code, String.valueOf(message.getFromId()));
             } else {
-                vk.messages().send(actor).message("Я тебя не понял.").userId(message.getFromId()).randomId(random.nextInt(10000)).execute();
+                vk
+                        .messages()
+                        .send(actor)
+                        .message("Я тебя не понял.")
+                        .userId(message.getFromId())
+                        .randomId(random.nextInt(10000))
+                        .execute();
             }
         } catch (ApiException | ClientException e) {
             e.printStackTrace();
