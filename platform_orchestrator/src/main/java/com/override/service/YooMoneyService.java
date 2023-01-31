@@ -1,5 +1,6 @@
 package com.override.service;
 
+import com.override.annotation.MaxExecutionTime;
 import com.override.feign.YooMoneyApiFeign;
 import com.override.model.Payment;
 import com.override.repository.PaymentRepository;
@@ -7,6 +8,7 @@ import dto.YooMoneyConfirmationRequestDTO;
 import dto.YooMoneyConfirmationResponseDTO;
 import dto.YooMoneyRequestInfoDTO;
 import enums.PaymentStatus;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,6 +65,8 @@ public class YooMoneyService {
         }
     }
 
+    @MaxExecutionTime(millis = 200)
+    @Timed("getConfirmationToken")
     public YooMoneyConfirmationResponseDTO getConfirmationResponseDTO(YooMoneyRequestInfoDTO yooMoneyRequestInfoDTO) {
         Random random = new Random();
         YooMoneyConfirmationRequestDTO request = createYooMoneyConfirmationRequestDTO(yooMoneyRequestInfoDTO);
