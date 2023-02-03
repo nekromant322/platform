@@ -8,7 +8,6 @@ import dto.YooMoneyConfirmationRequestDTO;
 import dto.YooMoneyConfirmationResponseDTO;
 import dto.YooMoneyRequestInfoDTO;
 import enums.PaymentStatus;
-import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -65,8 +64,7 @@ public class YooMoneyService {
         }
     }
 
-    @MaxExecutionTime(millis = 200)
-    @Timed("getConfirmationToken")
+    @MaxExecutionTime(millis = 500)
     public YooMoneyConfirmationResponseDTO getConfirmationResponseDTO(YooMoneyRequestInfoDTO yooMoneyRequestInfoDTO) {
         Random random = new Random();
         YooMoneyConfirmationRequestDTO request = createYooMoneyConfirmationRequestDTO(yooMoneyRequestInfoDTO);

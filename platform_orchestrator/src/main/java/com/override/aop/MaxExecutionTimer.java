@@ -1,7 +1,6 @@
 package com.override.aop;
 
 import com.override.annotation.MaxExecutionTime;
-import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -9,6 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
 
@@ -29,7 +29,7 @@ public class MaxExecutionTimer {
 
         Object proceed = null;
 
-        if (method.isAnnotationPresent(Timed.class)) {
+        if (thisJoinPoint.getSignature().getDeclaringType().isAnnotationPresent(Service.class)) {
 
             long start = System.currentTimeMillis();
 
