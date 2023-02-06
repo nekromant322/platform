@@ -220,6 +220,7 @@
                         <exclude>**/annotation/**</exclude>
                         <exclude>**/scheduler/**</exclude>
                         <exclude>**/properties/**</exclude>
+                        <exclude>**/aop/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>
