@@ -1,5 +1,6 @@
 package com.override.service;
 
+import com.override.annotation.MaxExecutionTime;
 import com.override.feign.YooMoneyApiFeign;
 import com.override.model.Payment;
 import com.override.repository.PaymentRepository;
@@ -63,6 +64,7 @@ public class YooMoneyService {
         }
     }
 
+    @MaxExecutionTime(millis = 500)
     public YooMoneyConfirmationResponseDTO getConfirmationResponseDTO(YooMoneyRequestInfoDTO yooMoneyRequestInfoDTO) {
         Random random = new Random();
         YooMoneyConfirmationRequestDTO request = createYooMoneyConfirmationRequestDTO(yooMoneyRequestInfoDTO);
