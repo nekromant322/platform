@@ -4,7 +4,7 @@ import com.override.service.communication.CommunicationStrategy;
 import com.override.service.communication.CommunicationStrategyFactory;
 import com.override.service.communication.SmsCommunication;
 import com.override.service.communication.VkCommunication;
-import enums.Communication;
+import enums.CommunicationType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,9 +35,9 @@ public class CommunicationStrategyFactoryTest {
 
     @Test
     public void testGetSenderMap() {
-        Map<Communication, CommunicationStrategy> wanted = new HashMap<>();
-        wanted.put(Communication.VK, vkCommunication);
-        wanted.put(Communication.SMS, smsCommunication);
+        Map<CommunicationType, CommunicationStrategy> wanted = new HashMap<>();
+        wanted.put(CommunicationType.VK, vkCommunication);
+        wanted.put(CommunicationType.SMS, smsCommunication);
         assertEquals(wanted, communicationStrategyFactory.getSenderMap());
     }
 }

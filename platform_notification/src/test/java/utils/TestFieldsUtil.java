@@ -6,20 +6,20 @@ import com.override.service.communication.EmailCommunication;
 import com.override.service.communication.SmsCommunication;
 import com.override.service.communication.TelegramCommunication;
 import dto.RecipientDTO;
-import enums.Communication;
+import enums.CommunicationType;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TestFieldsUtil {
 
-    public static Map<Communication, CommunicationStrategy> getSenderMap(
+    public static Map<CommunicationType, CommunicationStrategy> getSenderMap(
             TelegramCommunication telegramCommunication,
             EmailCommunication emailCommunication, SmsCommunication smsCommunication) {
-        Map<Communication, CommunicationStrategy> senderMap = new HashMap<>();
-        senderMap.put(Communication.EMAIL, emailCommunication);
-        senderMap.put(Communication.TELEGRAM, telegramCommunication);
-        senderMap.put(Communication.SMS, smsCommunication);
+        Map<CommunicationType, CommunicationStrategy> senderMap = new HashMap<>();
+        senderMap.put(CommunicationType.EMAIL, emailCommunication);
+        senderMap.put(CommunicationType.TELEGRAM, telegramCommunication);
+        senderMap.put(CommunicationType.SMS, smsCommunication);
         return senderMap;
     }
 

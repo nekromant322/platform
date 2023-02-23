@@ -11,7 +11,7 @@ import com.override.repository.VkCallRepository;
 import com.override.util.CurrentTimeService;
 import dto.ReviewDTO;
 import dto.ReviewFilterDTO;
-import enums.Communication;
+import enums.CommunicationType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -77,7 +77,7 @@ public class ReviewServiceTest {
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any(), any());
         verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(),
                 String.format(ReviewService.CONFIRMED_REVIEW_MESSAGE_TELEGRAM, testUser.getLogin(), testReviewDTO.getBookedDate(),
-                        testReviewDTO.getBookedTime(), testReviewDTO.getCallLink()), Communication.TELEGRAM);
+                        testReviewDTO.getBookedTime(), testReviewDTO.getCallLink()), CommunicationType.TELEGRAM);
     }
 
     @Test
@@ -97,7 +97,7 @@ public class ReviewServiceTest {
 
         verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(), String.format(
                 ReviewService.CHANGED_REVIEW_TIME_MESSAGE_TELEGRAM, testReviewDTO.getBookedDate(),
-                testReviewDTO.getBookedTime(), testReviewDTO.getCallLink()), Communication.TELEGRAM);
+                testReviewDTO.getBookedTime(), testReviewDTO.getCallLink()), CommunicationType.TELEGRAM);
         verify(reviewRepository, times(1)).save(any());
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any(), any());
     }
@@ -120,7 +120,7 @@ public class ReviewServiceTest {
 
         verify(notificatorFeign, times(1)).sendMessage(testReviewDTO.getStudentLogin(),
                 String.format(ReviewService.CHANGED_REVIEW_MENTOR_MESSAGE_TELEGRAM, testUserLogin,
-                        testReviewDTO.getBookedDate(), testReviewDTO.getBookedTime(), testReviewDTO.getCallLink()), Communication.TELEGRAM);
+                        testReviewDTO.getBookedDate(), testReviewDTO.getBookedTime(), testReviewDTO.getCallLink()), CommunicationType.TELEGRAM);
         verify(reviewRepository, times(1)).save(any());
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any(), any());
     }
@@ -151,7 +151,7 @@ public class ReviewServiceTest {
         reviewService.saveOrUpdate(testReviewDTO, testUser.getLogin());
 
         verify(notificatorFeign, times(1)).sendMessage(testUser.getLogin(),
-                String.format(ReviewService.NEW_REVIEW_MESSAGE_TELEGRAM, testUser.getLogin()), Communication.TELEGRAM);
+                String.format(ReviewService.NEW_REVIEW_MESSAGE_TELEGRAM, testUser.getLogin()), CommunicationType.TELEGRAM);
         verify(reviewRepository, times(1)).save(any());
         verify(reviewMapper, times(1)).dtoToEntity(any(), any(), any(), any());
     }
@@ -170,7 +170,7 @@ public class ReviewServiceTest {
         reviewService.delete(testReviewDTO.getId());
 
         verify(reviewRepository, times(1)).deleteById(1L);
-        verify(notificatorFeign, times(1)).sendMessage(testUser.getLogin(), DELETED_REVIEW_MESSAGE_TELEGRAM_TEST, Communication.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(testUser.getLogin(), DELETED_REVIEW_MESSAGE_TELEGRAM_TEST, CommunicationType.TELEGRAM);
     }
 
     @Test
@@ -307,6 +307,6 @@ public class ReviewServiceTest {
                 "Ссылка на звонок: " + review4.getVkCall().getJoinLink();
 
         reviewService.sendScheduledNotification();
-        verify(notificatorFeign, times(2)).sendMessage(review4.getStudent().getLogin(), messageText, Communication.TELEGRAM);
+        verify(notificatorFeign, times(2)).sendMessage(review4.getStudent().getLogin(), messageText, CommunicationType.TELEGRAM);
     }
 }

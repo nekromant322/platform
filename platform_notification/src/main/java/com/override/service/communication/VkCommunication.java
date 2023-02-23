@@ -3,7 +3,7 @@ package com.override.service.communication;
 import com.override.model.Recipient;
 import com.override.service.VkService;
 import dto.MessageDTO;
-import enums.Communication;
+import enums.CommunicationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ public class VkCommunication implements CommunicationStrategy {
     }
 
     @Override
-    public Communication getType() {
-        return Communication.VK;
+    public CommunicationType getType() {
+        return CommunicationType.VK;
     }
 }

@@ -9,7 +9,7 @@ import com.override.repository.JoinRequestRepository;
 import dto.JoinRequestStatusDTO;
 import dto.PlatformUserDTO;
 import dto.RegisterUserRequestDTO;
-import enums.Communication;
+import enums.CommunicationType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -103,7 +103,7 @@ public class JoinRequestServiceTest {
         when(requestRepository.findById(1L)).thenReturn(optional);
         when(accountMapper.entityToDto(any())).thenReturn(PlatformUserDTO.builder().login(joinRequest.getNickName()).build());
         joinRequestService.responseForJoinRequest(true, 1L);
-        verify(notificatorFeign, times(1)).sendMessage(eq(joinRequest.getNickName()), any(), eq(Communication.TELEGRAM));
+        verify(notificatorFeign, times(1)).sendMessage(eq(joinRequest.getNickName()), any(), eq(CommunicationType.TELEGRAM));
         verify(requestRepository, times(1)).delete(joinRequest);
     }
 }

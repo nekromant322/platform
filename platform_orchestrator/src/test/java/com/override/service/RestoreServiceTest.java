@@ -4,7 +4,7 @@ import com.override.feign.NotificatorFeign;
 import com.override.model.PlatformUser;
 import com.override.repository.PlatformUserRepository;
 import dto.ChangePasswordDTO;
-import enums.Communication;
+import enums.CommunicationType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,7 +43,7 @@ public class RestoreServiceTest {
     public void testSendSecurityCode() {
         when(cacheManager.getCache("codeTelegramSecurity")).thenReturn(cache);
         restoreService.sendSecurityCode("Artol7");
-        verify(notificatorFeign, times(1)).sendMessage(eq("Artol7"), any(String.class), eq(Communication.TELEGRAM));
+        verify(notificatorFeign, times(1)).sendMessage(eq("Artol7"), any(String.class), eq(CommunicationType.TELEGRAM));
     }
 
     @Test

@@ -6,7 +6,7 @@ import com.override.model.Recipient;
 import com.override.service.MessageService;
 import com.override.service.RecipientService;
 import com.override.service.communication.*;
-import enums.Communication;
+import enums.CommunicationType;
 import feign.FeignException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,14 +51,14 @@ public class MessageServiceTest {
     public void testWhenSendMessage() {
         Recipient recipient = getRecipient();
         String message = "test";
-        Communication[] communication = {Communication.TELEGRAM, Communication.EMAIL};
-        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
+        CommunicationType[] communicationType = {CommunicationType.TELEGRAM, CommunicationType.EMAIL};
+        Map<CommunicationType, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
 
         when(recipientService.findRecipientByLogin(recipient.getLogin())).thenReturn(recipient);
         when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
         doNothing().when(telegramCommunication).sendMessage(recipient, message);
 
-        messageService.sendMessage(recipient.getLogin(), message, communication);
+        messageService.sendMessage(recipient.getLogin(), message, communicationType);
 
         verify(recipientService, times(1)).findRecipientByLogin(recipient.getLogin());
         verify(strategyFactory, times(1)).getSenderMap();
@@ -76,11 +76,11 @@ public class MessageServiceTest {
     @Test
     public void testWhenRecipientNotFound() {
         String message = "test";
-        Communication[] communication = {Communication.TELEGRAM, Communication.EMAIL};
+        CommunicationType[] communicationType = {CommunicationType.TELEGRAM, CommunicationType.EMAIL};
 
         when(recipientService.findRecipientByLogin("test")).thenThrow(NoSuchElementException.class);
 
-        assertThatThrownBy(() -> messageService.sendMessage("test", message, communication))
+        assertThatThrownBy(() -> messageService.sendMessage("test", message, communicationType))
                 .isInstanceOf(NoSuchElementException.class);
     }
 
@@ -88,15 +88,15 @@ public class MessageServiceTest {
     public void testWhenFirstTypeCommunicationReturnError() {
         Recipient recipient = getRecipient();
         String message = "test";
-        Communication[] communication = {Communication.TELEGRAM, Communication.EMAIL};
-        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
+        CommunicationType[] communicationType = {CommunicationType.TELEGRAM, CommunicationType.EMAIL};
+        Map<CommunicationType, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
 
         when(recipientService.findRecipientByLogin(recipient.getLogin())).thenReturn(recipient);
         when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
         doThrow(FeignException.class).when(telegramCommunication).sendMessage(recipient, message);
         doNothing().when(emailCommunication).sendMessage(recipient, message);
 
-        messageService.sendMessage(recipient.getLogin(), message, communication);
+        messageService.sendMessage(recipient.getLogin(), message, communicationType);
 
         verify(recipientService, times(1)).findRecipientByLogin(recipient.getLogin());
         verify(strategyFactory, times(1)).getSenderMap();
@@ -109,8 +109,8 @@ public class MessageServiceTest {
     public void testWhenAllTypeCommunicationReturnError() {
         Recipient recipient = getRecipient();
         String message = "test";
-        Communication[] communication = {Communication.TELEGRAM, Communication.SMS};
-        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
+        CommunicationType[] communicationType = {CommunicationType.TELEGRAM, CommunicationType.SMS};
+        Map<CommunicationType, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
 
         when(recipientService.findRecipientByLogin(recipient.getLogin())).thenReturn(recipient);
         when(strategyFactory.getSenderMap()).thenReturn(strategyMap);
@@ -121,18 +121,18 @@ public class MessageServiceTest {
         assertThrows(FeignException.class, () -> telegramCommunication.sendMessage(recipient, message));
         assertThrows(MailSendException.class, () -> emailCommunication.sendMessage(recipient, message));
         assertThrows(SmsRuException.class, () -> smsCommunication.sendMessage(recipient, message));
-        assertThatThrownBy(() -> messageService.sendMessage(recipient.getLogin(), message, communication)).isInstanceOf(SendMessageException.class);
+        assertThatThrownBy(() -> messageService.sendMessage(recipient.getLogin(), message, communicationType)).isInstanceOf(SendMessageException.class);
     }
 
     @Test
     public void testCheckNotificationMethods() {
-        List<Communication> communications = new ArrayList<>();
-        communications.add(Communication.EMAIL);
-        communications.add(Communication.SMS);
-        communications.add(Communication.TELEGRAM);
-        communications.add(Communication.VK);
+        List<CommunicationType> communicationTypes = new ArrayList<>();
+        communicationTypes.add(CommunicationType.EMAIL);
+        communicationTypes.add(CommunicationType.SMS);
+        communicationTypes.add(CommunicationType.TELEGRAM);
+        communicationTypes.add(CommunicationType.VK);
         when(recipientService.findRecipientByLogin(any())).thenReturn(new Recipient(1L, "test", "test", "test", "test", "test"));
-        List<Communication> result = messageService.checkNotificationMethods("test");
-        assertEquals(communications, result);
+        List<CommunicationType> result = messageService.checkNotificationMethods("test");
+        assertEquals(communicationTypes, result);
     }
 }

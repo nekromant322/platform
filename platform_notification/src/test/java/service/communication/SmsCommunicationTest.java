@@ -3,7 +3,7 @@ package service.communication;
 import com.override.model.Recipient;
 import com.override.service.SmsRuServiceImpl;
 import com.override.service.communication.SmsCommunication;
-import enums.Communication;
+import enums.CommunicationType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,6 +38,6 @@ public class SmsCommunicationTest {
 
     @Test
     public void testGetType() {
-        assertEquals(Communication.SMS, smsCommunication.getType());
+        assertEquals(CommunicationType.SMS, smsCommunication.getType());
     }
 }

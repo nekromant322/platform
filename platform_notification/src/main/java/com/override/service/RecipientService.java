@@ -6,7 +6,7 @@ import com.override.repository.RecipientRepository;
 import com.override.service.communication.CommunicationStrategy;
 import com.override.service.communication.CommunicationStrategyFactory;
 import dto.RecipientDTO;
-import enums.Communication;
+import enums.CommunicationType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,10 +40,10 @@ public class RecipientService {
         }
     }
 
-    public void updateCommunication(String login, String value, Communication type) {
+    public void updateCommunication(String login, String value, CommunicationType type) {
         Recipient recipient = repository.findRecipientByLogin(login).orElseThrow(() ->
                 new EntityNotFoundException("Recipient with login " + login + " not found"));
-        Map<Communication, CommunicationStrategy> strategyMap = strategyFactory.getSenderMap();
+        Map<CommunicationType, CommunicationStrategy> strategyMap = strategyFactory.getSenderMap();
 
         recipient = strategyMap.get(type).updateRecipient(recipient, value);
         repository.save(recipient);

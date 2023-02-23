@@ -1,6 +1,6 @@
 package com.override.feign;
 
-import enums.Communication;
+import enums.CommunicationType;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,5 +12,5 @@ public interface NotificatorFeign {
     void sendMessage(
             @RequestParam("login") String login,
             @RequestParam("message") String message,
-            @RequestParam("type") Communication... type);
+            @RequestParam("type") CommunicationType... type);
 }

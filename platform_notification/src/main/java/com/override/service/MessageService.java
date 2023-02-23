@@ -5,7 +5,7 @@ import com.override.exception.SmsRuException;
 import com.override.model.Recipient;
 import com.override.service.communication.CommunicationStrategy;
 import com.override.service.communication.CommunicationStrategyFactory;
-import enums.Communication;
+import enums.CommunicationType;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +34,9 @@ public class MessageService {
      * @param message текст сообщения
      * @param types   тип коммуникации с пользователем, например: TELEGRAM, SMS, EMAIL
      */
-    public void sendMessage(String login, String message, Communication... types) {
+    public void sendMessage(String login, String message, CommunicationType... types) {
         Recipient recipient = recipientService.findRecipientByLogin(login);
-        Map<Communication, CommunicationStrategy> senderMap = communicationStrategyFactory.getSenderMap();
+        Map<CommunicationType, CommunicationStrategy> senderMap = communicationStrategyFactory.getSenderMap();
 
         if (types.length == 0) {
             throw new IllegalArgumentException("Не указаны типы коммуникации");
@@ -57,25 +57,25 @@ public class MessageService {
         }
     }
 
-    public List<Communication> checkNotificationMethods(String login) {
+    public List<CommunicationType> checkNotificationMethods(String login) {
         Recipient recipient = recipientService.findRecipientByLogin(login);
-        List<Communication> communicationList1 = new ArrayList<>();
+        List<CommunicationType> communicationTypeList1 = new ArrayList<>();
 
         if (recipient.getEmail().isPresent()) {
-            communicationList1.add(Communication.EMAIL);
+            communicationTypeList1.add(CommunicationType.EMAIL);
         }
 
         if (recipient.getPhoneNumber().isPresent()) {
-            communicationList1.add(Communication.SMS);
+            communicationTypeList1.add(CommunicationType.SMS);
         }
 
         if (recipient.getTelegramId().isPresent()) {
-            communicationList1.add(Communication.TELEGRAM);
+            communicationTypeList1.add(CommunicationType.TELEGRAM);
         }
         if (recipient.getVkChatId().isPresent()) {
-            communicationList1.add(Communication.VK);
+            communicationTypeList1.add(CommunicationType.VK);
         }
 
-        return communicationList1;
+        return communicationTypeList1;
     }
 }

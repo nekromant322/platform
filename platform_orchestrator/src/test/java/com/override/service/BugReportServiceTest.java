@@ -8,7 +8,7 @@ import com.override.model.enums.Role;
 import com.override.repository.BugReportRepository;
 import com.override.repository.PlatformUserRepository;
 import dto.BugReportsDTO;
-import enums.Communication;
+import enums.CommunicationType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,7 +59,7 @@ public class BugReportServiceTest {
 
         bugReportService.uploadFile(file, platformUser.getLogin(), "some text");
 
-        notificatorFeign.sendMessage(platformUser.getLogin(), "some message", Communication.EMAIL);
+        notificatorFeign.sendMessage(platformUser.getLogin(), "some message", CommunicationType.EMAIL);
     }
 
     @Test

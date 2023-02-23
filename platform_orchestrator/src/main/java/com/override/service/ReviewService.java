@@ -11,7 +11,7 @@ import com.override.repository.VkCallRepository;
 import com.override.util.CurrentTimeService;
 import dto.ReviewDTO;
 import dto.ReviewFilterDTO;
-import enums.Communication;
+import enums.CommunicationType;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,10 +109,10 @@ public class ReviewService {
         try {
             PlatformUser user = platformUserRepository.findFirstByLogin(login);
             if (user.getUserSettings().getVkNotification()) {
-                notificatorFeign.sendMessage(login, message, Communication.VK);
+                notificatorFeign.sendMessage(login, message, CommunicationType.VK);
             }
             if (user.getUserSettings().getTelegramNotification()) {
-                notificatorFeign.sendMessage(login, message, Communication.TELEGRAM);
+                notificatorFeign.sendMessage(login, message, CommunicationType.TELEGRAM);
             }
         } catch (FeignException e) {
             log.error("При попытке отправить сообщение пользователю \"{}\" произошла ошибка \"{}\"", login, e.getLocalizedMessage());

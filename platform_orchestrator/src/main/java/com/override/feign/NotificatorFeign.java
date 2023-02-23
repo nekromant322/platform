@@ -2,7 +2,7 @@ package com.override.feign;
 
 import dto.MailDTO;
 import dto.RecipientDTO;
-import enums.Communication;
+import enums.CommunicationType;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +28,7 @@ public interface NotificatorFeign {
     void setCommunications(
             @RequestParam("login") String login,
             @RequestParam("value") String value,
-            @RequestParam("type") Communication type);
+            @RequestParam("type") CommunicationType type);
 
     @PostMapping("/recipients/save")
     void saveRecipient(@RequestBody RecipientDTO recipientDTO);
@@ -40,7 +40,7 @@ public interface NotificatorFeign {
     void sendMessage(
             @RequestParam("login") String login,
             @RequestParam("message") String message,
-            @RequestParam("type") Communication... type);
+            @RequestParam("type") CommunicationType... type);
 
     @PostMapping("/email")
     void sendMessageByMail(@RequestBody MailDTO mailDTO);

@@ -7,7 +7,7 @@ import com.override.model.enums.Role;
 import enums.StudyStatus;
 import com.override.repository.StudentReportRepository;
 import com.override.utils.TestFieldsUtil;
-import enums.Communication;
+import enums.CommunicationType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -74,7 +74,7 @@ class ReportServiceTest {
         reportService.sendDailyReminderOfReport();
 
         verify(userService, times(1)).findStudentsWithoutReportOfCurrentDay();
-        verify(notificatorFeign, times(1)).sendMessage("123", message, Communication.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage("123", message, CommunicationType.TELEGRAM);
     }
 
     @Test
@@ -88,9 +88,9 @@ class ReportServiceTest {
         reportService.sendDailyReminderOfReport();
 
         verify(userService, times(1)).findStudentsWithoutReportOfCurrentDay();
-        verify(notificatorFeign, times(1)).sendMessage("1", message, Communication.TELEGRAM);
-        verify(notificatorFeign, times(1)).sendMessage("2", message, Communication.TELEGRAM);
-        verify(notificatorFeign, times(1)).sendMessage("3", message, Communication.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage("1", message, CommunicationType.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage("2", message, CommunicationType.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage("3", message, CommunicationType.TELEGRAM);
     }
 
     @Test
