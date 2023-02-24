@@ -9,7 +9,7 @@ import com.override.model.enums.Role;
 import com.override.repository.BugReportRepository;
 import com.override.repository.PlatformUserRepository;
 import dto.BugReportsDTO;
-import enums.Communication;
+import enums.CommunicationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,7 +56,7 @@ public class BugReportService {
             throw new BugReportException("Неверный формат файла");
         }
         platformUsers
-                .forEach(platformUser -> notificatorFeign.sendMessage(platformUser.getLogin(), String.format(NEW_BUG_MESSAGE, login, text), Communication.EMAIL));
+                .forEach(platformUser -> notificatorFeign.sendMessage(platformUser.getLogin(), String.format(NEW_BUG_MESSAGE, login, text), CommunicationType.EMAIL));
     }
 
     public List<BugReportsDTO> getAll() {

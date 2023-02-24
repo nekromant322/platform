@@ -6,7 +6,7 @@ import com.override.repository.RecipientRepository;
 import com.override.service.RecipientService;
 import com.override.service.communication.*;
 import dto.RecipientDTO;
-import enums.Communication;
+import enums.CommunicationType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -102,7 +102,7 @@ public class RecipientServiceTest {
     @Test
     public void testWhenUpdateCommunication() {
         Recipient recipient = getRecipient();
-        Map<Communication, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
+        Map<CommunicationType, CommunicationStrategy> strategyMap = getSenderMap(telegramCommunication, emailCommunication, smsCommunication);
         String value = "test";
 
         when(recipientRepository.findRecipientByLogin(recipient.getLogin())).thenReturn(Optional.of(recipient));
@@ -111,7 +111,7 @@ public class RecipientServiceTest {
         when(telegramCommunication.updateRecipient(recipient, value)).thenReturn(recipient);
         when(recipientRepository.save(recipient)).thenReturn(recipient);
 
-        recipientService.updateCommunication(recipient.getLogin(), value, Communication.TELEGRAM);
+        recipientService.updateCommunication(recipient.getLogin(), value, CommunicationType.TELEGRAM);
 
         verify(recipientRepository, times(1)).findRecipientByLogin(recipient.getLogin());
         verify(recipientRepository, times(1)).save(recipient);

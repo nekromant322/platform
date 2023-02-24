@@ -4,7 +4,7 @@ import com.override.model.Recipient;
 import com.override.service.VkService;
 import com.override.service.communication.VkCommunication;
 import dto.MessageDTO;
-import enums.Communication;
+import enums.CommunicationType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -39,6 +39,6 @@ public class VkCommunicationTest {
 
     @Test
     public void testGetType() {
-        assertEquals(Communication.VK, vkCommunication.getType());
+        assertEquals(CommunicationType.VK, vkCommunication.getType());
     }
 }

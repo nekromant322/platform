@@ -5,7 +5,7 @@ import com.override.model.PlatformUser;
 import com.override.model.enums.CoursePart;
 import com.override.repository.CodeTryRepository;
 import com.override.repository.ReviewRepository;
-import enums.Communication;
+import enums.CommunicationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -55,10 +55,10 @@ public class AlertService {
             String adminMessage = countDays + " - столько дней " + student.getLogin() + " не присылал новых решений на платформу";
 
             if (countDays > daysOfInactivity) {
-                notificatorFeign.sendMessage(student.getLogin(), studentMessage, Communication.EMAIL);
+                notificatorFeign.sendMessage(student.getLogin(), studentMessage, CommunicationType.EMAIL);
 
                 for (PlatformUser admin : admins) {
-                    notificatorFeign.sendMessage(admin.getLogin(), adminMessage, Communication.TELEGRAM);
+                    notificatorFeign.sendMessage(admin.getLogin(), adminMessage, CommunicationType.TELEGRAM);
                 }
             }
         }
@@ -72,7 +72,7 @@ public class AlertService {
         for (PlatformUser student : students) {
                     String adminMessage = "студент " + student.getLogin() + " давно не был на ревью ";
                     for (PlatformUser admin : admins) {
-                        notificatorFeign.sendMessage(admin.getLogin(), adminMessage, Communication.TELEGRAM);
+                        notificatorFeign.sendMessage(admin.getLogin(), adminMessage, CommunicationType.TELEGRAM);
                     }
         }
     }

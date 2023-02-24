@@ -4,7 +4,7 @@ import com.override.feign.NotificatorFeign;
 import com.override.model.PlatformUser;
 import com.override.repository.PlatformUserRepository;
 import dto.ChangePasswordDTO;
-import enums.Communication;
+import enums.CommunicationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.Cache;
@@ -43,7 +43,7 @@ public class RestoreService {
     public void sendSecurityCode(String username) {
         Random random = new Random();
         String code = Integer.toString(random.nextInt(9999));
-        notificatorFeign.sendMessage(username, String.format(MESSAGE_WITH_CODE, code), Communication.TELEGRAM);
+        notificatorFeign.sendMessage(username, String.format(MESSAGE_WITH_CODE, code), CommunicationType.TELEGRAM);
         getCodeTelegramSecurity(username, code);
     }
 

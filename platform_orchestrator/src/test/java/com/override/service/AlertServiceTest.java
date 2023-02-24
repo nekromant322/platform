@@ -5,7 +5,7 @@ import com.override.model.*;
 import com.override.model.enums.CoursePart;
 import com.override.repository.CodeTryRepository;
 import com.override.repository.ReviewRepository;
-import enums.Communication;
+import enums.CommunicationType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -73,18 +73,18 @@ public class AlertServiceTest {
         String messageForStudent3 = DAYS.between(codeTryRepository.findFirstByUserIdOrderByDate(students.get(2).getId()).getDate(), LocalDateTime.now()) + " - уже столько дней ты не отправляешь новых решений :(";
 
 
-        verify(notificatorFeign, times(1)).sendMessage(students.get(0).getLogin(), messageForStudent1, Communication.EMAIL);
-        verify(notificatorFeign, times(1)).sendMessage(students.get(1).getLogin(), messageForStudent2, Communication.EMAIL);
-        verify(notificatorFeign, times(0)).sendMessage(students.get(2).getLogin(), messageForStudent3, Communication.EMAIL);
+        verify(notificatorFeign, times(1)).sendMessage(students.get(0).getLogin(), messageForStudent1, CommunicationType.EMAIL);
+        verify(notificatorFeign, times(1)).sendMessage(students.get(1).getLogin(), messageForStudent2, CommunicationType.EMAIL);
+        verify(notificatorFeign, times(0)).sendMessage(students.get(2).getLogin(), messageForStudent3, CommunicationType.EMAIL);
 
 
-        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), messageForArmin1, Communication.TELEGRAM);
-        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), messageForArmin2, Communication.TELEGRAM);
-        verify(notificatorFeign, times(0)).sendMessage(admins.get(0).getLogin(), messageForArmin3, Communication.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), messageForArmin1, CommunicationType.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), messageForArmin2, CommunicationType.TELEGRAM);
+        verify(notificatorFeign, times(0)).sendMessage(admins.get(0).getLogin(), messageForArmin3, CommunicationType.TELEGRAM);
 
-        verify(notificatorFeign, times(1)).sendMessage(admins.get(1).getLogin(), messageForArmin1, Communication.TELEGRAM);
-        verify(notificatorFeign, times(1)).sendMessage(admins.get(1).getLogin(), messageForArmin2, Communication.TELEGRAM);
-        verify(notificatorFeign, times(0)).sendMessage(admins.get(1).getLogin(), messageForArmin3, Communication.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(1).getLogin(), messageForArmin1, CommunicationType.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(1).getLogin(), messageForArmin2, CommunicationType.TELEGRAM);
+        verify(notificatorFeign, times(0)).sendMessage(admins.get(1).getLogin(), messageForArmin3, CommunicationType.TELEGRAM);
 
     }
 
@@ -106,9 +106,9 @@ public class AlertServiceTest {
 
         alertService.alertMentorsAboutBadStudents();
 
-        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), "студент " + students.get(0).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
-        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), "студент " + students.get(1).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
-        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), "студент " + students.get(2).getLogin() + " давно не был на ревью ", Communication.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), "студент " + students.get(0).getLogin() + " давно не был на ревью ", CommunicationType.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), "студент " + students.get(1).getLogin() + " давно не был на ревью ", CommunicationType.TELEGRAM);
+        verify(notificatorFeign, times(1)).sendMessage(admins.get(0).getLogin(), "студент " + students.get(2).getLogin() + " давно не был на ревью ", CommunicationType.TELEGRAM);
 
     }
 

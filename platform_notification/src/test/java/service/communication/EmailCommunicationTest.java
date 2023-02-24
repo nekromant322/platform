@@ -4,7 +4,7 @@ import com.override.model.Recipient;
 import com.override.service.EmailService;
 import com.override.service.communication.EmailCommunication;
 import dto.MailDTO;
-import enums.Communication;
+import enums.CommunicationType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -44,6 +44,6 @@ public class EmailCommunicationTest {
 
     @Test
     public void testGetType() {
-        assertEquals(Communication.EMAIL, emailCommunication.getType());
+        assertEquals(CommunicationType.EMAIL, emailCommunication.getType());
     }
 }

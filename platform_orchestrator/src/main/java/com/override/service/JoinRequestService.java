@@ -6,7 +6,7 @@ import com.override.mapper.PlatformUserMapper;
 import com.override.model.JoinRequest;
 import com.override.repository.JoinRequestRepository;
 import dto.*;
-import enums.Communication;
+import enums.CommunicationType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,12 +62,12 @@ public class JoinRequestService {
         if (approve) {
             student = accountMapper.entityToDto(accountService.generateAccount(request.getNickName()));
             log.info("Запрос от {} в чате № {} разрешен", request.getNickName(), request.getChatId());
-            notificatorFeign.sendMessage(student.getLogin(), String.format(ACCEPT_MESSAGE, student.getLogin(), student.getPassword()), Communication.TELEGRAM);
+            notificatorFeign.sendMessage(student.getLogin(), String.format(ACCEPT_MESSAGE, student.getLogin(), student.getPassword()), CommunicationType.TELEGRAM);
         } else {
             student = PlatformUserDTO.builder().login(request.getNickName()).build();
             notificatorFeign.deleteRecipient(recipientDTO);
             log.info("Запрос от {} в чате № {} отклонен", request.getNickName(), request.getChatId());
-            notificatorFeign.sendMessage(student.getLogin(), DECLINE_MESSAGE, Communication.TELEGRAM);
+            notificatorFeign.sendMessage(student.getLogin(), DECLINE_MESSAGE, CommunicationType.TELEGRAM);
         }
         requestRepository.delete(request);
     }

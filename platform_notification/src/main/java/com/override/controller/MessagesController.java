@@ -1,7 +1,7 @@
 package com.override.controller;
 
 import com.override.service.MessageService;
-import enums.Communication;
+import enums.CommunicationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,12 +25,12 @@ public class MessagesController {
     void sendMessage(
             @RequestParam("login") String login,
             @RequestParam("message") String message,
-            @RequestParam("type") Communication... type) {
+            @RequestParam("type") CommunicationType... type) {
         messageService.sendMessage(login, message, type);
     }
 
     @GetMapping("/types")
-    public List<Communication> checkNotificationMethods(@RequestParam("login")String login){
+    public List<CommunicationType> checkNotificationMethods(@RequestParam("login")String login){
         return messageService.checkNotificationMethods(login);
     }
 }
