@@ -65,6 +65,9 @@ cacheManager:
   verification:
     timeout: 10m
     size: 100
+  interviews:
+    timeout: 1d
+    size: 100
 ---
 
 ---

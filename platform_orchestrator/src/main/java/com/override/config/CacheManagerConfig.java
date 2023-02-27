@@ -18,11 +18,17 @@ public class CacheManagerConfig {
     @Value("${cacheManager.verification.timeout}")
     private String timeToExpireVerificationCache;
 
+    @Value("${cacheManager.interviews.timeout}")
+    private String timeToExpireInterviewDataCache;
+
     @Value("${cacheManager.restore.size}")
     private long sizeOfRestoreCache;
 
     @Value("${cacheManager.verification.size}")
     private long sizeOfVerificationCache;
+
+    @Value("${cacheManager.interviews.size}")
+    private long sizeOfInterviewDataCache;
 
     @Primary
     @Bean
@@ -41,6 +47,13 @@ public class CacheManagerConfig {
     public CacheManager getVerificationCacheManager() {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager();
         cacheManager.setCacheSpecification(String.format(SPEC_AS_STRING, sizeOfVerificationCache, timeToExpireVerificationCache));
+        return cacheManager;
+    }
+
+    @Bean
+    public CacheManager getInterviewDataCacheManager() {
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager("interviewData", "interviewDataById");
+        cacheManager.setCacheSpecification(String.format(SPEC_AS_STRING, sizeOfInterviewDataCache, timeToExpireInterviewDataCache));
         return cacheManager;
     }
 }
