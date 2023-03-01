@@ -4,6 +4,7 @@ import com.override.service.ExecuteCodeService;
 import com.override.service.StepikService;
 import dto.CodeTryDTO;
 import dto.TestResultDTO;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ public class ExecuteCodeController {
     private StepikService stepikService;
 
     @PostMapping("/execute")
+    @ApiOperation("Возвращает результат проверки кода задачи")
     public TestResultDTO execute(@RequestBody CodeTryDTO codeTryDTO) {
         if (codeTryDTO.getAttempt() != null) {
             return stepikService.runStepikCode(codeTryDTO);
