@@ -5,7 +5,6 @@ import dto.CodeTryDTO;
 import dto.StepikTokenDTO;
 import dto.TestResultDTO;
 import enums.CodeExecutionStatus;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.Cache;
@@ -47,14 +46,12 @@ public class StepikService {
         return testResultDTO;
     }
 
-    @ApiOperation(value = "Кладет токен в Кэш")
     public void putStepikTokenInCache(StepikTokenDTO stepikTokenDTO) {
         Cache data = cacheManager.getCache("stepikToken");
         String token = stepikTokenDTO.getAccess_token();
         data.put("token", "Bearer " + token);
     }
 
-    @ApiOperation(value = "Запрашивает токен у StepikAPI по логину и паролю клиента - AUTHORIZATION")
     public String getStepikToken() {
         Cache data = cacheManager.getCache("stepikToken");
         if (data.get("token") == null) {
@@ -66,7 +63,6 @@ public class StepikService {
         return token;
     }
 
-    @ApiOperation("Добавляет в константу REQUESTS_JSON две необходимые переменные: code и attempt, после возвращает строку запроса.")
     public String getRequest(CodeTryDTO codeTryDTO) {
         return String.format(REQUESTS_JSON, codeTryDTO.getStudentsCode(), codeTryDTO.getAttempt());
     }
