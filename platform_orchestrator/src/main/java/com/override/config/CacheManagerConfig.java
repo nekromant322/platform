@@ -27,9 +27,6 @@ public class CacheManagerConfig {
     @Value("${cacheManager.verification.size}")
     private long sizeOfVerificationCache;
 
-    @Value("${cacheManager.interviews.size}")
-    private long sizeOfInterviewDataCache;
-
     @Primary
     @Bean
     public CacheManager getCacheManager() {
@@ -52,8 +49,8 @@ public class CacheManagerConfig {
 
     @Bean
     public CacheManager getInterviewDataCacheManager() {
-        CaffeineCacheManager cacheManager = new CaffeineCacheManager("interviewData", "interviewDataById");
-        cacheManager.setCacheSpecification(String.format(SPEC_AS_STRING, sizeOfInterviewDataCache, timeToExpireInterviewDataCache));
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager("interviewData");
+        cacheManager.setCacheSpecification(String.format("expireAfterAccess=%s", timeToExpireInterviewDataCache));
         return cacheManager;
     }
 }

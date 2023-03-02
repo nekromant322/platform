@@ -28,10 +28,7 @@ public class InterviewDataService {
                 .map(interviewDataMapper::entityToDto).collect(Collectors.toList());
     }
 
-    @Caching(evict = {
-                @CacheEvict(value = "interviewData", allEntries = true),
-                @CacheEvict(value = "interviewDataById", key = "#id"),
-            })
+    @CacheEvict(value = "interviewData", allEntries = true)
     public void delete(Long id) {
         interviewDataRepository.deleteById(id);
     }
@@ -41,7 +38,6 @@ public class InterviewDataService {
         interviewDataRepository.save(interviewDataMapper.dtoToEntity(interviewDataDTO));
     }
 
-    @Cacheable(cacheNames = "interviewDataById", key = "#id")
     public InterviewData findById(Long id) {
         Optional<InterviewData> interviewData = interviewDataRepository.findById(id);
         return interviewData.get();
