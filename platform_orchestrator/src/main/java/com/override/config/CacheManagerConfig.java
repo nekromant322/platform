@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Primary;
 public class CacheManagerConfig {
 
     private final String SPEC_AS_STRING = "maximumSize=%s,expireAfterAccess=%s";
+    private final String SPEC_EXPIRE_AFTER_ACCESS_AS_STRING = "expireAfterAccess=%s";
 
     @Value("${cacheManager.restore.timeout}")
     private String timeToExpireRestoreCache;
@@ -50,7 +51,7 @@ public class CacheManagerConfig {
     @Bean
     public CacheManager getInterviewDataCacheManager() {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager("interviewData");
-        cacheManager.setCacheSpecification(String.format("expireAfterAccess=%s", timeToExpireInterviewDataCache));
+        cacheManager.setCacheSpecification(String.format(SPEC_EXPIRE_AFTER_ACCESS_AS_STRING, timeToExpireInterviewDataCache));
         return cacheManager;
     }
 }
