@@ -21,7 +21,7 @@ public class RestoreController {
     }
 
     @GetMapping("/getCode/{username}")
-    public void getCode(@PathVariable("username") String username) {
-        restoreService.sendSecurityCode(username);
+    public void getCode(@PathVariable("username") String username, @RequestParam String type) {
+        restoreService.sendSecurityCode(username, type);
     }
 }

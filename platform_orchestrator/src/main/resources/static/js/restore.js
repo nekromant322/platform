@@ -1,15 +1,39 @@
 $(function () {
 
-    $('#code-form').submit(function (e) {
+    $('#getCodeByTelegram').click(function (e) {
         e.preventDefault();
+
         const login = $('#login-code').val();
+        const type = {"type" : "telegram"}
+
         $.ajax({
             url: '/restore/getCode/' + login,
             type: 'GET',
-            async: false
+            async: false,
+            data: type
         })
+
+        $('#change-password').removeClass("invisible")
         $('#change-0').val(login)
     })
+
+    $('#getCodeBySMS').click(function (e) {
+        e.preventDefault();
+
+        const login = $('#login-code').val();
+        const type = {"type" : "sms"}
+
+        $.ajax({
+            url: '/restore/getCode/' + login,
+            type: 'GET',
+            async: false,
+            data: type
+        })
+
+        $('#change-password').removeClass("invisible")
+        $('#change-0').val(login)
+    })
+
     $('#change-password').submit(function (e) {
         e.preventDefault();
 
@@ -35,36 +59,6 @@ $(function () {
             alert('Пароли не совпадают')
         }
     })
-
-    $('#code-bph-form').submit(function (e) {
-        e.preventDefault();
-        let phone = $('#phone-code').val();
-        $.ajax({
-            url: '/notification/phone?phone=' + phone,
-            dataType: 'json',
-            method: 'PATCH',
-            contentType: 'application/json'
-        });
-        $('#change-bph-0').val(phone)
-    })
-
-    $('#change-byPhone').submit(function (e) {
-        e.preventDefault();
-        let passwordFormByPhone = {};
-        passwordFormByPhone.username = $('#change-bph-0').val();
-        passwordFormByPhone.password = $('#change-bph-1').val()
-        passwordFormByPhone.passwordRepeated = $('#change-bph-2').val()
-        passwordFormByPhone.code = $('#change-bph-3').val()
-        $.ajax({
-            url: '/codePhone-password',
-            type: 'POST',
-            async: false,
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(passwordFormByPhone)
-        });
-        window.location.replace('/login')
-    })
-
 
 })
 
