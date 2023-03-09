@@ -1,7 +1,7 @@
 package dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,13 +13,13 @@ public class YooMoneyConfirmationRequestDTO {
 
     private Confirmation confirmation;
 
-    @ApiModelProperty(value = "Автоматический прием поступившего платежа.")
+    @Schema(description = "Автоматический прием поступившего платежа.")
     private Boolean capture;
 
-    @ApiModelProperty(value = "Описание транзакции (не более 128 символов)")
+    @Schema(description = "Описание транзакции (не более 128 символов)")
     private String description;
 
-    @ApiModelProperty(value = "Идентификатор покупателя в нашей системе (Login)")
+    @Schema(description = "Идентификатор покупателя в нашей системе (Login)")
     @JsonProperty("merchant_customer_id")
     private String merchantCustomerId;
 
@@ -27,10 +27,10 @@ public class YooMoneyConfirmationRequestDTO {
     @Data
     public static class Amount {
 
-        @ApiModelProperty(value = "Сумма платежа.")
+        @Schema(description = "Сумма платежа.")
         private double value;
 
-        @ApiModelProperty(value = "Сумма платежа.")
+        @Schema(description = "Сумма платежа.")
         private String currency;
     }
 
@@ -38,7 +38,7 @@ public class YooMoneyConfirmationRequestDTO {
     @Data
     public static class Confirmation {
 
-        @ApiModelProperty(value = "Код сценария подтверждения.", example = "embedded")
+        @Schema(description = "Код сценария подтверждения.", example = "embedded")
         private String type;
     }
 }

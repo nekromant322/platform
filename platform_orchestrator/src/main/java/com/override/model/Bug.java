@@ -1,7 +1,7 @@
 package com.override.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class Bug {
 
     private String name;
 
-    @ApiModelProperty(value = "Значение берется из файла MultipartFile, который приходит с фроната, " +
+    @Schema(description = "Значение берется из файла MultipartFile, который приходит с фроната, " +
             "если файла нет, то подставляется дефолтное значение - \"text\"")
     private String text;
 

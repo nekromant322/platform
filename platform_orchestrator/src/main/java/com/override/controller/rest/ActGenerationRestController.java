@@ -3,7 +3,7 @@ package com.override.controller.rest;
 import com.override.service.ActGenerationService;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.PlatformUserService;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -26,13 +26,13 @@ public class ActGenerationRestController {
 
     @Secured("ROLE_ADMIN")
     @GetMapping("{studentLogin}")
-    @ApiOperation(value = "Создает акт о выполненной работе формата .PDF для админа")
+    @Operation(summary = "Создает акт о выполненной работе формата .PDF для админа")
     public void generateAct(@PathVariable String studentLogin) {
         actGenerationService.createPDF(platformUserService.findPlatformUserByLogin(studentLogin).getPersonalData());
     }
 
     @GetMapping
-    @ApiOperation(value = "Создает акт о выполненной работе формата .PDF для текущего юзера")
+    @Operation(summary = "Создает акт о выполненной работе формата .PDF для текущего юзера")
     public ResponseEntity<Resource> generateCurrentUserAct(@AuthenticationPrincipal CustomStudentDetailService.CustomStudentDetails user) {
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType("application/pdf"))

@@ -1,17 +1,17 @@
 package dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
 public class YooMoneyRequestInfoDTO {
 
-    @ApiModelProperty(value = "Сумма платежа")
+    @Schema(description = "Сумма платежа")
     private Double amount;
 
-    @ApiModelProperty(value = "Комментарий к платежу")
+    @Schema(description = "Комментарий к платежу")
     private String comment;
 
-    @ApiModelProperty(value = "Login плательщика")
+    @Schema(description = "Login плательщика")
     private String login;
 }

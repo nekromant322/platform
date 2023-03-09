@@ -1,7 +1,7 @@
 package com.override.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +21,7 @@ public class LessonProgress {
     @JsonIgnore
     private Long id;
 
-    @ApiModelProperty(value = "Идентификатор урока", example = "core-1-1")
+    @Schema(description = "Идентификатор урока", example = "core-1-1")
     private String lesson;
 
     @JoinColumn(name = "user_id")

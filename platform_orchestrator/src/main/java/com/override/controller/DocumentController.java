@@ -5,7 +5,7 @@ import com.override.model.Document;
 import com.override.service.CustomStudentDetailService;
 import com.override.service.DocumentService;
 import dto.DocumentDTO;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -67,7 +67,7 @@ public class DocumentController {
 
     @GetMapping("/documentList/{id}")
     @ResponseBody
-    @ApiOperation(value = "Возвращает все \"документы\" студента по его id")
+    @Operation(summary = "Возвращает все \"документы\" студента по его id")
     public List<DocumentDTO> getStudentDocuments(@PathVariable Long id) {
         return documentService.findAllByUserId(id);
     }

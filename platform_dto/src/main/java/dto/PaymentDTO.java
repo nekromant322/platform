@@ -1,7 +1,7 @@
 package dto;
 
 import enums.PaymentStatus;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class PaymentDTO {
-    @ApiModelProperty(value = "Номер рассчетного счета, куда делается платеж (номер карты получателя платежа)")
+    @Schema(description = "Номер рассчетного счета, куда делается платеж (номер карты получателя платежа)")
     private Long accountNumber;
     private String comment;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
