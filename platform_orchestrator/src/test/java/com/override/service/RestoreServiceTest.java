@@ -42,7 +42,7 @@ public class RestoreServiceTest {
     @Test
     public void testSendSecurityCode() {
         when(cacheManager.getCache("codeTelegramSecurity")).thenReturn(cache);
-        restoreService.sendSecurityCode("Artol7");
+        restoreService.sendSecurityCode("Artol7", "telegram");
         verify(notificatorFeign, times(1)).sendMessage(eq("Artol7"), any(String.class), eq(CommunicationType.TELEGRAM));
     }
 

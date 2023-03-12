@@ -18,6 +18,7 @@ import java.util.Random;
 public class RestoreService {
 
     private final String MESSAGE_WITH_CODE = "Ваш разовый код: %s.\nНикому не сообщайте этот код.";
+    private final String SMS_TYPE = "sms";
 
     @Autowired
     private NotificatorFeign notificatorFeign;
@@ -40,10 +41,14 @@ public class RestoreService {
         data.put(username, changePasswordDTO);
     }
 
-    public void sendSecurityCode(String username) {
+    public void sendSecurityCode(String username, String type) {
         Random random = new Random();
         String code = Integer.toString(random.nextInt(9999));
-        notificatorFeign.sendMessage(username, String.format(MESSAGE_WITH_CODE, code), CommunicationType.TELEGRAM);
+        CommunicationType communicationType = CommunicationType.TELEGRAM;
+        if (type.equals(SMS_TYPE)) {
+            communicationType = CommunicationType.SMS;
+        }
+        notificatorFeign.sendMessage(username, String.format(MESSAGE_WITH_CODE, code), communicationType);
         getCodeTelegramSecurity(username, code);
     }
 

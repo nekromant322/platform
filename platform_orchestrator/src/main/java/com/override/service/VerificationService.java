@@ -39,12 +39,12 @@ public class VerificationService {
     @Autowired
     private PersonalDataMapper personalDataMapper;
 
-    @CachePut(value = "codeCallSecurity")
+    @CachePut(value = "codeCallSecurity", cacheManager = "getVerificationCacheManager", key = "#phone")
     public String getCodeCallSecurity(String phone) {
         return notificatorFeign.callToClient(phone);
     }
 
-    @CachePut(value = "codeEmailMessageSecurity")
+    @CachePut(value = "codeEmailMessageSecurity", cacheManager = "getVerificationCacheManager", key = "#email")
     public String getCodeEmailSecurity(String email) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 4; i++) {
