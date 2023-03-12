@@ -49,6 +49,8 @@ spring:
         smtp:
           starttls:
             enable: true
+  main:
+    allow-circular-references: true
 
 documentSizeLimit:
   forPersonalData: 5 # 5 МБ

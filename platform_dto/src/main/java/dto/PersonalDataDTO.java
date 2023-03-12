@@ -1,6 +1,6 @@
 package dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,68 +10,68 @@ import java.time.LocalDate;
 @Builder
 public class PersonalDataDTO {
 
-    @ApiModelProperty(
-            value = "Id персональных данных",
+    @Schema(
+            description = "Id персональных данных",
             example = "222L")
     private	Long id;
 
-    @ApiModelProperty(
-            value = "Номер акта",
+    @Schema(
+            description = "Номер акта",
             example = "222L")
     private Long actNumber;
 
-    @ApiModelProperty(
-            value = "Номер контракта",
+    @Schema(
+            description = "Номер контракта",
             example = "22/22/2222")
     private String contractNumber;
 
-    @ApiModelProperty(
-            value = "Дата подписания контракта",
+    @Schema(
+            description = "Дата подписания контракта",
             example = "22.22.2222")
     private LocalDate contractDate;
 
-    @ApiModelProperty(
-            value = "Полное имя (ФИО)",
+    @Schema(
+            description = "Полное имя (ФИО)",
             example = "Ernesto Denesik DDS")
     private String fullName;
 
-    @ApiModelProperty(
-            value = "Серия паспорта",
+    @Schema(
+            description = "Серия паспорта",
             example = "1673")
     private Long passportSeries;
 
-    @ApiModelProperty(
-            value = "Номер паспорта",
+    @Schema(
+            description = "Номер паспорта",
             example = "568174")
     private Long passportNumber;
 
-    @ApiModelProperty(
-            value = "Кем паспорт выдан",
+    @Schema(
+            description = "Кем паспорт выдан",
             example = "3261 Annette Coves, Port Sumiko, IN 66449")
     private String passportIssued;
 
-    @ApiModelProperty(
-            value = "Годен паспорт до",
+    @Schema(
+            description = "Годен паспорт до",
             example = "22.22.2222")
     private LocalDate issueDate;
 
-    @ApiModelProperty(
-            value = "Дата рождения",
+    @Schema(
+            description = "Дата рождения",
             example = "22.22.2222")
     private LocalDate birthDate;
 
-    @ApiModelProperty(
-            value = "Регистрация",
+    @Schema(
+            description = "Регистрация",
             example = "51981 Schoen Mews, North Stasiabury, DE 83709-7555")
     private String registration;
 
-    @ApiModelProperty(
-            value = "Почта",
+    @Schema(
+            description = "Почта",
             example = "chauncey54@gmail.com")
     private String email;
 
-    @ApiModelProperty(
-            value = "Номер телефона ",
+    @Schema(
+            description = "Номер телефона ",
             example = "81116327532")
     private Long phoneNumber;
 }

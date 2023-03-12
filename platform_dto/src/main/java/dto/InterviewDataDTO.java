@@ -1,6 +1,6 @@
 package dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,36 +12,36 @@ import java.time.LocalTime;
 public class InterviewDataDTO {
     private Long id;
 
-    @ApiModelProperty(value = "Логин пользователя")
+    @Schema(description = "Логин пользователя")
     private String userLogin;
 
-    @ApiModelProperty(value = "Название компании")
+    @Schema(description = "Название компании")
     private String company;
 
-    @ApiModelProperty(value = "Описание вакансии")
+    @Schema(description = "Описание вакансии")
     private String description;
 
-    @ApiModelProperty(value = "Контакты для связи")
+    @Schema(description = "Контакты для связи")
     private String contacts;
 
-    @ApiModelProperty(value = "Дата собеседования")
+    @Schema(description = "Дата собеседования")
     private LocalDate date;
 
-    @ApiModelProperty(value = "Время собеседования")
+    @Schema(description = "Время собеседования")
     private LocalTime time;
 
-    @ApiModelProperty(value = "Комментарий после собеседования")
+    @Schema(description = "Комментарий после собеседования")
     private String comment;
 
-    @ApiModelProperty(value = "Стек")
+    @Schema(description = "Стек")
     private String stack;
 
-    @ApiModelProperty(value = "Предлагаемая зарплата")
+    @Schema(description = "Предлагаемая зарплата")
     private int salary;
 
-    @ApiModelProperty(value = "Ссылка на встречу")
+    @Schema(description = "Ссылка на встречу")
     private String meetingLink;
 
-    @ApiModelProperty(value = "Уточнение, возможна ли удаленка")
+    @Schema(description = "Уточнение, возможна ли удаленка")
     private String distanceWork;
 }

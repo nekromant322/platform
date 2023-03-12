@@ -5,7 +5,7 @@ import dto.CodeTryStatDTO;
 import dto.GeneralIncomeDTO;
 import dto.IncomeFromUsersDTO;
 import dto.SalaryDTO;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,7 @@ public class StatisticsRestController {
     private StatisticsService statisticsService;
 
     @GetMapping("/hardTasks")
-    @ApiOperation(value = "Возвращает мапу Map<String, Long>, где ключ(String) - номер той самой сложной " +
+    @Operation(summary = "Возвращает мапу Map<String, Long>, где ключ(String) - номер той самой сложной " +
             "задачи (пример: 4.2.1, где 4 - глава, 2 - шаг, 1 - урок), а значение(Long) - колчичество неудачных " +
             "решений данной задачи")
     public Map<String, Long> statList(@RequestParam int size){
@@ -30,25 +30,25 @@ public class StatisticsRestController {
     }
 
     @GetMapping("/data")
-    @ApiOperation(value = "Возвращает CodeTryStatDTO, подробно описно в модели ДТОшки")
+    @Operation(summary = "Возвращает CodeTryStatDTO, подробно описно в модели ДТОшки")
     public CodeTryStatDTO countStatsByStatus(@RequestParam int size){
         return statisticsService.getCodeTryStatistics(size);
     }
 
     @GetMapping("/salary")
-    @ApiOperation(value = "Возвращает SalaryDTO, подробно описно в модели ДТОшки")
+    @Operation(summary = "Возвращает SalaryDTO, подробно описно в модели ДТОшки")
     public SalaryDTO getSalaryStat(){
         return statisticsService.getSalaryStatistics();
     }
 
     @GetMapping("/allPayment")
-    @ApiOperation(value = "Возвращает IncomeFromUsersDTO, подробно описно в модели ДТОшки")
+    @Operation(summary = "Возвращает IncomeFromUsersDTO, подробно описно в модели ДТОшки")
     public IncomeFromUsersDTO getAllPayment(){
         return statisticsService.getAllPayment();
     }
 
     @GetMapping("/generalIncome")
-    @ApiOperation(value = "Возвращает GeneralIncomeDTO, подробно описно в модели ДТОшки")
+    @Operation(summary = "Возвращает GeneralIncomeDTO, подробно описно в модели ДТОшки")
     public GeneralIncomeDTO getGeneralPayment(){
         return statisticsService.getGeneralPayment();
     }
